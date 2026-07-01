@@ -1,0 +1,1844 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IA + Redes: El Sistema Para Generar Ingresos Digitales en 2026 — TechnoCrazy</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;500;600;700;900&display=swap');
+
+*{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --bg:#06060f;
+  --bg2:#0d0d1a;
+  --bg3:#111127;
+  --blue:#2979ff;
+  --purple:#7c4dff;
+  --cyan:#00e5ff;
+  --green:#22c55e;
+  --orange:#f59e0b;
+  --pink:#fb7185;
+  --text:#e0e0ff;
+  --text2:rgba(224,224,255,.6);
+  --text3:rgba(224,224,255,.35);
+  --border:rgba(41,121,255,.2);
+  --card:rgba(13,13,26,.8);
+}
+
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+
+/* ── LAYOUT ── */
+.layout{display:flex;min-height:100vh}
+
+/* ── SIDEBAR ── */
+.sidebar{
+  width:280px;flex-shrink:0;background:var(--bg2);
+  border-right:1px solid var(--border);
+  position:sticky;top:0;height:100vh;overflow-y:auto;
+  display:flex;flex-direction:column;
+}
+.sidebar::-webkit-scrollbar{width:4px}
+.sidebar::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+
+.sidebar-logo{
+  padding:24px 20px 20px;border-bottom:1px solid var(--border);
+  text-align:center;
+}
+.logo-badge{
+  display:inline-flex;align-items:center;gap:10px;
+  background:linear-gradient(135deg,rgba(41,121,255,.15),rgba(124,77,255,.15));
+  border:1px solid rgba(41,121,255,.3);
+  border-radius:12px;padding:10px 18px;
+}
+.logo-dot{
+  width:32px;height:32px;
+  background:linear-gradient(135deg,#2979ff,#7c4dff);
+  border-radius:8px;display:flex;align-items:center;justify-content:center;
+  font-size:14px;font-weight:900;color:#fff;
+}
+.logo-name{font-size:15px;font-weight:900;color:#fff}
+.sidebar-title{font-size:11px;color:var(--text3);margin-top:10px;letter-spacing:1.5px;text-transform:uppercase}
+
+.nav-list{list-style:none;padding:16px 12px;flex:1}
+.nav-item{margin-bottom:4px}
+.nav-link{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 12px;border-radius:10px;
+  color:var(--text2);font-size:13px;font-weight:500;
+  text-decoration:none;cursor:pointer;transition:all .2s;
+  border:1px solid transparent;
+}
+.nav-link:hover{background:rgba(41,121,255,.08);color:var(--text);border-color:var(--border)}
+.nav-link.active{background:rgba(41,121,255,.15);color:#fff;border-color:rgba(41,121,255,.4)}
+.nav-num{
+  width:24px;height:24px;border-radius:6px;
+  background:rgba(255,255,255,.06);
+  display:flex;align-items:center;justify-content:center;
+  font-size:10px;font-family:'JetBrains Mono',monospace;font-weight:700;
+  flex-shrink:0;
+}
+.nav-link.active .nav-num{background:linear-gradient(135deg,#2979ff,#7c4dff);color:#fff}
+.nav-bonus .nav-num{background:linear-gradient(135deg,#f59e0b,#fb7185)!important;color:#fff}
+
+.sidebar-footer{padding:16px;border-top:1px solid var(--border)}
+.btn-pdf{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  width:100%;padding:10px;border-radius:10px;
+  background:linear-gradient(135deg,#2979ff,#7c4dff);
+  color:#fff;font-size:13px;font-weight:600;
+  border:none;cursor:pointer;transition:opacity .2s;
+}
+.btn-pdf:hover{opacity:.85}
+
+/* ── MAIN ── */
+.main{flex:1;overflow-y:auto;padding:48px 48px 80px}
+.main::-webkit-scrollbar{width:6px}
+.main::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+
+/* ── SECTION ── */
+.section{display:none;max-width:860px;margin:0 auto;animation:fadeIn .3s ease}
+.section.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── SECTION HEADER ── */
+.sec-header{margin-bottom:40px}
+.sec-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:6px 14px;border-radius:20px;font-size:11px;font-weight:700;
+  letter-spacing:1px;text-transform:uppercase;margin-bottom:16px;
+}
+.badge-blue{background:rgba(41,121,255,.15);border:1px solid rgba(41,121,255,.3);color:#2979ff}
+.badge-purple{background:rgba(124,77,255,.15);border:1px solid rgba(124,77,255,.3);color:#9f7aea}
+.badge-cyan{background:rgba(0,229,255,.1);border:1px solid rgba(0,229,255,.25);color:#00e5ff}
+.badge-green{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.25);color:#22c55e}
+.badge-orange{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.25);color:#f59e0b}
+.badge-pink{background:rgba(251,113,133,.1);border:1px solid rgba(251,113,133,.25);color:#fb7185}
+.badge-gold{background:linear-gradient(135deg,rgba(245,158,11,.15),rgba(251,113,133,.15));border:1px solid rgba(245,158,11,.4);color:#f59e0b}
+
+.sec-header h1{font-size:36px;font-weight:900;line-height:1.2;margin-bottom:12px}
+.gradient-text{background:linear-gradient(90deg,#2979ff,#7c4dff,#00e5ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sec-header .lead{font-size:16px;color:var(--text2);line-height:1.7;max-width:700px}
+
+/* ── DIVIDER ── */
+.divider{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:36px 0}
+
+/* ── CONTENT BLOCKS ── */
+h2.block-title{font-size:20px;font-weight:700;margin-bottom:16px;color:#fff}
+h3.sub-title{font-size:16px;font-weight:600;color:var(--cyan);margin-bottom:10px}
+p.block-text{font-size:15px;color:var(--text2);line-height:1.75;margin-bottom:16px}
+
+/* ── CARDS GRID ── */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;margin:20px 0}
+.card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:14px;padding:20px;transition:border-color .2s;
+}
+.card:hover{border-color:rgba(41,121,255,.5)}
+.card-icon{font-size:24px;margin-bottom:10px}
+.card h4{font-size:14px;font-weight:700;color:#fff;margin-bottom:6px}
+.card p{font-size:13px;color:var(--text2);line-height:1.6}
+
+/* ── INFO BOX ── */
+.info-box{
+  background:rgba(41,121,255,.08);border:1px solid rgba(41,121,255,.25);
+  border-left:3px solid #2979ff;border-radius:10px;padding:18px 20px;margin:20px 0;
+}
+.info-box.purple{background:rgba(124,77,255,.08);border-color:rgba(124,77,255,.25);border-left-color:#7c4dff}
+.info-box.cyan{background:rgba(0,229,255,.06);border-color:rgba(0,229,255,.2);border-left-color:#00e5ff}
+.info-box.green{background:rgba(34,197,94,.06);border-color:rgba(34,197,94,.2);border-left-color:#22c55e}
+.info-box.orange{background:rgba(245,158,11,.06);border-color:rgba(245,158,11,.2);border-left-color:#f59e0b}
+.info-box.gold{background:linear-gradient(135deg,rgba(245,158,11,.06),rgba(251,113,133,.06));border-color:rgba(245,158,11,.3);border-left-color:#f59e0b}
+.info-box .label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--blue);margin-bottom:6px}
+.info-box.purple .label{color:#9f7aea}
+.info-box.cyan .label{color:#00e5ff}
+.info-box.green .label{color:#22c55e}
+.info-box.orange .label{color:#f59e0b}
+.info-box.gold .label{color:#f59e0b}
+.info-box p{font-size:14px;color:var(--text2);line-height:1.7;margin:0}
+.info-box strong{color:#fff}
+
+/* ── QUOTE ── */
+.quote{
+  border-left:3px solid var(--purple);background:rgba(124,77,255,.08);
+  border-radius:0 10px 10px 0;padding:16px 20px;margin:24px 0;
+  font-size:15px;font-style:italic;color:var(--text2);line-height:1.7;
+}
+.quote strong{color:#fff;font-style:normal}
+
+/* ── TABLE ── */
+.tbl-wrap{overflow-x:auto;margin:20px 0;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse}
+th{background:rgba(41,121,255,.12);color:var(--cyan);font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:12px 16px;text-align:left}
+td{padding:12px 16px;font-size:14px;color:var(--text2);border-top:1px solid var(--border)}
+tr:hover td{background:rgba(255,255,255,.02)}
+td strong{color:#fff}
+
+/* ── LIST ── */
+ul.check-list{list-style:none;margin:12px 0}
+ul.check-list li{
+  display:flex;align-items:flex-start;gap:10px;
+  font-size:14px;color:var(--text2);padding:7px 0;line-height:1.6;
+}
+ul.check-list li::before{content:'✓';color:#22c55e;font-weight:700;flex-shrink:0;margin-top:1px}
+
+ul.dot-list{list-style:none;margin:12px 0}
+ul.dot-list li{
+  display:flex;align-items:flex-start;gap:10px;
+  font-size:14px;color:var(--text2);padding:6px 0;line-height:1.6;
+}
+ul.dot-list li::before{content:'▸';color:var(--blue);font-weight:700;flex-shrink:0;margin-top:1px}
+
+/* ── STEP BOXES ── */
+.steps{display:flex;flex-direction:column;gap:16px;margin:20px 0}
+.step{
+  display:flex;align-items:flex-start;gap:16px;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:14px;padding:18px;
+}
+.step-num{
+  width:36px;height:36px;border-radius:10px;
+  background:linear-gradient(135deg,#2979ff,#7c4dff);
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;font-weight:700;color:#fff;flex-shrink:0;
+}
+.step-content h4{font-size:14px;font-weight:700;color:#fff;margin-bottom:4px}
+.step-content p{font-size:13px;color:var(--text2);line-height:1.6}
+
+/* ── PROMPT BOX ── */
+.prompt-box{
+  background:#0a0a18;border:1px solid rgba(0,229,255,.25);border-radius:12px;
+  margin:16px 0;overflow:hidden;
+}
+.prompt-label{
+  background:rgba(0,229,255,.08);padding:8px 14px;
+  font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;
+  color:var(--cyan);letter-spacing:1px;border-bottom:1px solid rgba(0,229,255,.15);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.prompt-text{
+  font-family:'JetBrains Mono',monospace;font-size:13px;
+  color:#a5f3fc;line-height:1.7;padding:16px 18px;white-space:pre-wrap;
+}
+.btn-copy{
+  background:rgba(0,229,255,.15);border:1px solid rgba(0,229,255,.3);
+  color:var(--cyan);font-size:11px;font-weight:600;font-family:'Inter',sans-serif;
+  padding:3px 10px;border-radius:6px;cursor:pointer;transition:all .2s;
+}
+.btn-copy:hover{background:rgba(0,229,255,.25)}
+.btn-copy.copied{color:#22c55e;border-color:#22c55e;background:rgba(34,197,94,.1)}
+
+/* ── PRICE BADGE ── */
+.price-row{display:flex;gap:12px;flex-wrap:wrap;margin:16px 0}
+.price-tag{
+  background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);
+  border-radius:10px;padding:10px 16px;text-align:center;
+}
+.price-tag .amount{font-size:22px;font-weight:900;color:#22c55e}
+.price-tag .desc{font-size:11px;color:var(--text3);margin-top:2px}
+
+/* ── CAROUSEL ── */
+.carousel-section{margin:32px 0}
+.carousel-label{
+  display:flex;align-items:center;gap:8px;margin-bottom:14px;
+  font-size:12px;font-weight:700;letter-spacing:1px;
+  text-transform:uppercase;color:var(--text3);
+}
+.carousel-label span{
+  background:rgba(255,255,255,.06);border:1px solid var(--border);
+  border-radius:6px;padding:3px 8px;
+}
+.carousel-wrap{position:relative}
+.carousel-track-outer{
+  overflow:hidden;border-radius:14px;
+  border:1px dashed rgba(41,121,255,.3);
+  background:rgba(41,121,255,.03);
+}
+.carousel-track{
+  display:flex;transition:transform .35s cubic-bezier(.4,0,.2,1);
+}
+.carousel-slide{
+  min-width:100%;padding:0;
+}
+.img-placeholder{
+  min-height:280px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:12px;
+  padding:32px;text-align:center;
+}
+.img-placeholder .ph-icon{font-size:48px;opacity:.4}
+.img-placeholder .ph-num{
+  font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;
+  color:var(--blue);background:rgba(41,121,255,.12);
+  border:1px solid rgba(41,121,255,.2);border-radius:6px;
+  padding:3px 10px;letter-spacing:1px;
+}
+.img-placeholder .ph-title{font-size:15px;font-weight:700;color:rgba(255,255,255,.5)}
+.img-placeholder .ph-desc{font-size:13px;color:var(--text3);max-width:420px;line-height:1.6}
+
+.carousel-nav{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-top:12px;
+}
+.car-btn{
+  width:36px;height:36px;border-radius:50%;
+  background:rgba(255,255,255,.06);border:1px solid var(--border);
+  color:var(--text2);font-size:16px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .2s;
+}
+.car-btn:hover{background:rgba(41,121,255,.2);border-color:var(--blue);color:#fff}
+.car-dots{display:flex;gap:6px;align-items:center}
+.car-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:rgba(255,255,255,.15);transition:all .2s;cursor:pointer;
+}
+.car-dot.active{background:var(--blue);width:20px;border-radius:4px}
+
+/* ── PHASE CARD ── */
+.phase-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:20px 0}
+.phase-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:14px;padding:20px;
+}
+.phase-card .phase-num{
+  font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  margin-bottom:8px;
+}
+.phase-card h4{font-size:15px;font-weight:700;color:#fff;margin-bottom:6px}
+.phase-card .days{font-size:11px;color:var(--text3);margin-bottom:12px;font-family:'JetBrains Mono',monospace}
+.phase-card ul{list-style:none}
+.phase-card ul li{font-size:13px;color:var(--text2);padding:4px 0;display:flex;gap:8px;align-items:flex-start}
+.phase-card ul li::before{content:'→';color:var(--cyan);flex-shrink:0}
+
+/* ── NICHO CARD ── */
+.nicho-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin:20px 0}
+.nicho-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:12px;padding:18px;
+}
+.nicho-card .nicho-tag{
+  font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  color:var(--purple);margin-bottom:8px;display:block;
+}
+.nicho-card h4{font-size:14px;font-weight:700;color:#fff;margin-bottom:8px}
+.nicho-card .nicho-needs{font-size:13px;color:var(--text2);line-height:1.6}
+.nicho-card .nicho-price{
+  display:inline-block;margin-top:10px;
+  font-size:12px;font-weight:700;color:#22c55e;
+  background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.25);
+  border-radius:6px;padding:3px 9px;
+}
+
+/* ── HERO / PORTADA ── */
+.hero{
+  background:linear-gradient(135deg,#0d1f3c,#160d2e);
+  border:1px solid rgba(41,121,255,.3);
+  border-radius:20px;padding:48px 40px;text-align:center;
+  position:relative;overflow:hidden;margin-bottom:40px;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 0%,rgba(41,121,255,.15),transparent 65%);
+}
+.hero-tag{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(41,121,255,.15);border:1px solid rgba(41,121,255,.3);
+  border-radius:20px;padding:5px 14px;font-size:12px;font-weight:600;
+  color:var(--cyan);margin-bottom:20px;position:relative;
+}
+.hero h1{
+  font-size:42px;font-weight:900;line-height:1.15;
+  background:linear-gradient(90deg,#fff,#a5b4fc);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-bottom:16px;position:relative;
+}
+.hero p{font-size:16px;color:var(--text2);line-height:1.7;max-width:560px;margin:0 auto;position:relative}
+.hero-stats{
+  display:flex;gap:24px;justify-content:center;flex-wrap:wrap;
+  margin-top:32px;position:relative;
+}
+.hero-stat{text-align:center}
+.hero-stat .val{font-size:28px;font-weight:900;color:#fff}
+.hero-stat .val span{font-size:16px;color:var(--cyan)}
+.hero-stat .lbl{font-size:11px;color:var(--text3);margin-top:2px;letter-spacing:1px;text-transform:uppercase}
+
+/* ── MOBILE ── */
+.hamburger{display:none;position:fixed;top:14px;left:14px;z-index:200;
+  background:var(--bg2);border:1px solid var(--border);border-radius:10px;
+  padding:8px;cursor:pointer;color:var(--text);font-size:18px}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:99}
+
+@media(max-width:768px){
+  .sidebar{position:fixed;left:-280px;z-index:100;transition:left .3s;height:100vh}
+  .sidebar.open{left:0}
+  .overlay.show{display:block}
+  .hamburger{display:flex}
+  .main{padding:24px 18px 60px}
+  .main{padding-top:60px}
+  .phase-cards{grid-template-columns:1fr}
+  .hero h1{font-size:28px}
+}
+
+/* ── PRINT ── */
+@media print{
+  .sidebar,.hamburger,.overlay,.carousel-nav,.btn-pdf,.btn-copy{display:none!important}
+  .layout{display:block}
+  .main{padding:0}
+  .section{display:block!important;page-break-after:always}
+  .img-placeholder{border:1px dashed #ccc;min-height:200px}
+  body{background:#fff;color:#000}
+  .gradient-text{-webkit-text-fill-color:#000}
+  .sec-badge,.info-box,.card,.step,.prompt-box,.nicho-card,.phase-card{border:1px solid #ddd}
+}
+</style>
+</head>
+<body>
+
+<button class="hamburger" onclick="toggleSidebar()">☰</button>
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+<div class="layout">
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-badge">
+      <div class="logo-dot">TC</div>
+      <span class="logo-name">TechnoCrazy</span>
+    </div>
+    <div class="sidebar-title">Curso IA + Redes 2026</div>
+  </div>
+
+  <ul class="nav-list">
+    <li class="nav-item">
+      <a class="nav-link active" onclick="showSection('s0',this)">
+        <span class="nav-num">0</span> Portada & Bienvenida
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" onclick="showSection('s1',this)">
+        <span class="nav-num">1</span> Claude AI Desde Cero
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" onclick="showSection('s2',this)">
+        <span class="nav-num">2</span> Estrategia 1 — Contenido
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" onclick="showSection('s3',this)">
+        <span class="nav-num">3</span> Estrategia 2 — Automatizaciones
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" onclick="showSection('s4',this)">
+        <span class="nav-num">4</span> Estrategia 3 — High Ticket
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" onclick="showSection('s5',this)">
+        <span class="nav-num">5</span> Redes Sociales como Motor
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" onclick="showSection('s6',this)">
+        <span class="nav-num">6</span> Cómo Vender tu Servicio
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" onclick="showSection('s7',this)">
+        <span class="nav-num">7</span> Plan de Acción 90 Días
+      </a>
+    </li>
+    <li class="nav-item" style="margin-top:12px">
+      <a class="nav-link nav-bonus" onclick="showSection('s8',this)">
+        <span class="nav-num">★</span> BONUS — Prompts por Nicho
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" onclick="showSection('s9',this)">
+        <span class="nav-num">?</span> Preguntas Frecuentes
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" onclick="showSection('s10',this)">
+        <span class="nav-num">🚀</span> Cierre y Próximos Pasos
+      </a>
+    </li>
+  </ul>
+
+  <div class="sidebar-footer">
+    <button class="btn-pdf" onclick="window.print()">
+      ⬇ Descargar como PDF
+    </button>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+
+<!-- ══════════════════════════════════════════════
+     SECCIÓN 0 — PORTADA
+══════════════════════════════════════════════ -->
+<section class="section active" id="s0">
+
+  <div class="hero">
+    <div class="hero-tag">✦ TechnoCrazy · Edición 2026</div>
+    <h1>IA + Redes:<br>El Sistema Para Generar<br>Ingresos Digitales</h1>
+    <p>Aprende a usar Claude AI y las Redes Sociales para construir servicios que negocios reales ya están comprando — sin experiencia técnica, sin inversión enorme.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="val">3<span>★</span></div><div class="lbl">Estrategias</div></div>
+      <div class="hero-stat"><div class="val">$84<span>/hr</span></div><div class="lbl">Potencial</div></div>
+      <div class="hero-stat"><div class="val">90<span>d</span></div><div class="lbl">Plan de Acción</div></div>
+      <div class="hero-stat"><div class="val">+20<span></span></div><div class="lbl">Prompts Listos</div></div>
+    </div>
+  </div>
+
+  <!-- Carrusel portada -->
+  <div class="carousel-section">
+    <div class="carousel-label"><span>IMÁGENES DE PORTADA</span> — Añade tus gráficos aquí</div>
+    <div class="carousel-wrap" data-carousel="c0">
+      <div class="carousel-track-outer">
+        <div class="carousel-track">
+          <div class="carousel-slide">
+            <div class="img-placeholder">
+              <div class="ph-icon">🖼</div>
+              <div class="ph-num">IMG 01</div>
+              <div class="ph-title">Imagen Hero del Curso</div>
+              <div class="ph-desc">Imagen principal de portada — persona trabajando con IA, estilo TechnoCrazy, fondo oscuro con elementos tecnológicos</div>
+            </div>
+          </div>
+          <div class="carousel-slide">
+            <div class="img-placeholder">
+              <div class="ph-icon">🖼</div>
+              <div class="ph-num">IMG 02</div>
+              <div class="ph-title">Gráfico de Oportunidad de Mercado</div>
+              <div class="ph-desc">Infografía mostrando el crecimiento del mercado de IA, adopción acelerada, comparación con el internet en los 90s</div>
+            </div>
+          </div>
+          <div class="carousel-slide">
+            <div class="img-placeholder">
+              <div class="ph-icon">🖼</div>
+              <div class="ph-num">IMG 03</div>
+              <div class="ph-title">Branding TechnoCrazy</div>
+              <div class="ph-desc">Logo y tagline del curso sobre fondo oscuro con gradiente azul/morado característico de TechnoCrazy</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-nav">
+        <button class="car-btn" onclick="carMove('c0',-1)">‹</button>
+        <div class="car-dots" id="dots-c0">
+          <div class="car-dot active" onclick="carGo('c0',0)"></div>
+          <div class="car-dot" onclick="carGo('c0',1)"></div>
+          <div class="car-dot" onclick="carGo('c0',2)"></div>
+        </div>
+        <button class="car-btn" onclick="carMove('c0',1)">›</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <h2 class="block-title">¿De qué trata este curso?</h2>
+  <p class="block-text">Este curso te enseña a convertir Claude AI y las redes sociales en una fuente de ingresos real. No es teoría — son modelos que negocios ya están comprando hoy en el mercado hispano.</p>
+
+  <div class="info-box gold">
+    <div class="label">💡 Concepto clave</div>
+    <p><strong>La IA no es el negocio. El negocio es resolver problemas a los comerciantes.</strong><br>Las empresas pagan por resultados. Tu trabajo es usar Claude como herramienta para entregar esos resultados más rápido y mejor.</p>
+  </div>
+
+  <div class="cards">
+    <div class="card"><div class="card-icon">📱</div><h4>Sin experiencia técnica</h4><p>No necesitas saber programar ni ser ingeniero en sistemas.</p></div>
+    <div class="card"><div class="card-icon">💰</div><h4>Inversión mínima</h4><p>Puedes comenzar con el plan gratuito de Claude. Inversión inicial: $0–$200.</p></div>
+    <div class="card"><div class="card-icon">⚡</div><h4>Resultados en 30 días</h4><p>La primera estrategia puede generar tu primer cliente en menos de un mes.</p></div>
+    <div class="card"><div class="card-icon">🌎</div><h4>Mercado hispano enorme</h4><p>Faltan especialistas en IA en todo el mundo hispanohablante. Esa es tu ventaja.</p></div>
+  </div>
+
+  <div class="divider"></div>
+
+  <h2 class="block-title">Lo que vas a aprender</h2>
+  <ul class="check-list">
+    <li>Qué es Claude AI y cómo usarlo desde cero</li>
+    <li>Las 3 estrategias para generar ingresos con IA (beginner → high ticket)</li>
+    <li>Cómo identificar nichos rentables y ofrecerles servicios específicos</li>
+    <li>Cómo usar las redes sociales para atraer clientes de forma orgánica</li>
+    <li>Scripts de venta listos para WhatsApp, DM e email</li>
+    <li>Plan de acción de 90 días para pasar de cero a tu primer cliente pagador</li>
+    <li>+20 prompts de Claude listos para copiar por cada nicho</li>
+  </ul>
+
+</section>
+
+<!-- ══════════════════════════════════════════════
+     SECCIÓN 1 — CLAUDE AI DESDE CERO
+══════════════════════════════════════════════ -->
+<section class="section" id="s1">
+  <div class="sec-header">
+    <div class="sec-badge badge-blue">Módulo 1</div>
+    <h1 class="gradient-text">Claude AI Desde Cero</h1>
+    <p class="lead">Antes de ganar dinero con una herramienta, necesitas dominarla. Esta sección te lleva de la mano desde crear tu cuenta hasta escribir prompts que dan resultados profesionales.</p>
+  </div>
+
+  <h2 class="block-title">¿Qué es Claude AI?</h2>
+  <p class="block-text">Claude es un asistente de inteligencia artificial creado por Anthropic. A diferencia de otros modelos, Claude destaca por sus respuestas largas, su capacidad de análisis, y su habilidad para seguir instrucciones complejas — lo que lo hace ideal para crear contenido profesional, diseñar sistemas y automatizar procesos de negocio.</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>Característica</th><th>Claude</th><th>ChatGPT</th></tr>
+      <tr><td>Contexto largo</td><td><strong style="color:#22c55e">✓ 200K tokens</strong></td><td>128K tokens</td></tr>
+      <tr><td>Seguimiento de instrucciones</td><td><strong style="color:#22c55e">Muy preciso</strong></td><td>Bueno</td></tr>
+      <tr><td>Redacción en español</td><td><strong style="color:#22c55e">Excelente</strong></td><td>Bueno</td></tr>
+      <tr><td>Plan gratuito</td><td><strong style="color:#22c55e">✓ Disponible</strong></td><td>✓ Disponible</td></tr>
+      <tr><td>Plan Pro</td><td>$20/mes</td><td>$20/mes</td></tr>
+    </table>
+  </div>
+
+  <!-- Carrusel M1 -->
+  <div class="carousel-section">
+    <div class="carousel-label"><span>CAPTURAS DE PANTALLA</span> — Interfaz de Claude</div>
+    <div class="carousel-wrap" data-carousel="c1">
+      <div class="carousel-track-outer">
+        <div class="carousel-track">
+          <div class="carousel-slide"><div class="img-placeholder">
+            <div class="ph-icon">🖼</div><div class="ph-num">IMG 04</div>
+            <div class="ph-title">Página de Registro — claude.ai</div>
+            <div class="ph-desc">Screenshot de la pantalla de creación de cuenta en claude.ai, mostrando el botón "Sign up" y opciones de inicio de sesión</div>
+          </div></div>
+          <div class="carousel-slide"><div class="img-placeholder">
+            <div class="ph-icon">🖼</div><div class="ph-num">IMG 05</div>
+            <div class="ph-title">Interfaz Principal de Claude</div>
+            <div class="ph-desc">Vista del chat de Claude con la caja de texto, historial de conversaciones y panel lateral — con anotaciones señalando cada parte</div>
+          </div></div>
+          <div class="carousel-slide"><div class="img-placeholder">
+            <div class="ph-icon">🖼</div><div class="ph-num">IMG 06</div>
+            <div class="ph-title">Ejemplo de Prompt y Respuesta</div>
+            <div class="ph-desc">Screenshot de un prompt de negocio enviado a Claude y su respuesta profesional — demostración real de la herramienta</div>
+          </div></div>
+          <div class="carousel-slide"><div class="img-placeholder">
+            <div class="ph-icon">🖼</div><div class="ph-num">IMG 07</div>
+            <div class="ph-title">Planes de Precios de Claude</div>
+            <div class="ph-desc">Captura de la página de pricing de Claude mostrando la diferencia entre el plan gratuito y Pro ($20/mes)</div>
+          </div></div>
+        </div>
+      </div>
+      <div class="carousel-nav">
+        <button class="car-btn" onclick="carMove('c1',-1)">‹</button>
+        <div class="car-dots" id="dots-c1">
+          <div class="car-dot active" onclick="carGo('c1',0)"></div>
+          <div class="car-dot" onclick="carGo('c1',1)"></div>
+          <div class="car-dot" onclick="carGo('c1',2)"></div>
+          <div class="car-dot" onclick="carGo('c1',3)"></div>
+        </div>
+        <button class="car-btn" onclick="carMove('c1',1)">›</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <h2 class="block-title">Cómo Crear tu Cuenta</h2>
+  <div class="steps">
+    <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Ve a claude.ai</h4><p>Abre tu navegador y escribe claude.ai — no necesitas descargar nada.</p></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-content"><h4>Crea tu cuenta</h4><p>Haz clic en "Sign up". Puedes registrarte con tu correo de Google o con email y contraseña.</p></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-content"><h4>Elige tu plan</h4><p>Comienza con el plan gratuito. Es suficiente para aprender y conseguir tus primeros clientes. Cuando escales, considera el plan Pro ($20/mes).</p></div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-content"><h4>Escribe tu primer prompt</h4><p>Haz clic en el cuadro de texto y escribe una instrucción. Claude responderá en segundos.</p></div></div>
+  </div>
+
+  <div class="divider"></div>
+
+  <h2 class="block-title">Qué es el Prompting</h2>
+  <p class="block-text"><strong>Prompting</strong> es el arte de escribir instrucciones claras para que la IA genere exactamente lo que necesitas. Es la habilidad más importante de este curso — y la que más te diferenciará de los demás.</p>
+
+  <div class="info-box cyan">
+    <div class="label">📌 Regla de oro del prompting</div>
+    <p>Sé específico con <strong>el rol, la tarea, el tono y el formato</strong>.<br>
+    Mal prompt: <em>"Escribe algo para Instagram"</em><br>
+    Buen prompt: <em>"Actúa como experto en marketing digital. Escribe 3 publicaciones para Instagram para una agente de seguros en Miami que vende seguros de vida. Tono profesional pero cercano. Incluye llamada a la acción. Máximo 150 palabras cada una."</em></p>
+  </div>
+
+  <h3 class="sub-title">Estructura de un Prompt Efectivo</h3>
+  <div class="prompt-box">
+    <div class="prompt-label">
+      <span>ESTRUCTURA BASE</span>
+      <button class="btn-copy" onclick="copyPrompt(this)">Copiar</button>
+    </div>
+    <div class="prompt-text">Actúa como [ROL/EXPERTO EN ___].
+
+Tu tarea es [QUÉ QUIERES QUE HAGA].
+
+Contexto: [INFORMACIÓN RELEVANTE DEL NEGOCIO O CLIENTE].
+
+Requisitos:
+- Tono: [formal / amigable / educativo / persuasivo]
+- Formato: [lista / párrafos / tabla / post]
+- Longitud: [número de palabras o secciones]
+- Incluye: [elementos específicos que debe tener]
+
+Resultado esperado: [descripción de cómo debe verse el output]</div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     SECCIÓN 2 — ESTRATEGIA 1: CONTENIDO
+══════════════════════════════════════════════ -->
+<section class="section" id="s2">
+  <div class="sec-header">
+    <div class="sec-badge badge-green">Módulo 2 · Estrategia 1</div>
+    <h1><span class="gradient-text">Servicios de Contenido</span><br>para Negocios</h1>
+    <p class="lead">La estrategia más accesible para principiantes. Los negocios necesitan contenido constante y no tienen tiempo para crearlo — tú usas Claude para producirlo en minutos y cobras por el resultado.</p>
+  </div>
+
+  <div class="info-box green">
+    <div class="label">Nivel de entrada</div>
+    <p><strong>Principiante</strong> — No necesitas experiencia previa. Solo necesitas saber usar Claude y entender qué necesita el cliente.</p>
+  </div>
+
+  <div class="price-row">
+    <div class="price-tag"><div class="amount">$300–$800</div><div class="desc">por mes / cliente</div></div>
+    <div class="price-tag"><div class="amount">7–30</div><div class="desc">días para ver resultados</div></div>
+    <div class="price-tag"><div class="amount">$40–$200</div><div class="desc">inversión inicial tuya</div></div>
+  </div>
+
+  <div class="divider"></div>
+
+  <h2 class="block-title">Qué Servicios Ofreces</h2>
+  <ul class="check-list">
+    <li>Publicaciones para redes sociales (Facebook, Instagram, LinkedIn)</li>
+    <li>Correos electrónicos de marketing y seguimiento</li>
+    <li>Artículos de blog y contenido SEO</li>
+    <li>Guiones para videos (YouTube, TikTok, Reels)</li>
+    <li>Descripciones de productos o servicios</li>
+    <li>Campañas publicitarias y anuncios</li>
+    <li>Boletines informativos y newsletters</li>
+  </ul>
+
+  <!-- Carrusel M2 -->
+  <div class="carousel-section">
+    <div class="carousel-label"><span>EJEMPLOS VISUALES</span> — Estrategia de Contenido</div>
+    <div class="carousel-wrap" data-carousel="c2">
+      <div class="carousel-track-outer">
+        <div class="carousel-track">
+          <div class="carousel-slide"><div class="img-placeholder">
+            <div class="ph-icon">🖼</div><div class="ph-num">IMG 08</div>
+            <div class="ph-title">Claude Creando Contenido para Negocio</div>
+            <div class="ph-desc">Screenshot de Claude generando publicaciones de Instagram para un restaurante — prompt a la izquierda, resultado profesional a la derecha</div>
+          </div></div>
+          <div class="carousel-slide"><div class="img-placeholder">
+            <div class="ph-icon">🖼</div><div class="ph-num">IMG 09</div>
+            <div class="ph-title">Calendario Mensual de Contenido</div>
+            <div class="ph-desc">Ejemplo de calendario de 30 días con publicaciones organizadas por día, generado con ayuda de Claude para un cliente</div>
+          </div></div>
+          <div class="carousel-slide"><div class="img-placeholder">
+            <div class="ph-icon">🖼</div><div class="ph-num">IMG 10</div>
+            <div class="ph-title">Propuesta de Precio Visual</div>
+            <div class="ph-desc">Infografía mostrando los paquetes de servicio: Básico $300/mes, Estándar $500/mes, Premium $800/mes con lo que incluye cada uno</div>
+          </div></div>
+        </div>
+      </div>
+      <div class="carousel-nav">
+        <button class="car-btn" onclick="carMove('c2',-1)">‹</button>
+        <div class="car-dots" id="dots-c2">
+          <div class="car-dot active" onclick="carGo('c2',0)"></div>
+          <div class="car-dot" onclick="carGo('c2',1)"></div>
+          <div class="car-dot" onclick="carGo('c2',2)"></div>
+        </div>
+        <button class="car-btn" onclick="carMove('c2',1)">›</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <h2 class="block-title">Los Nichos Más Rentables</h2>
+  <div class="nicho-grid">
+    <div class="nicho-card"><span class="nicho-tag">Nicho 1</span><h4>🦷 Dentistas</h4><div class="nicho-needs">Posts educativos, promociones, consejos de salud bucal, testimonios de pacientes</div><div class="nicho-price">$400–$600/mes</div></div>
+    <div class="nicho-card"><span class="nicho-tag">Nicho 2</span><h4>⚖️ Abogados</h4><div class="nicho-needs">Artículos SEO, posts educativos sobre derechos, respuestas a preguntas frecuentes</div><div class="nicho-price">$500–$800/mes</div></div>
+    <div class="nicho-card"><span class="nicho-tag">Nicho 3</span><h4>🏠 Agentes de Seguros</h4><div class="nicho-needs">Correos de seguimiento, contenido educativo, guiones para llamadas, posts</div><div class="nicho-price">$300–$500/mes</div></div>
+    <div class="nicho-card"><span class="nicho-tag">Nicho 4</span><h4>🏡 Realtors / Inmobiliarias</h4><div class="nicho-needs">Descripciones de propiedades, posts de Instagram, correos de seguimiento</div><div class="nicho-price">$400–$700/mes</div></div>
+    <div class="nicho-card"><span class="nicho-tag">Nicho 5</span><h4>🍽️ Restaurantes</h4><div class="nicho-needs">Menú en redes, promociones, eventos especiales, contenido de temporada</div><div class="nicho-price">$300–$500/mes</div></div>
+    <div class="nicho-card"><span class="nicho-tag">Nicho 6</span><h4>🔨 Contratistas Locales</h4><div class="nicho-needs">Antes/después de proyectos, testimonios, guías educativas, anuncios locales</div><div class="nicho-price">$300–$600/mes</div></div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="quote">
+    <strong>La clave de esta estrategia:</strong> No le digas al cliente "te voy a crear 30 publicaciones". Dile: <em>"te voy a ayudar a mantener presencia constante frente a tus prospectos para que generes más citas cada semana."</em> Vendes resultados, no posts.
+  </div>
+
+  <h2 class="block-title">Error Más Común a Evitar</h2>
+  <div class="info-box orange">
+    <div class="label">⚠️ No hagas esto</div>
+    <p><strong>Venderle a todo el mundo.</strong> "Ofrezco servicios de IA" es demasiado genérico. Elige UN nicho y conviértete en especialista. Cuando te especializas, tus mensajes mejoran, tus ejemplos mejoran, tus ventas mejoran.</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     SECCIÓN 3 — ESTRATEGIA 2: AUTOMATIZACIONES
+══════════════════════════════════════════════ -->
+<section class="section" id="s3">
+  <div class="sec-header">
+    <div class="sec-badge badge-purple">Módulo 3 · Estrategia 2</div>
+    <h1><span class="gradient-text">Automatizaciones</span><br>y Sistemas con IA</h1>
+    <p class="lead">Los negocios pierden miles de dólares cada mes por no dar seguimiento a sus prospectos. Tú llegas con Claude y les instalas una "cinta transportadora" que automatiza ese trabajo.</p>
+  </div>
+
+  <div class="info-box purple">
+    <div class="label">Nivel de entrada</div>
+    <p><strong>Intermedio</strong> — Requiere entender los procesos del negocio del cliente, pero Claude te ayuda a diseñarlos desde cero.</p>
+  </div>
+
+  <div class="price-row">
+    <div class="price-tag"><div class="amount">$500–$3K</div><div class="desc">por proyecto</div></div>
+    <div class="price-tag"><div class="amount">30–90</div><div class="desc">días para entregar</div></div>
+    <div class="price-tag"><div class="amount">$100–$1K</div><div class="desc">inversión inicial tuya</div></div>
+  </div>
+
+  <div class="divider"></div>
+
+  <h2 class="block-title">El Problema que Resuelves</h2>
+  <p class="block-text">Una empresa recibe 100 prospectos al mes. Sin sistema: las llamadas se pierden, los correos se olvidan, los mensajes tardan 2–3 días en responderse. <strong>Ese negocio está perdiendo dinero sin darse cuenta.</strong></p>
+
+  <!-- Carrusel M3 -->
+  <div class="carousel-section">
+    <div class="carousel-label"><span>VISUALES DE SISTEMA</span> — Automatizaciones con IA</div>
+    <div class="carousel-wrap" data-carousel="c3">
+      <div class="carousel-track-outer">
+        <div class="carousel-track">
+          <div class="carousel-slide"><div class="img-placeholder">
+            <div class="ph-icon">🖼</div><div class="ph-num">IMG 11</div>
+            <div class="ph-title">Flujo de Automatización — Diagrama</div>
+            <div class="ph-desc">Diagrama visual mostrando el flujo: Prospecto llega → Claude clasifica → Respuesta automática → Seguimiento → Cita agendada</div>
+          </div></div>
+          <div class="carousel-slide"><div class="img-placeholder">
+            <div class="ph-icon">🖼</div><div class="ph-num">IMG 12</div>
+            <div class="ph-title">Claude Diseñando un Proceso</div>
+            <div class="ph-desc">Screenshot de Claude creando un manual operativo o flujo de trabajo para un negocio — prompt visible y resultado estructurado</div>
+          </div></div>
+          <div class="carousel-slide"><div class="img-placeholder">
+            <div class="ph-icon">🖼</div><div class="ph-num">IMG 13</div>
+            <div class="ph-title">GoHighLevel — Panel de Control</div>
+            <div class="ph-desc">Screenshot del dashboard de GoHighLevel mostrando automatizaciones activas, pipeline de clientes y flujos de seguimiento</div>
+          </div></div>
+          <div class="carousel-slide"><div class="img-placeholder">
+            <div class="ph-icon">🖼</div><div class="ph-num">IMG 14</div>
+            <div class="ph-title">Resultado: Antes vs Después</div>
+            <div class="ph-desc">Infografía comparativa: ANTES — seguimiento manual, pérdida de prospectos | DESPUÉS — sistema automatizado, tasa de conversión aumentada</div>
+          </div></div>
+        </div>
+      </div>
+      <div class="carousel-nav">
+        <button class="car-btn" onclick="carMove('c3',-1)">‹</button>
+        <div class="car-dots" id="dots-c3">
+          <div class="car-dot active" onclick="carGo('c3',0)"></div>
+          <div class="car-dot" onclick="carGo('c3',1)"></div>
+          <div class="car-dot" onclick="carGo('c3',2)"></div>
+          <div class="car-dot" onclick="carGo('c3',3)"></div>
+        </div>
+        <button class="car-btn" onclick="carMove('c3',1)">›</button>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="block-title">Servicios que Puedes Ofrecer</h2>
+  <ul class="check-list">
+    <li>Respuesta automática a prospectos (email + WhatsApp)</li>
+    <li>Secuencias de seguimiento de clientes</li>
+    <li>Creación de procesos operacionales y SOPs</li>
+    <li>Documentación interna y manuales del empleado</li>
+    <li>Guiones de ventas personalizados por nicho</li>
+    <li>Flujos de trabajo para agendar citas</li>
+    <li>Capacitación de personal con IA</li>
+  </ul>
+
+  <div class="divider"></div>
+
+  <div class="info-box cyan">
+    <div class="label">🛠 Herramienta complementaria</div>
+    <p><strong>GoHighLevel (GHL)</strong> — Software de CRM y automatización de marketing que se integra perfecto con los sistemas que Claude diseña. Tú lo configuras para el cliente y cobras el setup más una mensualidad de mantenimiento.</p>
+  </div>
+
+  <div class="quote">
+    <strong>Regla de oro:</strong> Nadie compra automatizaciones — compran <em>ahorro de tiempo</em>. Nadie compra IA — compran <em>crecimiento</em>. Ese cambio de lenguaje transforma tus ventas.
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     SECCIÓN 4 — ESTRATEGIA 3: HIGH TICKET
+══════════════════════════════════════════════ -->
+<section class="section" id="s4">
+  <div class="sec-header">
+    <div class="sec-badge badge-orange">Módulo 4 · Estrategia 3</div>
+    <h1><span class="gradient-text">Servicios de Alto Valor</span><br>con IA — High Ticket</h1>
+    <p class="lead">La estrategia con mayor potencial económico. Combina IA, automatización y servicios personalizados para cobrar proyectos de $3,000 a $50,000.</p>
+  </div>
+
+  <div class="price-row">
+    <div class="price-tag"><div class="amount">$3K–$50K</div><div class="desc">por proyecto</div></div>
+    <div class="price-tag"><div class="amount">30–180</div><div class="desc">días para entregar</div></div>
+    <div class="price-tag"><div class="amount">Alta</div><div class="desc">escalabilidad</div></div>
+  </div>
+
+  <!-- Carrusel M4 -->
+  <div class="carousel-section">
+    <div class="carousel-label"><span>CASOS DE USO</span> — Servicios High Ticket con IA</div>
+    <div class="carousel-wrap" data-carousel="c4">
+      <div class="carousel-track-outer">
+        <div class="carousel-track">
+          <div class="carousel-slide"><div class="img-placeholder">
+            <div class="ph-icon">🖼</div><div class="ph-num">IMG 15</div>
+            <div class="ph-title">Agente de IA — Concepto Visual</div>
+            <div class="ph-desc">Infografía explicando qué es un agente de IA: recepcionista virtual, responde preguntas, agenda citas, clasifica clientes — activo 24/7</div>
+          </div></div>
+          <div class="carousel-slide"><div class="img-placeholder">
+            <div class="ph-icon">🖼</div><div class="ph-num">IMG 16</div>
+            <div class="ph-title">Casos de Uso por Industria</div>
+            <div class="ph-desc">Tabla visual: Médico → agente que agenda pacientes | Abogado → agente que clasifica casos | Restaurante → agente de reservas y pedidos</div>
+          </div></div>
+          <div class="carousel-slide"><div class="img-placeholder">
+            <div class="ph-icon">🖼</div><div class="ph-num">IMG 17</div>
+            <div class="ph-title">Propuesta de Proyecto High Ticket</div>
+            <div class="ph-desc">Ejemplo de propuesta profesional de un proyecto de $5,000 — scope del trabajo, fases, entregables, precio y condiciones de pago</div>
+          </div></div>
+        </div>
+      </div>
+      <div class="carousel-nav">
+        <button class="car-btn" onclick="carMove('c4',-1)">‹</button>
+        <div class="car-dots" id="dots-c4">
+          <div class="car-dot active" onclick="carGo('c4',0)"></div>
+          <div class="car-dot" onclick="carGo('c4',1)"></div>
+          <div class="car-dot" onclick="carGo('c4',2)"></div>
+        </div>
+        <button class="car-btn" onclick="carMove('c4',1)">›</button>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="block-title">Qué Puedes Ofrecer en High Ticket</h2>
+  <div class="cards">
+    <div class="card"><div class="card-icon">🤖</div><h4>Agentes de IA Personalizados</h4><p>Asistentes virtuales entrenados con la información del negocio del cliente. Responden, clasifican y escalan consultas.</p></div>
+    <div class="card"><div class="card-icon">📞</div><h4>Recepcionistas Virtuales</h4><p>Sistema que responde prospectos 24/7, agenda citas y hace seguimiento sin intervención humana.</p></div>
+    <div class="card"><div class="card-icon">📊</div><h4>Sistemas de Marketing Automático</h4><p>Embudos completos: captura de leads → nurturing → conversión, todo automatizado con IA.</p></div>
+    <div class="card"><div class="card-icon">🏗️</div><h4>Infraestructura Digital Completa</h4><p>Diseño completo del ecosistema digital del cliente: CRM, automatizaciones, contenido y análisis.</p></div>
+  </div>
+
+  <div class="info-box orange">
+    <div class="label">💼 Cómo posicionarte para high ticket</div>
+    <p>No necesitas ser programador. Necesitas <strong>entender el problema de negocio</strong> mejor que el cliente mismo. Claude hace el trabajo técnico — tú haces la estrategia y la entrega. Eso es lo que vale $10,000.</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     SECCIÓN 5 — REDES SOCIALES
+══════════════════════════════════════════════ -->
+<section class="section" id="s5">
+  <div class="sec-header">
+    <div class="sec-badge badge-pink">Módulo 5</div>
+    <h1><span class="gradient-text">Redes Sociales</span><br>como Motor de Clientes</h1>
+    <p class="lead">Las redes sociales no son solo para el entretenimiento — son tu canal de adquisición de clientes más poderoso y más barato. Claude te ayuda a crear tu propio contenido para posicionarte como experto.</p>
+  </div>
+
+  <!-- Carrusel M5 -->
+  <div class="carousel-section">
+    <div class="carousel-label"><span>ESTRATEGIA EN REDES</span> — TikTok · Instagram · YouTube</div>
+    <div class="carousel-wrap" data-carousel="c5">
+      <div class="carousel-track-outer">
+        <div class="carousel-track">
+          <div class="carousel-slide"><div class="img-placeholder">
+            <div class="ph-icon">🖼</div><div class="ph-num">IMG 18</div>
+            <div class="ph-title">Estrategia TikTok — Captura de Clientes</div>
+            <div class="ph-desc">Ejemplo de video TikTok mostrando "Claude creando contenido en tiempo real" — formato screencast que atrae prospectos de servicios IA</div>
+          </div></div>
+          <div class="carousel-slide"><div class="img-placeholder">
+            <div class="ph-icon">🖼</div><div class="ph-num">IMG 19</div>
+            <div class="ph-title">Post de Instagram — Autoridad Visual</div>
+            <div class="ph-desc">Ejemplo de carrusel de Instagram: "5 cosas que un dentista puede automatizar con IA" — post educativo que atrae clientes del nicho</div>
+          </div></div>
+          <div class="carousel-slide"><div class="img-placeholder">
+            <div class="ph-icon">🖼</div><div class="ph-num">IMG 20</div>
+            <div class="ph-title">YouTube Short — Educación Rápida</div>
+            <div class="ph-desc">Thumbnail y estructura de un Short de 60 segundos: "Mira cómo Claude escribe 30 posts en 5 minutos" — demostración que vende</div>
+          </div></div>
+          <div class="carousel-slide"><div class="img-placeholder">
+            <div class="ph-icon">🖼</div><div class="ph-num">IMG 21</div>
+            <div class="ph-title">Calendario de Contenido con IA</div>
+            <div class="ph-desc">Screenshot de Claude generando un calendario de 30 días de contenido para tus propias redes — tu estrategia de visibilidad personal</div>
+          </div></div>
+        </div>
+      </div>
+      <div class="carousel-nav">
+        <button class="car-btn" onclick="carMove('c5',-1)">‹</button>
+        <div class="car-dots" id="dots-c5">
+          <div class="car-dot active" onclick="carGo('c5',0)"></div>
+          <div class="car-dot" onclick="carGo('c5',1)"></div>
+          <div class="car-dot" onclick="carGo('c5',2)"></div>
+          <div class="car-dot" onclick="carGo('c5',3)"></div>
+        </div>
+        <button class="car-btn" onclick="carMove('c5',1)">›</button>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="block-title">La Estrategia por Plataforma</h2>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>Red Social</th><th>Tipo de Contenido</th><th>Objetivo</th><th>Frecuencia</th></tr>
+      <tr><td><strong>TikTok</strong></td><td>Demos en vivo de Claude, resultados reales</td><td>Viralidad y clientes fríos</td><td>3–5 videos/semana</td></tr>
+      <tr><td><strong>Instagram</strong></td><td>Carruseles educativos, casos de éxito</td><td>Autoridad y credibilidad</td><td>4–6 posts/semana</td></tr>
+      <tr><td><strong>YouTube Shorts</strong></td><td>Tutoriales rápidos, transformaciones</td><td>Búsqueda orgánica</td><td>2–3 Shorts/semana</td></tr>
+      <tr><td><strong>LinkedIn</strong></td><td>Casos de estudio, análisis de negocio</td><td>Clientes corporativos</td><td>3–4 posts/semana</td></tr>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <h2 class="block-title">Cómo Claude Crea tu Propio Contenido</h2>
+  <div class="prompt-box">
+    <div class="prompt-label">
+      <span>PROMPT — Tu Estrategia de Contenido</span>
+      <button class="btn-copy" onclick="copyPrompt(this)">Copiar</button>
+    </div>
+    <div class="prompt-text">Actúa como estratega de contenido digital especializado en IA y negocios digitales.
+
+Crea un plan de contenido para 30 días para mis redes sociales.
+
+Mi negocio: Ofrezco servicios de IA (contenido, automatizaciones) a negocios locales hispanos.
+Mi nicho objetivo: [TU NICHO — ej: agentes de seguros en Miami]
+Plataformas: TikTok, Instagram, YouTube Shorts
+
+Para cada semana incluye:
+- 2 ideas para TikTok (demos en vivo o resultados)
+- 3 ideas para Instagram (carruseles educativos)
+- 1 idea para YouTube Short
+- 1 post de testimonio o caso de éxito
+
+Formato: tabla organizada por semana y día.</div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     SECCIÓN 6 — CÓMO VENDER
+══════════════════════════════════════════════ -->
+<section class="section" id="s6">
+  <div class="sec-header">
+    <div class="sec-badge badge-cyan">Módulo 6</div>
+    <h1><span class="gradient-text">Cómo Vender</span><br>tu Servicio</h1>
+    <p class="lead">Saber usar Claude es solo la mitad del trabajo. Esta sección te da los scripts, el proceso y las palabras exactas para conseguir clientes desde cero.</p>
+  </div>
+
+  <h2 class="block-title">Dónde Encontrar tus Primeros Clientes</h2>
+  <ul class="dot-list">
+    <li><strong>Google Maps</strong> — Busca tu nicho en tu ciudad. Aparecen miles de negocios con teléfono, email y web.</li>
+    <li><strong>Facebook Groups</strong> — Grupos de emprendedores locales, cámaras de comercio hispanas, grupos de tu nicho.</li>
+    <li><strong>Instagram</strong> — Busca el hashtag de tu nicho + ciudad. Contacta perfiles con pocos seguidores (son los que más necesitan ayuda).</li>
+    <li><strong>LinkedIn</strong> — Para nichos corporativos: abogados, contadores, consultores.</li>
+    <li><strong>Referidos</strong> — Tu primer cliente satisfecho te dará 2–3 más si se los pides directamente.</li>
+  </ul>
+
+  <!-- Carrusel M6 -->
+  <div class="carousel-section">
+    <div class="carousel-label"><span>PROCESO DE VENTA</span> — Scripts y Demostraciones</div>
+    <div class="carousel-wrap" data-carousel="c6">
+      <div class="carousel-track-outer">
+        <div class="carousel-track">
+          <div class="carousel-slide"><div class="img-placeholder">
+            <div class="ph-icon">🖼</div><div class="ph-num">IMG 22</div>
+            <div class="ph-title">Mensaje de WhatsApp — Contacto Inicial</div>
+            <div class="ph-desc">Screenshot de conversación de WhatsApp mostrando el mensaje inicial de presentación y la respuesta del prospecto interesado</div>
+          </div></div>
+          <div class="carousel-slide"><div class="img-placeholder">
+            <div class="ph-icon">🖼</div><div class="ph-num">IMG 23</div>
+            <div class="ph-title">Demostración en Vivo — Google Meet</div>
+            <div class="ph-desc">Captura de pantalla compartida en videollamada: tú muestras a Claude creando contenido específico para el negocio del prospecto en tiempo real</div>
+          </div></div>
+          <div class="carousel-slide"><div class="img-placeholder">
+            <div class="ph-icon">🖼</div><div class="ph-num">IMG 24</div>
+            <div class="ph-title">Propuesta de Servicio PDF</div>
+            <div class="ph-desc">Ejemplo de propuesta de 1 página: problema que resuelves, solución, qué incluye, precio, garantía y próximos pasos — diseño profesional</div>
+          </div></div>
+        </div>
+      </div>
+      <div class="carousel-nav">
+        <button class="car-btn" onclick="carMove('c6',-1)">‹</button>
+        <div class="car-dots" id="dots-c6">
+          <div class="car-dot active" onclick="carGo('c6',0)"></div>
+          <div class="car-dot" onclick="carGo('c6',1)"></div>
+          <div class="car-dot" onclick="carGo('c6',2)"></div>
+        </div>
+        <button class="car-btn" onclick="carMove('c6',1)">›</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <h2 class="block-title">Script de Mensaje Inicial (WhatsApp / DM)</h2>
+  <div class="prompt-box">
+    <div class="prompt-label">
+      <span>MENSAJE INICIAL — Contacto en frío</span>
+      <button class="btn-copy" onclick="copyPrompt(this)">Copiar</button>
+    </div>
+    <div class="prompt-text">Hola [NOMBRE], buenas tardes.
+
+Vi tu negocio [NOMBRE DEL NEGOCIO] en [DÓNDE LO ENCONTRASTE] y me llamó la atención porque ayudo a [NICHO] a conseguir más [CLIENTES / CITAS / VENTAS] usando inteligencia artificial.
+
+Trabajo con [2–3 negocios similares al tuyo] en el área y los resultados han sido buenos.
+
+¿Te interesaría que te mostrara en 15 minutos cómo funciona específicamente para tu negocio?
+
+Sin costo, sin compromiso — solo para que veas si es algo que te sirve.
+
+Saludos,
+[TU NOMBRE]</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <h2 class="block-title">Manejo de Objeciones Frecuentes</h2>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>Objeción</th><th>Tu Respuesta</th></tr>
+      <tr><td>"Está muy caro"</td><td><strong>¿Cuánto te cuesta no tener esto? Si pierdes solo 2 clientes al mes por falta de seguimiento, ¿cuánto dinero es eso?"</strong></td></tr>
+      <tr><td>"No tengo tiempo para esto"</td><td><strong>"Exactamente por eso yo me encargo de todo. Tú solo apruebas el contenido, yo lo entrego listo."</strong></td></tr>
+      <tr><td>"Ya tengo alguien para eso"</td><td><strong>"¿Puedo preguntarte qué resultados están viendo? Solo para entender si hay algo que podría complementar."</strong></td></tr>
+      <tr><td>"Lo voy a pensar"</td><td><strong>"Claro. ¿Qué información adicional necesitas para decidir? Puedo enviarte ejemplos de lo que haríamos para tu negocio específicamente."</strong></td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     SECCIÓN 7 — PLAN 90 DÍAS
+══════════════════════════════════════════════ -->
+<section class="section" id="s7">
+  <div class="sec-header">
+    <div class="sec-badge badge-blue">Módulo 7</div>
+    <h1><span class="gradient-text">Plan de Acción</span><br>90 Días</h1>
+    <p class="lead">El conocimiento sin acción no produce dinero. Este plan te dice exactamente qué hacer cada fase para pasar de cero a tu primer cliente — y luego a un negocio repetible.</p>
+  </div>
+
+  <div class="quote">
+    <strong>Mentalidad de este plan:</strong> No busques perfección, busca <em>progreso</em>. La persona que actúa imperfectamente gana más que la que espera el momento perfecto.
+  </div>
+
+  <!-- Carrusel M7 -->
+  <div class="carousel-section">
+    <div class="carousel-label"><span>HOJA DE RUTA</span> — Roadmap Visual 90 Días</div>
+    <div class="carousel-wrap" data-carousel="c7">
+      <div class="carousel-track-outer">
+        <div class="carousel-track">
+          <div class="carousel-slide"><div class="img-placeholder">
+            <div class="ph-icon">🖼</div><div class="ph-num">IMG 25</div>
+            <div class="ph-title">Roadmap Visual 90 Días</div>
+            <div class="ph-desc">Infografía timeline horizontal: Días 1-30 (Aprender) → Días 30-60 (Prospectar) → Días 60-90 (Sistema) — con hitos clave en cada fase</div>
+          </div></div>
+          <div class="carousel-slide"><div class="img-placeholder">
+            <div class="ph-icon">🖼</div><div class="ph-num">IMG 26</div>
+            <div class="ph-title">Checklist Semanal — Semana 1</div>
+            <div class="ph-desc">Lista visual de tareas para la primera semana: abrir cuenta Claude, elegir nicho, crear primeros 3 ejemplos de trabajo</div>
+          </div></div>
+          <div class="carousel-slide"><div class="img-placeholder">
+            <div class="ph-icon">🖼</div><div class="ph-num">IMG 27</div>
+            <div class="ph-title">Métricas de Éxito por Fase</div>
+            <div class="ph-desc">Dashboard visual: Fase 1 = 10 prompts dominados | Fase 2 = 20 prospectos contactados | Fase 3 = 3 clientes activos</div>
+          </div></div>
+        </div>
+      </div>
+      <div class="carousel-nav">
+        <button class="car-btn" onclick="carMove('c7',-1)">‹</button>
+        <div class="car-dots" id="dots-c7">
+          <div class="car-dot active" onclick="carGo('c7',0)"></div>
+          <div class="car-dot" onclick="carGo('c7',1)"></div>
+          <div class="car-dot" onclick="carGo('c7',2)"></div>
+        </div>
+        <button class="car-btn" onclick="carMove('c7',1)">›</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase-cards">
+    <div class="phase-card">
+      <div class="phase-num" style="color:#2979ff">— FASE 1 —</div>
+      <h4>Aprender y Practicar</h4>
+      <div class="days">Días 1 → 30</div>
+      <ul>
+        <li>Crear cuenta en claude.ai</li>
+        <li>Aprender prompting básico</li>
+        <li>Elegir UN nicho específico</li>
+        <li>Crear 5 ejemplos de trabajo</li>
+        <li>Construir portfolio simple</li>
+        <li>Dominar la estrategia 1</li>
+      </ul>
+    </div>
+    <div class="phase-card">
+      <div class="phase-num" style="color:#7c4dff">— FASE 2 —</div>
+      <h4>Conseguir Conversaciones</h4>
+      <div class="days">Días 30 → 60</div>
+      <ul>
+        <li>Contactar 5 negocios/semana</li>
+        <li>Publicar en redes sociales</li>
+        <li>Hacer 3 demostraciones</li>
+        <li>Obtener 1 testimonio</li>
+        <li>Validar tu oferta</li>
+        <li>Cerrar tu primer cliente</li>
+      </ul>
+    </div>
+    <div class="phase-card">
+      <div class="phase-num" style="color:#00e5ff">— FASE 3 —</div>
+      <h4>Construir Sistema</h4>
+      <div class="days">Días 60 → 90</div>
+      <ul>
+        <li>Refinar tu oferta</li>
+        <li>Documentar tus procesos</li>
+        <li>Automatizar tareas repetitivas</li>
+        <li>Pedir referidos activamente</li>
+        <li>Explorar estrategia 2 o 3</li>
+        <li>Meta: 3 clientes activos</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="info-box green">
+    <div class="label">🎯 Tu meta al día 90</div>
+    <p>3 clientes activos pagando entre $300–$500/mes cada uno = <strong>$900–$1,500 mensuales</strong> de ingresos adicionales, trabajando 8–12 horas semanales.</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     SECCIÓN 8 — BONUS: PROMPTS
+══════════════════════════════════════════════ -->
+<section class="section" id="s8">
+  <div class="sec-header">
+    <div class="sec-badge badge-gold">★ Bonus Exclusivo</div>
+    <h1><span class="gradient-text">Prompts Listos</span><br>por Nicho</h1>
+    <p class="lead">Más de 20 prompts de Claude listos para copiar, adaptados a los nichos más rentables. Úsalos desde el primer día con tus clientes.</p>
+  </div>
+
+  <!-- Carrusel Bonus -->
+  <div class="carousel-section">
+    <div class="carousel-label"><span>PROMPTS EN ACCIÓN</span> — Resultados Reales</div>
+    <div class="carousel-wrap" data-carousel="c8">
+      <div class="carousel-track-outer">
+        <div class="carousel-track">
+          <div class="carousel-slide"><div class="img-placeholder">
+            <div class="ph-icon">🖼</div><div class="ph-num">IMG 28</div>
+            <div class="ph-title">Prompt de Seguros — Resultado en Claude</div>
+            <div class="ph-desc">Screenshot de Claude usando el prompt de agente de seguros y generando 5 correos de seguimiento profesionales en 30 segundos</div>
+          </div></div>
+          <div class="carousel-slide"><div class="img-placeholder">
+            <div class="ph-icon">🖼</div><div class="ph-num">IMG 29</div>
+            <div class="ph-title">Prompt de Restaurante — Calendario</div>
+            <div class="ph-desc">Resultado de Claude creando un calendario de contenido mensual completo para restaurante, listo para publicar</div>
+          </div></div>
+          <div class="carousel-slide"><div class="img-placeholder">
+            <div class="ph-icon">🖼</div><div class="ph-num">IMG 30</div>
+            <div class="ph-title">Biblioteca de Prompts Completa</div>
+            <div class="ph-desc">Vista de la colección de prompts organizados por nicho — tu herramienta de trabajo lista desde el día 1</div>
+          </div></div>
+        </div>
+      </div>
+      <div class="carousel-nav">
+        <button class="car-btn" onclick="carMove('c8',-1)">‹</button>
+        <div class="car-dots" id="dots-c8">
+          <div class="car-dot active" onclick="carGo('c8',0)"></div>
+          <div class="car-dot" onclick="carGo('c8',1)"></div>
+          <div class="car-dot" onclick="carGo('c8',2)"></div>
+        </div>
+        <button class="car-btn" onclick="carMove('c8',1)">›</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- AGENTES DE SEGUROS -->
+  <h2 class="block-title">🛡️ Agentes de Seguros</h2>
+
+  <div class="prompt-box">
+    <div class="prompt-label"><span>PROMPT 1 — Correos de Seguimiento</span><button class="btn-copy" onclick="copyPrompt(this)">Copiar</button></div>
+    <div class="prompt-text">Actúa como experto en ventas de seguros. Escribe 5 correos de seguimiento para un prospecto que solicitó información sobre seguro de vida pero no ha respondido.
+
+Contexto del agente: [NOMBRE DEL AGENTE], trabaja en [CIUDAD], especializado en seguros de vida para familias hispanas.
+
+Requisitos:
+- Tono: amigable, profesional, sin presión
+- Incluir beneficio clave en cada correo
+- Llamada a la acción clara
+- Espaciado: enviar uno cada 3 días
+- Longitud: 100-150 palabras cada uno</div>
+  </div>
+
+  <div class="prompt-box">
+    <div class="prompt-label"><span>PROMPT 2 — Contenido Educativo para Instagram</span><button class="btn-copy" onclick="copyPrompt(this)">Copiar</button></div>
+    <div class="prompt-text">Actúa como especialista en marketing para agentes de seguros. Crea 8 publicaciones educativas para Instagram.
+
+Agente: [NOMBRE], vende seguros de vida y salud en [CIUDAD].
+Audiencia: familias hispanas de clase media, 30-55 años.
+
+Formato para cada post:
+- Gancho en la primera línea (genera curiosidad)
+- 3-4 puntos educativos
+- Llamada a la acción al final
+- 3-5 hashtags relevantes
+- Tono: educativo, cercano, sin tecnicismos
+
+Temas sugeridos: protección familiar, beneficios fiscales, mitos sobre seguros, cómo elegir la cobertura correcta.</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- REALTORS -->
+  <h2 class="block-title">🏡 Realtors / Corredores de Bienes Raíces</h2>
+
+  <div class="prompt-box">
+    <div class="prompt-label"><span>PROMPT 3 — Descripción de Propiedad Premium</span><button class="btn-copy" onclick="copyPrompt(this)">Copiar</button></div>
+    <div class="prompt-text">Actúa como copywriter especializado en bienes raíces de lujo. Escribe la descripción de venta para esta propiedad.
+
+Detalles de la propiedad:
+- Tipo: [casa / apartamento / townhouse]
+- Ubicación: [DIRECCIÓN / VECINDARIO]
+- Tamaño: [SQ FT], [# habitaciones], [# baños]
+- Características especiales: [LISTA LO QUE TIENE]
+- Precio: $[PRECIO]
+- Público objetivo: [familia / inversores / primera vivienda]
+
+Crea:
+1. Título llamativo (máx. 15 palabras)
+2. Descripción corta para MLS (100 palabras)
+3. Descripción larga para redes sociales (250 palabras)
+4. 5 bullets de características destacadas</div>
+  </div>
+
+  <div class="prompt-box">
+    <div class="prompt-label"><span>PROMPT 4 — Campaña de Instagram para Propiedades</span><button class="btn-copy" onclick="copyPrompt(this)">Copiar</button></div>
+    <div class="prompt-text">Actúa como estratega de redes sociales para agentes de bienes raíces. Crea un plan de contenido de 2 semanas para Instagram.
+
+Realtor: [NOMBRE], mercado: [CIUDAD/ÁREA]
+Especialidad: [tipo de propiedades]
+Meta: generar leads de compradores y vendedores
+
+Incluye para cada día:
+- Tipo de contenido (post / reel / story / carrusel)
+- Título y copy completo
+- Hashtags específicos del mercado local
+- Llamada a la acción
+Alterna entre: propiedades, consejos, mercado, testimonios, detrás de escenas.</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- RESTAURANTES -->
+  <h2 class="block-title">🍽️ Restaurantes</h2>
+
+  <div class="prompt-box">
+    <div class="prompt-label"><span>PROMPT 5 — Calendario Mensual de Contenido</span><button class="btn-copy" onclick="copyPrompt(this)">Copiar</button></div>
+    <div class="prompt-text">Actúa como gestor de redes sociales especializado en restaurantes. Crea el calendario de contenido para el mes de [MES].
+
+Restaurante: [NOMBRE]
+Tipo de comida: [TIPO]
+Ciudad: [CIUDAD]
+Plataformas: Facebook e Instagram
+
+Incluye para cada semana (4 semanas):
+- 3 posts de Facebook con copy completo
+- 4 posts de Instagram con descripción y hashtags
+- 2 ideas para Stories
+- 1 promoción especial semanal
+Tono: cálido, apetitoso, que invite a visitar.
+Incluye emojis relevantes.</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- CONTRATISTAS -->
+  <h2 class="block-title">🔨 Contratistas Locales</h2>
+
+  <div class="prompt-box">
+    <div class="prompt-label"><span>PROMPT 6 — Sistema de Seguimiento de Cotizaciones</span><button class="btn-copy" onclick="copyPrompt(this)">Copiar</button></div>
+    <div class="prompt-text">Actúa como consultor de ventas para empresas de construcción y remodelación. Diseña un sistema de seguimiento para cotizaciones que no han sido cerradas.
+
+Negocio: [NOMBRE DE LA EMPRESA]
+Especialidad: [roofing / remodelación / plomería / pintura / A/C]
+Ciudad: [CIUDAD]
+
+Crea:
+1. Mensaje de WhatsApp inicial (post-cotización, 24h después)
+2. Segundo mensaje a los 3 días
+3. Tercer contacto a los 7 días (diferente canal: llamada + script)
+4. Email de seguimiento a los 14 días
+5. Mensaje de cierre a los 30 días
+
+Tono: profesional, confiable, sin presión excesiva.</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- REDES PROPIAS -->
+  <h2 class="block-title">📱 Para tus Propias Redes Sociales</h2>
+
+  <div class="prompt-box">
+    <div class="prompt-label"><span>PROMPT 7 — Script de TikTok/Reel (Demo de Claude)</span><button class="btn-copy" onclick="copyPrompt(this)">Copiar</button></div>
+    <div class="prompt-text">Actúa como creador de contenido viral especializado en IA y negocios digitales. Escribe el script para un video corto de TikTok/Reel de 45-60 segundos.
+
+Mi nicho: ofrezco servicios de IA a [TU NICHO]
+Tipo de video: demostración en vivo de Claude
+
+Estructura del script:
+- Gancho (0-3 seg): frase que detiene el scroll
+- Problema (3-10 seg): el dolor del negocio
+- Solución (10-40 seg): mostrando Claude en acción
+- Resultado (40-50 seg): lo que logra el cliente
+- CTA (50-60 seg): qué deben hacer
+
+Incluye: texto para on-screen (captions), descripción del video y 5 hashtags.</div>
+  </div>
+
+  <div class="prompt-box">
+    <div class="prompt-label"><span>PROMPT 8 — Post de Autoridad para LinkedIn/Instagram</span><button class="btn-copy" onclick="copyPrompt(this)">Copiar</button></div>
+    <div class="prompt-text">Actúa como experto en personal branding para profesionales de IA. Escribe un post de autoridad para [LinkedIn / Instagram].
+
+Mi perfil: ofrezco servicios de IA a negocios locales en [CIUDAD/PAÍS]
+Tema del post: [ej: "Por qué los negocios hispanos necesitan IA ahora"]
+
+Formato del post:
+- Primera línea: gancho irresistible (genera curiosidad o controversia sana)
+- Desarrollo: 4-5 puntos con datos o ejemplos reales
+- Historia personal breve (1 párrafo)
+- Lección o insight clave
+- Pregunta final para generar comentarios
+- CTA suave (sin venta directa)
+- Longitud: 250-350 palabras para LinkedIn, 150-200 para Instagram</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ABOGADOS -->
+  <h2 class="block-title">⚖️ Abogados y Despachos Legales</h2>
+
+  <div class="prompt-box">
+    <div class="prompt-label"><span>PROMPT 9 — Artículo SEO para Website Legal</span><button class="btn-copy" onclick="copyPrompt(this)">Copiar</button></div>
+    <div class="prompt-text">Actúa como redactor especializado en contenido legal y SEO. Escribe un artículo de blog para el website de un abogado.
+
+Despacho: [NOMBRE DEL DESPACHO]
+Especialidad legal: [inmigración / familia / accidentes / laboral / criminal]
+Ciudad/Estado: [UBICACIÓN]
+Tema del artículo: [ej: "Qué hacer si tuviste un accidente de tráfico en Florida"]
+
+Estructura del artículo:
+- Título SEO optimizado (incluye ciudad y keyword principal)
+- Introducción que describe el problema del lector (150 palabras)
+- 4-5 secciones con subtítulos H2
+- Sección "¿Cuándo necesitas un abogado?"
+- CTA al final (consulta gratis)
+- Meta descripción de 155 caracteres
+- Longitud total: 800-1,000 palabras
+- Tono: accesible, confiable, sin tecnicismos excesivos</div>
+  </div>
+
+  <div class="prompt-box">
+    <div class="prompt-label"><span>PROMPT 10 — Respuestas a Preguntas Frecuentes</span><button class="btn-copy" onclick="copyPrompt(this)">Copiar</button></div>
+    <div class="prompt-text">Actúa como asistente legal y experto en comunicación. Crea una guía de 10 preguntas frecuentes que los clientes hacen a un abogado de [ESPECIALIDAD].
+
+Para cada pregunta:
+- Pregunta exactamente como la formularía el cliente (lenguaje cotidiano)
+- Respuesta clara en 80-120 palabras
+- Sin jerga legal innecesaria
+- Incluir cuándo deben consultar a un abogado vs. cuándo no es urgente
+
+Uso: página FAQ del website + contenido para redes sociales (cada FAQ = 1 post)
+
+Abogado: [NOMBRE], especialidad: [ÁREA], ciudad: [CIUDAD]</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- CLÍNICAS Y MÉDICOS -->
+  <h2 class="block-title">🩺 Clínicas y Consultorios Médicos</h2>
+
+  <div class="prompt-box">
+    <div class="prompt-label"><span>PROMPT 11 — Sistema de Recordatorio de Citas</span><button class="btn-copy" onclick="copyPrompt(this)">Copiar</button></div>
+    <div class="prompt-text">Actúa como especialista en comunicación para clínicas de salud. Diseña el sistema de mensajes para reducir las inasistencias a citas médicas.
+
+Clínica: [NOMBRE], especialidad: [TIPO DE CONSULTA], ciudad: [CIUDAD]
+
+Crea los siguientes mensajes (WhatsApp/SMS):
+1. Confirmación inmediata al agendar cita
+2. Recordatorio 48 horas antes (con instrucciones previas si aplica)
+3. Recordatorio 2 horas antes el mismo día
+4. Mensaje si no asistió (reagendar + no juicio)
+5. Mensaje de seguimiento post-consulta
+
+Cada mensaje debe:
+- Ser menor a 160 caracteres para SMS
+- Incluir nombre del paciente como variable [NOMBRE]
+- Tono: cálido, profesional, humano</div>
+  </div>
+
+  <div class="prompt-box">
+    <div class="prompt-label"><span>PROMPT 12 — Contenido Educativo de Salud para Redes</span><button class="btn-copy" onclick="copyPrompt(this)">Copiar</button></div>
+    <div class="prompt-text">Actúa como educador de salud y estratega de redes sociales. Crea 10 posts educativos de salud para Instagram y Facebook.
+
+Clínica: [NOMBRE], especialidad: [TIPO], ciudad: [CIUDAD]
+Audiencia: comunidad hispana de [RANGO DE EDAD]
+
+Para cada post:
+- Gancho que genera curiosidad o urgencia (primera línea)
+- Información educativa en puntos (3-4 bullets)
+- Mito vs. Realidad relacionado al tema (cuando aplique)
+- CTA: "Agenda tu consulta en el link de la bio" o "Escríbenos por WhatsApp"
+- 5 hashtags en español + 3 en inglés
+
+Temas: prevención, síntomas que no se deben ignorar, hábitos saludables, cuándo consultar al médico.</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ACADEMIAS Y COACHINGS -->
+  <h2 class="block-title">🎓 Academias, Coaches y Creadores de Cursos</h2>
+
+  <div class="prompt-box">
+    <div class="prompt-label"><span>PROMPT 13 — Secuencia de Emails de Lanzamiento</span><button class="btn-copy" onclick="copyPrompt(this)">Copiar</button></div>
+    <div class="prompt-text">Actúa como copywriter especializado en lanzamientos de infoproductos. Escribe la secuencia de 7 correos para el lanzamiento de un curso online.
+
+Creador: [NOMBRE]
+Curso: [NOMBRE DEL CURSO]
+Precio: $[PRECIO]
+Fechas: lanzamiento abre [FECHA], cierra [FECHA]
+Transformación principal: [QUÉ LOGRA EL ALUMNO]
+
+Correos:
+1. Día -7: Teaser (despierta curiosidad)
+2. Día -5: El problema (pain points del público)
+3. Día -3: La historia de transformación del creador
+4. Día -1: Apertura del carrito (qué incluye, precio, bonus)
+5. Día 0: Recordatorio de cierre se acerca
+6. Día +1: Último día (escasez real)
+7. Día +1 (noche): Cierre en 2 horas
+
+Cada email: asunto irresistible + cuerpo de 200-300 palabras + PS.</div>
+  </div>
+
+  <div class="prompt-box">
+    <div class="prompt-label"><span>PROMPT 14 — Guion para Video de Ventas (VSL)</span><button class="btn-copy" onclick="copyPrompt(this)">Copiar</button></div>
+    <div class="prompt-text">Actúa como copywriter especializado en Video Sales Letters (VSL). Escribe el guion completo para un video de ventas de 8-12 minutos.
+
+Producto: [NOMBRE DEL CURSO / SERVICIO]
+Precio: $[PRECIO]
+Creador: [NOMBRE]
+Transformación: de [SITUACIÓN ACTUAL] a [SITUACIÓN DESEADA]
+Objeciones principales del público: [LISTA 3 OBJECIONES]
+
+Estructura del VSL:
+1. Gancho (0-30 seg): promesa + quién es para
+2. Problema (30-90 seg): agitar el dolor
+3. Historia del creador (90-180 seg): credibilidad
+4. Presentación de la solución (180-300 seg)
+5. Qué incluye y cómo funciona (300-450 seg)
+6. Testimonios / resultados (450-540 seg)
+7. Oferta + precio + bonus (540-600 seg)
+8. Garantía + CTA (600-720 seg)</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="info-box gold">
+    <div class="label">🎓 Recuerda siempre</div>
+    <p><strong>El conocimiento solo no cambia vidas. Lo que cambia tu vida es la acción.</strong><br><br>
+    Tienes las estrategias. Tienes los prompts. Tienes el plan de 90 días. El único paso que falta eres <strong>tú</strong> tomando la decisión de comenzar hoy.</p>
+  </div>
+
+  <div style="text-align:center;padding:40px 0 20px">
+    <div class="logo-badge" style="margin:0 auto 16px;display:inline-flex">
+      <div class="logo-dot">TC</div>
+      <span class="logo-name">TechnoCrazy</span>
+    </div>
+    <p style="color:var(--text3);font-size:13px">IA + Redes: El Sistema Para Generar Ingresos Digitales en 2026<br>technocrazy.org</p>
+  </div>
+
+</section>
+
+<!-- ══════════════════════════════════════════════
+     SECCIÓN 9 — PREGUNTAS FRECUENTES
+══════════════════════════════════════════════ -->
+<section class="section" id="s9">
+  <div class="sec-header">
+    <div class="sec-badge badge-cyan">FAQ</div>
+    <h1><span class="gradient-text">Preguntas</span><br>Frecuentes</h1>
+    <p class="lead">Las dudas más comunes que tienen los estudiantes antes y después de comenzar. Si tienes una pregunta que no está aquí, búscanos en TechnoCrazy.</p>
+  </div>
+
+  <!-- Carrusel FAQ -->
+  <div class="carousel-section">
+    <div class="carousel-label"><span>IMÁGENES FAQ</span> — Ilustraciones de apoyo</div>
+    <div class="carousel-wrap" data-carousel="c9">
+      <div class="carousel-track-outer">
+        <div class="carousel-track">
+          <div class="carousel-slide"><div class="img-placeholder">
+            <div class="ph-icon">🖼</div><div class="ph-num">IMG 31</div>
+            <div class="ph-title">Infografía — Mitos de la IA en los Negocios</div>
+            <div class="ph-desc">Visual que desmiente los 5 mitos más comunes: "es caro", "es complicado", "no sirve para mi negocio", "necesito empleados", "ya pasó la oportunidad"</div>
+          </div></div>
+          <div class="carousel-slide"><div class="img-placeholder">
+            <div class="ph-icon">🖼</div><div class="ph-num">IMG 32</div>
+            <div class="ph-title">Comparativa — Plan Gratis vs Pro de Claude</div>
+            <div class="ph-desc">Tabla visual comparando el plan gratuito y el plan Pro de Claude ($20/mes) — qué incluye cada uno y cuándo vale la pena pagar</div>
+          </div></div>
+        </div>
+      </div>
+      <div class="carousel-nav">
+        <button class="car-btn" onclick="carMove('c9',-1)">‹</button>
+        <div class="car-dots" id="dots-c9">
+          <div class="car-dot active" onclick="carGo('c9',0)"></div>
+          <div class="car-dot" onclick="carGo('c9',1)"></div>
+        </div>
+        <button class="car-btn" onclick="carMove('c9',1)">›</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="steps">
+
+    <div class="step">
+      <div class="step-num" style="background:linear-gradient(135deg,#00e5ff,#2979ff);font-size:18px">?</div>
+      <div class="step-content">
+        <h4>¿Necesito saber programar para hacer esto?</h4>
+        <p>No. Claude no requiere código. Todo funciona escribiendo instrucciones en lenguaje natural. Si puedes escribir un mensaje de WhatsApp, puedes usar Claude para negocios. Las únicas herramientas que podrías necesitar (como GoHighLevel) tienen interfaces visuales tipo "drag and drop".</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num" style="background:linear-gradient(135deg,#00e5ff,#2979ff);font-size:18px">?</div>
+      <div class="step-content">
+        <h4>¿Cuánto cuesta Claude? ¿Es obligatorio pagar?</h4>
+        <p>Claude tiene un plan gratuito que es suficiente para comenzar y conseguir tus primeros clientes. El plan Pro cuesta $20/mes y vale la pena cuando ya tienes 2–3 clientes activos, porque te da acceso ilimitado y al modelo más avanzado. Empieza gratis — paga cuando ya estés generando ingresos.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num" style="background:linear-gradient(135deg,#00e5ff,#2979ff);font-size:18px">?</div>
+      <div class="step-content">
+        <h4>¿Puedo hacer esto desde cualquier país hispanohablante?</h4>
+        <p>Sí. Claude funciona en todo el mundo con conexión a internet. Puedes ofrecer servicios a negocios locales en tu ciudad o trabajar de forma remota con negocios hispanos en Estados Unidos. La falta de especialistas en IA afecta a todo el mercado hispano sin importar el país.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num" style="background:linear-gradient(135deg,#00e5ff,#2979ff);font-size:18px">?</div>
+      <div class="step-content">
+        <h4>¿Cuánto tiempo al día necesito dedicarle?</h4>
+        <p>Para la Estrategia 1 (contenido), puedes manejar 3–4 clientes trabajando 8–12 horas semanales. Claude hace el trabajo pesado; tú organizas, personalizas y entregas. A medida que aprendes los prompts de tu nicho, el tiempo baja. Muchos emprendedores lo hacen como ingreso paralelo al principio.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num" style="background:linear-gradient(135deg,#00e5ff,#2979ff);font-size:18px">?</div>
+      <div class="step-content">
+        <h4>¿Qué pasa si el cliente me pregunta si uso IA?</h4>
+        <p>Sé transparente. La IA es tu herramienta, así como un fotógrafo usa Photoshop o un contador usa Excel. Lo que el cliente paga es tu estrategia, tu criterio y tu entrega — no solo el software. De hecho, decir que usas IA puede ser un diferenciador positivo: "entrego resultados más rápido gracias a herramientas de última generación".</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num" style="background:linear-gradient(135deg,#00e5ff,#2979ff);font-size:18px">?</div>
+      <div class="step-content">
+        <h4>¿Cómo cobro a mis clientes? ¿Necesito empresa?</h4>
+        <p>Para empezar puedes cobrar por transferencia bancaria, PayPal, Zelle o cualquier método disponible en tu país. No necesitas empresa constituida para tus primeros clientes. Cuando superes los 2–3 clientes regulares, considera formalizar (LLC en EE.UU., o la figura legal de tu país) para protegerte y proyectar más profesionalismo.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num" style="background:linear-gradient(135deg,#00e5ff,#2979ff);font-size:18px">?</div>
+      <div class="step-content">
+        <h4>¿La IA va a reemplazar completamente a estas personas?</h4>
+        <p>No en el corto plazo. La IA reemplaza tareas repetitivas, no el juicio humano, las relaciones ni la estrategia. Un dentista seguirá necesitando tratar pacientes; lo que cambia es cómo consigue esos pacientes. Tu valor está en ser el puente entre la tecnología y el negocio — eso no lo automatiza nadie.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num" style="background:linear-gradient(135deg,#00e5ff,#2979ff);font-size:18px">?</div>
+      <div class="step-content">
+        <h4>¿Qué nicho me recomiendas para empezar si soy principiante total?</h4>
+        <p>El mejor nicho para empezar es el que ya conoces. Si tienes experiencia en seguros, empieza ahí. Si trabajaste en restaurantes, ese es tu nicho. Si no tienes experiencia en ninguno, los agentes de seguros y los realtors son los más receptivos al marketing digital y ya están acostumbrados a pagar por servicios de terceros.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     SECCIÓN 10 — CIERRE Y PRÓXIMOS PASOS
+══════════════════════════════════════════════ -->
+<section class="section" id="s10">
+  <div class="sec-header">
+    <div class="sec-badge badge-gold">Cierre</div>
+    <h1><span class="gradient-text">Tus Próximos</span><br>Pasos</h1>
+    <p class="lead">Terminaste el curso. Ahora la única diferencia entre tú y quien ya está ganando dinero con IA es una sola cosa: la acción que tomes en las próximas 24 horas.</p>
+  </div>
+
+  <!-- Carrusel Cierre -->
+  <div class="carousel-section">
+    <div class="carousel-label"><span>IMÁGENES DE CIERRE</span> — Motivación y Comunidad</div>
+    <div class="carousel-wrap" data-carousel="c10">
+      <div class="carousel-track-outer">
+        <div class="carousel-track">
+          <div class="carousel-slide"><div class="img-placeholder">
+            <div class="ph-icon">🖼</div><div class="ph-num">IMG 33</div>
+            <div class="ph-title">Imagen Inspiracional — Emprendedor Digital</div>
+            <div class="ph-desc">Imagen de persona trabajando desde laptop, ambiente profesional y moderno, estilo dark/tech. Representa la libertad de trabajar desde cualquier lugar</div>
+          </div></div>
+          <div class="carousel-slide"><div class="img-placeholder">
+            <div class="ph-icon">🖼</div><div class="ph-num">IMG 34</div>
+            <div class="ph-title">Comunidad TechnoCrazy</div>
+            <div class="ph-desc">Imagen del ecosistema TechnoCrazy: logo, redes sociales, comunidad, recursos disponibles para los estudiantes del curso</div>
+          </div></div>
+          <div class="carousel-slide"><div class="img-placeholder">
+            <div class="ph-icon">🖼</div><div class="ph-num">IMG 35</div>
+            <div class="ph-title">Resumen Visual del Curso</div>
+            <div class="ph-desc">Infografía resumen de todo el curso en una sola imagen: 3 estrategias, plan 90 días, prompts, redes sociales — el mapa completo</div>
+          </div></div>
+        </div>
+      </div>
+      <div class="carousel-nav">
+        <button class="car-btn" onclick="carMove('c10',-1)">‹</button>
+        <div class="car-dots" id="dots-c10">
+          <div class="car-dot active" onclick="carGo('c10',0)"></div>
+          <div class="car-dot" onclick="carGo('c10',1)"></div>
+          <div class="car-dot" onclick="carGo('c10',2)"></div>
+        </div>
+        <button class="car-btn" onclick="carMove('c10',1)">›</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <h2 class="block-title">Checklist de Inicio — Haz Esto Hoy</h2>
+  <div class="steps">
+    <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Crea tu cuenta en claude.ai ahora mismo</h4><p>Toma menos de 3 minutos. No lo dejes para mañana — el momentum se pierde con el tiempo.</p></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-content"><h4>Elige tu nicho (tienes 10 minutos para decidir)</h4><p>Revisa el Módulo 2 y elige UNO. No el perfecto — el que más te resuene. Puedes cambiarlo después.</p></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-content"><h4>Copia el Prompt Estructura Base del Módulo 1</h4><p>Pruébalo con un negocio de tu nicho — real o inventado. Practica hasta que el resultado te sorprenda.</p></div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-content"><h4>Busca 5 negocios de tu nicho en Google Maps</h4><p>Solo guarda sus nombres y teléfonos. No tienes que contactarlos hoy — solo ten la lista lista.</p></div></div>
+    <div class="step"><div class="step-num">5</div><div class="step-content"><h4>Crea tu primer ejemplo de trabajo con Claude</h4><p>Elige uno de esos 5 negocios y crea contenido para ellos — como si fuera un cliente real. Eso es tu primer pieza de portfolio.</p></div></div>
+  </div>
+
+  <div class="divider"></div>
+
+  <h2 class="block-title">Lo Que Aprendiste en Este Curso</h2>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>Módulo</th><th>Lo Que Dominaste</th></tr>
+      <tr><td><strong>Módulo 1</strong></td><td>Claude AI desde cero: cuenta, interfaz y prompting efectivo</td></tr>
+      <tr><td><strong>Módulo 2</strong></td><td>Estrategia 1: servicios de contenido para negocios locales ($300–$800/mes)</td></tr>
+      <tr><td><strong>Módulo 3</strong></td><td>Estrategia 2: automatizaciones y sistemas que ahorran tiempo a los negocios</td></tr>
+      <tr><td><strong>Módulo 4</strong></td><td>Estrategia 3: servicios high ticket con IA ($3K–$50K por proyecto)</td></tr>
+      <tr><td><strong>Módulo 5</strong></td><td>Redes sociales como motor de clientes: TikTok, Instagram, YouTube, LinkedIn</td></tr>
+      <tr><td><strong>Módulo 6</strong></td><td>Cómo vender: scripts de WhatsApp, demostraciones, manejo de objeciones</td></tr>
+      <tr><td><strong>Módulo 7</strong></td><td>Plan de acción de 90 días: de cero a 3 clientes activos</td></tr>
+      <tr><td><strong>Bonus</strong></td><td>+14 prompts listos por nicho: seguros, realtors, contratistas, abogados, clínicas, academias</td></tr>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="info-box gold" style="text-align:center">
+    <div class="label" style="text-align:center">✦ MENSAJE FINAL DE TECHNOCRAZY</div>
+    <p style="font-size:16px;line-height:1.8">
+      Estamos viviendo el momento más parecido a los años 90 cuando nació el internet.<br>
+      Los que actuaron entonces construyeron negocios de millones.<br><br>
+      <strong>La IA no es el futuro — es el presente.</strong><br>
+      Y tú ya tienes el mapa para aprovecharlo.<br><br>
+      El conocimiento está aquí. Las herramientas están aquí. Los clientes están ahí afuera esperando.<br>
+      <strong>Solo falta que tú des el primer paso.</strong>
+    </p>
+  </div>
+
+  <div style="text-align:center;padding:48px 0 24px">
+    <div class="logo-badge" style="margin:0 auto 20px;display:inline-flex">
+      <div class="logo-dot">TC</div>
+      <span class="logo-name">TechnoCrazy</span>
+    </div>
+    <h2 style="font-size:22px;font-weight:900;color:#fff;margin-bottom:8px">IA + Redes: El Sistema Para Generar Ingresos Digitales</h2>
+    <p style="color:var(--text3);font-size:13px;margin-bottom:24px">Edición 2026 · technocrazy.org</p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <div style="background:rgba(41,121,255,.1);border:1px solid rgba(41,121,255,.3);border-radius:10px;padding:10px 20px;font-size:13px;color:var(--text2)">
+        📱 <strong style="color:#fff">@technocrazy</strong> en todas las redes
+      </div>
+      <div style="background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.2);border-radius:10px;padding:10px 20px;font-size:13px;color:var(--text2)">
+        🌐 <strong style="color:#00e5ff">technocrazy.org</strong>
+      </div>
+    </div>
+  </div>
+
+</section>
+</main>
+</div>
+
+<script>
+// ── NAVEGACIÓN ──
+function showSection(id, link) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  link.classList.add('active');
+  document.querySelector('.main').scrollTo({ top: 0, behavior: 'smooth' });
+  if (window.innerWidth <= 768) toggleSidebar();
+}
+
+// ── SIDEBAR MÓVIL ──
+function toggleSidebar() {
+  const sb = document.getElementById('sidebar');
+  const ov = document.getElementById('overlay');
+  sb.classList.toggle('open');
+  ov.classList.toggle('show');
+}
+
+// ── CARRUSEL ──
+const carState = {};
+
+function carInit(id) {
+  if (!carState[id]) carState[id] = { current: 0 };
+}
+
+function carMove(id, dir) {
+  carInit(id);
+  const wrap = document.querySelector(`[data-carousel="${id}"]`);
+  const slides = wrap.querySelectorAll('.carousel-slide');
+  const total = slides.length;
+  carState[id].current = (carState[id].current + dir + total) % total;
+  updateCar(id, wrap, total);
+}
+
+function carGo(id, idx) {
+  carInit(id);
+  const wrap = document.querySelector(`[data-carousel="${id}"]`);
+  const slides = wrap.querySelectorAll('.carousel-slide');
+  carState[id].current = idx;
+  updateCar(id, wrap, slides.length);
+}
+
+function updateCar(id, wrap, total) {
+  const track = wrap.querySelector('.carousel-track');
+  const dots = document.getElementById('dots-' + id);
+  const cur = carState[id].current;
+  track.style.transform = `translateX(-${cur * 100}%)`;
+  if (dots) {
+    dots.querySelectorAll('.car-dot').forEach((d, i) => d.classList.toggle('active', i === cur));
+  }
+}
+
+// ── COPIAR PROMPTS ──
+function copyPrompt(btn) {
+  const box = btn.closest('.prompt-box');
+  const text = box.querySelector('.prompt-text').innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = '✓ Copiado';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copiar'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+</script>
+</body>
+</html>

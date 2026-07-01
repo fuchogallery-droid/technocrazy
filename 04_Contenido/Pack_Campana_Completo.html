@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pack Campaña Completo — TechnoCrazy</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', sans-serif; background: #0a0a0f; color: #e0e0e0; }
+
+  header {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    padding: 40px 60px;
+    border-bottom: 2px solid #2979ff;
+  }
+  header h1 { font-size: 2.2rem; color: #fff; }
+  header p { color: #7c9cbf; margin-top: 6px; font-size: 0.95rem; }
+  header .badge {
+    display: inline-block; background: #2979ff; color: #fff;
+    font-size: 0.75rem; padding: 3px 10px; border-radius: 20px; margin-left: 12px;
+    vertical-align: middle;
+  }
+
+  nav {
+    background: #111120; padding: 14px 60px; display: flex; gap: 10px; flex-wrap: wrap;
+    border-bottom: 1px solid #1e1e3a; position: sticky; top: 0; z-index: 100;
+  }
+  nav a {
+    color: #7c9cbf; text-decoration: none; font-size: 0.85rem;
+    padding: 6px 14px; border-radius: 20px; border: 1px solid #1e1e3a;
+    transition: all 0.2s;
+  }
+  nav a:hover { background: #2979ff; color: #fff; border-color: #2979ff; }
+
+  main { max-width: 1100px; margin: 0 auto; padding: 50px 40px; }
+
+  section { margin-bottom: 70px; }
+  section h2 {
+    font-size: 1.5rem; color: #2979ff; margin-bottom: 6px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  section h2 .icon { font-size: 1.3rem; }
+  section .sub { color: #556; font-size: 0.85rem; margin-bottom: 28px; border-bottom: 1px solid #1e1e3a; padding-bottom: 12px; }
+
+  /* GANCHO */
+  .gancho-box {
+    background: #111120; border: 1px solid #2979ff40; border-radius: 16px;
+    padding: 30px 36px; margin-bottom: 20px; position: relative;
+  }
+  .gancho-box .label {
+    font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px;
+    color: #2979ff; margin-bottom: 14px; font-weight: 700;
+  }
+  .gancho-box p { line-height: 1.75; color: #ccc; font-size: 0.97rem; margin-bottom: 10px; }
+  .gancho-box .highlight { color: #00e5ff; font-weight: 600; }
+  .copy-btn {
+    background: #1e1e3a; border: none; color: #7c9cbf; font-size: 0.8rem;
+    padding: 6px 14px; border-radius: 8px; cursor: pointer; float: right; margin-top: -8px;
+  }
+  .copy-btn:hover { background: #2979ff; color: #fff; }
+
+  /* GUIONES */
+  .guion {
+    background: #111120; border: 1px solid #1e1e3a; border-radius: 16px;
+    margin-bottom: 20px; overflow: hidden;
+  }
+  .guion-header {
+    padding: 16px 24px; background: #0d0d1a;
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 1px solid #1e1e3a;
+  }
+  .guion-header h3 { font-size: 1rem; color: #fff; }
+  .guion-header .tags { display: flex; gap: 6px; }
+  .guion-header .tag {
+    font-size: 0.7rem; padding: 3px 10px; border-radius: 20px;
+    background: #1e1e3a; color: #7c9cbf;
+  }
+  .guion-header .tag.es { background: #1a3a1a; color: #4caf50; }
+  .guion-header .tag.en { background: #1a2a3a; color: #2979ff; }
+  .guion-body { padding: 24px; }
+  .guion-body .parte { margin-bottom: 18px; }
+  .guion-body .parte-label {
+    font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px;
+    color: #556; margin-bottom: 6px;
+  }
+  .guion-body .parte-texto { color: #ccc; line-height: 1.7; font-size: 0.92rem; }
+  .guion-body .parte-texto strong { color: #00e5ff; }
+  .guion-tabs { display: flex; gap: 0; border-bottom: 1px solid #1e1e3a; }
+  .guion-tab {
+    padding: 10px 20px; font-size: 0.85rem; cursor: pointer;
+    color: #556; border-bottom: 2px solid transparent; transition: all 0.2s;
+  }
+  .guion-tab.active { color: #2979ff; border-bottom-color: #2979ff; }
+
+  /* LEAD MAGNET */
+  .lm-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .lm-cap {
+    background: #111120; border: 1px solid #1e1e3a; border-radius: 14px;
+    padding: 24px;
+  }
+  .lm-cap .num {
+    font-size: 2rem; font-weight: 900; color: #2979ff20;
+    line-height: 1; margin-bottom: 6px;
+  }
+  .lm-cap h3 { font-size: 1rem; color: #fff; margin-bottom: 10px; }
+  .lm-cap ul { list-style: none; }
+  .lm-cap ul li { font-size: 0.85rem; color: #aaa; padding: 4px 0; padding-left: 16px; position: relative; }
+  .lm-cap ul li::before { content: "→"; color: #2979ff; position: absolute; left: 0; }
+
+  /* CALENDARIO */
+  .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+  .cal-day { background: #111120; border: 1px solid #1e1e3a; border-radius: 10px; padding: 10px 8px; }
+  .cal-day .dia { font-size: 0.65rem; color: #556; text-transform: uppercase; }
+  .cal-day .num-dia { font-size: 1.1rem; font-weight: 700; color: #fff; margin: 4px 0; }
+  .cal-day .plataforma { font-size: 0.6rem; padding: 2px 6px; border-radius: 4px; margin-bottom: 4px; display: inline-block; }
+  .cal-day .tipo { font-size: 0.7rem; color: #aaa; line-height: 1.3; }
+  .ig { background: #3a1a2a; color: #e91e63; }
+  .tk { background: #1a1a3a; color: #7c4dff; }
+  .x  { background: #1a2a3a; color: #2979ff; }
+  .li { background: #1a2a1a; color: #4caf50; }
+  .off { opacity: 0.3; }
+
+  /* EMAILS */
+  .email-card {
+    background: #111120; border: 1px solid #1e1e3a; border-radius: 14px;
+    margin-bottom: 16px; overflow: hidden;
+  }
+  .email-header {
+    padding: 14px 24px; background: #0d0d1a;
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 1px solid #1e1e3a; cursor: pointer;
+  }
+  .email-header h3 { font-size: 0.95rem; color: #fff; }
+  .email-header .meta { display: flex; gap: 10px; align-items: center; }
+  .email-header .dia-tag { font-size: 0.7rem; color: #2979ff; }
+  .email-header .obj { font-size: 0.7rem; color: #556; }
+  .email-body { padding: 24px; display: none; }
+  .email-body.open { display: block; }
+  .email-body .asunto { font-size: 0.8rem; color: #00e5ff; margin-bottom: 14px; }
+  .email-body .cuerpo { font-size: 0.9rem; color: #ccc; line-height: 1.8; white-space: pre-line; }
+  .email-body .firma { margin-top: 20px; color: #556; font-size: 0.85rem; }
+
+  /* ADS */
+  .ads-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .ad-card { background: #111120; border: 1px solid #1e1e3a; border-radius: 14px; padding: 24px; }
+  .ad-card .plat { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; }
+  .ad-card h3 { color: #fff; font-size: 1rem; margin-bottom: 14px; }
+  .ad-card .campo { margin-bottom: 12px; }
+  .ad-card .campo-label { font-size: 0.7rem; color: #556; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+  .ad-card .campo-val { font-size: 0.88rem; color: #ccc; line-height: 1.6; }
+
+  /* FOOTER */
+  footer { background: #0d0d1a; border-top: 1px solid #1e1e3a; padding: 30px 60px; text-align: center; }
+  footer p { color: #556; font-size: 0.8rem; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Pack Campaña Completo <span class="badge">Fase 1–2</span></h1>
+  <p>TechnoCrazy · Rafael Navarro · Chicago, IL · Generado 29 Jun 2026</p>
+</header>
+
+<nav>
+  <a href="#gancho">🎯 Gancho Origen</a>
+  <a href="#guiones">🎬 10 Guiones</a>
+  <a href="#leadmagnet">📘 Lead Magnet</a>
+  <a href="#calendario">📅 Calendario 30 días</a>
+  <a href="#emails">📧 7 Emails</a>
+  <a href="#ads">💰 Copy Ads</a>
+</nav>
+
+<main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- SECCIÓN 1: GANCHO ORIGEN -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section id="gancho">
+  <h2><span class="icon">🎯</span> Gancho de Origen — La Historia de Rafael</h2>
+  <p class="sub">Usa estas versiones en el INICIO de cada video. La historia que conecta antes del contenido.</p>
+
+  <div class="gancho-box">
+    <div class="label">Versión Corta (15 seg — para Reels / TikTok)</div>
+    <p>
+      <span class="highlight">"Llegué a Chicago desde Venezuela con nada más que ganas."</span><br>
+      Cinco años haciendo de todo — trabajos de aquí y allá — mientras en las noches diseñaba logos y páginas para negocios.<br>
+      Un día descubrí algo con la IA que cambió todo: <span class="highlight">la barrera del conocimiento ya no existe.</span><br>
+      Ahí nació TechnoCrazy. Y por eso estoy aquí.
+    </p>
+    <button class="copy-btn" onclick="copiarTexto(this, 'Llegué a Chicago desde Venezuela con nada más que ganas. Cinco años haciendo de todo mientras en las noches diseñaba logos y páginas para negocios. Un día descubrí algo con la IA que cambió todo: la barrera del conocimiento ya no existe. Ahí nació TechnoCrazy.')">📋 Copiar</button>
+  </div>
+
+  <div class="gancho-box">
+    <div class="label">Versión Media (30 seg — estándar para la mayoría de videos)</div>
+    <p>
+      <span class="highlight">"Soy Rafael. Venezolano. 30 años. Llevo 5 años en Chicago."</span><br>
+      Trabajé en lo que tocó para vivir — como hace cualquier inmigrante. Pero siempre, en paralelo, hacía diseño: logos, páginas, piezas para negocios locales.<br>
+      Lo hacía de forma ocasional. Sin estructura. Sin precio fijo.<br>
+      Hasta que la inteligencia artificial me mostró algo que no esperaba: <span class="highlight">que la barrera entre tener una idea y ejecutarla ya no existe.</span><br>
+      Esta es la era de la información y la creación digital.<br>
+      Decidí formalizar todo en un proyecto serio. Eso es TechnoCrazy — y esto es lo que hago.
+    </p>
+    <button class="copy-btn" onclick="copiarTexto(this, 'Soy Rafael. Venezolano. 30 años. Llevo 5 años en Chicago. Trabajé en lo que tocó para vivir. Pero siempre hacía diseño: logos, páginas, piezas para negocios locales. Lo hacía de forma ocasional. Sin estructura. Sin precio fijo. Hasta que la inteligencia artificial me mostró algo: que la barrera entre tener una idea y ejecutarla ya no existe. Esta es la era de la información y la creación digital. Decidí formalizar todo en un proyecto serio. Eso es TechnoCrazy.')">📋 Copiar</button>
+  </div>
+
+  <div class="gancho-box">
+    <div class="label">Versión Larga (60 seg — para LinkedIn / YouTube / post largo)</div>
+    <p>
+      <span class="highlight">Hace 5 años llegué a Chicago con lo básico: ganas, experiencia en diseño y conexión a internet.</span><br><br>
+      Como cualquier inmigrante, hice lo que se presentó. Trabajé en diferentes cosas para pagar las cuentas. Pero siempre, siempre, me las buscaba para diseñar en mis horas libres: logos para negocios, páginas web, piezas publicitarias. Lo hacía por amor al oficio — y de forma muy informal.<br><br>
+      Cinco años después, algo cambió: empecé a explorar la inteligencia artificial de verdad. Y me di cuenta de algo que nadie me había dicho: <span class="highlight">la IA no destruyó la creatividad. Destruyó la barrera que separaba a los que podían ejecutar de los que no podían.</span><br><br>
+      Eso fue una revelación. No un producto. No un servicio. Una verdad.<br><br>
+      En esta nueva era, cualquier persona con una idea puede construir algo real. Y yo, que llevo años en el mundo digital, decidí dejar de hacerlo por las sombras y formalizarlo.<br><br>
+      Nació TechnoCrazy. Una plaza digital para negocios que quieren crecer: diseño, tecnología, automatización e inteligencia artificial — desde Chicago, para el mundo.
+    </p>
+    <button class="copy-btn" onclick="copiarTexto(this, 'Hace 5 años llegué a Chicago con lo básico: ganas, experiencia en diseño y conexión a internet...')">📋 Copiar</button>
+  </div>
+
+  <div class="gancho-box" style="border-color:#00e5ff40">
+    <div class="label">English Version (30 sec)</div>
+    <p>
+      <span class="highlight">"My name is Rafael. Venezuelan. 30 years old. I've been in Chicago for 5 years."</span><br>
+      Like most immigrants, I did what I had to do to survive. But at night — I was always designing. Logos, websites, marketing pieces for local businesses.<br>
+      Then AI hit me different. I realized the wall between having an idea and executing it? <span class="highlight">It's gone.</span><br>
+      So I stopped working in the shadows and built TechnoCrazy. Design. Tech. Automation. AI — out of Chicago, for the world.
+    </p>
+    <button class="copy-btn" onclick="copiarTexto(this, 'My name is Rafael. Venezuelan. 30 years old. I\'ve been in Chicago for 5 years. Like most immigrants, I did what I had to do to survive. But at night I was always designing. Logos, websites, marketing pieces for local businesses. Then AI hit me different. I realized the wall between having an idea and executing it? It\'s gone. So I stopped working in the shadows and built TechnoCrazy.')">📋 Copiar</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- SECCIÓN 2: GUIONES DE VIDEO -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section id="guiones">
+  <h2><span class="icon">🎬</span> 10 Guiones de Video</h2>
+  <p class="sub">TikTok / Reels / YouTube Shorts · 30–60 seg · Face-to-camera · Fórmula: GANCHO → VALOR → CTA</p>
+
+  <!-- GUION 1 -->
+  <div class="guion">
+    <div class="guion-header">
+      <h3>#1 — La Barrera que Ya No Existe</h3>
+      <div class="tags"><span class="tag es">ES</span><span class="tag">IA</span><span class="tag">45 seg</span></div>
+    </div>
+    <div class="guion-body">
+      <div class="parte"><div class="parte-label">GANCHO (0–5 seg)</div>
+        <div class="parte-texto"><strong>"¿Sabes qué destruyó la IA? No los empleos. Destruyó la barrera del conocimiento."</strong></div></div>
+      <div class="parte"><div class="parte-label">HISTORIA (5–20 seg)</div>
+        <div class="parte-texto">Llegué a Chicago sin nada. Solo ganas y un Photoshop pirata. Cinco años después, con inteligencia artificial, puedo hacer en un día lo que antes me tomaba un mes. No porque sea más inteligente. Sino porque la herramienta cambió.</div></div>
+      <div class="parte"><div class="parte-label">VALOR (20–40 seg)</div>
+        <div class="parte-texto">La IA eliminó la diferencia entre el que sabe y el que no sabe. Ahora importa quién tiene la visión. Quién sabe qué resultado quiere. Y eso, cualquier emprendedor lo tiene. El conocimiento técnico — yo lo pongo.</div></div>
+      <div class="parte"><div class="parte-label">CTA (40–45 seg)</div>
+        <div class="parte-texto"><strong>¿Tienes una idea de negocio digital? Escríbeme. El link está en la bio.</strong></div></div>
+    </div>
+  </div>
+
+  <!-- GUION 2 -->
+  <div class="guion">
+    <div class="guion-header">
+      <h3>#2 — Por qué un venezolano en Chicago hace esto</h3>
+      <div class="tags"><span class="tag es">ES</span><span class="tag">Origen</span><span class="tag">30 seg</span></div>
+    </div>
+    <div class="guion-body">
+      <div class="parte"><div class="parte-label">GANCHO (0–5 seg)</div>
+        <div class="parte-texto"><strong>"Llegué a Chicago a los 25. Sin contactos. Sin seguro. Con diseño gráfico como única habilidad comprobada."</strong></div></div>
+      <div class="parte"><div class="parte-label">HISTORIA (5–18 seg)</div>
+        <div class="parte-texto">Hice de todo para vivir. En paralelo diseñaba logos, páginas, banners — para quien me los pidiera. Informal, sin estructura, casi sin cobrar lo que valía. Así estuve años.</div></div>
+      <div class="parte"><div class="parte-label">GIRO (18–26 seg)</div>
+        <div class="parte-texto">Hasta que decidí dejar de hacer las cosas a medias. Formalicé. Puse nombre, precios, proceso. Y hoy TechnoCrazy es la agencia que me hubiera gustado encontrar cuando llegué.</div></div>
+      <div class="parte"><div class="parte-label">CTA (26–30 seg)</div>
+        <div class="parte-texto"><strong>Sígueme — esto recién empieza.</strong></div></div>
+    </div>
+  </div>
+
+  <!-- GUION 3 -->
+  <div class="guion">
+    <div class="guion-header">
+      <h3>#3 — ¿Cuánto cuesta una página web real?</h3>
+      <div class="tags"><span class="tag es">ES</span><span class="tag">Educativo</span><span class="tag">45 seg</span></div>
+    </div>
+    <div class="guion-body">
+      <div class="parte"><div class="parte-label">GANCHO (0–5 seg)</div>
+        <div class="parte-texto"><strong>"Te van a cobrar $5,000 por una página web. No tienes que pagar eso."</strong></div></div>
+      <div class="parte"><div class="parte-label">VALOR (5–35 seg)</div>
+        <div class="parte-texto">Las agencias grandes cobran caro porque tienen alquiler, empleados y overhead. Yo soy diseñador + desarrollador + estratega en uno. Sin intermediarios. Por eso puedo entregar una página profesional, rápida y optimizada a una fracción del precio. Y sin sacrificar calidad — aquí están los proyectos reales que he construido (señala o muestra pantalla).</div></div>
+      <div class="parte"><div class="parte-label">CTA (35–45 seg)</div>
+        <div class="parte-texto"><strong>Si tu negocio no está online todavía, escríbeme hoy. Hacemos algo que valga la pena.</strong></div></div>
+    </div>
+  </div>
+
+  <!-- GUION 4 -->
+  <div class="guion">
+    <div class="guion-header">
+      <h3>#4 — El error más caro de un negocio local</h3>
+      <div class="tags"><span class="tag es">ES</span><span class="tag">Pain Point</span><span class="tag">40 seg</span></div>
+    </div>
+    <div class="guion-body">
+      <div class="parte"><div class="parte-label">GANCHO (0–5 seg)</div>
+        <div class="parte-texto"><strong>"El error más caro que cometen los negocios en Chicago: no tener presencia digital."</strong></div></div>
+      <div class="parte"><div class="parte-label">PROBLEMA (5–22 seg)</div>
+        <div class="parte-texto">No es la falta de clientes. Es que los clientes los buscan en Google, en Instagram, en internet — y no los encuentran. O peor: los encuentran con información desactualizada, sin fotos, sin precios, sin forma de contactar. Eso son clientes que se van a la competencia.</div></div>
+      <div class="parte"><div class="parte-label">SOLUCIÓN (22–36 seg)</div>
+        <div class="parte-texto">Una buena presencia digital no es cara ni complicada. Es estratégica. Perfil optimizado, página web funcional, automatizaciones que respondan cuando tú no puedes. Eso lo hago yo.</div></div>
+      <div class="parte"><div class="parte-label">CTA (36–40 seg)</div>
+        <div class="parte-texto"><strong>Escríbeme al WhatsApp o visita technocrazy.org</strong></div></div>
+    </div>
+  </div>
+
+  <!-- GUION 5 -->
+  <div class="guion">
+    <div class="guion-header">
+      <h3>#5 — Qué puede hacer la IA por tu negocio HOY</h3>
+      <div class="tags"><span class="tag es">ES</span><span class="tag">IA</span><span class="tag">50 seg</span></div>
+    </div>
+    <div class="guion-body">
+      <div class="parte"><div class="parte-label">GANCHO (0–5 seg)</div>
+        <div class="parte-texto"><strong>"La IA no va a reemplazar tu negocio. Va a reemplazar al que no usa IA."</strong></div></div>
+      <div class="parte"><div class="parte-label">LISTA RÁPIDA (5–38 seg)</div>
+        <div class="parte-texto">
+          Te digo 5 cosas que la IA puede hacer por tu negocio ya mismo:<br>
+          Uno — responder a clientes 24/7 en Instagram y WhatsApp.<br>
+          Dos — generar contenido visual para tus redes en minutos.<br>
+          Tres — analizar tus números y decirte dónde estás perdiendo dinero.<br>
+          Cuatro — automatizar cotizaciones, agendas y recordatorios.<br>
+          Cinco — crear una página web o app sin que tengas que saber programar.
+        </div></div>
+      <div class="parte"><div class="parte-label">CIERRE (38–50 seg)</div>
+        <div class="parte-texto">Esto no es el futuro. Está pasando ahora. Y los negocios que lo adopten primero van a ganar. ¿Tu negocio está listo? <strong>Habla conmigo.</strong></div></div>
+    </div>
+  </div>
+
+  <!-- GUION 6 -->
+  <div class="guion">
+    <div class="guion-header">
+      <h3>#6 — Mostrar el proceso (Behind the Scenes)</h3>
+      <div class="tags"><span class="tag es">ES</span><span class="tag">BTS</span><span class="tag">30 seg</span></div>
+    </div>
+    <div class="guion-body">
+      <div class="parte"><div class="parte-label">GANCHO (0–4 seg)</div>
+        <div class="parte-texto"><strong>"Así construyo una página web desde cero — en tiempo real."</strong></div></div>
+      <div class="parte"><div class="parte-label">DEMO (4–24 seg)</div>
+        <div class="parte-texto">[Mostrar pantalla: editor de código o Figma → resultado en browser] Sin templates genéricos. Sin página de $9.99 al mes que parece de 2010. Diseño limpio, carga rápida, optimizado para celular y Google.</div></div>
+      <div class="parte"><div class="parte-label">CTA (24–30 seg)</div>
+        <div class="parte-texto"><strong>Si quieres esto para tu negocio, el link está en la bio.</strong></div></div>
+    </div>
+  </div>
+
+  <!-- GUION 7 -->
+  <div class="guion">
+    <div class="guion-header">
+      <h3>#7 — Para el empresario que no confía en lo digital</h3>
+      <div class="tags"><span class="tag es">ES</span><span class="tag">Objeción</span><span class="tag">45 seg</span></div>
+    </div>
+    <div class="guion-body">
+      <div class="parte"><div class="parte-label">GANCHO (0–6 seg)</div>
+        <div class="parte-texto"><strong>"'Yo no necesito internet. Mis clientes me llegan por recomendación.' — Eso me dijo un cliente hace un año. Hoy me llama preocupado."</strong></div></div>
+      <div class="parte"><div class="parte-label">HISTORIA (6–28 seg)</div>
+        <div class="parte-texto">Su competencia abrió página web, optimizó su Google, empezó a publicar en Instagram. En seis meses le quitaron el 30% de los clientes. No porque fueran mejores. Porque eran más visibles. En el mundo digital, el que no aparece no existe.</div></div>
+      <div class="parte"><div class="parte-label">SOLUCIÓN (28–40 seg)</div>
+        <div class="parte-texto">No tienes que reinventarte. Solo tienes que asegurarte de que cuando alguien busque lo que tú ofreces — te encuentre a ti primero.</div></div>
+      <div class="parte"><div class="parte-label">CTA (40–45 seg)</div>
+        <div class="parte-texto"><strong>Eso es lo que hago. Escríbeme y armamos algo.</strong></div></div>
+    </div>
+  </div>
+
+  <!-- GUION 8 -->
+  <div class="guion">
+    <div class="guion-header">
+      <h3>#8 — What I do (English)</h3>
+      <div class="tags"><span class="tag en">EN</span><span class="tag">Intro</span><span class="tag">30 seg</span></div>
+    </div>
+    <div class="guion-body">
+      <div class="parte"><div class="parte-label">HOOK (0–5 sec)</div>
+        <div class="parte-texto"><strong>"I build digital businesses for people who have the vision but not the time to learn code."</strong></div></div>
+      <div class="parte"><div class="parte-label">WHO (5–18 sec)</div>
+        <div class="parte-texto">I'm Rafael. I moved from Venezuela to Chicago 5 years ago. I've been designing and building in the digital space ever since. Websites, apps, branding, AI automation — all under one roof.</div></div>
+      <div class="parte"><div class="parte-label">VALUE (18–26 sec)</div>
+        <div class="parte-texto">You don't need a $10k agency. You need someone who gets the result you want and builds it fast. That's TechnoCrazy.</div></div>
+      <div class="parte"><div class="parte-label">CTA (26–30 sec)</div>
+        <div class="parte-texto"><strong>Link in bio. Let's build something.</strong></div></div>
+    </div>
+  </div>
+
+  <!-- GUION 9 -->
+  <div class="guion">
+    <div class="guion-header">
+      <h3>#9 — 3 señales de que tu negocio necesita una app</h3>
+      <div class="tags"><span class="tag es">ES</span><span class="tag">Apps</span><span class="tag">45 seg</span></div>
+    </div>
+    <div class="guion-body">
+      <div class="parte"><div class="parte-label">GANCHO (0–5 seg)</div>
+        <div class="parte-texto"><strong>"3 señales de que tu negocio ya necesita una app móvil."</strong></div></div>
+      <div class="parte"><div class="parte-label">LISTA (5–36 seg)</div>
+        <div class="parte-texto">
+          Una: tus clientes te piden hacer citas, pedidos o seguimiento por WhatsApp — y ya no te da el tiempo.<br>
+          Dos: tienes mucha información de clientes regada en papeles, notas o Excel — que nunca consultas.<br>
+          Tres: tu competencia tiene app y tú no — y lo sabes.<br><br>
+          Una app no es lujo. Es una herramienta de trabajo. Y hoy cuesta mucho menos de lo que crees.
+        </div></div>
+      <div class="parte"><div class="parte-label">CTA (36–45 seg)</div>
+        <div class="parte-texto"><strong>¿Tienes una idea de app? Escríbeme. Evaluamos juntos si tiene sentido construirla.</strong></div></div>
+    </div>
+  </div>
+
+  <!-- GUION 10 -->
+  <div class="guion">
+    <div class="guion-header">
+      <h3>#10 — La nueva era (manifesto)</h3>
+      <div class="tags"><span class="tag es">ES</span><span class="tag">Manifesto</span><span class="tag">60 seg</span></div>
+    </div>
+    <div class="guion-body">
+      <div class="parte"><div class="parte-label">APERTURA (0–8 seg)</div>
+        <div class="parte-texto"><strong>"Estamos viviendo la era más importante de la historia humana para los emprendedores. Y la mayoría no se está dando cuenta."</strong></div></div>
+      <div class="parte"><div class="parte-label">DESARROLLO (8–46 seg)</div>
+        <div class="parte-texto">
+          Hace 20 años, para tener un negocio online necesitabas dinero, tiempo, programadores, diseñadores, servidores.<br>
+          Hoy solo necesitas una idea y conexión a internet.<br>
+          La inteligencia artificial destruyó la barrera del conocimiento. La creatividad ya no es exclusiva del que estudió diseño. La tecnología ya no es exclusiva del que sabe programar.<br>
+          Ahora todos pueden crear. Todos pueden vender. Todos pueden escalar.<br>
+          La pregunta no es si vas a entrar al mundo digital. La pregunta es cuándo.
+        </div></div>
+      <div class="parte"><div class="parte-label">CIERRE (46–60 seg)</div>
+        <div class="parte-texto">Yo llevo 5 años construyendo en ese mundo. Y ahora estoy aquí para ayudarte a entrar. <strong>TechnoCrazy. Transformo ideas en negocios digitales.</strong></div></div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- SECCIÓN 3: LEAD MAGNET -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section id="leadmagnet">
+  <h2><span class="icon">📘</span> Lead Magnet — "Guía Negocio Digital desde Cero"</h2>
+  <p class="sub">PDF de 15–20 páginas · Título: <em>"De Cero a Negocio Digital: La Guía que Nadie Te Da"</em> · Rafael Navarro · TechnoCrazy</p>
+
+  <div class="lm-grid">
+
+    <div class="lm-cap"><div class="num">00</div><h3>Portada + Bienvenida</h3><ul>
+      <li>Foto de Rafael + headline poderoso</li>
+      <li>"Esto no es un PDF genérico. Es lo que yo hubiera querido leer."</li>
+      <li>Promesa: en 5 capítulos sabrás qué necesitas, qué hacer primero y cómo no malgastar dinero</li>
+    </ul></div>
+
+    <div class="lm-cap"><div class="num">01</div><h3>La Mentalidad Correcta</h3><ul>
+      <li>Por qué la mayoría falla antes de empezar</li>
+      <li>La diferencia entre un hobby y un negocio digital real</li>
+      <li>El error del "lo hago yo mismo para ahorrar"</li>
+      <li>Cuándo tiene sentido delegar y cuándo no</li>
+    </ul></div>
+
+    <div class="lm-cap"><div class="num">02</div><h3>Los 4 Pilares de Cualquier Negocio Online</h3><ul>
+      <li>Pilar 1: Identidad visual (logo, colores, voz de marca)</li>
+      <li>Pilar 2: Presencia web (no es solo tener página — es convertir)</li>
+      <li>Pilar 3: Captación de clientes (redes, SEO, ads, referidos)</li>
+      <li>Pilar 4: Automatización (responder, vender, entregar sin estar presente)</li>
+    </ul></div>
+
+    <div class="lm-cap"><div class="num">03</div><h3>Tu Primera Semana de Acción</h3><ul>
+      <li>Día 1: Define tu oferta en una oración</li>
+      <li>Día 2: Crea o mejora tu perfil de Instagram</li>
+      <li>Día 3: Registra tu dominio</li>
+      <li>Día 4: Configura WhatsApp Business</li>
+      <li>Día 5–7: Publica tus primeros 3 posts</li>
+    </ul></div>
+
+    <div class="lm-cap"><div class="num">04</div><h3>IA: Tu Empleado de $0</h3><ul>
+      <li>Qué puede hacer la IA por tu negocio hoy (lista práctica)</li>
+      <li>Herramientas gratuitas recomendadas por Rafael</li>
+      <li>Cómo usar IA para crear contenido sin ser creativo</li>
+      <li>El chatbot que responde por ti 24/7</li>
+    </ul></div>
+
+    <div class="lm-cap"><div class="num">05</div><h3>Qué Hacer Cuando Estés Listo para Escalar</h3><ul>
+      <li>Señales de que ya tienes base para crecer</li>
+      <li>La diferencia entre hacer crecer y hacer crecer bien</li>
+      <li>Qué herramientas se quedan y cuáles se cambian</li>
+      <li>CTA: trabaja con Rafael directamente</li>
+    </ul></div>
+
+    <div class="lm-cap" style="border-color:#2979ff40"><div class="num">++</div><h3>Bonus: Checklist de Lanzamiento</h3><ul>
+      <li>20 puntos de verificación antes de lanzar cualquier negocio online</li>
+      <li>Descargable, imprimible, con casillas</li>
+      <li>Firma visual de TechnoCrazy en cada página</li>
+    </ul></div>
+
+    <div class="lm-cap" style="border-color:#00e5ff40"><div class="num">CTA</div><h3>Página Final — Oferta de Rafael</h3><ul>
+      <li>Servicios con precios (Diseño $149, Web $299, Apps $499, IA $199)</li>
+      <li>CTA directo a WhatsApp: wa.me/17794318214</li>
+      <li>Enlace a technocrazy.org</li>
+    </ul></div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- SECCIÓN 4: CALENDARIO 30 DÍAS -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section id="calendario">
+  <h2><span class="icon">📅</span> Calendario de Publicaciones — 30 días</h2>
+  <p class="sub">Julio 2026 · Ritmo: 1 post IG/día + 1 tweet/día + 2 TikToks/semana · Domingos = descanso</p>
+
+  <div class="cal-grid">
+    <!-- Semana 1 -->
+    <div class="cal-day"><div class="dia">Mar</div><div class="num-dia">1</div><span class="plataforma ig">IG</span><div class="tipo">Post 3: Diseño gráfico (carrusel)</div></div>
+    <div class="cal-day"><div class="dia">Mié</div><div class="num-dia">2</div><span class="plataforma tk">TK</span><div class="tipo">Guión #1 La Barrera</div></div>
+    <div class="cal-day"><div class="dia">Jue</div><div class="num-dia">3</div><span class="plataforma ig">IG</span><div class="tipo">Post 4: Páginas web reales</div></div>
+    <div class="cal-day"><div class="dia">Vie</div><div class="num-dia">4</div><span class="plataforma x">X</span><div class="tipo">Tweet: precio web real</div></div>
+    <div class="cal-day"><div class="dia">Sáb</div><div class="num-dia">5</div><span class="plataforma ig">IG</span><div class="tipo">Post 5: IA para negocios</div></div>
+    <div class="cal-day off"><div class="dia">Dom</div><div class="num-dia">6</div><div class="tipo">—</div></div>
+    <div class="cal-day"><div class="dia">Lun</div><div class="num-dia">7</div><span class="plataforma li">LI</span><div class="tipo">Historia origen (versión larga)</div></div>
+    <!-- Semana 2 -->
+    <div class="cal-day"><div class="dia">Mar</div><div class="num-dia">8</div><span class="plataforma ig">IG</span><div class="tipo">Post 6: Apps móviles</div></div>
+    <div class="cal-day"><div class="dia">Mié</div><div class="num-dia">9</div><span class="plataforma tk">TK</span><div class="tipo">Guión #3 precio web</div></div>
+    <div class="cal-day"><div class="dia">Jue</div><div class="num-dia">10</div><span class="plataforma ig">IG</span><div class="tipo">Post 7: Automatización</div></div>
+    <div class="cal-day"><div class="dia">Vie</div><div class="num-dia">11</div><span class="plataforma x">X</span><div class="tipo">Thread: 5 cosas que hace la IA</div></div>
+    <div class="cal-day"><div class="dia">Sáb</div><div class="num-dia">12</div><span class="plataforma ig">IG</span><div class="tipo">Post 8: Testimonial / BTS</div></div>
+    <div class="cal-day off"><div class="dia">Dom</div><div class="num-dia">13</div><div class="tipo">—</div></div>
+    <div class="cal-day"><div class="dia">Lun</div><div class="num-dia">14</div><span class="plataforma ig">IG</span><div class="tipo">Lanzamiento Lead Magnet 🎁</div></div>
+    <!-- Semana 3 -->
+    <div class="cal-day"><div class="dia">Mar</div><div class="num-dia">15</div><span class="plataforma tk">TK</span><div class="tipo">Guión #5 IA para negocios</div></div>
+    <div class="cal-day"><div class="dia">Mié</div><div class="num-dia">16</div><span class="plataforma ig">IG</span><div class="tipo">Post 9: IA + persona</div></div>
+    <div class="cal-day"><div class="dia">Jue</div><div class="num-dia">17</div><span class="plataforma li">LI</span><div class="tipo">Artículo: Negocios Chicago y digital</div></div>
+    <div class="cal-day"><div class="dia">Vie</div><div class="num-dia">18</div><span class="plataforma ig">IG</span><div class="tipo">Post 10: Cierre Fase 1</div></div>
+    <div class="cal-day"><div class="dia">Sáb</div><div class="num-dia">19</div><span class="plataforma tk">TK</span><div class="tipo">Guión #2 venezolano en Chicago</div></div>
+    <div class="cal-day off"><div class="dia">Dom</div><div class="num-dia">20</div><div class="tipo">—</div></div>
+    <div class="cal-day"><div class="dia">Lun</div><div class="num-dia">21</div><span class="plataforma x">X</span><div class="tipo">Tweet: 3 señales de que necesitas web</div></div>
+    <!-- Semana 4 -->
+    <div class="cal-day"><div class="dia">Mar</div><div class="num-dia">22</div><span class="plataforma ig">IG</span><div class="tipo">Nuevo post: Objeción #1</div></div>
+    <div class="cal-day"><div class="dia">Mié</div><div class="num-dia">23</div><span class="plataforma tk">TK</span><div class="tipo">Guión #7 empresario que no confía</div></div>
+    <div class="cal-day"><div class="dia">Jue</div><div class="num-dia">24</div><span class="plataforma ig">IG</span><div class="tipo">Nuevo post: Proceso de trabajo</div></div>
+    <div class="cal-day"><div class="dia">Vie</div><div class="num-dia">25</div><span class="plataforma li">LI</span><div class="tipo">Post: "5 años construyendo en digital"</div></div>
+    <div class="cal-day"><div class="dia">Sáb</div><div class="num-dia">26</div><span class="plataforma ig">IG</span><div class="tipo">Nuevo post: en inglés (Chicago audience)</div></div>
+    <div class="cal-day off"><div class="dia">Dom</div><div class="num-dia">27</div><div class="tipo">—</div></div>
+    <div class="cal-day"><div class="dia">Lun</div><div class="num-dia">28</div><span class="plataforma tk">TK</span><div class="tipo">Guión #8 EN: What I do</div></div>
+    <!-- Últimos días -->
+    <div class="cal-day"><div class="dia">Mar</div><div class="num-dia">29</div><span class="plataforma ig">IG</span><div class="tipo">Reel: Manifiesto (Guión #10)</div></div>
+    <div class="cal-day"><div class="dia">Mié</div><div class="num-dia">30</div><span class="plataforma x">X</span><div class="tipo">Thread: 30 días de TechnoCrazy</div></div>
+    <div class="cal-day"><div class="dia">Jue</div><div class="num-dia">31</div><span class="plataforma ig">IG</span><div class="tipo">Balance + teaser Agosto</div></div>
+  </div>
+
+  <div style="margin-top:20px; background:#111120; border:1px solid #1e1e3a; border-radius:12px; padding:20px 24px;">
+    <p style="color:#aaa; font-size:0.85rem; line-height:1.8;">
+      <strong style="color:#2979ff">Día 14 = Lanzamiento Lead Magnet</strong> — publicar en todas las plataformas + historia en IG + email de bienvenida activado.<br>
+      <strong style="color:#2979ff">Regla de precios:</strong> NUNCA mostrar precio en imágenes ni captions. Siempre → WhatsApp o technocrazy.org.<br>
+      <strong style="color:#2979ff">Hashtags por post:</strong> Usar Set 1 (servicios) los lunes/martes, Set 2 (IA/tech) miércoles/jueves, Set 3 (Chicago) los sábados.
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- SECCIÓN 5: SECUENCIA DE EMAILS -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section id="emails">
+  <h2><span class="icon">📧</span> Secuencia de 7 Emails — Lead Magnet</h2>
+  <p class="sub">Se envían automáticamente cuando alguien descarga la guía · Plataforma: Systeme.io (gratuito hasta 2,000 contactos)</p>
+
+  <div class="email-card">
+    <div class="email-header" onclick="toggleEmail(this)">
+      <h3>Email 1 — Bienvenida + Entrega</h3>
+      <div class="meta"><span class="dia-tag">Día 0 (inmediato)</span><span class="obj">Entrega + primera impresión</span><span>▼</span></div>
+    </div>
+    <div class="email-body">
+      <div class="asunto">Asunto: Tu guía está aquí 👇 (y un secreto que no va en el PDF)</div>
+      <div class="cuerpo">Hola [Nombre],
+
+Aquí está tu guía: [LINK AL PDF]
+
+Pero antes de que la abras, quiero contarte algo que no puse adentro.
+
+La guía explica el QUÉ y el CÓMO. Lo que no dice es por qué yo creo que este momento específico — 2026 — es el mejor momento en la historia para lanzar un negocio digital.
+
+Te lo cuento en el siguiente correo. Llega mañana.
+
+Mientras tanto, lee la guía. Y si tienes preguntas, responde este email. Sí, yo lo leo.
+
+Rafael
+TechnoCrazy | technocrazy.org | WhatsApp: wa.me/17794318214</div>
+    </div>
+  </div>
+
+  <div class="email-card">
+    <div class="email-header" onclick="toggleEmail(this)">
+      <h3>Email 2 — La Historia (Origen)</h3>
+      <div class="meta"><span class="dia-tag">Día 1</span><span class="obj">Conexión emocional + autoridad</span><span>▼</span></div>
+    </div>
+    <div class="email-body">
+      <div class="asunto">Asunto: Llegué a Chicago sin nada (y esto aprendí)</div>
+      <div class="cuerpo">Hace 5 años llegué a Chicago desde Venezuela.
+
+No llegué con un plan de negocios ni con capital. Llegué con lo básico: experiencia en diseño, conexión a internet y ganas de construir algo aquí.
+
+Hice de todo para vivir — como hace cualquier inmigrante. Pero en las noches, siempre diseñaba. Logos, páginas, banners. Lo hacía por amor al oficio y casi sin cobrar lo que valía.
+
+Hasta que algo cambió.
+
+Empecé a explorar la inteligencia artificial de verdad. Y entendí algo que todavía me sacude: la barrera entre tener una idea y poder ejecutarla ya no existe.
+
+Antes necesitabas dinero, tiempo y un equipo para tener un negocio online. Hoy necesitas una idea y conexión a internet. Y yo llevo años operando en ese mundo.
+
+Decidí formalizar todo. Ponerle nombre. Precios. Proceso. Y nació TechnoCrazy.
+
+Mañana te cuento cuál es el primer paso que yo recomiendo para cualquier negocio que quiere entrar al mundo digital — sin desperdiciar ni tiempo ni dinero.
+
+Rafael</div>
+    </div>
+  </div>
+
+  <div class="email-card">
+    <div class="email-header" onclick="toggleEmail(this)">
+      <h3>Email 3 — El Primer Paso Real</h3>
+      <div class="meta"><span class="dia-tag">Día 2</span><span class="obj">Valor educativo + posicionamiento</span><span>▼</span></div>
+    </div>
+    <div class="email-body">
+      <div class="asunto">Asunto: El primer error que cometen el 90% de los negocios</div>
+      <div class="cuerpo">Si me preguntas cuál es el error número 1 que veo en negocios que quieren entrar al mundo digital, te digo sin dudar:
+
+Arrancan por el medio.
+
+Crean Instagram antes de tener claro qué venden.
+Pagan una página web antes de definir a quién le hablan.
+Invierten en ads antes de tener una oferta que convierta.
+
+¿El resultado? Gastan. No venden. Se frustran. Creen que "lo digital no funciona para ellos."
+
+El orden correcto es este:
+1. Define tu oferta en una oración (quién, qué problema, qué resultado)
+2. Crea tu presencia visual básica (logo, colores, voz)
+3. Abre tu canal principal (Instagram o web — elige uno)
+4. Habla con 10 clientes potenciales antes de hacer un solo post
+5. Después de tener tus primeras ventas — escala
+
+Simple. Pero el 90% lo ignora.
+
+Si ya pasaste por el paso 1 y 2 y quieres construir tu presencia digital, en la próxima semana tengo tiempo para evaluar tu proyecto.
+
+Escríbeme: wa.me/17794318214
+
+Rafael</div>
+    </div>
+  </div>
+
+  <div class="email-card">
+    <div class="email-header" onclick="toggleEmail(this)">
+      <h3>Email 4 — Caso de Uso / Resultado Real</h3>
+      <div class="meta"><span class="dia-tag">Día 4</span><span class="obj">Prueba social + confianza</span><span>▼</span></div>
+    </div>
+    <div class="email-body">
+      <div class="asunto">Asunto: Lo que construí en los últimos 12 meses</div>
+      <div class="cuerpo">No tengo testimoniales de clientes famosos. Todavía.
+
+Lo que sí tengo son proyectos reales que puedes ver funcionando ahora mismo.
+
+Aquí van 5 — todos en producción, todos construidos por mí:
+
+→ AutoPost: genera posts para redes con IA en segundos
+   autopost-plum-five.vercel.app
+
+→ ServiYA: marketplace de servicios con más de 55 categorías
+   serviya.vercel.app
+
+→ CambioBs: conversor USD/Bs con tasas BCV, Paralelo y Binance en tiempo real
+   cambiobs.vercel.app
+
+→ ElGestor: app de gestión empresarial completa
+   elgestor.vercel.app
+
+→ TechnoCrazy: mi plaza digital principal
+   technocrazy.org
+
+¿Por qué te muestro esto?
+
+Porque quiero que veas que lo que ofrezco no es teoría. Son aplicaciones reales que funcionan hoy. Y lo mismo puedo hacer para tu negocio.
+
+Si tienes algo en mente — escríbeme.
+
+Rafael
+wa.me/17794318214</div>
+    </div>
+  </div>
+
+  <div class="email-card">
+    <div class="email-header" onclick="toggleEmail(this)">
+      <h3>Email 5 — La Pregunta que Decide Todo</h3>
+      <div class="meta"><span class="dia-tag">Día 6</span><span class="obj">Calificación + CTA suave</span><span>▼</span></div>
+    </div>
+    <div class="email-body">
+      <div class="asunto">Asunto: ¿Cuál de estos describe tu situación?</div>
+      <div class="cuerpo">Quiero hacerte una pregunta directa.
+
+¿Cuál de estas describe mejor dónde estás ahora?
+
+A) Tengo una idea de negocio pero no sé por dónde empezar
+B) Ya tengo negocio pero sin presencia digital o muy poca
+C) Tengo presencia digital pero no convierte — no me genera clientes
+D) Quiero automatizar o escalar algo que ya funciona
+
+No hay respuesta correcta. Pero sí hay una respuesta honesta.
+
+Si me la envías respondiendo este email, te digo exactamente qué recomiendo para tu caso. Sin rodeos. Sin intento de venta.
+
+Solo lo que yo haría si estuviera en tu lugar.
+
+Rafael</div>
+    </div>
+  </div>
+
+  <div class="email-card">
+    <div class="email-header" onclick="toggleEmail(this)">
+      <h3>Email 6 — La Oferta (directa)</h3>
+      <div class="meta"><span class="dia-tag">Día 9</span><span class="obj">Conversión</span><span>▼</span></div>
+    </div>
+    <div class="email-body">
+      <div class="asunto">Asunto: Si estás listo para construir algo real</div>
+      <div class="cuerpo">Quiero ser directo contigo.
+
+Si en los últimos días leyiste la guía, leíste mis emails y todavía estás en esta lista — probablemente estás pensando en construir o mejorar algo en el mundo digital.
+
+Aquí está lo que ofrezco y lo que cuesta:
+
+🎨 Diseño gráfico (logo + identidad) — desde $149
+🌐 Página web profesional — desde $299
+📱 App móvil (iOS + Android) — desde $499
+🤖 IA & Automatización — desde $199
+⚙️ Sistemas automatizados — desde $299
+
+Todo incluye: estrategia, diseño, desarrollo, entrega y soporte post-lanzamiento.
+
+Sin contratos largos. Sin sorpresas de precio.
+
+Si quieres hablar sobre tu proyecto, este es el link directo a mi WhatsApp:
+wa.me/17794318214
+
+O visita technocrazy.org para ver el portafolio completo.
+
+Rafael</div>
+    </div>
+  </div>
+
+  <div class="email-card">
+    <div class="email-header" onclick="toggleEmail(this)">
+      <h3>Email 7 — El cierre (sin presión)</h3>
+      <div class="meta"><span class="dia-tag">Día 14</span><span class="obj">Retención + puerta abierta</span><span>▼</span></div>
+    </div>
+    <div class="email-body">
+      <div class="asunto">Asunto: Último email de la secuencia (y lo que sigue)</div>
+      <div class="cuerpo">Este es el último email de la secuencia que activaste cuando descargaste la guía.
+
+No te voy a presionar. Si el momento no es ahora, no es ahora. Y está bien.
+
+Lo que sí quiero que sepas:
+
+Seguiré publicando en Instagram (@igTechnocrazy) y en la web casi todos los días. Tips, proyectos, herramientas, realidades del mundo digital.
+
+Si en algún momento tienes un proyecto que quieres construir — ya sabes dónde encontrarme.
+
+wa.me/17794318214
+technocrazy.org
+
+Fue un placer compartir esto contigo.
+
+Rafael Navarro
+TechnoCrazy — Transformo Ideas en Negocios Digitales</div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- SECCIÓN 6: COPY ADS (FASE 3-4) -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section id="ads">
+  <h2><span class="icon">💰</span> Copy para Paid Ads — Fase 3 &amp; 4</h2>
+  <p class="sub">Guardar para cuando llegue el momento. Cada ad tiene: titular, texto principal y CTA.</p>
+
+  <div class="ads-grid">
+
+    <div class="ad-card">
+      <div class="plat" style="color:#e91e63">Facebook / Instagram Ad — ES</div>
+      <h3>Versión 1: Precio directo</h3>
+      <div class="campo"><div class="campo-label">Titular</div><div class="campo-val">Página web profesional desde $299. Sin contratos. Sin sorpresas.</div></div>
+      <div class="campo"><div class="campo-label">Texto</div><div class="campo-val">¿Tu negocio todavía no tiene página web? O tiene una que no atrae clientes.<br><br>Soy Rafael, diseñador y desarrollador con 5 años de experiencia en Chicago. Construyo páginas rápidas, modernas y optimizadas — sin que tengas que entender de tecnología.<br><br>Diseño · Web · Apps · IA · Automatización</div></div>
+      <div class="campo"><div class="campo-label">CTA</div><div class="campo-val">Más información → technocrazy.org</div></div>
+    </div>
+
+    <div class="ad-card">
+      <div class="plat" style="color:#e91e63">Facebook / Instagram Ad — EN</div>
+      <h3>Version 2: Chicago Local</h3>
+      <div class="campo"><div class="campo-label">Headline</div><div class="campo-val">Chicago business? You need a digital presence that actually works.</div></div>
+      <div class="campo"><div class="campo-label">Body</div><div class="campo-val">I'm Rafael — based in Chicago. I build websites, apps and AI systems for local businesses and entrepreneurs who are ready to grow online.<br><br>No generic templates. No bloated agency fees. Just results.</div></div>
+      <div class="campo"><div class="campo-label">CTA</div><div class="campo-val">See my work → technocrazy.org</div></div>
+    </div>
+
+    <div class="ad-card">
+      <div class="plat" style="color:#7c4dff">TikTok Ad</div>
+      <h3>Versión UGC (video directo a cámara)</h3>
+      <div class="campo"><div class="campo-label">Gancho (0–3 seg)</div><div class="campo-val">"¿Cuánto crees que cuesta una página web profesional? Te sorprendes."</div></div>
+      <div class="campo"><div class="campo-label">Cuerpo (3–20 seg)</div><div class="campo-val">La mayoría paga miles porque no conoce las opciones. Soy Rafael, de TechnoCrazy. Construyo páginas reales desde $299 — y apps desde $499. Sin contratos. Sin letra pequeña.</div></div>
+      <div class="campo"><div class="campo-label">CTA (20–25 seg)</div><div class="campo-val">"Link en la bio. Escríbeme hoy y en 24 horas tienes propuesta."</div></div>
+    </div>
+
+    <div class="ad-card">
+      <div class="plat" style="color:#4caf50">Google Ads — Local Chicago</div>
+      <h3>Search Ad (keywords: web design chicago)</h3>
+      <div class="campo"><div class="campo-label">Headline 1</div><div class="campo-val">Web Design Chicago — desde $299</div></div>
+      <div class="campo"><div class="campo-label">Headline 2</div><div class="campo-val">Diseñador Local · Resultados Reales</div></div>
+      <div class="campo"><div class="campo-label">Headline 3</div><div class="campo-val">Apps · IA · Automatización</div></div>
+      <div class="campo"><div class="campo-label">Description</div><div class="campo-val">Diseñador y desarrollador basado en Chicago. Páginas web, apps móviles e IA para negocios que quieren crecer. Sin contratos largos. Propuesta en 24h.</div></div>
+    </div>
+
+  </div>
+
+  <div style="margin-top:24px; background:#111120; border:1px solid #2979ff40; border-radius:12px; padding:24px;">
+    <h3 style="color:#2979ff; margin-bottom:12px; font-size:1rem;">Keywords para Google Ads (Chicago)</h3>
+    <div style="color:#aaa; font-size:0.85rem; line-height:2; column-count:2; column-gap:40px;">
+      web design chicago<br>diseñador web chicago<br>página web para negocio chicago<br>app development chicago<br>ai automation small business<br>graphic design chicago<br>web developer latino chicago<br>how much does a website cost chicago<br>small business website chicago<br>custom app chicago<br>affordable web design illinois<br>marketing digital chicago latinos
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p>TechnoCrazy · Rafael Navarro · Chicago, IL · technocrazy.org · rafaelpixel3004@gmail.com · wa.me/17794318214</p>
+  <p style="margin-top:6px;">Pack Campaña Completo — Generado con Claude Code · 29 Jun 2026</p>
+</footer>
+
+<script>
+function toggleEmail(header) {
+  const body = header.nextElementSibling;
+  body.classList.toggle('open');
+  header.querySelector('span:last-child').textContent = body.classList.contains('open') ? '▲' : '▼';
+}
+
+function copiarTexto(btn, texto) {
+  navigator.clipboard.writeText(texto).then(() => {
+    const original = btn.textContent;
+    btn.textContent = '✅ Copiado';
+    setTimeout(() => btn.textContent = original, 2000);
+  });
+}
+</script>
+
+</body>
+</html>

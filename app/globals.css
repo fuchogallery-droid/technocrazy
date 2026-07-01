@@ -1,0 +1,244 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+@import "tailwindcss";
+@source "../components/**/*.{js,jsx,ts,tsx}";
+@source "../app/**/*.{js,jsx,ts,tsx}";
+
+:root {
+  --primary: #2979ff;
+  --purple: #7c4dff;
+  --cyan: #00e5ff;
+  --dark: #0a0a1a;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: #ffffff;
+  color: #111;
+  overflow-x: hidden;
+}
+
+/* ── GRADIENT TEXT ── */
+.gradient-text {
+  background: linear-gradient(135deg, #2979ff, #7c4dff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-cyan {
+  background: linear-gradient(135deg, #00e5ff, #2979ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── GLASS ── */
+.glass {
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.15);
+}
+
+.glass-dark {
+  background: rgba(10,10,26,0.6);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(41,121,255,0.2);
+}
+
+/* ── BUTTONS ── */
+.btn-primary {
+  background: linear-gradient(135deg, #2979ff, #7c4dff);
+  color: white;
+  padding: 13px 30px;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 15px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 44px rgba(41,121,255,0.45);
+}
+
+.btn-outline {
+  background: transparent;
+  color: #2979ff;
+  padding: 12px 30px;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 15px;
+  border: 2px solid #2979ff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.btn-outline:hover {
+  background: #2979ff;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(41,121,255,0.3);
+}
+
+/* ── SECTIONS ── */
+.section-dark {
+  background: linear-gradient(135deg, #0a0a1a 0%, #12122a 100%);
+}
+
+.card-hover {
+  transition: all 0.3s ease;
+}
+.card-hover:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 60px rgba(41,121,255,0.2);
+}
+
+/* ── FLOATING ELEMENTS ── */
+.whatsapp-float {
+  position: fixed;
+  bottom: 90px;
+  right: 24px;
+  z-index: 1000;
+  animation: pulse-green 2s infinite;
+}
+
+@keyframes pulse-green {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(37,211,102,0.4); }
+  50% { box-shadow: 0 0 0 14px rgba(37,211,102,0); }
+}
+
+.chat-float {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1000;
+}
+
+/* ── GLOW EFFECTS ── */
+.glow-blue { box-shadow: 0 0 30px rgba(41,121,255,0.3); }
+.glow-purple { box-shadow: 0 0 30px rgba(124,77,255,0.3); }
+
+/* ── BACKGROUND PATTERNS ── */
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(41,121,255,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(41,121,255,0.05) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+/* ── LAYOUT SYSTEM ── */
+.tc-wrap {
+  max-width: 1060px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: clamp(16px, 5vw, 80px);
+  padding-right: clamp(16px, 5vw, 80px);
+}
+
+.section-py {
+  padding-top: 72px;
+  padding-bottom: 72px;
+}
+
+/* ── SECTION HEADERS ── */
+.tc-header {
+  text-align: center;
+  margin-bottom: 44px;
+}
+
+.tc-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 9999px;
+  padding: 7px 18px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+.tc-h2 {
+  font-size: clamp(26px, 4vw, 48px);
+  font-weight: 900;
+  line-height: 1.12;
+  margin-bottom: 16px;
+}
+
+.tc-sub {
+  font-size: 15px;
+  line-height: 1.75;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+  color: inherit;
+}
+
+/* ── HERO ── */
+.hero-title-line {
+  display: block;
+  white-space: normal;
+}
+
+@media (min-width: 1024px) {
+  .hero-title-line {
+    white-space: nowrap;
+  }
+}
+
+/* ── MOBILE OVERRIDES ─────────────────────────── */
+@media (max-width: 767px) {
+  .section-py {
+    padding-top: 44px;
+    padding-bottom: 44px;
+  }
+  .tc-header {
+    margin-bottom: 28px;
+  }
+  .tc-sub {
+    font-size: 14px;
+  }
+  .btn-primary,
+  .btn-outline {
+    padding: 12px 24px;
+    font-size: 14px;
+  }
+}
+
+/* ── EXTRA SMALL PHONES (<480px) ── */
+@media (max-width: 479px) {
+  .section-py {
+    padding-top: 36px;
+    padding-bottom: 36px;
+  }
+  .tc-h2 {
+    font-size: clamp(22px, 7vw, 32px);
+  }
+  .btn-primary,
+  .btn-outline {
+    padding: 11px 20px;
+    font-size: 13px;
+  }
+}

@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://technocrazy.org
+
+# Sitemaps
+Sitemap: https://technocrazy.org/sitemap.xml

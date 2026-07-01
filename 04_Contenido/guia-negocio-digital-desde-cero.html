@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>De Cero a Negocio Digital — TechnoCrazy</title>
+<style>
+
+/* ═══ RESET & BASE ═══ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --azul: #2979ff;
+  --morado: #7c4dff;
+  --cyan: #00e5ff;
+  --oscuro: #0a0a1a;
+  --gris: #1e1e3a;
+  --texto: #1a1a2e;
+  --suave: #4a4a6a;
+}
+
+body {
+  font-family: 'Segoe UI', 'Arial', sans-serif;
+  background: #f0f2f8;
+  color: var(--texto);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* ═══ PÁGINA — simulación de hoja A4 ═══ */
+.page {
+  width: 794px;
+  min-height: 1123px;
+  background: #ffffff;
+  margin: 30px auto;
+  padding: 0;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.15);
+  position: relative;
+  overflow: hidden;
+  page-break-after: always;
+}
+
+/* ═══ BOTÓN DESCARGAR (solo en pantalla) ═══ */
+.download-bar {
+  width: 794px;
+  margin: 0 auto 0 auto;
+  padding: 14px 24px;
+  background: var(--azul);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 0 0 12px 12px;
+}
+.download-bar p { color: #fff; font-size: 0.85rem; }
+.download-bar button {
+  background: #fff;
+  color: var(--azul);
+  border: none;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+/* ═══ PORTADA ═══ */
+.portada {
+  background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 40%, #0d1535 100%);
+  min-height: 1123px;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+.portada::before {
+  content: '';
+  position: absolute;
+  top: -200px; right: -200px;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, #2979ff22 0%, transparent 70%);
+  border-radius: 50%;
+}
+.portada::after {
+  content: '';
+  position: absolute;
+  bottom: -150px; left: -150px;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, #7c4dff22 0%, transparent 70%);
+  border-radius: 50%;
+}
+
+.portada-top {
+  padding: 40px 50px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.portada-logo { color: #fff; font-size: 1rem; font-weight: 700; letter-spacing: 1px; }
+.portada-logo span { color: var(--cyan); }
+.portada-tag {
+  background: #2979ff20;
+  border: 1px solid #2979ff60;
+  color: #7cb8ff;
+  font-size: 0.7rem;
+  padding: 4px 12px;
+  border-radius: 20px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.portada-hero {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 40px 50px;
+  position: relative; z-index: 1;
+}
+.portada-eyebrow {
+  color: var(--cyan);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+.portada-titulo {
+  font-size: 2.8rem;
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.1;
+  margin-bottom: 16px;
+}
+.portada-titulo span { color: var(--cyan); }
+.portada-sub {
+  font-size: 1rem;
+  color: #9ab0d0;
+  max-width: 520px;
+  line-height: 1.65;
+  margin-bottom: 40px;
+}
+.portada-promesa {
+  background: #ffffff10;
+  border: 1px solid #ffffff20;
+  border-left: 3px solid var(--cyan);
+  border-radius: 0 12px 12px 0;
+  padding: 18px 24px;
+  max-width: 500px;
+}
+.portada-promesa p { color: #cdd8e8; font-size: 0.88rem; line-height: 1.65; }
+
+.portada-bottom {
+  padding: 30px 50px;
+  border-top: 1px solid #ffffff15;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative; z-index: 1;
+}
+.portada-autor { color: #9ab0d0; font-size: 0.82rem; }
+.portada-autor strong { color: #fff; display: block; font-size: 1rem; margin-bottom: 2px; }
+.portada-url { color: var(--cyan); font-size: 0.82rem; }
+
+/* ═══ PÁGINAS INTERIORES ═══ */
+.inner {
+  padding: 60px 60px 50px;
+  min-height: 1123px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Número de capítulo */
+.cap-num {
+  font-size: 5rem;
+  font-weight: 900;
+  color: #f0f2f8;
+  line-height: 1;
+  margin-bottom: -10px;
+}
+.cap-eyebrow {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--azul);
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.cap-titulo {
+  font-size: 1.9rem;
+  font-weight: 900;
+  color: var(--oscuro);
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+.cap-divider {
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--azul), var(--morado));
+  border-radius: 2px;
+  margin: 16px 0 30px;
+}
+.cap-intro {
+  font-size: 1rem;
+  color: var(--suave);
+  line-height: 1.75;
+  margin-bottom: 30px;
+  font-style: italic;
+  border-left: 3px solid var(--azul);
+  padding-left: 18px;
+}
+
+/* Subencabezados */
+.h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--oscuro);
+  margin: 28px 0 10px;
+}
+
+/* Párrafos */
+.p { font-size: 0.9rem; color: #2a2a4a; line-height: 1.8; margin-bottom: 14px; }
+
+/* Listas */
+.ul { list-style: none; margin: 14px 0 20px; }
+.ul li {
+  padding: 7px 0 7px 26px;
+  font-size: 0.88rem;
+  color: #2a2a4a;
+  line-height: 1.65;
+  position: relative;
+  border-bottom: 1px solid #f0f2f8;
+}
+.ul li::before {
+  content: '→';
+  color: var(--azul);
+  position: absolute;
+  left: 0;
+  font-weight: 700;
+}
+.ul li:last-child { border-bottom: none; }
+
+/* Numerada */
+.ol { counter-reset: ol-counter; list-style: none; margin: 14px 0 20px; }
+.ol li {
+  counter-increment: ol-counter;
+  padding: 10px 14px 10px 52px;
+  font-size: 0.88rem;
+  color: #2a2a4a;
+  line-height: 1.65;
+  position: relative;
+  background: #f8f9ff;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+.ol li::before {
+  content: counter(ol-counter);
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--azul);
+  color: #fff;
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  font-size: 0.75rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Caja destacada */
+.box {
+  background: linear-gradient(135deg, #eef3ff 0%, #f3eeff 100%);
+  border: 1px solid #c8d8ff;
+  border-radius: 14px;
+  padding: 22px 26px;
+  margin: 20px 0;
+}
+.box .box-titulo { font-weight: 700; color: var(--azul); font-size: 0.88rem; margin-bottom: 10px; }
+.box p, .box li { font-size: 0.86rem; color: #2a2a4a; line-height: 1.7; }
+
+/* Caja cita */
+.cita {
+  border-left: 4px solid var(--cyan);
+  padding: 16px 22px;
+  margin: 20px 0;
+  background: #f8fbff;
+  border-radius: 0 10px 10px 0;
+}
+.cita p { font-size: 0.95rem; font-style: italic; color: #1a1a3a; line-height: 1.7; font-weight: 500; }
+
+/* Grid 2 columnas */
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+.grid2-card {
+  background: #f8f9ff;
+  border: 1px solid #e0e8ff;
+  border-radius: 12px;
+  padding: 18px 20px;
+}
+.grid2-card .g-num {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--azul);
+  opacity: 0.3;
+  margin-bottom: 4px;
+}
+.grid2-card h4 { font-size: 0.88rem; font-weight: 700; color: var(--oscuro); margin-bottom: 8px; }
+.grid2-card p, .grid2-card li { font-size: 0.8rem; color: var(--suave); line-height: 1.65; }
+.grid2-card ul { list-style: none; }
+.grid2-card ul li { padding: 3px 0 3px 14px; position: relative; }
+.grid2-card ul li::before { content: '·'; color: var(--azul); position: absolute; left: 0; font-weight: 900; }
+
+/* Semana de acción */
+.dia-card {
+  background: #fff;
+  border: 1px solid #e0e8ff;
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+.dia-badge {
+  background: linear-gradient(135deg, var(--azul), var(--morado));
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 8px;
+  white-space: nowrap;
+  margin-top: 2px;
+}
+.dia-card h4 { font-size: 0.88rem; font-weight: 700; color: var(--oscuro); margin-bottom: 4px; }
+.dia-card p { font-size: 0.82rem; color: var(--suave); line-height: 1.6; }
+
+/* IA tools table */
+.tools-table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+.tools-table th {
+  background: var(--oscuro);
+  color: #fff;
+  padding: 10px 14px;
+  font-size: 0.78rem;
+  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.tools-table td {
+  padding: 10px 14px;
+  font-size: 0.82rem;
+  color: #2a2a4a;
+  border-bottom: 1px solid #f0f2f8;
+}
+.tools-table tr:nth-child(even) td { background: #f8f9ff; }
+.gratis { color: #2e7d32; font-weight: 700; font-size: 0.75rem; }
+
+/* Señales de escala */
+.senal {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 18px;
+  background: #f8f9ff;
+  border-radius: 10px;
+  margin-bottom: 8px;
+}
+.senal-icon { font-size: 1.3rem; }
+.senal-texto { font-size: 0.85rem; color: #2a2a4a; line-height: 1.5; }
+
+/* ═══ CHECKLIST ═══ */
+.checklist-header {
+  background: linear-gradient(135deg, var(--oscuro), #1a1a3a);
+  padding: 40px 60px 30px;
+  color: #fff;
+}
+.checklist-header .eyebrow { color: var(--cyan); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 8px; }
+.checklist-header h2 { font-size: 1.8rem; font-weight: 900; line-height: 1.2; }
+.checklist-header p { color: #9ab0d0; font-size: 0.88rem; margin-top: 8px; }
+
+.checklist-body { padding: 30px 60px 40px; flex: 1; }
+.cl-section { margin-bottom: 24px; }
+.cl-section h3 { font-size: 0.82rem; text-transform: uppercase; letter-spacing: 2px; color: var(--azul); font-weight: 700; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid #e0e8ff; }
+.cl-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid #f8f9ff;
+}
+.cl-box {
+  width: 18px; height: 18px;
+  border: 2px solid #c8d8ff;
+  border-radius: 4px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.cl-item p { font-size: 0.84rem; color: #2a2a4a; line-height: 1.5; }
+
+/* ═══ PÁGINA FINAL — OFERTA ═══ */
+.oferta-page {
+  background: linear-gradient(160deg, #0a0a1a 0%, #1a1a3a 60%, #0d1535 100%);
+  min-height: 1123px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+.oferta-page::before {
+  content: '';
+  position: absolute;
+  top: -100px; right: -100px;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, #2979ff18 0%, transparent 70%);
+}
+.oferta-inner { padding: 60px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; position: relative; z-index:1; }
+
+.oferta-top h2 { font-size: 2rem; font-weight: 900; color: #fff; line-height: 1.2; margin-bottom: 10px; }
+.oferta-top h2 span { color: var(--cyan); }
+.oferta-top p { color: #9ab0d0; font-size: 0.92rem; line-height: 1.7; max-width: 520px; }
+
+.servicios-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 30px 0; }
+.srv-card {
+  background: #ffffff0d;
+  border: 1px solid #ffffff15;
+  border-radius: 14px;
+  padding: 20px 22px;
+}
+.srv-card .srv-icon { font-size: 1.5rem; margin-bottom: 8px; }
+.srv-card h4 { color: #fff; font-size: 0.9rem; font-weight: 700; margin-bottom: 4px; }
+.srv-card .srv-precio { color: var(--cyan); font-size: 1.1rem; font-weight: 900; margin-bottom: 6px; }
+.srv-card p { color: #8a9ab8; font-size: 0.78rem; line-height: 1.55; }
+
+.oferta-cta {
+  background: var(--azul);
+  border-radius: 16px;
+  padding: 28px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.oferta-cta p { color: #fff; font-size: 0.9rem; line-height: 1.6; }
+.oferta-cta p strong { font-size: 1rem; display: block; margin-bottom: 4px; }
+.oferta-cta .cta-link { color: #fff; font-weight: 700; font-size: 0.9rem; text-decoration: none; }
+
+.oferta-firma {
+  margin-top: 30px;
+  padding-top: 24px;
+  border-top: 1px solid #ffffff15;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.oferta-firma p { color: #9ab0d0; font-size: 0.8rem; }
+.oferta-firma .logo-text { color: #fff; font-size: 1rem; font-weight: 700; }
+.oferta-firma .logo-text span { color: var(--cyan); }
+
+/* ═══ NUMERACIÓN DE PÁGINA ═══ */
+.page-num {
+  position: absolute;
+  bottom: 20px;
+  right: 30px;
+  font-size: 0.75rem;
+  color: #c8d8ff;
+  font-weight: 600;
+}
+.page-footer {
+  margin-top: auto;
+  padding-top: 20px;
+  border-top: 1px solid #f0f2f8;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.72rem;
+  color: #c8d8ff;
+}
+.page-footer a { color: var(--azul); text-decoration: none; }
+
+/* ═══ PRINT ═══ */
+@media print {
+  body { background: #fff; }
+  .download-bar { display: none !important; }
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    margin: 0;
+    box-shadow: none;
+    border-radius: 0;
+  }
+}
+
+@page {
+  size: A4;
+  margin: 0;
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════ BARRA DESCARGA ═══════════════════ -->
+<div class="download-bar">
+  <p>📘 Guía Negocio Digital desde Cero · TechnoCrazy · Para imprimir: Ctrl+P → Guardar como PDF → Sin márgenes</p>
+  <button onclick="window.print()">🖨️ Guardar como PDF</button>
+</div>
+
+<!-- ═══════════════════ PORTADA ═══════════════════ -->
+<div class="page">
+  <div class="portada">
+    <div class="portada-top">
+      <div class="portada-logo">TECHNO<span>CRAZY</span></div>
+      <div class="portada-tag">Guía Gratuita · 2026</div>
+    </div>
+
+    <div class="portada-hero">
+      <div class="portada-eyebrow">Rafael Navarro · Chicago, IL</div>
+      <h1 class="portada-titulo">
+        De Cero a<br>
+        Negocio <span>Digital</span>
+      </h1>
+      <p class="portada-sub">
+        La guía práctica que nadie te da. Sin teoría innecesaria. Sin pasos genéricos.
+        Lo que realmente necesitas saber para lanzar o digitalizar tu negocio — y no desperdiciar ni tiempo ni dinero.
+      </p>
+      <div class="portada-promesa">
+        <p>En 5 capítulos vas a saber: qué necesitas realmente, en qué orden hacerlo, cómo usar la IA sin ser técnico, y cuándo estás listo para escalar.</p>
+      </div>
+    </div>
+
+    <div class="portada-bottom">
+      <div class="portada-autor">
+        <strong>Rafael Navarro</strong>
+        Diseñador · Desarrollador · Estratega Digital<br>
+        5 años construyendo en el mundo digital desde Chicago
+      </div>
+      <div class="portada-url">technocrazy.org</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ INTRO / BIENVENIDA ═══════════════════ -->
+<div class="page">
+  <div class="inner">
+    <div class="cap-eyebrow">Bienvenida</div>
+    <h1 class="cap-titulo">Esto no es un PDF genérico</h1>
+    <div class="cap-divider"></div>
+
+    <p class="cap-intro">"Es lo que yo hubiera querido leer cuando empecé."</p>
+
+    <p class="p">Llegué a Chicago desde Venezuela hace 5 años. Hice de todo para vivir — como hace cualquier inmigrante. Pero siempre, en paralelo, hacía diseño: logos, páginas, piezas para negocios. Lo hacía de forma informal, sin estructura, sin precio fijo.</p>
+
+    <p class="p">Hasta que un día exploré la inteligencia artificial de verdad. Y entendí algo que cambió todo: <strong>la barrera entre tener una idea y poder ejecutarla ya no existe.</strong> Esta es la era de la información y la creación digital.</p>
+
+    <p class="p">Decidí formalizar todo en un proyecto serio. Así nació TechnoCrazy. Y esta guía es parte de lo que aprendí — lo que a mí me costó años, tú lo vas a leer en minutos.</p>
+
+    <div class="box">
+      <div class="box-titulo">Lo que vas a encontrar aquí:</div>
+      <ul class="ul">
+        <li><strong>Capítulo 1:</strong> La mentalidad correcta para entrar al mundo digital</li>
+        <li><strong>Capítulo 2:</strong> Los 4 pilares de cualquier negocio online</li>
+        <li><strong>Capítulo 3:</strong> Tu primera semana de acción (día por día)</li>
+        <li><strong>Capítulo 4:</strong> Cómo usar la IA sin saber de tecnología</li>
+        <li><strong>Capítulo 5:</strong> Señales de que estás listo para escalar</li>
+        <li><strong>Bonus:</strong> Checklist de 20 puntos antes de lanzar</li>
+      </ul>
+    </div>
+
+    <p class="p">Si tienes preguntas mientras lees, responde el email con el que recibiste esta guía. Sí, yo lo leo.</p>
+
+    <div class="cita">
+      <p>"No necesitas saberlo todo para empezar. Necesitas empezar para saber lo que necesitas."</p>
+    </div>
+
+    <div class="page-footer">
+      <span>Rafael Navarro · TechnoCrazy</span>
+      <span>technocrazy.org · wa.me/17794318214</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ CAP 1: MENTALIDAD ═══════════════════ -->
+<div class="page">
+  <div class="inner">
+    <div class="cap-num">01</div>
+    <div class="cap-eyebrow">Capítulo Uno</div>
+    <h1 class="cap-titulo">La Mentalidad Correcta</h1>
+    <div class="cap-divider"></div>
+
+    <p class="cap-intro">El problema más común no es la falta de recursos. Es entrar al mundo digital con la mentalidad equivocada.</p>
+
+    <div class="h3">Por qué la mayoría falla antes de empezar</div>
+    <p class="p">No es por falta de herramientas. No es por falta de ideas. La mayoría falla porque confunde estar activo con estar avanzando. Publican sin estrategia. Pagan sin dirección. Se frustran sin haber realmente intentado.</p>
+    <p class="p">La diferencia entre los que lo logran y los que no está en una sola cosa: <strong>claridad antes de movimiento.</strong></p>
+
+    <div class="h3">La diferencia entre un hobby y un negocio digital real</div>
+    <div class="grid2">
+      <div class="grid2-card">
+        <div class="g-num">H</div>
+        <h4>Hobby Digital</h4>
+        <ul>
+          <li>Publicas cuando tienes ganas</li>
+          <li>No sabes cuánto ganas por cliente</li>
+          <li>No tienes precio fijo</li>
+          <li>Dependes de la recomendación</li>
+          <li>No tienes proceso definido</li>
+        </ul>
+      </div>
+      <div class="grid2-card" style="border-color: #c8d8ff;">
+        <div class="g-num" style="color: var(--morado);">N</div>
+        <h4>Negocio Digital Real</h4>
+        <ul>
+          <li>Publicas con calendario y objetivo</li>
+          <li>Conoces tu margen y ticket promedio</li>
+          <li>Tienes precios claros y justificados</li>
+          <li>Generas demanda activa</li>
+          <li>Tienes un proceso que se repite</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="h3">El error del "lo hago yo mismo para ahorrar"</div>
+    <p class="p">Hay cosas que debes hacer tú: conocer a tu cliente, definir tu oferta, construir relaciones. Hay cosas que no debes hacer tú si no sabes hacerlas bien: diseño profesional, código, automatización. El tiempo que gastas aprendiendo algo que no es tu negocio es tiempo que no estás vendiendo.</p>
+
+    <div class="cita">
+      <p>"Tu tiempo vale. Delega lo que no eres tú. Domina lo que solo tú puedes hacer."</p>
+    </div>
+
+    <div class="h3">Cuándo tiene sentido delegar y cuándo no</div>
+    <ul class="ul">
+      <li><strong>SÍ delegar:</strong> diseño, desarrollo, automatización, SEO técnico, edición de video</li>
+      <li><strong>NO delegar:</strong> tu voz de marca, tus valores, tu conocimiento del cliente, tus precios</li>
+      <li><strong>Regla simple:</strong> si alguien puede hacerlo mejor que tú en menos tiempo — delega</li>
+    </ul>
+
+    <div class="page-footer">
+      <span>Capítulo 01 — La Mentalidad Correcta</span>
+      <span>technocrazy.org</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ CAP 2: 4 PILARES ═══════════════════ -->
+<div class="page">
+  <div class="inner">
+    <div class="cap-num">02</div>
+    <div class="cap-eyebrow">Capítulo Dos</div>
+    <h1 class="cap-titulo">Los 4 Pilares de Cualquier Negocio Online</h1>
+    <div class="cap-divider"></div>
+
+    <p class="cap-intro">Independientemente del sector, tamaño o tipo de negocio — todo negocio digital exitoso está construido sobre los mismos 4 pilares. Si falta uno, el sistema no funciona.</p>
+
+    <div class="grid2">
+
+      <div class="grid2-card" style="border-left: 3px solid var(--azul);">
+        <div class="g-num">1</div>
+        <h4>Identidad Visual</h4>
+        <ul>
+          <li>Logo que comunica lo que eres</li>
+          <li>Paleta de colores consistente</li>
+          <li>Tipografía definida</li>
+          <li>Voz de marca (cómo hablas)</li>
+          <li>Templates de contenido</li>
+        </ul>
+        <p style="margin-top:10px; font-size:0.78rem; color: var(--azul);">Sin identidad, eres invisible entre el ruido.</p>
+      </div>
+
+      <div class="grid2-card" style="border-left: 3px solid var(--morado);">
+        <div class="g-num">2</div>
+        <h4>Presencia Web</h4>
+        <ul>
+          <li>Dominio propio (no .wix ni .link)</li>
+          <li>Página que carga rápido</li>
+          <li>Diseño optimizado para móvil</li>
+          <li>CTA clara en cada sección</li>
+          <li>Formulario o WhatsApp directo</li>
+        </ul>
+        <p style="margin-top:10px; font-size:0.78rem; color: var(--morado);">No es tener página. Es tener página que convierte.</p>
+      </div>
+
+      <div class="grid2-card" style="border-left: 3px solid #e91e63;">
+        <div class="g-num">3</div>
+        <h4>Captación de Clientes</h4>
+        <ul>
+          <li>Redes sociales con estrategia</li>
+          <li>SEO local (aparecer en Google)</li>
+          <li>Contenido educativo / de valor</li>
+          <li>Sistema de referidos</li>
+          <li>Email marketing básico</li>
+        </ul>
+        <p style="margin-top:10px; font-size:0.78rem; color: #e91e63;">Sin captación activa, dependes de la suerte.</p>
+      </div>
+
+      <div class="grid2-card" style="border-left: 3px solid #00bcd4;">
+        <div class="g-num">4</div>
+        <h4>Automatización</h4>
+        <ul>
+          <li>Respuestas automáticas en IG/WA</li>
+          <li>Emails automáticos post-compra</li>
+          <li>Agendamiento sin llamadas</li>
+          <li>Entrega digital automática</li>
+          <li>Facturación y recordatorios</li>
+        </ul>
+        <p style="margin-top:10px; font-size:0.78rem; color: #00bcd4;">Automatizar = vender mientras duermes.</p>
+      </div>
+
+    </div>
+
+    <div class="box">
+      <div class="box-titulo">El orden importa</div>
+      <p>No construyas captación antes de tener identidad. No pagues ads antes de tener tu web lista. No automatices antes de tener el proceso probado manualmente. El orden correcto: Identidad → Web → Captación → Automatización.</p>
+    </div>
+
+    <div class="page-footer">
+      <span>Capítulo 02 — Los 4 Pilares</span>
+      <span>technocrazy.org</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ CAP 3: PRIMERA SEMANA ═══════════════════ -->
+<div class="page">
+  <div class="inner">
+    <div class="cap-num">03</div>
+    <div class="cap-eyebrow">Capítulo Tres</div>
+    <h1 class="cap-titulo">Tu Primera Semana de Acción</h1>
+    <div class="cap-divider"></div>
+
+    <p class="cap-intro">Basta de planear. Esta es la semana donde empiezas a existir en el mundo digital. Siete días. Siete pasos. Sin excusas.</p>
+
+    <div class="dia-card">
+      <div class="dia-badge">Día 1</div>
+      <div>
+        <h4>Define tu oferta en una oración</h4>
+        <p>Fórmula: "Ayudo a [quién] a [lograr qué resultado] sin [obstáculo que los frena]."<br>
+        Ejemplo: "Ayudo a restaurantes en Chicago a conseguir más clientes sin gastar en publicidad costosa."<br>
+        Si no puedes decirlo en una oración, aún no está claro suficiente.</p>
+      </div>
+    </div>
+
+    <div class="dia-card">
+      <div class="dia-badge">Día 2</div>
+      <div>
+        <h4>Crea o mejora tu perfil de Instagram</h4>
+        <p>Foto profesional · Nombre de usuario simple · Bio con tu oferta en 3 líneas · Link directo a WhatsApp o web · Publicar 1 post de presentación hoy.</p>
+      </div>
+    </div>
+
+    <div class="dia-card">
+      <div class="dia-badge">Día 3</div>
+      <div>
+        <h4>Registra tu dominio</h4>
+        <p>Namecheap.com: busca tunombre.com o tunegocio.com — desde $8/año. Si no está disponible: .org, .net o agrega tu ciudad. Un dominio propio es tu dirección profesional permanente.</p>
+      </div>
+    </div>
+
+    <div class="dia-card">
+      <div class="dia-badge">Día 4</div>
+      <div>
+        <h4>Configura WhatsApp Business</h4>
+        <p>Perfil con foto · Descripción del negocio · Horario de atención · Mensaje de bienvenida automático · Mensaje de ausencia automático · Catálogo de servicios/productos.</p>
+      </div>
+    </div>
+
+    <div class="dia-card">
+      <div class="dia-badge">Día 5</div>
+      <div>
+        <h4>Habla con 5 clientes potenciales</h4>
+        <p>No para vender. Para entender. Pregunta: ¿Cuál es tu mayor problema con [lo que tú resuelves]? Escucha. Toma nota. Las respuestas te van a decir exactamente cómo vender.</p>
+      </div>
+    </div>
+
+    <div class="dia-card">
+      <div class="dia-badge">Día 6</div>
+      <div>
+        <h4>Publica tus primeros 3 posts</h4>
+        <p>Post 1: Presentación tuya. Post 2: El problema que resuelves. Post 3: Cómo trabajas. Sin precios. Sin venta dura. Solo valor y presencia.</p>
+      </div>
+    </div>
+
+    <div class="dia-card">
+      <div class="dia-badge">Día 7</div>
+      <div>
+        <h4>Revisa y ajusta</h4>
+        <p>¿Qué funcionó? ¿Cuántas personas contactaron? ¿Qué preguntas te hicieron? Con esa información ya tienes tu primera estrategia real — basada en datos, no en suposiciones.</p>
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <span>Capítulo 03 — Tu Primera Semana</span>
+      <span>technocrazy.org</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ CAP 4: IA ═══════════════════ -->
+<div class="page">
+  <div class="inner">
+    <div class="cap-num">04</div>
+    <div class="cap-eyebrow">Capítulo Cuatro</div>
+    <h1 class="cap-titulo">IA: Tu Empleado de $0</h1>
+    <div class="cap-divider"></div>
+
+    <p class="cap-intro">La inteligencia artificial no destruyó la creatividad. Destruyó la barrera que separaba a los que podían ejecutar de los que no podían. Ahora es tu turno.</p>
+
+    <div class="h3">Qué puede hacer la IA por tu negocio HOY</div>
+    <ul class="ol">
+      <li><strong>Responder a clientes 24/7</strong> en Instagram y WhatsApp — sin que tú estés presente</li>
+      <li><strong>Generar contenido visual</strong> (imágenes, banners, posts) en segundos</li>
+      <li><strong>Escribir captions, emails y mensajes</strong> de venta optimizados</li>
+      <li><strong>Analizar tus números</strong> y señalarte dónde estás perdiendo dinero</li>
+      <li><strong>Automatizar cotizaciones, agendas y recordatorios</strong> de citas</li>
+      <li><strong>Crear o mejorar tu página web</strong> sin saber programar</li>
+      <li><strong>Traducir tu contenido</strong> a inglés para el mercado americano al instante</li>
+    </ul>
+
+    <div class="h3">Herramientas gratuitas recomendadas</div>
+    <table class="tools-table">
+      <tr>
+        <th>Herramienta</th>
+        <th>Para qué sirve</th>
+        <th>Plan</th>
+      </tr>
+      <tr>
+        <td><strong>ChatGPT / Claude</strong></td>
+        <td>Redactar textos, emails, estrategias, respuestas</td>
+        <td><span class="gratis">GRATIS</span></td>
+      </tr>
+      <tr>
+        <td><strong>Canva IA</strong></td>
+        <td>Diseño gráfico asistido por IA, posts, banners</td>
+        <td><span class="gratis">GRATIS</span></td>
+      </tr>
+      <tr>
+        <td><strong>ManyChat</strong></td>
+        <td>Automatización de DMs en Instagram</td>
+        <td><span class="gratis">GRATIS</span></td>
+      </tr>
+      <tr>
+        <td><strong>Systeme.io</strong></td>
+        <td>Email marketing + embudo de ventas</td>
+        <td><span class="gratis">GRATIS (2k contactos)</span></td>
+      </tr>
+      <tr>
+        <td><strong>Google Analytics</strong></td>
+        <td>Ver quién visita tu web y de dónde viene</td>
+        <td><span class="gratis">GRATIS</span></td>
+      </tr>
+      <tr>
+        <td><strong>Notion IA</strong></td>
+        <td>Organizar tu negocio + asistente IA incluido</td>
+        <td><span class="gratis">GRATIS</span></td>
+      </tr>
+    </table>
+
+    <div class="h3">Cómo crear contenido con IA sin ser creativo</div>
+    <p class="p">El secreto es el prompt correcto. En lugar de decirle "dame ideas de posts", dile: <em>"Soy dueño de [tipo de negocio] en [ciudad]. Mi cliente ideal es [descripción]. Dame 5 ideas de posts para Instagram que resuelvan su mayor problema, con gancho en las primeras 3 palabras."</em></p>
+    <p class="p">La IA no reemplaza tu voz. La amplifica. Tú pones la dirección — ella pone la velocidad.</p>
+
+    <div class="cita">
+      <p>"La IA no va a reemplazar tu negocio. Va a reemplazar al que no usa IA."</p>
+    </div>
+
+    <div class="page-footer">
+      <span>Capítulo 04 — IA: Tu Empleado de $0</span>
+      <span>technocrazy.org</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ CAP 5: ESCALAR ═══════════════════ -->
+<div class="page">
+  <div class="inner">
+    <div class="cap-num">05</div>
+    <div class="cap-eyebrow">Capítulo Cinco</div>
+    <h1 class="cap-titulo">Cuándo Estás Listo para Escalar</h1>
+    <div class="cap-divider"></div>
+
+    <p class="cap-intro">Escalar un negocio roto solo lo rompe más rápido. Escalar bien significa multiplicar lo que ya funciona — no adivinar qué podría funcionar.</p>
+
+    <div class="h3">Señales de que ya tienes base para crecer</div>
+
+    <div class="senal"><div class="senal-icon">✅</div><div class="senal-texto"><strong>Tienes clientes recurrentes</strong> — al menos 3 personas que volvieron a comprarte o recomendarte sin que tú los buscaras</div></div>
+    <div class="senal"><div class="senal-icon">✅</div><div class="senal-texto"><strong>Sabes qué funciona</strong> — tienes al menos 1 canal, 1 oferta o 1 tipo de contenido que consistentemente trae resultados</div></div>
+    <div class="senal"><div class="senal-icon">✅</div><div class="senal-texto"><strong>Tu proceso está documentado</strong> — puedes explicar exactamente cómo trabajas en menos de 5 pasos</div></div>
+    <div class="senal"><div class="senal-icon">✅</div><div class="senal-texto"><strong>Tienes más demanda de la que puedes atender</strong> — el cuello de botella es tu tiempo, no la falta de clientes</div></div>
+    <div class="senal"><div class="senal-icon">✅</div><div class="senal-texto"><strong>Tus números son positivos</strong> — ingresas más de lo que gastas, incluso si el margen es pequeño</div></div>
+
+    <div class="h3">La diferencia entre hacer crecer y hacer crecer bien</div>
+    <div class="grid2">
+      <div class="grid2-card" style="border-left: 3px solid #e53935;">
+        <h4>❌ Hacer crecer mal</h4>
+        <ul>
+          <li>Pagar ads sin saber qué convierte</li>
+          <li>Contratar sin proceso definido</li>
+          <li>Lanzar más productos antes de dominar uno</li>
+          <li>Cambiar de plataforma porque "no funciona"</li>
+        </ul>
+      </div>
+      <div class="grid2-card" style="border-left: 3px solid #2e7d32;">
+        <h4>✅ Hacer crecer bien</h4>
+        <ul>
+          <li>Invertir en lo que ya demostró funcionar</li>
+          <li>Automatizar antes de contratar</li>
+          <li>Perfeccionar antes de diversificar</li>
+          <li>Duplicar lo que da resultado</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="h3">Las herramientas que crecen contigo</div>
+    <ul class="ul">
+      <li><strong>Systeme.io → ConvertKit:</strong> cuando superas 2,000 contactos de email</li>
+      <li><strong>Instagram → YouTube:</strong> cuando tienes contenido largo y autoridad establecida</li>
+      <li><strong>WhatsApp → CRM:</strong> cuando no puedes seguir el rastro de todos tus leads a mano</li>
+      <li><strong>Landing page → App propia:</strong> cuando el volumen de clientes justifica la inversión</li>
+    </ul>
+
+    <div class="box">
+      <div class="box-titulo">El momento de hablar con un profesional</div>
+      <p>Cuando ya tienes clientes, proceso y claridad — pero no el tiempo ni el conocimiento técnico para llevarlo al siguiente nivel. Ese es el momento de delegar diseño, desarrollo, automatización o IA a alguien que lo hace todos los días.</p>
+    </div>
+
+    <div class="page-footer">
+      <span>Capítulo 05 — Cuándo Escalar</span>
+      <span>technocrazy.org</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ CHECKLIST BONUS ═══════════════════ -->
+<div class="page">
+  <div style="display:flex; flex-direction:column; min-height:1123px;">
+    <div class="checklist-header">
+      <div class="eyebrow">Bonus — Checklist</div>
+      <h2>20 Puntos Antes de Lanzar<br>Tu Negocio Digital</h2>
+      <p>Imprime esta página. Marca cada punto. No lances hasta tener al menos 15/20.</p>
+    </div>
+
+    <div class="checklist-body">
+
+      <div class="cl-section">
+        <h3>Identidad y Oferta</h3>
+        <div class="cl-item"><div class="cl-box"></div><p>Tengo mi oferta definida en una oración clara (quién, qué resultado, sin qué obstáculo)</p></div>
+        <div class="cl-item"><div class="cl-box"></div><p>Tengo un logo o imagen de marca consistente</p></div>
+        <div class="cl-item"><div class="cl-box"></div><p>Sé cuáles son mis precios y por qué valen lo que cuestan</p></div>
+        <div class="cl-item"><div class="cl-box"></div><p>Conozco quién es mi cliente ideal (edad, problema, plataforma donde está)</p></div>
+      </div>
+
+      <div class="cl-section">
+        <h3>Presencia Digital</h3>
+        <div class="cl-item"><div class="cl-box"></div><p>Tengo un dominio propio registrado (.com / .org / .net)</p></div>
+        <div class="cl-item"><div class="cl-box"></div><p>Mi perfil de Instagram está completo y optimizado</p></div>
+        <div class="cl-item"><div class="cl-box"></div><p>Tengo WhatsApp Business configurado con mensaje automático</p></div>
+        <div class="cl-item"><div class="cl-box"></div><p>Hay al menos 1 forma de contacto visible en todas mis plataformas</p></div>
+        <div class="cl-item"><div class="cl-box"></div><p>Mi bio/descripción dice claramente qué hago y para quién</p></div>
+      </div>
+
+      <div class="cl-section">
+        <h3>Contenido y Captación</h3>
+        <div class="cl-item"><div class="cl-box"></div><p>Tengo al menos 3 posts publicados antes del lanzamiento</p></div>
+        <div class="cl-item"><div class="cl-box"></div><p>Tengo un plan de publicación (aunque sea 3 posts por semana)</p></div>
+        <div class="cl-item"><div class="cl-box"></div><p>Hablé con al menos 5 clientes potenciales antes de lanzar</p></div>
+        <div class="cl-item"><div class="cl-box"></div><p>Tengo un sistema para recibir y responder consultas (WA/email/form)</p></div>
+      </div>
+
+      <div class="cl-section">
+        <h3>Operación</h3>
+        <div class="cl-item"><div class="cl-box"></div><p>Sé cómo entrego mi producto/servicio de inicio a fin</p></div>
+        <div class="cl-item"><div class="cl-box"></div><p>Tengo una forma de cobrar (PayPal, Stripe, Zelle, efectivo)</p></div>
+        <div class="cl-item"><div class="cl-box"></div><p>Tengo claro cuánto tiempo toma entregar cada servicio</p></div>
+        <div class="cl-item"><div class="cl-box"></div><p>Puedo manejar 3 clientes simultáneos sin saturarme</p></div>
+      </div>
+
+      <div class="cl-section">
+        <h3>Mentalidad</h3>
+        <div class="cl-item"><div class="cl-box"></div><p>Estoy dispuesto a publicar aunque no tenga seguidores todavía</p></div>
+        <div class="cl-item"><div class="cl-box"></div><p>Voy a medir resultados y ajustar en lugar de rendirme</p></div>
+        <div class="cl-item"><div class="cl-box"></div><p>Sé que el primer mes es de aprendizaje, no de resultados masivos</p></div>
+      </div>
+
+    </div>
+
+    <div style="padding: 0 60px 30px; margin-top: auto;">
+      <div style="background: #f8f9ff; border-radius: 12px; padding: 16px 20px; display:flex; justify-content:space-between; align-items:center;">
+        <p style="font-size:0.82rem; color: var(--suave);">¿Tienes menos de 12 marcadas? Escríbeme antes de invertir más tiempo o dinero.</p>
+        <p style="font-size:0.82rem; font-weight:700; color: var(--azul);">wa.me/17794318214</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ PÁGINA FINAL — OFERTA ═══════════════════ -->
+<div class="page">
+  <div class="oferta-page">
+    <div class="oferta-inner">
+
+      <div class="oferta-top">
+        <div style="color: var(--cyan); font-size:0.7rem; text-transform:uppercase; letter-spacing:3px; margin-bottom:12px;">¿Listo para construir algo real?</div>
+        <h2>Esto es lo que hago.<br>Esto es lo que <span>puedo hacer por ti.</span></h2>
+        <p style="margin-top:14px;">Llevo 5 años construyendo en el mundo digital. Ahora puedo hacer en días lo que antes tomaba meses. Sin equipos grandes. Sin precios de agencia. Con resultados reales que puedes ver funcionando hoy.</p>
+      </div>
+
+      <div class="servicios-grid">
+        <div class="srv-card">
+          <div class="srv-icon">🎨</div>
+          <h4>Diseño Gráfico</h4>
+          <div class="srv-precio">desde $149</div>
+          <p>Logo · Identidad visual · Piezas publicitarias · Plantillas para redes</p>
+        </div>
+        <div class="srv-card">
+          <div class="srv-icon">🌐</div>
+          <h4>Páginas Web</h4>
+          <div class="srv-precio">desde $299</div>
+          <p>Diseño moderno · Rápida · Optimizada para móvil y Google · Con CTA que convierte</p>
+        </div>
+        <div class="srv-card">
+          <div class="srv-icon">📱</div>
+          <h4>Apps Móviles</h4>
+          <div class="srv-precio">desde $499</div>
+          <p>iOS y Android · Diseño nativo · Integración con pagos, mapas, notificaciones</p>
+        </div>
+        <div class="srv-card">
+          <div class="srv-icon">⚙️</div>
+          <h4>Automatización</h4>
+          <div class="srv-precio">desde $299</div>
+          <p>Procesos inteligentes · Flujos automáticos · Integración de sistemas · Sin fricciones</p>
+        </div>
+        <div class="srv-card" style="grid-column: 1 / -1; display:flex; gap:20px; align-items:center;">
+          <div style="flex:1;">
+            <div class="srv-icon">🤖</div>
+            <h4>IA & Automatización</h4>
+            <div class="srv-precio">desde $199</div>
+            <p>Chatbots · Respuestas automáticas · Sistemas inteligentes · Agentes IA personalizados</p>
+          </div>
+          <div style="flex:1; background:#ffffff08; border-radius:10px; padding:16px; border:1px solid #ffffff15;">
+            <p style="color:#9ab0d0; font-size:0.8rem; line-height:1.7;">Todo incluye: estrategia, diseño, desarrollo, entrega y soporte post-lanzamiento.<br><br><strong style="color:#fff;">Sin contratos largos. Sin sorpresas de precio. Sin términos confusos.</strong></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="oferta-cta">
+        <div>
+          <p><strong>¿Tienes un proyecto en mente?</strong>
+          Escríbeme hoy. En 24 horas tienes una propuesta clara con precio y tiempo de entrega.</p>
+        </div>
+        <div style="text-align:right; flex-shrink:0; margin-left:20px;">
+          <p style="color:#fff; font-size:0.8rem; margin-bottom:6px;">WhatsApp directo:</p>
+          <a class="cta-link" href="https://wa.me/17794318214">wa.me/17794318214</a>
+          <p style="color:#b3ccff; font-size:0.75rem; margin-top:6px;">technocrazy.org</p>
+        </div>
+      </div>
+
+      <div class="oferta-firma">
+        <div>
+          <p>Rafael Navarro · Chicago, IL</p>
+          <p>rafaelpixel3004@gmail.com</p>
+        </div>
+        <div class="logo-text">TECHNO<span>CRAZY</span></div>
+        <p style="color:#556; font-size:0.75rem;">Transformo Ideas en Negocios Digitales</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

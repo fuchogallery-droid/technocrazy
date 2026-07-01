@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catálogo de Servicios — TechnoCrazy</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f0f2ff;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .page {
+      width: 794px;
+      min-height: 1123px;
+      margin: 0 auto 40px;
+      background: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* ── HEADER ── */
+    .header {
+      background: linear-gradient(135deg, #0d0d1a 0%, #1a0d2e 60%, #0d1f3c 100%);
+      padding: 52px 60px 44px;
+      position: relative;
+    }
+
+    .header::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #2979ff, #7c4dff, #00e5ff);
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .logo-area { display: flex; gap: 14px; align-items: center; }
+
+    .logo-dot {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, #2979ff, #7c4dff);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 900;
+      color: #fff;
+    }
+
+    .logo-text { }
+    .logo-name { font-size: 20px; font-weight: 800; color: #fff; }
+    .logo-sub { font-size: 10px; color: rgba(255,255,255,0.4); letter-spacing: 2px; text-transform: uppercase; }
+
+    .header-right { text-align: right; }
+    .header-right .label { font-size: 10px; color: rgba(255,255,255,0.4); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 4px; }
+    .header-right .date { font-size: 12px; color: rgba(255,255,255,0.6); }
+
+    .header-headline {
+      margin-top: 36px;
+    }
+
+    .header-headline h1 {
+      font-size: 42px;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.1;
+    }
+
+    .header-headline h1 span {
+      background: linear-gradient(90deg, #00e5ff, #7c4dff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .header-headline p {
+      font-size: 14px;
+      color: rgba(255,255,255,0.5);
+      margin-top: 8px;
+    }
+
+    /* ── BODY ── */
+    .body { padding: 48px 60px; }
+
+    .intro-text {
+      font-size: 14px;
+      color: #555;
+      line-height: 1.8;
+      margin-bottom: 40px;
+      padding: 20px 24px;
+      background: #f7f8ff;
+      border-left: 3px solid #2979ff;
+      border-radius: 0 10px 10px 0;
+    }
+
+    .intro-text em {
+      display: block;
+      font-size: 12px;
+      color: #aaa;
+      margin-top: 6px;
+    }
+
+    /* ── SERVICIOS ── */
+    .services { display: flex; flex-direction: column; gap: 24px; margin-bottom: 40px; }
+
+    .svc {
+      border: 1.5px solid #eee;
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+    }
+
+    .svc-sidebar {
+      width: 8px;
+      flex-shrink: 0;
+    }
+
+    .svc-content {
+      flex: 1;
+      padding: 24px 28px;
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    .svc-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+
+    .svc-info { flex: 1; }
+
+    .svc-name {
+      font-size: 17px;
+      font-weight: 800;
+      color: #1a1a2e;
+      margin-bottom: 2px;
+    }
+
+    .svc-name-en {
+      font-size: 11px;
+      color: #aaa;
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+
+    .svc-desc {
+      font-size: 13px;
+      color: #555;
+      line-height: 1.65;
+      margin-bottom: 12px;
+    }
+
+    .svc-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .svc-tag {
+      font-size: 10px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 999px;
+      letter-spacing: 0.3px;
+    }
+
+    .svc-price {
+      text-align: right;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: flex-start;
+      padding-top: 4px;
+    }
+
+    .price-label { font-size: 9px; color: #ccc; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 4px; }
+    .price-val { font-size: 20px; font-weight: 900; color: #1a1a2e; }
+    .price-note { font-size: 10px; color: #999; margin-top: 2px; }
+
+    /* colores por servicio */
+    .s1 .svc-sidebar { background: linear-gradient(180deg, #7c4dff, #2979ff); }
+    .s1 .svc-icon { background: #f3f0ff; }
+    .s1 .svc-tag { background: #f3f0ff; color: #7c4dff; }
+
+    .s2 .svc-sidebar { background: linear-gradient(180deg, #2979ff, #00e5ff); }
+    .s2 .svc-icon { background: #eff6ff; }
+    .s2 .svc-tag { background: #eff6ff; color: #2979ff; }
+
+    .s3 .svc-sidebar { background: linear-gradient(180deg, #f59e0b, #ef4444); }
+    .s3 .svc-icon { background: #fffbeb; }
+    .s3 .svc-tag { background: #fffbeb; color: #d97706; }
+
+    .s4 .svc-sidebar { background: linear-gradient(180deg, #10b981, #059669); }
+    .s4 .svc-icon { background: #ecfdf5; }
+    .s4 .svc-tag { background: #ecfdf5; color: #059669; }
+
+    .s5 .svc-sidebar { background: linear-gradient(180deg, #00e5ff, #2979ff); }
+    .s5 .svc-icon { background: #e0f7fa; }
+    .s5 .svc-tag { background: #e0f7fa; color: #0288d1; }
+
+    /* ── PROCESO ── */
+    .proceso-section { margin-bottom: 40px; }
+
+    .section-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 20px;
+    }
+
+    .steps {
+      display: flex;
+      gap: 0;
+      position: relative;
+    }
+
+    .steps::before {
+      content: '';
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      right: 20px;
+      height: 2px;
+      background: linear-gradient(90deg, #2979ff, #7c4dff, #00e5ff);
+      z-index: 0;
+    }
+
+    .step {
+      flex: 1;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .step-dot {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #2979ff, #7c4dff);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 12px;
+    }
+
+    .step-label { font-size: 12px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+    .step-sub { font-size: 10px; color: #999; }
+
+    /* ── FOOTER ── */
+    .footer {
+      background: linear-gradient(135deg, #0d0d1a, #1a0d2e);
+      padding: 32px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-left { }
+    .footer-name { font-size: 18px; font-weight: 800; color: #fff; }
+    .footer-tagline { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 3px; }
+
+    .footer-contacts { display: flex; flex-direction: column; gap: 6px; text-align: right; }
+    .footer-contact { font-size: 12px; color: rgba(255,255,255,0.6); }
+    .footer-contact span { color: rgba(255,255,255,0.35); margin-right: 6px; }
+
+    @media print {
+      body { background: #fff; }
+      .page { margin: 0; page-break-after: always; }
+      @page { size: A4; margin: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-top">
+      <div class="logo-area">
+        <div class="logo-dot">TC</div>
+        <div class="logo-text">
+          <div class="logo-name">TechnoCrazy</div>
+          <div class="logo-sub">technocrazy.org</div>
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="label">Documento</div>
+        <div class="date">Catálogo de Servicios · 2026</div>
+      </div>
+    </div>
+    <div class="header-headline">
+      <h1>Catálogo de<br><span>Servicios</span></h1>
+      <p>Services Catalog · Rafael Navarro · Chicago, Illinois</p>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div class="body">
+
+    <div class="intro-text">
+      Transformo ideas en negocios digitales. Trabajo directamente con cada cliente para entregar soluciones que generan resultados reales — no promesas.<br>
+      <em>I turn ideas into digital businesses. I work directly with each client to deliver solutions that generate real results — not promises.</em>
+    </div>
+
+    <div class="services">
+
+      <!-- 1. Diseño Gráfico -->
+      <div class="svc s1">
+        <div class="svc-sidebar"></div>
+        <div class="svc-content">
+          <div class="svc-icon">🎨</div>
+          <div class="svc-info">
+            <div class="svc-name">Diseño Gráfico</div>
+            <div class="svc-name-en">Graphic Design</div>
+            <div class="svc-desc">
+              Logos, identidad visual, branding completo, piezas para redes sociales, flyers, banners y todo material gráfico que tu negocio necesite para ser recordado.
+              <br><em style="color:#aaa;font-style:italic;font-size:11px;">Logos, visual identity, full branding, social media graphics, flyers, banners — everything your business needs to be remembered.</em>
+            </div>
+            <div class="svc-tags">
+              <span class="svc-tag">Logo & Branding</span>
+              <span class="svc-tag">Redes Sociales</span>
+              <span class="svc-tag">Identidad Visual</span>
+              <span class="svc-tag">Material Impreso</span>
+            </div>
+          </div>
+          <div class="svc-price">
+            <div class="price-label">Desde</div>
+            <div class="price-val">$250</div>
+            <div class="price-note">Consultar</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Páginas Web -->
+      <div class="svc s2">
+        <div class="svc-sidebar"></div>
+        <div class="svc-content">
+          <div class="svc-icon">💻</div>
+          <div class="svc-info">
+            <div class="svc-name">Páginas Web Profesionales</div>
+            <div class="svc-name-en">Professional Websites</div>
+            <div class="svc-desc">
+              Diseño moderno, rápido y optimizado para convertir visitantes en clientes. Landing pages, tiendas, portafolios, plataformas completas. Con dominio, hosting y SSL incluidos.
+              <br><em style="color:#aaa;font-style:italic;font-size:11px;">Modern, fast, conversion-optimized design. Landing pages, stores, portfolios, full platforms. Domain, hosting, and SSL included.</em>
+            </div>
+            <div class="svc-tags">
+              <span class="svc-tag">Landing Page</span>
+              <span class="svc-tag">E-commerce</span>
+              <span class="svc-tag">Next.js / React</span>
+              <span class="svc-tag">SEO incluido</span>
+            </div>
+          </div>
+          <div class="svc-price">
+            <div class="price-label">Desde</div>
+            <div class="price-val">$500</div>
+            <div class="price-note">Consultar</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Apps Móviles -->
+      <div class="svc s3">
+        <div class="svc-sidebar"></div>
+        <div class="svc-content">
+          <div class="svc-icon">📱</div>
+          <div class="svc-info">
+            <div class="svc-name">Apps Móviles</div>
+            <div class="svc-name-en">Mobile Applications</div>
+            <div class="svc-desc">
+              Aplicaciones nativas para iOS y Android. Desde apps de pedidos hasta sistemas de gestión. Una sola app que funciona en todos los dispositivos, sin límites.
+              <br><em style="color:#aaa;font-style:italic;font-size:11px;">Native iOS & Android apps. From order apps to management systems. One app that works on all devices, no limits.</em>
+            </div>
+            <div class="svc-tags">
+              <span class="svc-tag">iOS & Android</span>
+              <span class="svc-tag">React Native</span>
+              <span class="svc-tag">Publicación App Store</span>
+              <span class="svc-tag">Notificaciones Push</span>
+            </div>
+          </div>
+          <div class="svc-price">
+            <div class="price-label">Desde</div>
+            <div class="price-val">$800</div>
+            <div class="price-note">Consultar</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. Sistemas Automatizados -->
+      <div class="svc s4">
+        <div class="svc-sidebar"></div>
+        <div class="svc-content">
+          <div class="svc-icon">⚙️</div>
+          <div class="svc-info">
+            <div class="svc-name">Sistemas Automatizados</div>
+            <div class="svc-name-en">Automated Business Systems</div>
+            <div class="svc-desc">
+              Construyo sistemas que eliminan tareas repetitivas: CRMs personalizados, flujos de ventas automáticos, integraciones entre plataformas y dashboards de control en tiempo real.
+              <br><em style="color:#aaa;font-style:italic;font-size:11px;">I build systems that eliminate repetitive tasks: custom CRMs, automated sales funnels, platform integrations, real-time dashboards.</em>
+            </div>
+            <div class="svc-tags">
+              <span class="svc-tag">CRM Custom</span>
+              <span class="svc-tag">Make / Zapier</span>
+              <span class="svc-tag">Flujos Automáticos</span>
+              <span class="svc-tag">Dashboard</span>
+            </div>
+          </div>
+          <div class="svc-price">
+            <div class="price-label">Desde</div>
+            <div class="price-val">$600</div>
+            <div class="price-note">Consultar</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. IA & Automatización -->
+      <div class="svc s5">
+        <div class="svc-sidebar"></div>
+        <div class="svc-content">
+          <div class="svc-icon">🤖</div>
+          <div class="svc-info">
+            <div class="svc-name">IA & Automatización</div>
+            <div class="svc-name-en">AI & Automation</div>
+            <div class="svc-desc">
+              Chatbots inteligentes, agentes IA que atienden clientes 24/7, sistemas de respuesta automática y trabajadores virtuales que cuestan 1/5 de un empleado y nunca descansan.
+              <br><em style="color:#aaa;font-style:italic;font-size:11px;">Smart chatbots, AI agents that serve clients 24/7, auto-response systems — virtual workers at 1/5 the cost of an employee, never resting.</em>
+            </div>
+            <div class="svc-tags">
+              <span class="svc-tag">Chatbot IA</span>
+              <span class="svc-tag">Claude API</span>
+              <span class="svc-tag">DM Automation</span>
+              <span class="svc-tag">Agentes 24/7</span>
+            </div>
+          </div>
+          <div class="svc-price">
+            <div class="price-label">Desde</div>
+            <div class="price-val">$400</div>
+            <div class="price-note">Consultar</div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /services -->
+
+    <!-- PROCESO -->
+    <div class="proceso-section">
+      <div class="section-title">Cómo funciona · How it works</div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-dot">1</div>
+          <div class="step-label">Consulta</div>
+          <div class="step-sub">Gratis · Free</div>
+        </div>
+        <div class="step">
+          <div class="step-dot">2</div>
+          <div class="step-label">Propuesta</div>
+          <div class="step-sub">24-48 hrs</div>
+        </div>
+        <div class="step">
+          <div class="step-dot">3</div>
+          <div class="step-label">Desarrollo</div>
+          <div class="step-sub">Entregas parciales</div>
+        </div>
+        <div class="step">
+          <div class="step-dot">4</div>
+          <div class="step-label">Entrega</div>
+          <div class="step-sub">Con soporte</div>
+        </div>
+        <div class="step">
+          <div class="step-dot">5</div>
+          <div class="step-label">Resultados</div>
+          <div class="step-sub">Tu negocio crece</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /body -->
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-left">
+      <div class="footer-name">Rafael Navarro · TechnoCrazy</div>
+      <div class="footer-tagline">Transformo Ideas en Negocios Digitales · Chicago, Illinois</div>
+    </div>
+    <div class="footer-contacts">
+      <div class="footer-contact"><span>🌐</span>technocrazy.org</div>
+      <div class="footer-contact"><span>📱</span>WhatsApp: +17794318214</div>
+      <div class="footer-contact"><span>📸</span>@igtechnocrazy</div>
+    </div>
+  </div>
+
+</div><!-- /page -->
+
+</body>
+</html>

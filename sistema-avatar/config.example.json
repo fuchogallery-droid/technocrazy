@@ -1,0 +1,23 @@
+{
+    "_instrucciones": "Copia este archivo como config.json y completa tus API keys",
+
+    "ANTHROPIC_API_KEY": "sk-ant-XXXXXXXXXX",
+
+    "HEYGEN_API_KEY": "TU_API_KEY_AQUI",
+    "HEYGEN_AVATAR_ID": "TU_AVATAR_ID_AQUI",
+    "HEYGEN_VOICE_ID": "TU_VOICE_ID_AQUI",
+
+    "ELEVENLABS_API_KEY": "TU_API_KEY_AQUI",
+    "ELEVENLABS_VOICE_ID": "TU_VOICE_ID_AQUI",
+
+    "BLOTATO_API_KEY": "TU_API_KEY_AQUI",
+
+    "TELEGRAM_BOT_TOKEN": "TU_BOT_TOKEN",
+    "TELEGRAM_CHAT_ID": "TU_CHAT_ID",
+
+    "_costos_estimados": {
+        "modelo_A_colab_gratis": "$0/semana",
+        "modelo_B_saas_pagado": "$30-35/semana",
+        "nota": "Empieza con modelo A, actualiza a B cuando haya ingresos"
+    }
+}

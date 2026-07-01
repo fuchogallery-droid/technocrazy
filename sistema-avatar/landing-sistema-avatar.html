@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistema Avatar IA — TechnoCrazy</title>
+<style>
+  :root {
+    --tc-blue: #4F6EF7;
+    --tc-purple: #7C3AED;
+    --tc-grad: linear-gradient(135deg, #4F6EF7, #7C3AED);
+    --dark: #0A0A0F;
+    --dark2: #111118;
+    --dark3: #1A1A24;
+    --text: #F0F0F8;
+    --muted: #8888AA;
+    --green: #10B981;
+    --yellow: #F59E0B;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--dark); color:var(--text); font-family:'Segoe UI',system-ui,sans-serif; line-height:1.6; }
+
+  /* NAV */
+  nav { display:flex; justify-content:space-between; align-items:center; padding:1.2rem 2rem; background:rgba(10,10,15,0.95); position:sticky; top:0; z-index:100; border-bottom:1px solid rgba(79,110,247,0.2); backdrop-filter:blur(10px); }
+  .logo { display:flex; align-items:center; gap:0.6rem; }
+  .logo img { height:36px; }
+  .logo-text { font-size:1.3rem; font-weight:800; background:var(--tc-grad); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+  .nav-cta { background:var(--tc-grad); color:#fff; padding:0.6rem 1.4rem; border-radius:8px; text-decoration:none; font-weight:700; font-size:0.9rem; transition:opacity 0.2s; }
+  .nav-cta:hover { opacity:0.85; }
+
+  /* HERO */
+  .hero { min-height:90vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:4rem 2rem; position:relative; overflow:hidden; }
+  .hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 80% 60% at 50% 0%, rgba(79,110,247,0.15), transparent 70%); pointer-events:none; }
+  .badge { display:inline-block; background:rgba(79,110,247,0.15); border:1px solid rgba(79,110,247,0.4); color:var(--tc-blue); padding:0.4rem 1rem; border-radius:100px; font-size:0.85rem; font-weight:600; margin-bottom:1.5rem; }
+  .hero h1 { font-size:clamp(2.2rem,6vw,4rem); font-weight:900; line-height:1.1; max-width:800px; margin-bottom:1.2rem; }
+  .hero h1 span { background:var(--tc-grad); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+  .hero p { font-size:1.2rem; color:var(--muted); max-width:600px; margin-bottom:2.5rem; }
+  .hero-ctas { display:flex; gap:1rem; flex-wrap:wrap; justify-content:center; }
+  .btn-primary { background:var(--tc-grad); color:#fff; padding:1rem 2.5rem; border-radius:12px; text-decoration:none; font-weight:800; font-size:1.1rem; transition:transform 0.2s,box-shadow 0.2s; box-shadow:0 0 30px rgba(79,110,247,0.4); }
+  .btn-primary:hover { transform:translateY(-2px); box-shadow:0 0 50px rgba(79,110,247,0.6); }
+  .btn-secondary { background:transparent; border:2px solid rgba(79,110,247,0.5); color:var(--text); padding:1rem 2rem; border-radius:12px; text-decoration:none; font-weight:700; font-size:1rem; transition:border-color 0.2s; }
+  .btn-secondary:hover { border-color:var(--tc-blue); }
+
+  /* PIPELINE VISUAL */
+  .pipeline { padding:5rem 2rem; background:var(--dark2); }
+  .pipeline h2 { text-align:center; font-size:2rem; font-weight:800; margin-bottom:0.5rem; }
+  .pipeline .sub { text-align:center; color:var(--muted); margin-bottom:3rem; }
+  .pipeline-flow { display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:0.5rem; max-width:1000px; margin:0 auto; }
+  .pipe-step { background:var(--dark3); border:1px solid rgba(79,110,247,0.2); border-radius:12px; padding:1.2rem 1.5rem; text-align:center; min-width:140px; flex:1; }
+  .pipe-step .icon { font-size:2rem; margin-bottom:0.5rem; }
+  .pipe-step .label { font-size:0.8rem; color:var(--muted); }
+  .pipe-step .name { font-weight:700; font-size:0.95rem; }
+  .pipe-arrow { color:var(--tc-blue); font-size:1.5rem; font-weight:900; }
+
+  /* WHAT YOU GET */
+  .what { padding:5rem 2rem; }
+  .what h2 { text-align:center; font-size:2rem; font-weight:800; margin-bottom:0.5rem; }
+  .what .sub { text-align:center; color:var(--muted); margin-bottom:3rem; }
+  .features { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:1.5rem; max-width:1000px; margin:0 auto; }
+  .feature { background:var(--dark3); border:1px solid rgba(79,110,247,0.15); border-radius:16px; padding:1.8rem; transition:border-color 0.2s,transform 0.2s; }
+  .feature:hover { border-color:rgba(79,110,247,0.4); transform:translateY(-3px); }
+  .feature .f-icon { font-size:2.2rem; margin-bottom:0.8rem; }
+  .feature h3 { font-size:1.1rem; font-weight:700; margin-bottom:0.5rem; }
+  .feature p { color:var(--muted); font-size:0.9rem; }
+
+  /* CONTENT TYPES */
+  .content-types { padding:5rem 2rem; background:var(--dark2); }
+  .content-types h2 { text-align:center; font-size:2rem; font-weight:800; margin-bottom:0.5rem; }
+  .content-types .sub { text-align:center; color:var(--muted); margin-bottom:3rem; }
+  .ct-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1.5rem; max-width:900px; margin:0 auto; }
+  .ct-card { border-radius:16px; padding:1.8rem; }
+  .ct-card.viral { background:linear-gradient(135deg,rgba(124,58,237,0.2),rgba(79,110,247,0.1)); border:1px solid rgba(124,58,237,0.3); }
+  .ct-card.ventas { background:linear-gradient(135deg,rgba(16,185,129,0.15),rgba(79,110,247,0.1)); border:1px solid rgba(16,185,129,0.3); }
+  .ct-card h3 { font-size:1.2rem; font-weight:800; margin-bottom:1rem; }
+  .ct-card ul { list-style:none; }
+  .ct-card ul li { padding:0.4rem 0; color:var(--muted); font-size:0.9rem; }
+  .ct-card ul li::before { content:'→ '; color:var(--tc-blue); }
+
+  /* PRICING */
+  .pricing { padding:5rem 2rem; }
+  .pricing h2 { text-align:center; font-size:2rem; font-weight:800; margin-bottom:0.5rem; }
+  .pricing .sub { text-align:center; color:var(--muted); margin-bottom:3rem; }
+  .plans { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1.5rem; max-width:1000px; margin:0 auto; }
+  .plan { background:var(--dark3); border:1px solid rgba(79,110,247,0.15); border-radius:20px; padding:2rem; position:relative; }
+  .plan.featured { border-color:var(--tc-blue); box-shadow:0 0 40px rgba(79,110,247,0.2); }
+  .plan .featured-badge { position:absolute; top:-14px; left:50%; transform:translateX(-50%); background:var(--tc-grad); color:#fff; padding:0.3rem 1.2rem; border-radius:100px; font-size:0.8rem; font-weight:700; white-space:nowrap; }
+  .plan h3 { font-size:1.1rem; font-weight:700; margin-bottom:0.5rem; color:var(--muted); }
+  .plan .price { font-size:2.5rem; font-weight:900; margin-bottom:0.3rem; }
+  .plan .price span { font-size:1rem; font-weight:400; color:var(--muted); }
+  .plan .desc { color:var(--muted); font-size:0.9rem; margin-bottom:1.5rem; }
+  .plan ul { list-style:none; margin-bottom:2rem; }
+  .plan ul li { padding:0.5rem 0; font-size:0.9rem; border-bottom:1px solid rgba(255,255,255,0.05); }
+  .plan ul li::before { content:'✓ '; color:var(--green); font-weight:700; }
+  .plan .plan-cta { display:block; text-align:center; padding:0.9rem; border-radius:10px; text-decoration:none; font-weight:700; font-size:0.95rem; transition:opacity 0.2s; }
+  .plan .plan-cta.grad { background:var(--tc-grad); color:#fff; }
+  .plan .plan-cta.outline { border:2px solid rgba(79,110,247,0.4); color:var(--text); }
+  .plan .plan-cta:hover { opacity:0.85; }
+
+  /* STACK TECH */
+  .stack { padding:4rem 2rem; background:var(--dark2); }
+  .stack h2 { text-align:center; font-size:1.8rem; font-weight:800; margin-bottom:3rem; }
+  .stack-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:1rem; max-width:900px; margin:0 auto; }
+  .stack-item { background:var(--dark3); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:1.2rem; text-align:center; }
+  .stack-item .s-icon { font-size:2rem; margin-bottom:0.5rem; }
+  .stack-item .s-name { font-weight:700; font-size:0.9rem; }
+  .stack-item .s-role { font-size:0.75rem; color:var(--muted); }
+
+  /* FAQ */
+  .faq { padding:5rem 2rem; }
+  .faq h2 { text-align:center; font-size:2rem; font-weight:800; margin-bottom:3rem; }
+  .faq-list { max-width:700px; margin:0 auto; }
+  .faq-item { border-bottom:1px solid rgba(255,255,255,0.08); padding:1.2rem 0; cursor:pointer; }
+  .faq-item summary { font-weight:700; font-size:1rem; list-style:none; display:flex; justify-content:space-between; align-items:center; }
+  .faq-item summary::after { content:'+'; color:var(--tc-blue); font-size:1.3rem; }
+  .faq-item[open] summary::after { content:'−'; }
+  .faq-item p { color:var(--muted); margin-top:0.8rem; font-size:0.95rem; }
+
+  /* CTA FINAL */
+  .final-cta { padding:5rem 2rem; text-align:center; background:linear-gradient(135deg,rgba(79,110,247,0.1),rgba(124,58,237,0.1)); border-top:1px solid rgba(79,110,247,0.2); }
+  .final-cta h2 { font-size:2.2rem; font-weight:900; margin-bottom:1rem; }
+  .final-cta p { color:var(--muted); max-width:500px; margin:0 auto 2rem; }
+  .urgency { background:rgba(245,158,11,0.1); border:1px solid rgba(245,158,11,0.3); color:var(--yellow); padding:0.6rem 1.5rem; border-radius:8px; display:inline-block; margin-bottom:2rem; font-size:0.9rem; font-weight:600; }
+
+  /* FOOTER */
+  footer { padding:2rem; text-align:center; color:var(--muted); font-size:0.85rem; border-top:1px solid rgba(255,255,255,0.05); }
+
+  @media(max-width:600px) {
+    .pipe-arrow { display:none; }
+    .hero h1 { font-size:2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">
+    <div class="logo-text">TC TechnoCrazy</div>
+  </div>
+  <a href="#pricing" class="nav-cta">Quiero mi Sistema →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="badge">🤖 Sistema Avatar IA — Nuevo 2026</div>
+  <h1>Tu cara. Tu voz.<br><span>Publicando sola en redes.</span></h1>
+  <p>Clonamos tu imagen, tu voz y tu personalidad en IA. El sistema genera contenido y publica solo en Instagram, TikTok y YouTube — sin que tú grabes nada.</p>
+  <div class="hero-ctas">
+    <a href="#pricing" class="btn-primary">Ver Planes y Precios</a>
+    <a href="#como-funciona" class="btn-secondary">¿Cómo funciona?</a>
+  </div>
+</section>
+
+<!-- PIPELINE -->
+<section class="pipeline" id="como-funciona">
+  <h2>El pipeline que trabaja por ti</h2>
+  <p class="sub">7 pasos automáticos. Tú solo apareces el día del escaneo inicial.</p>
+  <div class="pipeline-flow">
+    <div class="pipe-step">
+      <div class="icon">🧠</div>
+      <div class="name">Claude IA</div>
+      <div class="label">Genera el script</div>
+    </div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step">
+      <div class="icon">🎬</div>
+      <div class="name">HeyGen</div>
+      <div class="label">Tu cara habla</div>
+    </div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step">
+      <div class="icon">🗣️</div>
+      <div class="name">ElevenLabs</div>
+      <div class="label">Tu voz clonada</div>
+    </div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step">
+      <div class="icon">🎨</div>
+      <div class="name">ChatGPT</div>
+      <div class="label">Fotos tuyas IA</div>
+    </div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step">
+      <div class="icon">⚙️</div>
+      <div class="name">n8n</div>
+      <div class="label">Orquesta todo</div>
+    </div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step">
+      <div class="icon">🚀</div>
+      <div class="name">Publicación</div>
+      <div class="label">IG + TikTok + YT</div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT YOU GET -->
+<section class="what">
+  <h2>Lo que recibes</h2>
+  <p class="sub">Un ecosistema completo. No un curso. El sistema listo y funcionando.</p>
+  <div class="features">
+    <div class="feature">
+      <div class="f-icon">👤</div>
+      <h3>Avatar IA de tu cara</h3>
+      <p>Clonamos tu rostro con HeyGen Avatar V. Un video de 5 minutos tuyo → avatar listo para generar miles de videos.</p>
+    </div>
+    <div class="feature">
+      <div class="f-icon">🗣️</div>
+      <h3>Voz clonada exacta</h3>
+      <p>10 minutos de audio tuyo → ElevenLabs clona tu voz. El avatar habla exactamente como tú, con tu acento.</p>
+    </div>
+    <div class="feature">
+      <div class="f-icon">📸</div>
+      <h3>Generador de imágenes tuyas</h3>
+      <p>Entrenamos un modelo IA con tus fotos. Genera imágenes tuyas en cualquier escena: aeropuerto, oficina, playa, estudio.</p>
+    </div>
+    <div class="feature">
+      <div class="f-icon">✍️</div>
+      <h3>Scripts automáticos semanales</h3>
+      <p>Claude genera cada lunes 7 scripts: 5 virales + 2 de venta. Listos para entrar directo a HeyGen.</p>
+    </div>
+    <div class="feature">
+      <div class="f-icon">⚙️</div>
+      <h3>Workflow n8n configurado</h3>
+      <p>El flujo completo montado y funcionando: genera → ensambla → programa → publica. Sin que toques nada.</p>
+    </div>
+    <div class="feature">
+      <div class="f-icon">📱</div>
+      <h3>Publicación automática</h3>
+      <p>Conectado a Instagram, TikTok y YouTube Shorts. Publica en el horario óptimo. Te llega notificación cuando está listo.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TIPOS DE CONTENIDO -->
+<section class="content-types">
+  <h2>Dos tipos de contenido que genera el sistema</h2>
+  <p class="sub">Balanceados automáticamente cada semana</p>
+  <div class="ct-grid">
+    <div class="ct-card viral">
+      <h3>🔥 Contenido Viral</h3>
+      <p style="color:var(--muted);font-size:0.9rem;margin-bottom:1rem;">Para atraer nuevos seguidores y generar alcance orgánico masivo</p>
+      <ul>
+        <li>Anti-natural / Sorpresa IA</li>
+        <li>Dato que rompe creencias</li>
+        <li>Antes vs Después (30 seg)</li>
+        <li>Reflexión que genera comentarios</li>
+        <li>Loop infinito (se ve 3-4 veces)</li>
+      </ul>
+    </div>
+    <div class="ct-card ventas">
+      <h3>💰 Contenido de Ventas</h3>
+      <p style="color:var(--muted);font-size:0.9rem;margin-bottom:1rem;">Para convertir seguidores en clientes con tu avatar presentando</p>
+      <ul>
+        <li>Demo del producto con avatar</li>
+        <li>Problema → Solución → CTA</li>
+        <li>Testimonio dramatizado</li>
+        <li>Comparación antes/después</li>
+        <li>Oferta con urgencia real</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <h2>Elige tu plan</h2>
+  <p class="sub">Sin mensualidades ocultas. Pagas una vez, el sistema es tuyo.</p>
+  <div class="plans">
+
+    <div class="plan">
+      <h3>KIT DIY</h3>
+      <div class="price">$97</div>
+      <div class="desc">Tú lo implementas con nuestra guía paso a paso</div>
+      <ul>
+        <li>Guía completa de implementación</li>
+        <li>5 Skills de Claude (.md listos)</li>
+        <li>Workflow n8n (JSON importable)</li>
+        <li>Templates de scripts viral + venta</li>
+        <li>Prompts de imagen para tu cara</li>
+        <li>Soporte por correo 30 días</li>
+      </ul>
+      <a href="#contacto" class="plan-cta outline">Empezar →</a>
+    </div>
+
+    <div class="plan featured">
+      <div class="featured-badge">⭐ MÁS POPULAR</div>
+      <h3>HECHO CONTIGO</h3>
+      <div class="price">$297</div>
+      <div class="desc">Taller de 5 días. Lo construimos juntos desde cero.</div>
+      <ul>
+        <li>Todo lo del Kit DIY</li>
+        <li>Escaneo de avatar HeyGen guiado</li>
+        <li>Clonación de voz ElevenLabs</li>
+        <li>Entrenamiento Flux LoRA tu cara</li>
+        <li>Configuración n8n + Blotato</li>
+        <li>Primera semana de contenido generada</li>
+        <li>Soporte WhatsApp 60 días</li>
+      </ul>
+      <a href="#contacto" class="plan-cta grad">Lo quiero →</a>
+    </div>
+
+    <div class="plan">
+      <h3>INSTALADO PARA TI</h3>
+      <div class="price">$997</div>
+      <div class="desc">Nosotros instalamos todo. Tú recibes el sistema funcionando.</div>
+      <ul>
+        <li>Todo lo del plan Hecho Contigo</li>
+        <li>Instalación completa por TechnoCrazy</li>
+        <li>30 días de contenido generados</li>
+        <li>Integración con tus cuentas</li>
+        <li>Ajuste fino de tono y estilo</li>
+        <li>Soporte prioritario 90 días</li>
+        <li>Revisión mensual del sistema</li>
+      </ul>
+      <a href="#contacto" class="plan-cta outline">Consultar →</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- STACK TECH -->
+<section class="stack">
+  <h2>🛠️ El Stack Tecnológico</h2>
+  <div class="stack-grid">
+    <div class="stack-item"><div class="s-icon">🧠</div><div class="s-name">Claude Opus</div><div class="s-role">Scripts + Estrategia</div></div>
+    <div class="stack-item"><div class="s-icon">🎬</div><div class="s-name">HeyGen V5</div><div class="s-role">Avatar video</div></div>
+    <div class="stack-item"><div class="s-icon">🗣️</div><div class="s-name">ElevenLabs</div><div class="s-role">Voz clonada</div></div>
+    <div class="stack-item"><div class="s-icon">🎨</div><div class="s-name">Flux LoRA</div><div class="s-role">Fotos consistentes</div></div>
+    <div class="stack-item"><div class="s-icon">⚙️</div><div class="s-name">n8n</div><div class="s-role">Automatización</div></div>
+    <div class="stack-item"><div class="s-icon">🚀</div><div class="s-name">Blotato</div><div class="s-role">Multi-publicación</div></div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+  <h2>Preguntas frecuentes</h2>
+  <div class="faq-list">
+    <details class="faq-item">
+      <summary>¿El avatar se ve natural o robótico?</summary>
+      <p>Con HeyGen Avatar V (2026) el resultado es fotorrealista. Labios sincronizados, expresiones naturales, iluminación coherente. La mayoría de espectadores no lo distingue de un video real grabado.</p>
+    </details>
+    <details class="faq-item">
+      <summary>¿Cuánto tiempo tarda en estar listo?</summary>
+      <p>En el plan "Hecho Contigo": 5 días hábiles. Día 1: escaneo y clonación. Días 2-3: configuración del workflow. Día 4: prueba del pipeline completo. Día 5: primera semana de contenido generada y lista.</p>
+    </details>
+    <details class="faq-item">
+      <summary>¿Cuánto cuesta mantenerlo cada mes?</summary>
+      <p>Aproximadamente $120-140/mes en APIs (HeyGen + ElevenLabs + Claude + Blotato). Para un negocio que genera contenido diario, es una fracción de lo que costaría un equipo humano.</p>
+    </details>
+    <details class="faq-item">
+      <summary>¿Funciona para cualquier tipo de negocio?</summary>
+      <p>Sí. El sistema genera contenido basado en tu nicho, productos y audiencia. Funciona para coaches, ecommerce, servicios, infoproductos, restaurantes, consultores — cualquier negocio que necesite presencia en redes.</p>
+    </details>
+    <details class="faq-item">
+      <summary>¿Necesito conocimientos técnicos?</summary>
+      <p>En el plan DIY: nivel básico. En los planes Hecho Contigo e Instalado para Ti: cero. Nosotros nos encargamos de todo lo técnico.</p>
+    </details>
+    <details class="faq-item">
+      <summary>¿Las plataformas penalizan el contenido de IA?</summary>
+      <p>No, mientras el contenido aporte valor. Instagram, TikTok y YouTube no penalizan el contenido generado con IA — solo el spam sin valor. El sistema está diseñado para generar contenido de calidad que las audiencias disfrutan.</p>
+    </details>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta" id="contacto">
+  <div class="urgency">⚡ Cupos limitados — Primeros 10 clientes con precio de lanzamiento</div>
+  <h2>Tu contenido empieza a publicarse solo esta semana</h2>
+  <p>Un solo escaneo de 5 minutos. Nosotros construimos el resto. Tu cara, tu voz, tu marca — trabajando 24/7.</p>
+  <a href="https://wa.me/584120000000?text=Hola%20Rafael%2C%20quiero%20el%20Sistema%20Avatar%20IA%20de%20TechnoCrazy" class="btn-primary" style="display:inline-block;">
+    Hablar con Rafael → WhatsApp
+  </a>
+</section>
+
+<footer>
+  <p>© 2026 TechnoCrazy — Creamos el Futuro de Tu Negocio | technocrazy.org</p>
+</footer>
+
+</body>
+</html>

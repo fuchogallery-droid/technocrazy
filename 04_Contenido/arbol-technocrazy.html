@@ -1,0 +1,1646 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Árbol TechnoCrazy — Mapa Completo</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;600;700;900&display=swap');
+
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+  font-family:'Inter',sans-serif;
+  background:#06060f;
+  color:#e0e0ff;
+  min-height:100vh;
+  padding:40px 20px 80px;
+  -webkit-print-color-adjust:exact;
+  print-color-adjust:exact;
+}
+
+/* ── HEADER ── */
+.header{text-align:center;margin-bottom:60px}
+.header .logo{
+  display:inline-flex;align-items:center;gap:14px;
+  background:linear-gradient(135deg,rgba(41,121,255,.15),rgba(124,77,255,.15));
+  border:1px solid rgba(41,121,255,.3);
+  padding:16px 32px;border-radius:16px;margin-bottom:20px;
+}
+.header .logo-dot{
+  width:44px;height:44px;
+  background:linear-gradient(135deg,#2979ff,#7c4dff);
+  border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;font-weight:900;color:#fff;
+}
+.header h1{font-size:40px;font-weight:900;background:linear-gradient(90deg,#2979ff,#7c4dff,#00e5ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.header p{font-size:14px;color:rgba(255,255,255,.4);margin-top:8px;letter-spacing:2px;text-transform:uppercase}
+
+/* ── TREE ── */
+.tree{max-width:none;margin:0 auto}
+
+/* ROOT */
+.root{display:flex;justify-content:center;margin-bottom:0;position:relative}
+.root-node{
+  background:linear-gradient(135deg,#0d1f3c,#160d2e);
+  border:2px solid #2979ff;
+  box-shadow:0 0 30px rgba(41,121,255,.4),0 0 60px rgba(41,121,255,.1);
+  border-radius:20px;padding:24px 40px;text-align:center;position:relative;z-index:2;
+}
+.root-node h2{font-size:26px;font-weight:900;color:#fff}
+.root-node .url{font-family:'JetBrains Mono',monospace;font-size:13px;color:#00e5ff;margin-top:4px}
+.root-node .url a{color:#00e5ff;text-decoration:none}
+.root-node .url a:hover{text-decoration:underline}
+.root-node .cred{
+  display:inline-flex;gap:8px;margin-top:10px;
+  background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.2);
+  border-radius:8px;padding:6px 14px;
+  font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(255,255,255,.6);
+}
+
+/* TRUNK LINE */
+.trunk{width:3px;height:50px;background:linear-gradient(180deg,#2979ff,#7c4dff);margin:0 auto}
+
+/* BRANCHES SCROLL */
+.branches-scroll{overflow-x:auto;padding-bottom:20px;-webkit-overflow-scrolling:touch}
+
+/* BRANCHES ROW */
+.branches{
+  display:flex;gap:0;align-items:flex-start;
+  position:relative;min-width:max-content;padding:0 10px;
+}
+.branches::before{
+  content:'';position:absolute;top:0;left:10px;right:10px;height:3px;
+  background:linear-gradient(90deg,#2979ff,#7c4dff,#00e5ff,#22c55e,#f59e0b,#94a3b8,#818cf8,#fb7185,#fb923c,#d946ef);
+}
+
+/* BRANCH */
+.branch{
+  flex:0 0 auto;display:flex;flex-direction:column;align-items:center;
+  padding:0 6px;width:200px;
+}
+.branch-line{width:3px;height:40px}
+
+/* SECTION NODE */
+.section-node{border-radius:14px;padding:14px 16px;text-align:center;width:100%}
+.section-node .ico{font-size:22px;display:block;margin-bottom:5px}
+.section-node h3{font-size:12px;font-weight:800;color:#fff;text-transform:uppercase;letter-spacing:1px}
+
+/* BRANCH COLORS */
+.c-web     {background:linear-gradient(135deg,#0a1628,#0d2040);border:1.5px solid #2979ff;box-shadow:0 0 20px rgba(41,121,255,.2)}
+.c-social  {background:linear-gradient(135deg,#1a0a2e,#280d44);border:1.5px solid #7c4dff;box-shadow:0 0 20px rgba(124,77,255,.2)}
+.c-manychat{background:linear-gradient(135deg,#001a1a,#002a1a);border:1.5px solid #00e5ff;box-shadow:0 0 20px rgba(0,229,255,.3)}
+.c-stripe  {background:linear-gradient(135deg,#0d1f0d,#1a2e0d);border:1.5px solid #22c55e;box-shadow:0 0 20px rgba(34,197,94,.2)}
+.c-productos{background:linear-gradient(135deg,#1f1200,#2d1f00);border:1.5px solid #f59e0b;box-shadow:0 0 20px rgba(245,158,11,.2)}
+.c-infra   {background:linear-gradient(135deg,#0f1117,#1a1d26);border:1.5px solid #94a3b8;box-shadow:0 0 20px rgba(148,163,184,.15)}
+.c-ai      {background:linear-gradient(135deg,#0d0d2e,#150d40);border:1.5px solid #818cf8;box-shadow:0 0 20px rgba(129,140,248,.2)}
+.c-email   {background:linear-gradient(135deg,#2e0d16,#1a0810);border:1.5px solid #fb7185;box-shadow:0 0 20px rgba(251,113,133,.2)}
+.c-analytics{background:linear-gradient(135deg,#1f0d00,#2d1800);border:1.5px solid #fb923c;box-shadow:0 0 20px rgba(251,146,60,.2)}
+.c-lm       {background:linear-gradient(135deg,#1a0030,#2d0050);border:1.5px solid #d946ef;box-shadow:0 0 20px rgba(217,70,239,.2)}
+
+/* SUBBRANCH */
+.sub-tree{width:100%;margin-top:0;padding:0 4px}
+.sub-line{width:2px;height:18px;background:rgba(255,255,255,.15);margin:0 auto}
+
+.sub-node{
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);
+  border-radius:10px;padding:9px 11px;margin:0 0 5px;
+  font-size:11px;color:rgba(255,255,255,.75);line-height:1.6;position:relative;
+}
+.sub-node::before{content:'├─';font-family:'JetBrains Mono',monospace;color:rgba(255,255,255,.25);font-size:10px;margin-right:3px}
+.sub-node:last-child::before{content:'└─'}
+.sub-node strong{color:#fff;font-weight:700}
+.sub-node .key{
+  font-family:'JetBrains Mono',monospace;font-size:9.5px;
+  background:rgba(0,0,0,.3);padding:2px 5px;border-radius:4px;
+  color:#00e5ff;display:inline-block;margin-top:2px;
+}
+.sub-node .badge{
+  font-size:8.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  padding:2px 5px;border-radius:99px;display:inline-block;margin-left:3px;
+}
+.badge-green  {background:rgba(34,197,94,.2);color:#22c55e}
+.badge-yellow {background:rgba(245,158,11,.2);color:#f59e0b}
+.badge-red    {background:rgba(239,68,68,.2);color:#ef4444}
+.badge-blue   {background:rgba(41,121,255,.2);color:#60a5fa}
+.badge-cyan   {background:rgba(0,229,255,.2);color:#00e5ff}
+.badge-gray   {background:rgba(148,163,184,.15);color:#94a3b8}
+.badge-indigo {background:rgba(129,140,248,.2);color:#818cf8}
+
+/* ── BOTONES LINK ── */
+.lnk{
+  display:flex;align-items:center;justify-content:center;gap:5px;
+  color:#fff;text-decoration:none;
+  font-family:'Inter',sans-serif;font-size:10px;font-weight:700;
+  background:rgba(0,229,255,.18);
+  border:1.5px solid rgba(0,229,255,.45);
+  border-radius:7px;padding:6px 10px;
+  transition:all .15s;cursor:pointer;letter-spacing:.3px;
+  width:100%;
+}
+.lnk:hover{
+  background:rgba(0,229,255,.35);border-color:#00e5ff;
+  box-shadow:0 0 12px rgba(0,229,255,.3);transform:translateY(-1px);
+}
+.lnk-block{display:flex;flex-direction:column;gap:4px;margin-top:7px}
+.lnk-green {background:rgba(34,197,94,.18);border-color:rgba(34,197,94,.45)}
+.lnk-green:hover{background:rgba(34,197,94,.35);border-color:#22c55e;box-shadow:0 0 12px rgba(34,197,94,.3)}
+.lnk-yellow{background:rgba(245,158,11,.18);border-color:rgba(245,158,11,.45)}
+.lnk-yellow:hover{background:rgba(245,158,11,.35);border-color:#f59e0b;box-shadow:0 0 12px rgba(245,158,11,.3)}
+
+/* ── CREDENTIAL PANEL ── */
+.cred-panel{
+  position:fixed;bottom:30px;right:30px;
+  background:linear-gradient(135deg,#0d1117,#0a0e1a);
+  border:2px solid #00e5ff;
+  box-shadow:0 0 50px rgba(0,229,255,.25),0 25px 70px rgba(0,0,0,.95);
+  border-radius:18px;padding:22px;z-index:9999;
+  min-width:320px;max-width:390px;
+  transform:translateY(calc(100% + 60px));
+  transition:transform .4s cubic-bezier(.34,1.4,.64,1);
+}
+.cred-panel.show{transform:translateY(0)}
+
+.cp-header{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:14px;padding-bottom:12px;
+  border-bottom:1px solid rgba(0,229,255,.15);
+}
+.cp-site{font-size:15px;font-weight:900;color:#fff}
+.cp-close{
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);
+  color:rgba(255,255,255,.6);border-radius:7px;
+  padding:4px 10px;cursor:pointer;font-size:13px;transition:.15s;
+}
+.cp-close:hover{background:rgba(255,80,80,.2);border-color:rgba(255,80,80,.4);color:#ff6666}
+
+.cp-row{
+  display:flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);
+  border-radius:10px;padding:10px 12px;margin-bottom:8px;
+}
+.cp-icon{font-size:15px;flex-shrink:0}
+.cp-value{
+  flex:1;font-family:'JetBrains Mono',monospace;
+  font-size:11px;color:#e0e0ff;word-break:break-all;line-height:1.4;
+}
+.cp-copy{
+  background:rgba(0,229,255,.15);border:1px solid rgba(0,229,255,.3);
+  color:#00e5ff;border-radius:7px;padding:5px 9px;cursor:pointer;
+  font-size:12px;transition:.15s;flex-shrink:0;font-weight:700;
+}
+.cp-copy:hover{background:rgba(0,229,255,.3);border-color:#00e5ff}
+.cp-copy.copied{background:rgba(34,197,94,.25);border-color:#22c55e;color:#22c55e}
+
+.cp-note{
+  background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);
+  border-radius:8px;padding:8px 12px;
+  font-size:10.5px;color:rgba(255,200,80,.85);
+  margin-bottom:10px;line-height:1.5;
+}
+.cp-note-info{
+  background:rgba(41,121,255,.08);border:1px solid rgba(41,121,255,.2);
+  border-radius:8px;padding:8px 12px;
+  font-size:10.5px;color:rgba(100,160,255,.9);
+  margin-bottom:10px;line-height:1.5;
+}
+
+.cp-actions{display:flex;gap:8px;margin-top:14px}
+.cp-go{
+  flex:1;display:flex;align-items:center;justify-content:center;gap:6px;
+  background:linear-gradient(135deg,rgba(0,229,255,.2),rgba(41,121,255,.25));
+  border:1.5px solid #00e5ff;color:#fff;text-decoration:none;
+  font-weight:800;font-size:12px;border-radius:10px;padding:11px;
+  transition:.15s;letter-spacing:.3px;
+}
+.cp-go:hover{background:linear-gradient(135deg,rgba(0,229,255,.35),rgba(41,121,255,.4));box-shadow:0 0 20px rgba(0,229,255,.3)}
+.cp-cancel{
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);
+  color:rgba(255,255,255,.5);border-radius:10px;
+  padding:11px 16px;cursor:pointer;font-size:12px;transition:.15s;
+}
+.cp-cancel:hover{background:rgba(255,255,255,.12);color:rgba(255,255,255,.8)}
+
+/* ── MANYCHAT FLOW ── */
+.manychat-section{max-width:1200px;margin:50px auto 0;padding:0 8px}
+.flow-title{
+  text-align:center;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;
+  color:#00e5ff;margin-bottom:24px;display:flex;align-items:center;gap:12px;
+}
+.flow-title::before,.flow-title::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(0,229,255,.3))}
+.flow-title::after{background:linear-gradient(90deg,rgba(0,229,255,.3),transparent)}
+.flow-container{
+  background:linear-gradient(135deg,rgba(0,229,255,.05),rgba(124,77,255,.05));
+  border:1.5px solid rgba(0,229,255,.2);border-radius:20px;padding:32px;
+}
+.flow-steps{display:flex;gap:0;align-items:flex-start;position:relative}
+.flow-steps::before{content:'';position:absolute;top:30px;left:30px;right:30px;height:2px;background:linear-gradient(90deg,#2979ff,#7c4dff,#00e5ff,#22c55e);z-index:0}
+.flow-step{flex:1;text-align:center;position:relative;z-index:1;padding:0 8px}
+.step-bubble{width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;margin:0 auto 14px;border:2px solid}
+.step-arrow{position:absolute;top:50%;right:-24px;transform:translateY(-50%);font-size:18px;color:rgba(255,255,255,.3);z-index:2}
+.s0 .step-bubble{background:rgba(41,121,255,.15);border-color:#2979ff;box-shadow:0 0 15px rgba(41,121,255,.3)}
+.s1 .step-bubble{background:rgba(124,77,255,.15);border-color:#7c4dff;box-shadow:0 0 15px rgba(124,77,255,.3)}
+.s2 .step-bubble{background:rgba(0,229,255,.1);border-color:#00e5ff;box-shadow:0 0 15px rgba(0,229,255,.3)}
+.s3 .step-bubble{background:rgba(34,197,94,.1);border-color:#22c55e;box-shadow:0 0 15px rgba(34,197,94,.3)}
+.s4 .step-bubble{background:rgba(245,158,11,.1);border-color:#f59e0b;box-shadow:0 0 15px rgba(245,158,11,.3)}
+.step-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px}
+.s0 .step-label{color:#60a5fa}.s1 .step-label{color:#a78bfa}.s2 .step-label{color:#00e5ff}.s3 .step-label{color:#22c55e}.s4 .step-label{color:#fbbf24}
+.step-card{border-radius:12px;padding:12px;font-size:11px;line-height:1.65;color:rgba(255,255,255,.7);text-align:left;border:1px solid rgba(255,255,255,.08);background:rgba(0,0,0,.3)}
+.step-card strong{color:#fff;display:block;margin-bottom:4px;font-size:12px}
+.step-card .msg{background:rgba(255,255,255,.05);border-radius:8px;padding:6px 8px;margin-top:6px;font-size:10.5px;font-style:italic;color:rgba(255,255,255,.55)}
+.step-card .btn-preview{display:inline-block;background:linear-gradient(135deg,#7c4dff,#2979ff);color:#fff;font-size:10px;font-weight:700;padding:4px 10px;border-radius:6px;margin-top:6px}
+
+/* ── BIBLIOTECA ── */
+.bib-section{max-width:1400px;margin:40px auto 0;padding:0 8px}
+.bib-cat{margin-bottom:28px}
+.bib-cat-title{
+  font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;
+  margin-bottom:12px;display:flex;align-items:center;gap:12px;padding-bottom:8px;
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+.bib-cat-title::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.06)}
+.bib-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+.bib-card{
+  background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.09);
+  border-radius:12px;padding:14px 16px;cursor:pointer;
+  transition:all .2s;position:relative;overflow:hidden;
+}
+.bib-card:hover{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.2);transform:translateY(-2px)}
+.bib-card .bc-ico{font-size:20px;margin-bottom:8px}
+.bib-card .bc-title{font-size:12px;font-weight:700;color:#fff;margin-bottom:4px;line-height:1.3}
+.bib-card .bc-desc{font-size:10px;color:rgba(255,255,255,.45);line-height:1.5;margin-bottom:10px}
+.bib-card .bc-path{font-family:'JetBrains Mono',monospace;font-size:8.5px;color:rgba(255,255,255,.2);word-break:break-all;margin-bottom:10px}
+.bib-card .bc-footer{display:flex;align-items:center;justify-content:space-between;gap:6px}
+.bib-card .bc-badge{font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:2px 7px;border-radius:20px}
+.bib-card .bc-btn{
+  font-size:10px;font-weight:700;padding:5px 10px;border-radius:7px;border:none;cursor:pointer;
+  transition:.15s;text-decoration:none;display:inline-block;
+}
+.bib-card .bc-btn:hover{filter:brightness(1.2)}
+
+/* colores por categoría */
+.bc-curso  {border-color:rgba(217,70,239,.25)} .bc-curso:hover{border-color:#d946ef}
+.bc-campana{border-color:rgba(0,229,255,.2)}   .bc-campana:hover{border-color:#00e5ff}
+.bc-guia   {border-color:rgba(41,121,255,.2)}  .bc-guia:hover{border-color:#2979ff}
+.bc-negocio{border-color:rgba(34,197,94,.2)}   .bc-negocio:hover{border-color:#22c55e}
+.bc-cal    {border-color:rgba(245,158,11,.2)}  .bc-cal:hover{border-color:#f59e0b}
+
+/* ── LEGEND ── */
+.legend{max-width:1200px;margin:40px auto 0;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.legend-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:16px 20px}
+.legend-card h4{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:10px}
+.legend-card .item{font-family:'JetBrains Mono',monospace;font-size:11px;color:#60a5fa;margin-bottom:4px}
+.legend-card .item span{color:rgba(255,255,255,.5)}
+
+@media print{body{background:#fff;color:#000;padding:20px}@page{size:A3 landscape;margin:10mm}}
+</style>
+</head>
+<body>
+
+<!-- ═══════════ CREDENTIAL PANEL ═══════════ -->
+<div id="credPanel" class="cred-panel">
+  <div class="cp-header">
+    <span id="cpSite" class="cp-site">·</span>
+    <button class="cp-close" onclick="closeCred()">✕ Cerrar</button>
+  </div>
+  <div class="cp-row" id="cpUserRow">
+    <span class="cp-icon">📧</span>
+    <span id="cpUser" class="cp-value">·</span>
+    <button class="cp-copy" onclick="copyVal('cpUser',this)" title="Copiar">📋 Copiar</button>
+  </div>
+  <div class="cp-row" id="cpPassRow">
+    <span class="cp-icon">🔑</span>
+    <span id="cpPass" class="cp-value">·</span>
+    <button class="cp-copy" onclick="copyVal('cpPass',this)" title="Copiar">📋 Copiar</button>
+  </div>
+  <div id="cpNote" class="cp-note" style="display:none"></div>
+  <div class="cp-actions">
+    <a id="cpGo" href="#" target="_blank" class="cp-go" onclick="closeCred()">🚀 Abrir sitio</a>
+    <button class="cp-cancel" onclick="closeCred()">Cerrar</button>
+  </div>
+</div>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="logo">
+    <div class="logo-dot">TC</div>
+    <div>
+      <div style="font-size:22px;font-weight:900;color:#fff">TechnoCrazy</div>
+      <div style="font-size:11px;color:rgba(255,255,255,.4);letter-spacing:2px">MAPA COMPLETO DEL SISTEMA · 2026</div>
+    </div>
+  </div>
+  <h1>Árbol de Operaciones</h1>
+  <p>Haz clic en cualquier botón → aparecen las credenciales automáticamente</p>
+</div>
+
+<!-- TREE -->
+<div class="tree">
+
+  <!-- ROOT -->
+  <div class="root">
+    <div class="root-node">
+      <h2>🌐 TechnoCrazy</h2>
+      <div class="url">
+        <a href="#" onclick="showCred(event,this)" data-url="https://technocrazy.org" data-cred="none" data-label="TechnoCrazy.org">technocrazy.org ↗</a>
+      </div>
+      <div class="cred">
+        <span>📧 rafaelpixel3004@gmail.com</span>
+        <span style="color:rgba(255,255,255,.3)">|</span>
+        <span>🔑 Rafael3004$</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="trunk"></div>
+
+  <!-- BRANCHES -->
+  <div class="branches-scroll">
+  <div class="branches">
+
+    <!-- ─── BRANCH 1 — SITIO WEB ─── -->
+    <div class="branch">
+      <div class="branch-line" style="background:#2979ff"></div>
+      <div class="section-node c-web">
+        <span class="ico">💻</span>
+        <h3>Sitio Web</h3>
+      </div>
+      <div class="sub-line"></div>
+      <div class="sub-tree">
+
+        <div class="sub-node">
+          <strong>Dominio</strong> <span class="badge badge-green">ACTIVO</span><br>
+          Namecheap · $8.18/año
+          <div class="lnk-block">
+            <a class="lnk lnk-green" onclick="showCred(event,this)" data-url="https://technocrazy.org" data-cred="none" data-label="TechnoCrazy.org">🌐 technocrazy.org</a>
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://ap.www.namecheap.com/domains/list/" data-cred="namecheap" data-label="Namecheap">⚙️ Namecheap panel</a>
+          </div>
+        </div>
+
+        <div class="sub-node">
+          <strong>Deploy</strong> <span class="badge badge-cyan">VERCEL</span><br>
+          <span class="key">vercel --prod</span>
+          <div class="lnk-block">
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://vercel.com/dashboard" data-cred="oauth" data-label="Vercel Dashboard">▲ Vercel Dashboard</a>
+          </div>
+        </div>
+
+        <div class="sub-node">
+          <strong>Stack</strong><br>
+          Next.js · Tailwind · Claude API<br>
+          Puerto local: 3000
+        </div>
+
+        <div class="sub-node">
+          <strong>Lead Magnet</strong> <span class="badge badge-cyan">PDF</span>
+          <div class="lnk-block">
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://technocrazy.org/lead-magnet-ia.html" data-cred="none" data-label="Lead Magnet PDF">📄 lead-magnet-ia.html</a>
+          </div>
+        </div>
+
+        <div class="sub-node">
+          <strong>Catálogo</strong> <span class="badge badge-cyan">PDF</span>
+          <div class="lnk-block">
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://technocrazy.org/catalogo-servicios.html" data-cred="none" data-label="Catálogo de Servicios">📋 catalogo-servicios.html</a>
+          </div>
+        </div>
+
+        <div class="sub-node">
+          <strong>WhatsApp CTA</strong>
+          <div class="lnk-block">
+            <a class="lnk lnk-green" onclick="showCred(event,this)" data-url="https://wa.me/17794318214" data-cred="wa" data-label="WhatsApp Business">💬 +17794318214</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ─── BRANCH 2 — REDES SOCIALES ─── -->
+    <div class="branch" style="width:210px">
+      <div class="branch-line" style="background:#7c4dff"></div>
+      <div class="section-node c-social">
+        <span class="ico">📱</span>
+        <h3>Redes Sociales</h3>
+      </div>
+      <div class="sub-line"></div>
+      <div class="sub-tree">
+
+        <div class="sub-node">
+          <strong>📸 Instagram</strong> <span class="badge badge-cyan">MANYCHAT</span><br>
+          @igtechnocrazy · 5 posts
+          <div class="lnk-block">
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://www.instagram.com/igtechnocrazy/" data-cred="instagram" data-label="Instagram @igtechnocrazy">🔗 Ver perfil</a>
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://www.instagram.com/direct/inbox/" data-cred="instagram" data-label="Instagram DMs">📩 Bandeja DMs</a>
+          </div>
+        </div>
+
+        <div class="sub-node">
+          <strong>🎵 TikTok</strong> <span class="badge badge-green">ACTIVO</span><br>
+          @tktechnocrazy · Google OAuth
+          <div class="lnk-block">
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://www.tiktok.com/@tktechnocrazy" data-cred="oauth" data-label="TikTok @tktechnocrazy">🔗 Ver perfil</a>
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://www.tiktok.com/creator-center" data-cred="oauth" data-label="TikTok Creator Center">🎬 Creator Center</a>
+          </div>
+        </div>
+
+        <div class="sub-node">
+          <strong>✖️ X (Twitter)</strong> <span class="badge badge-blue">0 posts</span><br>
+          @Xtechnocrazy
+          <div class="lnk-block">
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://x.com/Xtechnocrazy" data-cred="default" data-label="X @Xtechnocrazy">🔗 Ver perfil</a>
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://x.com/compose/tweet" data-cred="default" data-label="X — Crear post">✏️ Crear post</a>
+          </div>
+        </div>
+
+        <div class="sub-node">
+          <strong>👤 Facebook</strong> <span class="badge badge-green">CONECTADO</span><br>
+          Página TechnoCrazy
+          <div class="lnk-block">
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://www.facebook.com/profile.php?id=1152990307904666" data-cred="default" data-label="Facebook TechnoCrazy">🔗 Ver página</a>
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://www.facebook.com/pages/?ref=bookmarks" data-cred="default" data-label="Facebook — Gestionar páginas">⚙️ Gestionar</a>
+          </div>
+        </div>
+
+        <div class="sub-node">
+          <strong>💼 LinkedIn</strong> <span class="badge badge-yellow">PENDIENTE</span><br>
+          Rafael Navarro · Google OAuth
+          <div class="lnk-block">
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://www.linkedin.com/in/" data-cred="oauth" data-label="LinkedIn — Mi perfil">🔗 Mi perfil</a>
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://www.linkedin.com/company/setup/new/" data-cred="oauth" data-label="LinkedIn — Crear empresa">🏢 Crear empresa</a>
+          </div>
+        </div>
+
+        <div class="sub-node">
+          <strong>▶️ YouTube</strong> <span class="badge badge-gray">PENDIENTE</span>
+          <div class="lnk-block">
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://studio.youtube.com" data-cred="oauth" data-label="YouTube Studio">🎬 YouTube Studio</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ─── BRANCH 3 — MANYCHAT ─── -->
+    <div class="branch">
+      <div class="branch-line" style="background:#00e5ff"></div>
+      <div class="section-node c-manychat">
+        <span class="ico">🤖</span>
+        <h3>ManyChat</h3>
+      </div>
+      <div class="sub-line"></div>
+      <div class="sub-tree">
+
+        <div class="sub-node">
+          <strong>Dashboard</strong><br>
+          Google OAuth · rafaelpixel3004
+          <div class="lnk-block">
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://app.manychat.com" data-cred="manychat" data-label="ManyChat Dashboard">🔗 Abrir Dashboard</a>
+          </div>
+        </div>
+
+        <div class="sub-node">
+          <strong>Plan</strong> <span class="badge badge-green">FREE</span><br>
+          Contactos: 0/25
+          <div class="lnk-block">
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://app.manychat.com/settings/billing" data-cred="manychat" data-label="ManyChat Billing">💳 Plan & Billing</a>
+          </div>
+        </div>
+
+        <div class="sub-node">
+          <strong>Canal activo</strong><br>
+          📸 Instagram @igtechnocrazy
+          <div class="lnk-block">
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://app.manychat.com/instagram" data-cred="manychat" data-label="ManyChat — Canal IG">📱 Canal IG</a>
+          </div>
+        </div>
+
+        <div class="sub-node" style="border-color:rgba(0,229,255,.3);background:rgba(0,229,255,.05)">
+          <strong style="color:#00e5ff">✅ Automatización ACTIVA</strong><br>
+          DM desde comentarios · 4 posts
+          <div class="lnk-block">
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://app.manychat.com/automations" data-cred="manychat" data-label="ManyChat — Automatizaciones">⚡ Ver automatizaciones</a>
+          </div>
+        </div>
+
+        <div class="sub-node">
+          <strong>Audiencia</strong>
+          <div class="lnk-block">
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://app.manychat.com/subscribers" data-cred="manychat" data-label="ManyChat — Suscriptores">👥 Suscriptores</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ─── BRANCH 4 — STRIPE & PAGOS ─── -->
+    <div class="branch">
+      <div class="branch-line" style="background:#22c55e"></div>
+      <div class="section-node c-stripe">
+        <span class="ico">💳</span>
+        <h3>Stripe & Pagos</h3>
+      </div>
+      <div class="sub-line"></div>
+      <div class="sub-tree">
+
+        <div class="sub-node">
+          <strong>Stripe</strong> <span class="badge badge-yellow">VERIFICACIÓN</span><br>
+          <span class="key" style="font-size:9px">acct_1Tn9UHF6nkWDxqxf</span>
+          <div class="lnk-block">
+            <a class="lnk lnk-green" onclick="showCred(event,this)" data-url="https://dashboard.stripe.com" data-cred="stripe" data-label="Stripe Dashboard">💳 Dashboard</a>
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://dashboard.stripe.com/settings" data-cred="stripe" data-label="Stripe — Configuración">⚙️ Configuración</a>
+          </div>
+        </div>
+
+        <div class="sub-node">
+          <strong>2FA:</strong> +1 (407) 509-0902<br>
+          <strong>Backup:</strong><br>
+          <span class="key" style="font-size:8.5px">zqhn-jhim-slgv-svup-mcxm</span>
+        </div>
+
+        <div class="sub-node">
+          <strong>Chime (banco)</strong><br>
+          Routing: 101205681
+          <div class="lnk-block">
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://app.chime.com" data-cred="chime" data-label="Chime Bank">🏦 Chime App</a>
+          </div>
+        </div>
+
+        <div class="sub-node">
+          <strong>Hotmart</strong>
+          <div class="lnk-block">
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://app.hotmart.com" data-cred="default" data-label="Hotmart">🔥 Hotmart App</a>
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://app.hotmart.com/market/products" data-cred="default" data-label="Hotmart — Mis productos">📦 Mis productos</a>
+          </div>
+        </div>
+
+        <div class="sub-node">
+          <strong>PayPal</strong> <span class="badge badge-gray">ALTERNATIVO</span>
+          <div class="lnk-block">
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://www.paypal.com" data-cred="default" data-label="PayPal">🅿️ PayPal</a>
+          </div>
+        </div>
+
+        <div class="sub-node">
+          <strong>Wise</strong> <span class="badge badge-gray">PENDIENTE</span>
+          <div class="lnk-block">
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://wise.com" data-cred="default" data-label="Wise">💸 Wise</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ─── BRANCH 5 — PRODUCTOS ─── -->
+    <div class="branch" style="width:210px">
+      <div class="branch-line" style="background:#f59e0b"></div>
+      <div class="section-node c-productos">
+        <span class="ico">📦</span>
+        <h3>Productos</h3>
+      </div>
+      <div class="sub-line"></div>
+      <div class="sub-tree">
+
+        <div class="sub-node">
+          <strong>AutoPost</strong> <span class="badge badge-green">LIVE</span>
+          <div class="lnk-block">
+            <a class="lnk lnk-green" onclick="showCred(event,this)" data-url="https://autopost-plum-five.vercel.app" data-cred="none" data-label="AutoPost App">🚀 Ver app</a>
+          </div>
+        </div>
+        <div class="sub-node">
+          <strong>ServiYA</strong> <span class="badge badge-green">LIVE</span>
+          <div class="lnk-block">
+            <a class="lnk lnk-green" onclick="showCred(event,this)" data-url="https://serviya.vercel.app" data-cred="none" data-label="ServiYA App">🚀 Ver app</a>
+          </div>
+        </div>
+        <div class="sub-node">
+          <strong>GaleríaX</strong> <span class="badge badge-green">LIVE</span>
+          <div class="lnk-block">
+            <a class="lnk lnk-green" onclick="showCred(event,this)" data-url="https://galeriax.vercel.app" data-cred="none" data-label="GaleríaX App">🚀 Ver app</a>
+          </div>
+        </div>
+        <div class="sub-node">
+          <strong>CambioBs</strong> <span class="badge badge-green">LIVE</span>
+          <div class="lnk-block">
+            <a class="lnk lnk-green" onclick="showCred(event,this)" data-url="https://cambiobs.vercel.app" data-cred="none" data-label="CambioBs App">🚀 Ver app</a>
+          </div>
+        </div>
+        <div class="sub-node">
+          <strong>ElGestor</strong> <span class="badge badge-green">LIVE</span>
+          <div class="lnk-block">
+            <a class="lnk lnk-green" onclick="showCred(event,this)" data-url="https://elgestor.vercel.app" data-cred="none" data-label="ElGestor App">🚀 Ver app</a>
+          </div>
+        </div>
+        <div class="sub-node">
+          <strong>GestorPersonal</strong> <span class="badge badge-green">LIVE</span>
+          <div class="lnk-block">
+            <a class="lnk lnk-green" onclick="showCred(event,this)" data-url="https://gestor-personal.vercel.app" data-cred="none" data-label="GestorPersonal App">🚀 Ver app</a>
+          </div>
+        </div>
+        <div class="sub-node">
+          <strong>SmartClinic</strong> <span class="badge badge-green">LIVE</span>
+          <div class="lnk-block">
+            <a class="lnk lnk-green" onclick="showCred(event,this)" data-url="https://smartclinic.vercel.app" data-cred="none" data-label="SmartClinic App">🚀 Ver app</a>
+          </div>
+        </div>
+        <div class="sub-node">
+          <strong>LowPassFilter</strong> <span class="badge badge-green">LIVE</span>
+          <div class="lnk-block">
+            <a class="lnk lnk-green" onclick="showCred(event,this)" data-url="https://lowpassfilter.vercel.app" data-cred="none" data-label="LowPassFilter App">🚀 Ver app</a>
+          </div>
+        </div>
+        <div class="sub-node">
+          <strong>HK-PC Organizer</strong> <span class="badge badge-yellow">PENDIENTE</span><br>
+          <span style="font-size:10px;color:rgba(255,255,255,.4)">Listo para deploy</span>
+          <div class="lnk-block">
+            <a class="lnk lnk-yellow" onclick="showCred(event,this)" data-url="https://vercel.com/new" data-cred="oauth" data-label="Vercel — Nuevo deploy">▲ Deploy ahora</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ─── BRANCH 6 — INFRAESTRUCTURA ─── -->
+    <div class="branch">
+      <div class="branch-line" style="background:#94a3b8"></div>
+      <div class="section-node c-infra">
+        <span class="ico">⚙️</span>
+        <h3>Infraestructura</h3>
+      </div>
+      <div class="sub-line"></div>
+      <div class="sub-tree">
+
+        <div class="sub-node">
+          <strong>Vercel</strong> <span class="badge badge-green">9 apps</span>
+          <div class="lnk-block">
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://vercel.com/dashboard" data-cred="oauth" data-label="Vercel Dashboard">▲ Dashboard</a>
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://vercel.com/account" data-cred="oauth" data-label="Vercel — Mi cuenta">👤 Mi cuenta</a>
+          </div>
+        </div>
+
+        <div class="sub-node">
+          <strong>Namecheap</strong><br>
+          technocrazy.org → activo
+          <div class="lnk-block">
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://ap.www.namecheap.com/domains/list/" data-cred="namecheap" data-label="Namecheap — Mis dominios">🌐 Mis dominios</a>
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://ap.www.namecheap.com/dashboard" data-cred="namecheap" data-label="Namecheap Dashboard">⚙️ Dashboard</a>
+          </div>
+        </div>
+
+        <div class="sub-node">
+          <strong>GitHub</strong>
+          <div class="lnk-block">
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://github.com" data-cred="github" data-label="GitHub">🐱 GitHub</a>
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://github.com/settings/repositories" data-cred="github" data-label="GitHub — Mis repos">📁 Mis repos</a>
+          </div>
+        </div>
+
+        <div class="sub-node">
+          <strong>Google Cloud</strong><br>
+          OAuth y APIs
+          <div class="lnk-block">
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://console.cloud.google.com" data-cred="oauth" data-label="Google Cloud Console">☁️ GCP Console</a>
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://console.cloud.google.com/apis/credentials" data-cred="oauth" data-label="GCP — Credenciales">🔑 Credenciales</a>
+          </div>
+        </div>
+
+        <div class="sub-node">
+          <strong>Firebase</strong>
+          <div class="lnk-block">
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://console.firebase.google.com" data-cred="oauth" data-label="Firebase Console">🔥 Firebase Console</a>
+          </div>
+        </div>
+
+        <div class="sub-node">
+          <strong>npm / Node</strong>
+          <div class="lnk-block">
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://www.npmjs.com" data-cred="default" data-label="NPM">📦 NPM</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ─── BRANCH 7 — CLAUDE & IA ─── -->
+    <div class="branch">
+      <div class="branch-line" style="background:#818cf8"></div>
+      <div class="section-node c-ai">
+        <span class="ico">🧠</span>
+        <h3>Claude & IA</h3>
+      </div>
+      <div class="sub-line"></div>
+      <div class="sub-tree">
+
+        <div class="sub-node">
+          <strong>Anthropic Console</strong> <span class="badge badge-indigo">API</span>
+          <div class="lnk-block">
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://console.anthropic.com" data-cred="anthropic" data-label="Anthropic Console">🤖 Console</a>
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://console.anthropic.com/settings/keys" data-cred="anthropic" data-label="Anthropic — API Keys">🔑 API Keys</a>
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://console.anthropic.com/settings/billing" data-cred="anthropic" data-label="Anthropic — Billing">💳 Billing</a>
+          </div>
+        </div>
+
+        <div class="sub-node">
+          <strong>Claude.ai</strong>
+          <div class="lnk-block">
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://claude.ai" data-cred="anthropic" data-label="Claude.ai Chat">💬 Claude.ai</a>
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://claude.ai/code" data-cred="anthropic" data-label="Claude Code">💻 Claude Code</a>
+          </div>
+        </div>
+
+        <div class="sub-node">
+          <strong>Gemini / Google AI</strong>
+          <div class="lnk-block">
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://aistudio.google.com" data-cred="oauth" data-label="Google AI Studio">🔮 AI Studio</a>
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://makersuite.google.com/app/apikey" data-cred="oauth" data-label="Gemini — API Keys">🔑 API Keys</a>
+          </div>
+        </div>
+
+        <div class="sub-node">
+          <strong>Prodia</strong><br>
+          Imágenes IA (AutoPost)
+          <div class="lnk-block">
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://app.prodia.com" data-cred="default" data-label="Prodia">🖼️ Prodia App</a>
+          </div>
+        </div>
+
+        <div class="sub-node">
+          <strong>ChatGPT</strong>
+          <div class="lnk-block">
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://chatgpt.com" data-cred="chatgpt" data-label="ChatGPT">💡 ChatGPT</a>
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://platform.openai.com" data-cred="default" data-label="OpenAI Platform">🔧 OpenAI Platform</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ─── BRANCH 8 — EMAIL & COMUNIDAD ─── -->
+    <div class="branch">
+      <div class="branch-line" style="background:#fb7185"></div>
+      <div class="section-node c-email">
+        <span class="ico">📧</span>
+        <h3>Email & Comunidad</h3>
+      </div>
+      <div class="sub-line"></div>
+      <div class="sub-tree">
+
+        <div class="sub-node">
+          <strong>Gmail Principal</strong><br>
+          rafaelpixel3004@gmail.com
+          <div class="lnk-block">
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://mail.google.com/mail/u/0/" data-cred="gmail" data-label="Gmail — rafaelpixel3004">📧 Abrir Gmail</a>
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://myaccount.google.com" data-cred="gmail" data-label="Google — Mi cuenta">👤 Mi cuenta Google</a>
+          </div>
+        </div>
+
+        <div class="sub-node">
+          <strong>Gmail Secundario</strong><br>
+          fuchogallery@gmail.com
+          <div class="lnk-block">
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://mail.google.com/mail/u/1/" data-cred="gmail2" data-label="Gmail — fuchogallery">📧 Abrir Gmail 2</a>
+          </div>
+        </div>
+
+        <div class="sub-node">
+          <strong>WhatsApp Business</strong><br>
+          +17794318214
+          <div class="lnk-block">
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://web.whatsapp.com" data-cred="wa" data-label="WhatsApp Web">💬 WhatsApp Web</a>
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://business.whatsapp.com" data-cred="wa" data-label="WhatsApp Business">🏢 WA Business</a>
+          </div>
+        </div>
+
+        <div class="sub-node">
+          <strong>Systeme.io</strong><br>
+          Email marketing + funnels
+          <div class="lnk-block">
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://systeme.io/dashboard" data-cred="default" data-label="Systeme.io Dashboard">📨 Dashboard</a>
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://systeme.io/dashboard/emails" data-cred="default" data-label="Systeme.io — Campañas">✉️ Campañas email</a>
+          </div>
+        </div>
+
+        <div class="sub-node">
+          <strong>Canva</strong><br>
+          Diseño posts y material
+          <div class="lnk-block">
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://www.canva.com" data-cred="oauth" data-label="Canva">🎨 Canva</a>
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://www.canva.com/folder/all-designs" data-cred="oauth" data-label="Canva — Mis diseños">📁 Mis diseños</a>
+          </div>
+        </div>
+
+        <div class="sub-node">
+          <strong>Telegram</strong> <span class="badge badge-gray">PENDIENTE</span>
+          <div class="lnk-block">
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://web.telegram.org" data-cred="telegram" data-label="Telegram Web">✈️ Telegram Web</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ─── BRANCH 9 — ANALYTICS & SEO ─── -->
+    <div class="branch">
+      <div class="branch-line" style="background:#fb923c"></div>
+      <div class="section-node c-analytics">
+        <span class="ico">📊</span>
+        <h3>Analytics & SEO</h3>
+      </div>
+      <div class="sub-line"></div>
+      <div class="sub-tree">
+
+        <div class="sub-node">
+          <strong>Google Analytics 4</strong>
+          <div class="lnk-block">
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://analytics.google.com" data-cred="oauth" data-label="Google Analytics 4">📈 Analytics</a>
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://analytics.google.com/analytics/web/#/provision" data-cred="oauth" data-label="GA4 — Crear propiedad">➕ Crear propiedad</a>
+          </div>
+        </div>
+
+        <div class="sub-node">
+          <strong>Search Console</strong>
+          <div class="lnk-block">
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://search.google.com/search-console" data-cred="oauth" data-label="Google Search Console">🔍 Search Console</a>
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://search.google.com/search-console/performance/search-analytics" data-cred="oauth" data-label="GSC — Performance">📊 Performance</a>
+          </div>
+        </div>
+
+        <div class="sub-node">
+          <strong>Vercel Analytics</strong>
+          <div class="lnk-block">
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://vercel.com/analytics" data-cred="oauth" data-label="Vercel Analytics">▲ Analytics</a>
+          </div>
+        </div>
+
+        <div class="sub-node">
+          <strong>Meta Business Suite</strong><br>
+          FB + Instagram insights
+          <div class="lnk-block">
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://business.facebook.com" data-cred="default" data-label="Meta Business Suite">👤 Meta Business</a>
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://www.facebook.com/insights" data-cred="default" data-label="Facebook — Page Insights">📊 Page Insights</a>
+          </div>
+        </div>
+
+        <div class="sub-node">
+          <strong>TikTok Analytics</strong>
+          <div class="lnk-block">
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://www.tiktok.com/creator-center/analytics" data-cred="oauth" data-label="TikTok Analytics">📈 Analytics TT</a>
+          </div>
+        </div>
+
+        <div class="sub-node">
+          <strong>Google My Business</strong> <span class="badge badge-gray">PENDIENTE</span>
+          <div class="lnk-block">
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://business.google.com" data-cred="oauth" data-label="Google My Business">🗺️ Google Business</a>
+          </div>
+        </div>
+
+        <div class="sub-node">
+          <strong>SEO Tools</strong>
+          <div class="lnk-block">
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://app.semrush.com" data-cred="default" data-label="Semrush">🔎 Semrush</a>
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://app.neilpatel.com/en/ubersuggest" data-cred="oauth" data-label="Ubersuggest">💡 Ubersuggest</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ─── BRANCH 10 — LEAD MAGNET ─── -->
+    <div class="branch">
+      <div class="branch-line" style="background:#d946ef"></div>
+      <div class="section-node c-lm">
+        <span class="ico">📘</span>
+        <h3>Lead Magnet</h3>
+      </div>
+      <div class="sub-line"></div>
+      <div class="sub-tree">
+
+        <div class="sub-node">
+          <strong>Guía PDF</strong> <span class="badge" style="background:rgba(217,70,239,.2);color:#d946ef">LISTO</span><br>
+          "De Cero a Negocio Digital"
+          <div class="lnk-block">
+            <a class="lnk" style="background:rgba(217,70,239,.18);border-color:rgba(217,70,239,.45)" onclick="abrirGuia(event)">📄 Abrir guía</a>
+          </div>
+        </div>
+
+        <div class="sub-node">
+          <strong>URL Pública</strong> <span id="lm-status-badge" class="badge badge-yellow">SIN LINK</span><br>
+          <span id="lm-url-display" style="font-family:'JetBrains Mono',monospace;font-size:9px;color:#00e5ff;word-break:break-all">No configurada</span>
+          <div class="lnk-block">
+            <a class="lnk" style="background:rgba(217,70,239,.18);border-color:rgba(217,70,239,.45)" onclick="abrirPanelLM(event)">⚙️ Configurar link</a>
+            <a class="lnk" id="lm-copy-btn" style="background:rgba(34,197,94,.18);border-color:rgba(34,197,94,.45);display:none" onclick="copiarLinkLM(event)">📋 Copiar link</a>
+          </div>
+        </div>
+
+        <div class="sub-node">
+          <strong>Hospedar PDF</strong>
+          <div class="lnk-block">
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://drive.google.com/drive/my-drive" data-cred="oauth" data-label="Google Drive — Subir PDF">☁️ Google Drive</a>
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://systeme.io/dashboard/files" data-cred="default" data-label="Systeme.io — Archivos">📨 Systeme.io</a>
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://hotmart.com/product/dashboard" data-cred="default" data-label="Hotmart — Subir producto">🛒 Hotmart</a>
+          </div>
+        </div>
+
+        <div class="sub-node">
+          <strong>Emails automáticos</strong><br>
+          7 emails en Systeme.io
+          <div class="lnk-block">
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://systeme.io/dashboard/automation-rules" data-cred="default" data-label="Systeme.io — Automatizaciones">⚡ Automatizaciones</a>
+            <a class="lnk" onclick="showCred(event,this)" data-url="https://systeme.io/dashboard/funnels" data-cred="default" data-label="Systeme.io — Funnels">🎯 Funnel</a>
+          </div>
+        </div>
+
+        <div class="sub-node">
+          <strong>Lanzamiento</strong> <span class="badge badge-yellow">14 JUL</span><br>
+          IG + TikTok + X + LinkedIn
+        </div>
+
+      </div>
+    </div>
+
+  </div><!-- /branches -->
+  </div><!-- /branches-scroll -->
+
+</div><!-- /tree -->
+
+
+<!-- ═══════════ FLUJO MANYCHAT ═══════════ -->
+<div class="manychat-section">
+  <div class="flow-title">🤖 FLUJO MANYCHAT — PASO A PASO — ACTIVO EN @igtechnocrazy</div>
+  <div class="flow-container">
+
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:28px">
+      <div style="font-size:11px;color:rgba(255,255,255,.4)">
+        ⚡ Trigger: <strong style="color:#00e5ff">Cualquier comentario</strong> en posts seleccionados
+      </div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:10px;padding:4px 12px;background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.3);border-radius:6px;color:#22c55e">
+        ● AUTOMATIZACIÓN ACTIVA
+      </div>
+    </div>
+
+    <div class="flow-steps">
+      <div class="flow-step s0">
+        <div class="step-bubble">💬</div>
+        <div class="step-label">Paso 0</div>
+        <div class="step-card">
+          <strong>Comentario detectado</strong>
+          Alguien comenta cualquier cosa en un post
+          <div class="msg">@usuario: "Info" / "👍" / cualquier texto</div>
+        </div>
+        <div class="step-arrow">→</div>
+      </div>
+      <div class="flow-step s1">
+        <div class="step-bubble">📣</div>
+        <div class="step-label">Paso 1</div>
+        <div class="step-card">
+          <strong>Respuesta pública</strong>
+          ManyChat responde públicamente
+          <div class="msg">"Gracias! Por favor, vea DMs."</div>
+        </div>
+        <div class="step-arrow">→</div>
+      </div>
+      <div class="flow-step s2">
+        <div class="step-bubble">📩</div>
+        <div class="step-label">Paso 2</div>
+        <div class="step-card">
+          <strong>DM de Apertura</strong>
+          Llega instantáneo al inbox
+          <div class="msg">¡Hola! 👋 🎁 Aquí está tu regalo GRATIS:<br>"5 Herramientas IA que Están Cambiando los Negocios"</div>
+          <div class="btn-preview">🎁 Ver Guía Gratis</div>
+        </div>
+        <div class="step-arrow">→</div>
+      </div>
+      <div class="flow-step s3">
+        <div class="step-bubble">👆</div>
+        <div class="step-label">Paso 3</div>
+        <div class="step-card">
+          <strong>Click en botón</strong>
+          Señal de interés alto 🔥
+          <div class="msg">ManyChat registra el click</div>
+        </div>
+        <div class="step-arrow">→</div>
+      </div>
+      <div class="flow-step s4">
+        <div class="step-bubble">🎁</div>
+        <div class="step-label">Paso 4</div>
+        <div class="step-card">
+          <strong>DM con Enlace</strong>
+          Entrega del link real
+          <div class="msg">¡Aquí está! 👇 Disfrútalo.</div>
+          <div class="btn-preview">🎁 Guía Gratis</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:#00e5ff;margin-top:6px">→ technocrazy.org/lead-magnet-ia.html</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:28px;padding:14px 20px;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);border-radius:10px;font-size:12px;color:rgba(255,255,255,.6)">
+      ⚠️ <strong style="color:#fbbf24">Pendiente:</strong>
+      <span style="font-family:'JetBrains Mono',monospace;color:#00e5ff;font-size:11px">$env:NODE_OPTIONS="--use-system-ca"; vercel --prod --yes</span>
+      para que el link quede accesible.
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ═══════════ LEAD MAGNET HUB ═══════════ -->
+<div class="manychat-section" style="margin-top:40px">
+  <div class="flow-title">📘 LEAD MAGNET HUB — GESTIÓN COMPLETA</div>
+  <div class="flow-container" style="padding:28px">
+
+    <!-- STATUS BAR -->
+    <div style="display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap">
+      <div id="lmst-pdf" style="flex:1;min-width:160px;background:rgba(217,70,239,.1);border:1px solid rgba(217,70,239,.3);border-radius:10px;padding:12px 16px;text-align:center">
+        <div style="font-size:18px;margin-bottom:4px">📄</div>
+        <div style="font-size:11px;font-weight:700;color:#d946ef">PDF Guía</div>
+        <div style="font-size:10px;color:rgba(255,255,255,.5);margin-top:2px">Listo para exportar</div>
+      </div>
+      <div id="lmst-url" style="flex:1;min-width:160px;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.3);border-radius:10px;padding:12px 16px;text-align:center">
+        <div style="font-size:18px;margin-bottom:4px">🔗</div>
+        <div style="font-size:11px;font-weight:700;color:#f59e0b">Link público</div>
+        <div id="lmst-url-val" style="font-size:10px;color:rgba(255,255,255,.5);margin-top:2px">Sin configurar</div>
+      </div>
+      <div id="lmst-email" style="flex:1;min-width:160px;background:rgba(41,121,255,.08);border:1px solid rgba(41,121,255,.3);border-radius:10px;padding:12px 16px;text-align:center">
+        <div style="font-size:18px;margin-bottom:4px">📧</div>
+        <div style="font-size:11px;font-weight:700;color:#60a5fa">7 Emails</div>
+        <div style="font-size:10px;color:rgba(255,255,255,.5);margin-top:2px">Pendiente Systeme.io</div>
+      </div>
+      <div id="lmst-launch" style="flex:1;min-width:160px;background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.2);border-radius:10px;padding:12px 16px;text-align:center">
+        <div style="font-size:18px;margin-bottom:4px">🚀</div>
+        <div style="font-size:11px;font-weight:700;color:#22c55e">Lanzamiento</div>
+        <div style="font-size:10px;color:rgba(255,255,255,.5);margin-top:2px">14 de Julio 2026</div>
+      </div>
+    </div>
+
+    <!-- GRID PRINCIPAL -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+
+      <!-- COLUMNA IZQUIERDA: PDF -->
+      <div>
+        <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#d946ef;margin-bottom:12px">① Exportar PDF</div>
+        <div style="background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:16px">
+          <p style="font-size:11px;color:rgba(255,255,255,.6);line-height:1.7;margin-bottom:14px">
+            La guía ya está lista. Ábrela en el browser y guárdala como PDF:
+          </p>
+          <div style="background:rgba(217,70,239,.1);border:1px solid rgba(217,70,239,.2);border-radius:8px;padding:10px 14px;margin-bottom:12px;font-family:'JetBrains Mono',monospace;font-size:10px;color:#d946ef">
+            Ctrl+P → Destino: Guardar como PDF<br>
+            Más configuración → Márgenes: Ninguno<br>
+            Escala: 100% → Guardar
+          </div>
+          <button onclick="abrirGuia(event)" style="width:100%;background:linear-gradient(135deg,rgba(217,70,239,.25),rgba(124,77,255,.25));border:1.5px solid #d946ef;color:#fff;border-radius:10px;padding:10px;font-size:12px;font-weight:700;cursor:pointer;letter-spacing:.3px">
+            📄 Abrir guía para exportar PDF
+          </button>
+        </div>
+      </div>
+
+      <!-- COLUMNA DERECHA: LINK PÚBLICO -->
+      <div>
+        <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#f59e0b;margin-bottom:12px">② Pegar link público del PDF</div>
+        <div style="background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:16px">
+          <p style="font-size:11px;color:rgba(255,255,255,.6);line-height:1.7;margin-bottom:12px">
+            Sube el PDF a Google Drive o Systeme.io → copia el link → pégalo aquí:
+          </p>
+          <input id="lm-link-input" type="text" placeholder="https://drive.google.com/file/..." style="width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:10px 12px;color:#fff;font-size:11px;font-family:'JetBrains Mono',monospace;margin-bottom:10px;outline:none">
+          <div style="display:flex;gap:8px">
+            <button onclick="guardarLinkLM()" style="flex:1;background:rgba(245,158,11,.2);border:1.5px solid #f59e0b;color:#fbbf24;border-radius:8px;padding:9px;font-size:11px;font-weight:700;cursor:pointer">
+              💾 Guardar link
+            </button>
+            <button onclick="copiarLinkLM(event)" id="lm-copy-main" style="flex:1;background:rgba(34,197,94,.15);border:1.5px solid rgba(34,197,94,.4);color:#22c55e;border-radius:8px;padding:9px;font-size:11px;font-weight:700;cursor:pointer">
+              📋 Copiar link
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- COLUMNA IZQUIERDA: DÓNDE SUBIR -->
+      <div>
+        <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#60a5fa;margin-bottom:12px">③ Opciones para hospedar el PDF</div>
+        <div style="background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:8px">
+
+          <a onclick="showCred(event,this)" data-url="https://drive.google.com/drive/my-drive" data-cred="oauth" data-label="Google Drive" class="lnk" style="background:rgba(66,133,244,.15);border-color:rgba(66,133,244,.4)">
+            ☁️ Google Drive <span style="font-size:9px;opacity:.6">(gratis, link compartible)</span>
+          </a>
+          <a onclick="showCred(event,this)" data-url="https://systeme.io/dashboard/files" data-cred="default" data-label="Systeme.io Files" class="lnk" style="background:rgba(245,158,11,.15);border-color:rgba(245,158,11,.4)">
+            📨 Systeme.io Files <span style="font-size:9px;opacity:.6">(integrado con emails)</span>
+          </a>
+          <a onclick="showCred(event,this)" data-url="https://hotmart.com/product/dashboard" data-cred="default" data-label="Hotmart" class="lnk" style="background:rgba(239,68,68,.15);border-color:rgba(239,68,68,.4)">
+            🛒 Hotmart <span style="font-size:9px;opacity:.6">(si quieres cobrar por él)</span>
+          </a>
+          <a onclick="showCred(event,this)" data-url="https://app.gumroad.com/products" data-cred="default" data-label="Gumroad" class="lnk" style="background:rgba(217,70,239,.12);border-color:rgba(217,70,239,.35)">
+            🛍️ Gumroad <span style="font-size:9px;opacity:.6">(precio libre, 10% fee)</span>
+          </a>
+
+        </div>
+      </div>
+
+      <!-- COLUMNA DERECHA: PREVIA DEL DM -->
+      <div>
+        <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#22c55e;margin-bottom:12px">④ Preview — DM de entrega (ManyChat)</div>
+        <div style="background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:16px">
+          <div style="background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2);border-radius:10px;padding:14px;font-size:11px;color:rgba(255,255,255,.75);line-height:1.75">
+            ¡Aquí está tu guía! 👇<br><br>
+            📘 <em>De Cero a Negocio Digital</em><br>
+            La guía que nadie te da — gratis.<br><br>
+            👉 <span id="dm-link-preview" style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#00e5ff">[Pega el link para ver la preview]</span><br><br>
+            <span style="color:rgba(255,255,255,.4);font-size:10px">— Rafael · TechnoCrazy</span>
+          </div>
+          <button onclick="copiarDM()" style="width:100%;margin-top:10px;background:rgba(34,197,94,.15);border:1.5px solid rgba(34,197,94,.4);color:#22c55e;border-radius:8px;padding:9px;font-size:11px;font-weight:700;cursor:pointer">
+            📋 Copiar DM completo para ManyChat
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- PASOS PENDIENTES -->
+    <div style="margin-top:20px;background:rgba(41,121,255,.06);border:1px solid rgba(41,121,255,.2);border-radius:12px;padding:16px 20px">
+      <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#60a5fa;margin-bottom:10px">📋 Checklist de activación</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+        <div class="cl-check" data-key="lm1" onclick="toggleCheck(this)" style="display:flex;align-items:center;gap:8px;padding:7px 10px;background:rgba(255,255,255,.04);border-radius:8px;cursor:pointer;font-size:11px;color:rgba(255,255,255,.7)">
+          <span class="chk">☐</span> Exportar PDF desde guía
+        </div>
+        <div class="cl-check" data-key="lm2" onclick="toggleCheck(this)" style="display:flex;align-items:center;gap:8px;padding:7px 10px;background:rgba(255,255,255,.04);border-radius:8px;cursor:pointer;font-size:11px;color:rgba(255,255,255,.7)">
+          <span class="chk">☐</span> Subir PDF a Drive / Systeme.io
+        </div>
+        <div class="cl-check" data-key="lm3" onclick="toggleCheck(this)" style="display:flex;align-items:center;gap:8px;padding:7px 10px;background:rgba(255,255,255,.04);border-radius:8px;cursor:pointer;font-size:11px;color:rgba(255,255,255,.7)">
+          <span class="chk">☐</span> Pegar link en este panel
+        </div>
+        <div class="cl-check" data-key="lm4" onclick="toggleCheck(this)" style="display:flex;align-items:center;gap:8px;padding:7px 10px;background:rgba(255,255,255,.04);border-radius:8px;cursor:pointer;font-size:11px;color:rgba(255,255,255,.7)">
+          <span class="chk">☐</span> Actualizar link en ManyChat
+        </div>
+        <div class="cl-check" data-key="lm5" onclick="toggleCheck(this)" style="display:flex;align-items:center;gap:8px;padding:7px 10px;background:rgba(255,255,255,.04);border-radius:8px;cursor:pointer;font-size:11px;color:rgba(255,255,255,.7)">
+          <span class="chk">☐</span> Crear secuencia 7 emails en Systeme.io
+        </div>
+        <div class="cl-check" data-key="lm6" onclick="toggleCheck(this)" style="display:flex;align-items:center;gap:8px;padding:7px 10px;background:rgba(255,255,255,.04);border-radius:8px;cursor:pointer;font-size:11px;color:rgba(255,255,255,.7)">
+          <span class="chk">☐</span> Publicar en todas las redes (14 Jul)
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ═══════════ BIBLIOTECA DE CONTENIDO ═══════════ -->
+<div class="bib-section">
+  <div class="flow-title" style="margin-bottom:24px">📚 BIBLIOTECA DE CONTENIDO — GUÍAS · CURSOS · MANUALES · CAMPAÑAS</div>
+
+  <!-- CURSOS VENDIBLES -->
+  <div class="bib-cat">
+    <div class="bib-cat-title" style="color:#d946ef">🎓 Cursos Vendibles</div>
+    <div class="bib-grid">
+
+      <div class="bib-card bc-curso" onclick="abrirLocal('C:\\Users\\jenav\\01_Proyectos\\Activos\\technocrazy\\04_Contenido\\curso-ia-redes-technocrazy.html')">
+        <div class="bc-ico">🤖</div>
+        <div class="bc-title">Curso IA + Redes Sociales</div>
+        <div class="bc-desc">11 módulos · 14 prompts · Interactivo · Precio sugerido $37–$47 en Hotmart</div>
+        <div class="bc-path">04_Contenido\curso-ia-redes-technocrazy.html</div>
+        <div class="bc-footer">
+          <span class="bc-badge" style="background:rgba(217,70,239,.2);color:#d946ef">VENDIBLE</span>
+          <span class="bc-btn" style="background:rgba(217,70,239,.2);color:#d946ef">Abrir →</span>
+        </div>
+      </div>
+
+      <div class="bib-card bc-curso" onclick="abrirLocal('C:\\Users\\jenav\\05_Scripts_Dev\\hkpc_ebook.html')">
+        <div class="bc-ico">💻</div>
+        <div class="bc-title">Ebook HK-PC Smart Organizer</div>
+        <div class="bc-desc">App Windows organización automática de archivos · Ebook de producto</div>
+        <div class="bc-path">05_Scripts_Dev\hkpc_ebook.html</div>
+        <div class="bc-footer">
+          <span class="bc-badge" style="background:rgba(217,70,239,.2);color:#d946ef">VENDIBLE</span>
+          <span class="bc-btn" style="background:rgba(217,70,239,.2);color:#d946ef">Abrir →</span>
+        </div>
+      </div>
+
+      <div class="bib-card bc-curso" onclick="abrirLocal('C:\\Users\\jenav\\05_Scripts_Dev\\HK-PC_Smart_Organizer_Ebook_v3.pdf')">
+        <div class="bc-ico">📕</div>
+        <div class="bc-title">HK-PC Ebook PDF v3</div>
+        <div class="bc-desc">PDF final del ebook · Versión 3 · 1.4 MB · Listo para distribuir</div>
+        <div class="bc-path">05_Scripts_Dev\HK-PC_Smart_Organizer_Ebook_v3.pdf</div>
+        <div class="bc-footer">
+          <span class="bc-badge" style="background:rgba(34,197,94,.2);color:#22c55e">PDF LISTO</span>
+          <span class="bc-btn" style="background:rgba(217,70,239,.2);color:#d946ef">Abrir →</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CAMPAÑAS Y CONTENIDO -->
+  <div class="bib-cat">
+    <div class="bib-cat-title" style="color:#00e5ff">📣 Campañas & Contenido TechnoCrazy</div>
+    <div class="bib-grid">
+
+      <div class="bib-card bc-campana" onclick="abrirLocal('C:\\Users\\jenav\\01_Proyectos\\Activos\\technocrazy\\04_Contenido\\Pack_Campana_Completo.html')">
+        <div class="bc-ico">🎬</div>
+        <div class="bc-title">Pack Campaña Completo</div>
+        <div class="bc-desc">10 guiones video · 7 emails · Calendario Jul · Copy ads FB/IG/Google · Gancho origen</div>
+        <div class="bc-path">04_Contenido\Pack_Campana_Completo.html</div>
+        <div class="bc-footer">
+          <span class="bc-badge" style="background:rgba(0,229,255,.15);color:#00e5ff">FASE 1-2</span>
+          <span class="bc-btn" style="background:rgba(0,229,255,.15);color:#00e5ff">Abrir →</span>
+        </div>
+      </div>
+
+      <div class="bib-card bc-campana" onclick="abrirLocal('C:\\Users\\jenav\\01_Proyectos\\Activos\\technocrazy\\04_Contenido\\Pack_Contenido_Fase1.html')">
+        <div class="bc-ico">📱</div>
+        <div class="bc-title">Pack Contenido Fase 1</div>
+        <div class="bc-desc">Bio IG optimizada · 10 captions · 3 guiones Reels · 3 sets hashtags</div>
+        <div class="bc-path">04_Contenido\Pack_Contenido_Fase1.html</div>
+        <div class="bc-footer">
+          <span class="bc-badge" style="background:rgba(34,197,94,.2);color:#22c55e">PUBLICAR</span>
+          <span class="bc-btn" style="background:rgba(0,229,255,.15);color:#00e5ff">Abrir →</span>
+        </div>
+      </div>
+
+      <div class="bib-card bc-campana" onclick="abrirLocal('C:\\Users\\jenav\\04_Contenido\\manual-content-machine-technocrazy.html')">
+        <div class="bc-ico">⚙️</div>
+        <div class="bc-title">Manual Content Machine</div>
+        <div class="bc-desc">Sistema de creación y publicación de contenido para TechnoCrazy</div>
+        <div class="bc-path">C:\Users\jenav\04_Contenido\manual-content-machine-technocrazy.html</div>
+        <div class="bc-footer">
+          <span class="bc-badge" style="background:rgba(0,229,255,.15);color:#00e5ff">MANUAL</span>
+          <span class="bc-btn" style="background:rgba(0,229,255,.15);color:#00e5ff">Abrir →</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CALENDARIOS -->
+  <div class="bib-cat">
+    <div class="bib-cat-title" style="color:#f59e0b">📅 Calendarios</div>
+    <div class="bib-grid">
+
+      <div class="bib-card bc-cal" onclick="abrirLocal('C:\\Users\\jenav\\01_Proyectos\\Activos\\technocrazy\\04_Contenido\\Calendario\\Calendario_Julio_2026.html')">
+        <div class="bc-ico">🗓️</div>
+        <div class="bc-title">Calendario Julio 2026</div>
+        <div class="bc-desc">68 posts planificados · Galería 5 fotos · SVG flat · localStorage · Standalone</div>
+        <div class="bc-path">04_Contenido\Calendario\Calendario_Julio_2026.html</div>
+        <div class="bc-footer">
+          <span class="bc-badge" style="background:rgba(245,158,11,.2);color:#f59e0b">JULIO</span>
+          <span class="bc-btn" style="background:rgba(245,158,11,.18);color:#f59e0b">Abrir →</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- GUÍAS TÉCNICAS -->
+  <div class="bib-cat">
+    <div class="bib-cat-title" style="color:#60a5fa">🔧 Guías de Configuración Técnica</div>
+    <div class="bib-grid">
+
+      <div class="bib-card bc-guia" onclick="abrirLocal('C:\\Users\\jenav\\01_Proyectos\\Activos\\technocrazy\\04_Contenido\\Guias_Configuracion_TechnoCrazy.md')">
+        <div class="bc-ico">⚙️</div>
+        <div class="bc-title">Guías Configuración TechnoCrazy</div>
+        <div class="bc-desc">Zoho Mail · Search Console · GA4 · LinkedIn empresa · YouTube canal</div>
+        <div class="bc-path">04_Contenido\Guias_Configuracion_TechnoCrazy.md</div>
+        <div class="bc-footer">
+          <span class="bc-badge" style="background:rgba(41,121,255,.2);color:#60a5fa">SETUP</span>
+          <span class="bc-btn" style="background:rgba(41,121,255,.18);color:#60a5fa">Abrir →</span>
+        </div>
+      </div>
+
+      <div class="bib-card bc-guia" onclick="abrirLocal('C:\\Users\\jenav\\01_Proyectos\\Guias_Negocio_Digital\\03_Biblia_Diseno_Web_Claude.md')">
+        <div class="bc-ico">🎨</div>
+        <div class="bc-title">Biblia Claude Diseño Web</div>
+        <div class="bc-desc">200 capítulos · 40 temas UX/UI · Checklist 8 puntos · Prompts por tema</div>
+        <div class="bc-path">Guias_Negocio_Digital\03_Biblia_Diseno_Web_Claude.md</div>
+        <div class="bc-footer">
+          <span class="bc-badge" style="background:rgba(41,121,255,.2);color:#60a5fa">REFERENCIA</span>
+          <span class="bc-btn" style="background:rgba(41,121,255,.18);color:#60a5fa">Abrir →</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- GUÍAS DE NEGOCIO -->
+  <div class="bib-cat">
+    <div class="bib-cat-title" style="color:#22c55e">📈 Estrategia & Negocio Digital</div>
+    <div class="bib-grid">
+
+      <div class="bib-card bc-negocio" onclick="abrirLocal('C:\\Users\\jenav\\01_Proyectos\\Guias_Negocio_Digital\\01_Digital_Growth_Engine.md')">
+        <div class="bc-ico">🚀</div>
+        <div class="bc-title">Digital Growth Engine</div>
+        <div class="bc-desc">6 módulos: Traffic→Funnel→Leads→Affiliates→Producto→Forecast · Fórmula: Ventas=Tráfico×Conv×Precio</div>
+        <div class="bc-path">Guias_Negocio_Digital\01_Digital_Growth_Engine.md</div>
+        <div class="bc-footer">
+          <span class="bc-badge" style="background:rgba(34,197,94,.2);color:#22c55e">FRAMEWORK</span>
+          <span class="bc-btn" style="background:rgba(34,197,94,.15);color:#22c55e">Abrir →</span>
+        </div>
+      </div>
+
+      <div class="bib-card bc-negocio" onclick="abrirLocal('C:\\Users\\jenav\\01_Proyectos\\Guias_Negocio_Digital\\02_TML_Academy_Resumen.md')">
+        <div class="bc-ico">🎓</div>
+        <div class="bc-title">TML Academy — Resumen</div>
+        <div class="bc-desc">130 lecciones Top Marketing Latino · 6 módulos · 5 modelos de negocio derivados</div>
+        <div class="bc-path">Guias_Negocio_Digital\02_TML_Academy_Resumen.md</div>
+        <div class="bc-footer">
+          <span class="bc-badge" style="background:rgba(34,197,94,.2);color:#22c55e">MARKETING</span>
+          <span class="bc-btn" style="background:rgba(34,197,94,.15);color:#22c55e">Abrir →</span>
+        </div>
+      </div>
+
+      <div class="bib-card bc-negocio" onclick="abrirLocal('C:\\Users\\jenav\\01_Proyectos\\Activos\\technocrazy\\04_Contenido\\guia-negocio-digital-desde-cero.html')">
+        <div class="bc-ico">📘</div>
+        <div class="bc-title">Guía Negocio Digital (Lead Magnet)</div>
+        <div class="bc-desc">8 págs A4 · "De Cero a Negocio Digital" · Print-ready PDF · Para entregar a leads</div>
+        <div class="bc-path">04_Contenido\guia-negocio-digital-desde-cero.html</div>
+        <div class="bc-footer">
+          <span class="bc-badge" style="background:rgba(217,70,239,.2);color:#d946ef">LEAD MAGNET</span>
+          <span class="bc-btn" style="background:rgba(34,197,94,.15);color:#22c55e">Abrir →</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+
+<!-- LEGEND -->
+<div class="legend">
+  <div class="legend-card">
+    <h4>🔑 Credenciales Master</h4>
+    <div class="item">Email 1: <span>rafaelpixel3004@gmail.com</span></div>
+    <div class="item">Email 2: <span>fuchogallery@gmail.com</span></div>
+    <div class="item">Pass:    <span>Rafael3004$</span></div>
+    <div class="item">WA:      <span>+17794318214</span></div>
+  </div>
+  <div class="legend-card">
+    <h4>📊 Estado ManyChat</h4>
+    <div class="item">Plan:    <span>FREE (0/25 contactos)</span></div>
+    <div class="item">Canal:   <span>@igtechnocrazy</span></div>
+    <div class="item">Trigger: <span>Cualquier comentario</span></div>
+    <div class="item">Estado:  <span style="color:#22c55e">● ACTIVO</span></div>
+  </div>
+  <div class="legend-card">
+    <h4>ℹ️ Cómo usar</h4>
+    <div class="item" style="color:rgba(255,255,255,.5);font-size:10px;line-height:1.7">
+      Haz clic en cualquier botón →<br>
+      aparece panel con credenciales →<br>
+      copia usuario/contraseña →<br>
+      clic en "Abrir sitio" → pegar y listo
+    </div>
+  </div>
+</div>
+
+<div style="text-align:center;margin-top:40px;font-size:11px;color:rgba(255,255,255,.2);letter-spacing:1px">
+  TechnoCrazy · Rafael Navarro · technocrazy.org · 2026-06-29 · 9 secciones · Auto-credenciales activo
+</div>
+
+
+<!-- ═══════════ JAVASCRIPT ═══════════ -->
+<script>
+const CREDS = {
+  default: {
+    user: 'rafaelpixel3004@gmail.com',
+    pass: 'Rafael3004$',
+    note: null
+  },
+  gmail: {
+    user: 'rafaelpixel3004@gmail.com',
+    pass: 'Rafael3004$',
+    note: 'Cuenta principal TechnoCrazy'
+  },
+  gmail2: {
+    user: 'fuchogallery@gmail.com',
+    pass: 'Rafael3004$',
+    note: 'Cuenta secundaria — Proyecto Z / AcademiaZC'
+  },
+  oauth: {
+    user: 'rafaelpixel3004@gmail.com',
+    pass: '→ Usar "Continuar con Google"',
+    note: 'ℹ️ No necesitas contraseña — solo selecciona esta cuenta Google al pedirte elegir.'
+  },
+  instagram: {
+    user: 'rafaelpixel3004@gmail.com',
+    pass: 'Rafael3004$',
+    note: 'También puedes ingresar con Facebook (misma cuenta conectada)'
+  },
+  stripe: {
+    user: 'rafaelpixel3004@gmail.com',
+    pass: 'Rafael3004$',
+    note: '⚠️ 2FA por SMS al +1 (407) 509-0902\nCódigo backup: zqhn-jhim-slgv-svup-mcxm'
+  },
+  chime: {
+    user: 'rafaelpixel3004@gmail.com',
+    pass: 'Rafael3004$',
+    note: 'Routing: 101205681 | Cuenta bancaria vinculada a Stripe'
+  },
+  namecheap: {
+    user: 'rafaelpixel3004@gmail.com',
+    pass: 'Rafael3004$',
+    note: 'Dominio: technocrazy.org — Renueva antes del vencimiento anual'
+  },
+  github: {
+    user: 'rafaelpixel3004@gmail.com',
+    pass: 'Rafael3004$',
+    note: 'Puede requerir token 2FA. Usa el token de acceso personal si pide contraseña.'
+  },
+  manychat: {
+    user: 'rafaelpixel3004@gmail.com',
+    pass: 'Rafael3004$',
+    note: 'Entra con Google OAuth (recomendado) o con email + contraseña'
+  },
+  anthropic: {
+    user: 'rafaelpixel3004@gmail.com',
+    pass: 'Rafael3004$ (o Google OAuth)',
+    note: 'Puedes entrar con Google o con email+contraseña'
+  },
+  wa: {
+    user: '+17794318214',
+    pass: '→ Escanear código QR',
+    note: 'Abre WhatsApp en tu teléfono → Dispositivos vinculados → Vincular un dispositivo → Escanea el QR'
+  },
+  telegram: {
+    user: '+17794318214',
+    pass: '→ Código SMS al teléfono',
+    note: 'Telegram usa número de teléfono, no contraseña. Te llega un código SMS al +17794318214'
+  },
+  chatgpt: {
+    user: 'rafaelpixel3004@gmail.com',
+    pass: 'Rafael3004$',
+    note: 'Puedes entrar con Google OAuth o con email + contraseña directa'
+  },
+  none: null
+};
+
+function showCred(e, el) {
+  e.preventDefault();
+  const url = el.dataset.url || el.href;
+  const credKey = el.dataset.cred || 'default';
+  const label = el.dataset.label || el.textContent.trim();
+
+  if (credKey === 'none' || !CREDS[credKey]) {
+    window.open(url, '_blank');
+    return;
+  }
+
+  const cred = CREDS[credKey];
+  document.getElementById('cpSite').textContent = label;
+  document.getElementById('cpUser').textContent = cred.user || '—';
+  document.getElementById('cpPass').textContent = cred.pass || '—';
+
+  const noteEl = document.getElementById('cpNote');
+  if (cred.note) {
+    noteEl.textContent = cred.note;
+    noteEl.style.display = 'block';
+    noteEl.className = cred.note.startsWith('ℹ️') ? 'cp-note-info' : 'cp-note';
+  } else {
+    noteEl.style.display = 'none';
+  }
+
+  document.getElementById('cpGo').href = url;
+  document.getElementById('credPanel').classList.add('show');
+}
+
+function closeCred() {
+  document.getElementById('credPanel').classList.remove('show');
+}
+
+function copyVal(id, btn) {
+  const text = document.getElementById(id).textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const orig = btn.innerHTML;
+    btn.innerHTML = '✅ Copiado';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.innerHTML = orig;
+      btn.classList.remove('copied');
+    }, 1800);
+  }).catch(() => {
+    const el = document.getElementById(id);
+    const range = document.createRange();
+    range.selectNode(el);
+    window.getSelection().removeAllRanges();
+    window.getSelection().addRange(range);
+    document.execCommand('copy');
+    btn.innerHTML = '✅ Copiado';
+    setTimeout(() => btn.innerHTML = '📋 Copiar', 1800);
+  });
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeCred();
+});
+
+/* ── LEAD MAGNET ── */
+const LM_GUIDE_PATH = 'C:\\Users\\jenav\\01_Proyectos\\Activos\\technocrazy\\04_Contenido\\guia-negocio-digital-desde-cero.html';
+
+function abrirLocal(ruta) {
+  // Convierte ruta Windows a file:// URL
+  const url = 'file:///' + ruta.replace(/\\/g, '/');
+  window.open(url, '_blank');
+}
+
+function abrirGuia(e) {
+  if(e) e.preventDefault();
+  abrirLocal(LM_GUIDE_PATH);
+}
+
+function abrirPanelLM(e) {
+  if(e) e.preventDefault();
+  document.querySelector('.manychat-section:last-of-type').scrollIntoView({behavior:'smooth', block:'start'});
+  setTimeout(() => {
+    const inp = document.getElementById('lm-link-input');
+    if(inp) inp.focus();
+  }, 600);
+}
+
+function guardarLinkLM() {
+  const val = document.getElementById('lm-link-input').value.trim();
+  if (!val) { alert('Pega el link primero'); return; }
+  localStorage.setItem('tc_lm_link', val);
+  actualizarEstadoLM(val);
+  const btn = document.querySelector('button[onclick="guardarLinkLM()"]');
+  const orig = btn.textContent;
+  btn.textContent = '✅ Guardado';
+  setTimeout(() => btn.textContent = orig, 2000);
+}
+
+function copiarLinkLM(e) {
+  if(e) e.preventDefault();
+  const link = localStorage.getItem('tc_lm_link');
+  if (!link) { alert('Primero guarda un link'); return; }
+  navigator.clipboard.writeText(link).then(() => {
+    const btns = [document.getElementById('lm-copy-btn'), document.getElementById('lm-copy-main')];
+    btns.forEach(b => { if(b){ const o=b.innerHTML; b.innerHTML='✅ Copiado'; setTimeout(()=>b.innerHTML=o,1800); }});
+  });
+}
+
+function copiarDM() {
+  const link = localStorage.getItem('tc_lm_link') || '[LINK PENDIENTE]';
+  const msg = `¡Aquí está tu guía! 👇\n\n📘 De Cero a Negocio Digital\nLa guía que nadie te da — gratis.\n\n👉 ${link}\n\n— Rafael · TechnoCrazy`;
+  navigator.clipboard.writeText(msg).then(() => {
+    const btn = document.querySelector('button[onclick="copiarDM()"]');
+    const orig = btn.textContent;
+    btn.textContent = '✅ Copiado para ManyChat';
+    setTimeout(() => btn.textContent = orig, 2000);
+  });
+}
+
+function actualizarEstadoLM(link) {
+  const short = link.length > 40 ? link.substring(0,38)+'…' : link;
+
+  // Branch del árbol
+  const badge = document.getElementById('lm-status-badge');
+  const display = document.getElementById('lm-url-display');
+  const copyBtn = document.getElementById('lm-copy-btn');
+  if(badge){ badge.textContent='ACTIVO'; badge.className='badge badge-green'; }
+  if(display){ display.textContent = short; }
+  if(copyBtn){ copyBtn.style.display='flex'; }
+
+  // Input del panel
+  const inp = document.getElementById('lm-link-input');
+  if(inp) inp.value = link;
+
+  // Status bar
+  const urlSt = document.getElementById('lmst-url');
+  const urlVal = document.getElementById('lmst-url-val');
+  if(urlSt){ urlSt.style.background='rgba(34,197,94,.08)'; urlSt.style.borderColor='rgba(34,197,94,.3)'; }
+  if(urlVal){ urlVal.textContent='Configurado ✅'; urlVal.style.color='#22c55e'; }
+
+  // Preview DM
+  const prev = document.getElementById('dm-link-preview');
+  if(prev) prev.textContent = short;
+}
+
+function toggleCheck(el) {
+  const key = 'lmchk_' + el.dataset.key;
+  const done = localStorage.getItem(key) === '1';
+  const chk = el.querySelector('.chk');
+  if(done){
+    localStorage.removeItem(key);
+    el.style.background = 'rgba(255,255,255,.04)';
+    el.style.color = 'rgba(255,255,255,.7)';
+    if(chk) chk.textContent = '☐';
+  } else {
+    localStorage.setItem(key, '1');
+    el.style.background = 'rgba(34,197,94,.1)';
+    el.style.color = '#22c55e';
+    if(chk) chk.textContent = '☑';
+  }
+}
+
+// Cargar estado guardado al abrir
+(function initLM(){
+  const saved = localStorage.getItem('tc_lm_link');
+  if(saved) actualizarEstadoLM(saved);
+  // Checkboxes
+  document.querySelectorAll('.cl-check').forEach(el => {
+    const k = 'lmchk_' + el.dataset.key;
+    if(localStorage.getItem(k)==='1'){
+      el.style.background='rgba(34,197,94,.1)';
+      el.style.color='#22c55e';
+      const chk=el.querySelector('.chk');
+      if(chk) chk.textContent='☑';
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

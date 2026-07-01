@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TechnoCrazy — Pack Contenido Fase 1</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', sans-serif; background: #0a0a0f; color: #e0e0ff; min-height: 100vh; }
+
+  .header {
+    background: linear-gradient(135deg, #1a0a2e 0%, #0d1b3e 100%);
+    padding: 32px 40px;
+    border-bottom: 1px solid rgba(121,40,202,0.3);
+    display: flex; align-items: center; gap: 20px;
+  }
+  .header .logo { font-size: 28px; font-weight: 900; }
+  .header .logo span { color: #7928ca; }
+  .header .subtitle { font-size: 13px; color: rgba(255,255,255,0.4); margin-top: 4px; }
+  .header .badge { margin-left: auto; background: linear-gradient(135deg,#7928ca,#2979ff); color: #fff; padding: 6px 16px; border-radius: 20px; font-size: 12px; font-weight: 700; }
+
+  .nav-tabs {
+    background: rgba(255,255,255,0.03);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    padding: 0 40px;
+    display: flex; gap: 4px;
+  }
+  .tab {
+    padding: 14px 20px; font-size: 13px; font-weight: 600;
+    color: rgba(255,255,255,0.4); cursor: pointer; border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+  }
+  .tab.active { color: #7928ca; border-color: #7928ca; }
+  .tab:hover { color: rgba(255,255,255,0.8); }
+
+  .section { display: none; padding: 40px; max-width: 1100px; margin: 0 auto; }
+  .section.active { display: block; }
+
+  .section-title { font-size: 22px; font-weight: 800; margin-bottom: 8px; }
+  .section-desc { font-size: 13px; color: rgba(255,255,255,0.4); margin-bottom: 32px; }
+
+  /* POSTS */
+  .posts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(480px, 1fr)); gap: 20px; }
+  .post-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px; overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .post-card:hover { border-color: rgba(121,40,202,0.4); }
+  .post-header {
+    padding: 16px 20px;
+    background: rgba(255,255,255,0.03);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    display: flex; align-items: center; gap: 12px;
+  }
+  .post-num {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: linear-gradient(135deg,#7928ca,#2979ff);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 800; flex-shrink: 0;
+  }
+  .post-title { font-size: 13px; font-weight: 700; }
+  .post-tag {
+    margin-left: auto; font-size: 10px; font-weight: 700;
+    padding: 3px 10px; border-radius: 20px;
+    background: rgba(121,40,202,0.15); color: #a78bfa;
+    border: 1px solid rgba(121,40,202,0.3);
+  }
+  .post-body { padding: 20px; }
+  .post-caption {
+    font-size: 13px; line-height: 1.75; color: rgba(255,255,255,0.85);
+    white-space: pre-wrap; margin-bottom: 16px;
+    background: rgba(0,0,0,0.2); border-radius: 10px; padding: 16px;
+    border: 1px solid rgba(255,255,255,0.05);
+  }
+  .post-hashtags {
+    font-size: 12px; color: #60a5fa; line-height: 1.8;
+    background: rgba(41,121,255,0.05); border-radius: 8px; padding: 12px;
+    border: 1px solid rgba(41,121,255,0.15); margin-bottom: 14px;
+  }
+  .copy-btn {
+    background: linear-gradient(135deg,#7928ca,#2979ff);
+    color: #fff; border: none; border-radius: 8px;
+    padding: 8px 16px; font-size: 12px; font-weight: 700;
+    cursor: pointer; transition: opacity 0.2s; width: 100%;
+  }
+  .copy-btn:hover { opacity: 0.85; }
+  .copy-btn.done { background: linear-gradient(135deg,#10b981,#059669); }
+
+  /* BIO */
+  .bio-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px; padding: 28px;
+    max-width: 600px;
+  }
+  .bio-label { font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.3); letter-spacing: 1px; margin-bottom: 14px; }
+  .bio-text {
+    font-size: 14px; line-height: 1.8; color: rgba(255,255,255,0.9);
+    white-space: pre-wrap; margin-bottom: 20px;
+    background: rgba(0,0,0,0.2); border-radius: 10px; padding: 16px;
+    border: 1px solid rgba(255,255,255,0.05);
+  }
+  .char-count { font-size: 11px; color: rgba(255,255,255,0.3); margin-bottom: 16px; }
+
+  /* GUIONES */
+  .guion-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px; overflow: hidden; margin-bottom: 24px;
+  }
+  .guion-header {
+    padding: 16px 24px; background: rgba(121,40,202,0.1);
+    border-bottom: 1px solid rgba(121,40,202,0.2);
+    display: flex; align-items: center; gap: 12px;
+  }
+  .guion-icon { font-size: 20px; }
+  .guion-title { font-size: 14px; font-weight: 800; }
+  .guion-meta { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 2px; }
+  .guion-body { padding: 24px; }
+  .scene {
+    margin-bottom: 18px;
+    padding: 14px;
+    background: rgba(0,0,0,0.2);
+    border-radius: 10px;
+    border-left: 3px solid #7928ca;
+  }
+  .scene-tag { font-size: 10px; font-weight: 700; color: #a78bfa; letter-spacing: 1px; margin-bottom: 6px; }
+  .scene-text { font-size: 13px; line-height: 1.7; color: rgba(255,255,255,0.85); }
+
+  /* HASHTAGS */
+  .hashtag-section { margin-bottom: 28px; }
+  .hashtag-title { font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+  .hashtag-desc { font-size: 12px; color: rgba(255,255,255,0.4); margin-bottom: 12px; }
+  .hashtag-cloud {
+    background: rgba(0,0,0,0.2); border-radius: 12px; padding: 16px;
+    border: 1px solid rgba(255,255,255,0.06);
+    font-size: 13px; color: #60a5fa; line-height: 2;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <div class="logo">Techno<span>Crazy</span></div>
+    <div class="subtitle">Pack de Contenido · Fase 1 · Orgánico</div>
+  </div>
+  <div class="badge">10 Posts + 3 Reels + Hashtags</div>
+</div>
+
+<div class="nav-tabs">
+  <div class="tab active" onclick="showTab('posts')">📝 10 Posts</div>
+  <div class="tab" onclick="showTab('bio')">👤 Bio Instagram</div>
+  <div class="tab" onclick="showTab('reels')">🎬 3 Guiones Reels</div>
+  <div class="tab" onclick="showTab('hashtags')">🔖 Hashtags</div>
+</div>
+
+<!-- POSTS -->
+<div class="section active" id="posts">
+  <div class="section-title">10 Posts — Captions Listos</div>
+  <div class="section-desc">Copia cada caption directo a Instagram. Los hashtags van al final de cada post.</div>
+
+  <div class="posts-grid">
+
+    <!-- POST 1 -->
+    <div class="post-card">
+      <div class="post-header">
+        <div class="post-num">1</div>
+        <div>
+          <div class="post-title">Presentación de TechnoCrazy</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:2px;">Día 1 — Post de apertura</div>
+        </div>
+        <div class="post-tag">INTRO</div>
+      </div>
+      <div class="post-body">
+        <div class="post-caption" id="caption1">¿Tienes una idea de negocio pero no sabes cómo llevarla al mundo digital? 💡
+
+Soy Rafael, fundador de TechnoCrazy. Y mi trabajo es exactamente ese:
+tomar tu idea → y convertirla en un negocio digital real.
+
+No vendo cursos.
+No te enseño teoría.
+Te construyo la herramienta y te enseño a usarla.
+
+✅ Páginas web que venden
+✅ Apps móviles que funcionan
+✅ Sistemas automatizados que escalan solos
+✅ IA que trabaja 24/7 por ti
+
+Si tienes una idea — yo tengo la tecnología.
+
+Escríbeme hoy 👇 technocrazy.org</div>
+        <div class="post-hashtags">#TechnoCrazy #NegocioDigital #Chicago #Emprendedor #IA #Automatizacion #DesarrolloWeb #AppsMoviles #MarketingDigital #LatinoEnUSA</div>
+        <button class="copy-btn" onclick="copyPost('caption1', this)">📋 Copiar Caption</button>
+      </div>
+    </div>
+
+    <!-- POST 2 -->
+    <div class="post-card">
+      <div class="post-header">
+        <div class="post-num">2</div>
+        <div>
+          <div class="post-title">Diseño Gráfico — El Problema</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:2px;">Día 2 — Pain point visual</div>
+        </div>
+        <div class="post-tag">DISEÑO</div>
+      </div>
+      <div class="post-body">
+        <div class="post-caption" id="caption2">Una cosa que destruye negocios antes de que empiecen: 👇
+
+El logo de $5 de Fiverr.
+La tipografía random.
+Los colores que no combinan.
+La identidad visual que parece de 2010.
+
+Los clientes juzgan en 3 segundos.
+Si tu marca no transmite confianza — se van.
+
+En TechnoCrazy diseñamos identidades visuales completas:
+🎨 Logo profesional
+🎨 Paleta de colores estratégica
+🎨 Piezas para redes sociales
+🎨 Branding que convierte
+
+Todo por $19.99.
+
+¿Cuánto te está costando tener una marca que no convence?
+
+👇 technocrazy.org | IG: @igtechnocrazy</div>
+        <div class="post-hashtags">#DisenoGrafico #Branding #Identidadvisual #LogoDesign #Chicago #Emprendedor #MarketingLatino #NegocioDigital #TechnoCrazy #DiseñadorGrafico</div>
+        <button class="copy-btn" onclick="copyPost('caption2', this)">📋 Copiar Caption</button>
+      </div>
+    </div>
+
+    <!-- POST 3 -->
+    <div class="post-card">
+      <div class="post-header">
+        <div class="post-num">3</div>
+        <div>
+          <div class="post-title">Páginas Web — El Costo Real</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:2px;">Día 3 — Objeción de precio</div>
+        </div>
+        <div class="post-tag">WEB</div>
+      </div>
+      <div class="post-body">
+        <div class="post-caption" id="caption3">Agencias en Chicago te cobran $3,000 por una página web. 🤯
+
+¿La diferencia con TechnoCrazy? Ninguna en calidad.
+La diferencia en precio: todo.
+
+Construimos tu página web:
+⚡ Diseño moderno y profesional
+⚡ Carga en menos de 1 segundo
+⚡ Optimizada para vender
+⚡ Con dominio y deploy incluido
+
+¿Por qué tan accesible?
+Porque uso IA + mi experiencia para entregar en días lo que otros tardan semanas.
+
+¿Tu negocio todavía no tiene página web?
+
+Escríbeme: technocrazy.org 👇</div>
+        <div class="post-hashtags">#PaginaWeb #WebDesign #Chicago #NegocioDigital #DesarrolloWeb #SitioWeb #TechnoCrazy #Emprendedor #LatinoEnUSA #MarketingDigital</div>
+        <button class="copy-btn" onclick="copyPost('caption3', this)">📋 Copiar Caption</button>
+      </div>
+    </div>
+
+    <!-- POST 4 -->
+    <div class="post-card">
+      <div class="post-header">
+        <div class="post-num">4</div>
+        <div>
+          <div class="post-title">Páginas Web — Proyectos Reales</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:2px;">Día 4 — Social proof + showcase</div>
+        </div>
+        <div class="post-tag">WEB</div>
+      </div>
+      <div class="post-body">
+        <div class="post-caption" id="caption4">No te pido que confíes en mi palabra.
+
+Te dejo que veas el trabajo con tus propios ojos 👀
+
+Proyectos que he construido:
+🌐 AutoPost — generador de posts con IA (autopost-plum-five.vercel.app)
+🌐 ElGestor — gestión empresarial completa (elgestor.vercel.app)
+🌐 ServiYA — marketplace de 55+ servicios (serviya.vercel.app)
+🌐 CambioBs — conversor de divisas en tiempo real (cambiobs.vercel.app)
+🌐 TechnoCrazy — esta misma plataforma (technocrazy.org)
+
+Y eso es solo lo que está en vivo.
+
+Tu negocio merece una presencia digital así.
+El próximo proyecto puede ser el tuyo.
+
+💬 technocrazy.org</div>
+        <div class="post-hashtags">#Portfolio #WebDesign #DesarrolloWeb #Chicago #TechnoCrazy #NegocioDigital #SocialProof #Proyectos #Emprendimiento #LatinoTech</div>
+        <button class="copy-btn" onclick="copyPost('caption4', this)">📋 Copiar Caption</button>
+      </div>
+    </div>
+
+    <!-- POST 5 -->
+    <div class="post-card">
+      <div class="post-header">
+        <div class="post-num">5</div>
+        <div>
+          <div class="post-title">Apps Móviles — De Idea a App</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:2px;">Día 5 — Aspiracional</div>
+        </div>
+        <div class="post-tag">APPS</div>
+      </div>
+      <div class="post-body">
+        <div class="post-caption" id="caption5">Tienes una idea para una app.
+
+La mayoría dice: "sí, algún día."
+En TechnoCrazy decimos: "¿cuándo empezamos?"
+
+Una app móvil ya no es solo para empresas Fortune 500.
+Es para el restaurante de la esquina.
+Para el coach que quiere cobrar membresías.
+Para el profesional que quiere automatizar citas.
+Para TI.
+
+Construimos tu app:
+📱 iOS y Android
+📱 Diseño intuitivo
+📱 Funcional desde el día 1
+📱 Escalable para crecer
+
+La diferencia entre tener una idea y tener un negocio es la tecnología.
+
+¿Cuál es tu idea?
+
+Cuéntamela: technocrazy.org 👇</div>
+        <div class="post-hashtags">#AppMovil #AppDevelopment #iOS #Android #Chicago #Emprendedor #Startup #TechnoCrazy #NegocioDigital #IdeaDeNegocio</div>
+        <button class="copy-btn" onclick="copyPost('caption5', this)">📋 Copiar Caption</button>
+      </div>
+    </div>
+
+    <!-- POST 6 -->
+    <div class="post-card">
+      <div class="post-header">
+        <div class="post-num">6</div>
+        <div>
+          <div class="post-title">Sistemas Automatizados — Tiempo</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:2px;">Día 6 — ROI de la automatización</div>
+        </div>
+        <div class="post-tag">AUTOS</div>
+      </div>
+      <div class="post-body">
+        <div class="post-caption" id="caption6">¿Cuántas horas semanales pierdes en tareas repetitivas? ⏱️
+
+Responder los mismos mensajes.
+Enviar las mismas facturas.
+Actualizar las mismas hojas de cálculo.
+Recordar los mismos seguimientos.
+
+Eso no es un negocio — eso es un trabajo disfrazado.
+
+Un sistema automatizado hace todo eso por ti:
+🔄 Respuestas automáticas 24/7
+🔄 Facturación automática
+🔄 CRM que se actualiza solo
+🔄 Alertas y seguimientos en piloto automático
+
+10 horas a la semana = 40 horas al mes = 480 horas al año.
+
+¿Cuánto vale tu tiempo?
+
+Hablemos de automatizar tu negocio: technocrazy.org 👇</div>
+        <div class="post-hashtags">#Automatizacion #NegocioDigital #Productividad #SistemasAutomatizados #TechnoCrazy #Chicago #Emprendedor #WorkSmart #MarketingAutomation #GrowthHacking</div>
+        <button class="copy-btn" onclick="copyPost('caption6', this)">📋 Copiar Caption</button>
+      </div>
+    </div>
+
+    <!-- POST 7 -->
+    <div class="post-card">
+      <div class="post-header">
+        <div class="post-num">7</div>
+        <div>
+          <div class="post-title">IA — El Empleado que No Duerme</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:2px;">Día 7 — IA accesible para todos</div>
+        </div>
+        <div class="post-tag">IA</div>
+      </div>
+      <div class="post-body">
+        <div class="post-caption" id="caption7">Un empleado promedio cuesta miles al mes.
+
+Una IA trabajando por tu negocio: una fracción de eso.
+
+Y la IA no pide días libres.
+No llega tarde.
+No se olvida de responder.
+No tiene mal día.
+
+Lo que puede hacer una IA en tu negocio:
+🤖 Atender clientes 24/7 en tu web
+🤖 Calificar leads automáticamente
+🤖 Responder preguntas frecuentes
+🤖 Agendar citas sin intervención humana
+🤖 Generar reportes diarios
+
+No es ciencia ficción. Es lo que hacemos en TechnoCrazy.
+
+¿Tu negocio todavía no tiene un asistente de IA?
+
+Empecemos hoy: technocrazy.org 👇</div>
+        <div class="post-hashtags">#InteligenciaArtificial #IA #Chatbot #Automatizacion #NegocioDigital #TechnoCrazy #AIBusiness #Chicago #Emprendedor #FuturoDigital</div>
+        <button class="copy-btn" onclick="copyPost('caption7', this)">📋 Copiar Caption</button>
+      </div>
+    </div>
+
+    <!-- POST 8 -->
+    <div class="post-card">
+      <div class="post-header">
+        <div class="post-num">8</div>
+        <div>
+          <div class="post-title">Lead Magnet — 5 Herramientas IA Gratis</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:2px;">Día 8 — Captura de leads</div>
+        </div>
+        <div class="post-tag">LEAD</div>
+      </div>
+      <div class="post-body">
+        <div class="post-caption" id="caption8">🎁 REGALO GRATIS para emprendedores
+
+"5 Herramientas IA que Están Cambiando los Negocios"
+
+La guía que yo uso para construir negocios digitales en 2026.
+
+✅ Herramienta #1: La que genera contenido en segundos
+✅ Herramienta #2: La que automatiza tu atención al cliente
+✅ Herramienta #3: La que crea imágenes profesionales
+✅ Herramienta #4: La que analiza tu competencia
+✅ Herramienta #5: La que hace el trabajo de 3 empleados
+
+100% gratis. Sin trampa.
+
+¿Cómo la consigues?
+
+1️⃣ Comenta "IA" debajo
+2️⃣ Te mando el link por DM
+
+O descárgala directo: technocrazy.org 👇</div>
+        <div class="post-hashtags">#Gratis #HerramientasIA #LeadMagnet #NegocioDigital #IA #TechnoCrazy #Emprendedor #Chicago #MarketingDigital #RecursosGratis</div>
+        <button class="copy-btn" onclick="copyPost('caption8', this)">📋 Copiar Caption</button>
+      </div>
+    </div>
+
+    <!-- POST 9 -->
+    <div class="post-card">
+      <div class="post-header">
+        <div class="post-num">9</div>
+        <div>
+          <div class="post-title">Proceso de Trabajo — Cómo Funciona</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:2px;">Día 9 — Reduce la fricción de compra</div>
+        </div>
+        <div class="post-tag">PROCESO</div>
+      </div>
+      <div class="post-body">
+        <div class="post-caption" id="caption9">¿Cómo es trabajar con TechnoCrazy? 🤔
+
+Sencillo:
+
+Paso 1: Me escribes y me cuentas tu idea
+Paso 2: Te mando una propuesta en 24h (sin costo)
+Paso 3: Si te convence, empezamos
+Paso 4: En días (no semanas) tienes tu producto listo
+Paso 5: Te enseño a usarlo y a hacerlo crecer
+
+Sin contratos raros.
+Sin pagos adelantados enormes.
+Sin letra pequeña.
+
+Solo tú, yo y la tecnología que necesitas.
+
+Más de 10 proyectos construidos.
+Clientes desde Chicago hasta Venezuela.
+
+¿Empezamos?
+
+👇 technocrazy.org | WhatsApp: +1 (779) 431-8214</div>
+        <div class="post-hashtags">#ComoFunciona #ProcesoDeCompra #TechnoCrazy #NegocioDigital #Chicago #Emprendedor #Confianza #TransformacionDigital #DigitalMarketing #LatinoTech</div>
+        <button class="copy-btn" onclick="copyPost('caption9', this)">📋 Copiar Caption</button>
+      </div>
+    </div>
+
+    <!-- POST 10 -->
+    <div class="post-card">
+      <div class="post-header">
+        <div class="post-num">10</div>
+        <div>
+          <div class="post-title">CTA Final — Tu Negocio Merece Más</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:2px;">Día 10 — Cierre emocional + CTA fuerte</div>
+        </div>
+        <div class="post-tag">CTA</div>
+      </div>
+      <div class="post-body">
+        <div class="post-caption" id="caption10">Hay dos tipos de emprendedores en 2026:
+
+Los que siguen esperando el momento perfecto.
+Y los que ya tienen su negocio en internet.
+
+¿Cuál de los dos quieres ser?
+
+La tecnología ya no es una ventaja competitiva — es el mínimo para competir.
+
+Tu negocio merece:
+🚀 Una presencia digital que impresione
+🚀 Sistemas que trabajen mientras duermes
+🚀 IA que convierta visitantes en clientes
+🚀 Herramientas que escalen sin contratar más
+
+Y todo eso existe. Y está disponible para ti hoy.
+
+En TechnoCrazy no esperamos a que "estés listo."
+Te ayudamos a ESTAR listo.
+
+El primer paso: escríbeme.
+
+👇 technocrazy.org | @igtechnocrazy</div>
+        <div class="post-hashtags">#NegocioDigital #TechnoCrazy #TransformacionDigital #Chicago #Emprendedor #EmprendimientoLatino #MarketingDigital #IA #Automatizacion #EmprendedorLatino</div>
+        <button class="copy-btn" onclick="copyPost('caption10', this)">📋 Copiar Caption</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- BIO -->
+<div class="section" id="bio">
+  <div class="section-title">Bio Optimizada para Instagram</div>
+  <div class="section-desc">Pega esto en Editar perfil → Biografía en @igtechnocrazy</div>
+
+  <div class="bio-card">
+    <div class="bio-label">BIO PRINCIPAL (150 chars max)</div>
+    <div class="bio-text" id="bioText">🚀 Transformo ideas en negocios digitales
+💻 Webs · Apps · IA · Automatización
+📍 Chicago, IL | 🌎 Servicio mundial
+👇 technocrazy.org</div>
+    <div class="char-count">97 caracteres — ✅ dentro del límite de 150</div>
+    <button class="copy-btn" onclick="copyPost('bioText', this)">📋 Copiar Bio</button>
+
+    <div style="margin-top:24px;padding-top:24px;border-top:1px solid rgba(255,255,255,0.06);">
+      <div class="bio-label">NOMBRE DE PERFIL (sugerido)</div>
+      <div class="bio-text" id="profileName">Rafael Navarro | TechnoCrazy</div>
+      <button class="copy-btn" onclick="copyPost('profileName', this)" style="margin-top:12px;">📋 Copiar Nombre</button>
+    </div>
+
+    <div style="margin-top:24px;padding-top:24px;border-top:1px solid rgba(255,255,255,0.06);">
+      <div class="bio-label">CATEGORÍA DE CUENTA</div>
+      <div class="bio-text" id="categoria">Consultor de negocios digitales</div>
+      <button class="copy-btn" onclick="copyPost('categoria', this)" style="margin-top:12px;">📋 Copiar Categoría</button>
+    </div>
+
+    <div style="margin-top:24px;padding-top:24px;border-top:1px solid rgba(255,255,255,0.06);">
+      <div class="bio-label">LINK EN BIO</div>
+      <div class="bio-text" id="linkBio">https://technocrazy.org</div>
+      <button class="copy-btn" onclick="copyPost('linkBio', this)" style="margin-top:12px;">📋 Copiar Link</button>
+    </div>
+  </div>
+</div>
+
+<!-- REELS -->
+<div class="section" id="reels">
+  <div class="section-title">3 Guiones para Reels / TikTok</div>
+  <div class="section-desc">Face-to-camera · 30–45 seg · Español · Léelos en cámara, no memorices — sé tú mismo</div>
+
+  <!-- GUION 1 -->
+  <div class="guion-card">
+    <div class="guion-header">
+      <div class="guion-icon">🎬</div>
+      <div>
+        <div class="guion-title">Reel #1 — "¿Cuánto vale una página web?"</div>
+        <div class="guion-meta">30 seg · Hook fuerte · Objeción de precio · CTA directo</div>
+      </div>
+    </div>
+    <div class="guion-body">
+      <div class="scene">
+        <div class="scene-tag">HOOK (0–3 seg)</div>
+        <div class="scene-text">¿Sabes cuánto cuesta una página web profesional en Chicago?</div>
+      </div>
+      <div class="scene">
+        <div class="scene-tag">PROBLEMA (3–12 seg)</div>
+        <div class="scene-text">Las agencias te cobran entre mil y cinco mil dólares. Y tardan meses. Y al final te entregan algo que no te gusta.</div>
+      </div>
+      <div class="scene">
+        <div class="scene-tag">SOLUCIÓN (12–22 seg)</div>
+        <div class="scene-text">En TechnoCrazy hacemos tu página web por treinta dólares. Con dominio. Con deploy. En días. No semanas.</div>
+      </div>
+      <div class="scene">
+        <div class="scene-tag">PRUEBA (22–30 seg)</div>
+        <div class="scene-text">¿No me crees? Entra a technocrazy.org y ve los proyectos que ya están vivos. Si todavía no tienes página web — ya sabes a dónde escribirme. El link está en mi bio.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GUION 2 -->
+  <div class="guion-card">
+    <div class="guion-header">
+      <div class="guion-icon">🎬</div>
+      <div>
+        <div class="guion-title">Reel #2 — "La IA que trabaja por ti"</div>
+        <div class="guion-meta">40 seg · Educativo · Aspiracional · Resultado concreto</div>
+      </div>
+    </div>
+    <div class="guion-body">
+      <div class="scene">
+        <div class="scene-tag">HOOK (0–4 seg)</div>
+        <div class="scene-text">¿Qué pasaría si tuvieras un empleado que trabaja 24 horas, 7 días a la semana, y nunca pide aumento?</div>
+      </div>
+      <div class="scene">
+        <div class="scene-tag">CONCEPTO (4–15 seg)</div>
+        <div class="scene-text">Eso es lo que hace la inteligencia artificial. Atiende a tus clientes mientras duermes. Responde preguntas. Agenda citas. Califica leads. Solo.</div>
+      </div>
+      <div class="scene">
+        <div class="scene-tag">DATO (15–25 seg)</div>
+        <div class="scene-text">Un empleado promedio cuesta miles al mes. Una IA en tu negocio cuesta una fracción de eso. La misma eficiencia. Sin drama.</div>
+      </div>
+      <div class="scene">
+        <div class="scene-tag">CTA (25–40 seg)</div>
+        <div class="scene-text">En TechnoCrazy integramos IA en tu negocio aunque no sepas nada de tecnología. Comenta "IA" y te cuento cuánto cuesta adaptarlo a tu negocio. O entra a technocrazy.org.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GUION 3 -->
+  <div class="guion-card">
+    <div class="guion-header">
+      <div class="guion-icon">🎬</div>
+      <div>
+        <div class="guion-title">Reel #3 — "Historia: de la idea al negocio"</div>
+        <div class="guion-meta">45 seg · Personal · Confianza · Conexión emocional</div>
+      </div>
+    </div>
+    <div class="guion-body">
+      <div class="scene">
+        <div class="scene-tag">HOOK (0–5 seg)</div>
+        <div class="scene-text">Llegué a Chicago sin conocer a nadie. Y construí un negocio digital desde cero. Así es como lo hice.</div>
+      </div>
+      <div class="scene">
+        <div class="scene-tag">HISTORIA (5–20 seg)</div>
+        <div class="scene-text">Aprendí a programar. Aprendí a usar IA. Construí mis primeras herramientas. Las probé. Las mejoré. Y me di cuenta de que lo que yo hacía — podía hacerlo para otros también.</div>
+      </div>
+      <div class="scene">
+        <div class="scene-tag">MISIÓN (20–35 seg)</div>
+        <div class="scene-text">Hoy en TechnoCrazy ayudo a emprendedores como tú a tener la misma tecnología que tienen las grandes empresas — pero a precios reales. Páginas web. Apps. Automatización. IA.</div>
+      </div>
+      <div class="scene">
+        <div class="scene-tag">CTA (35–45 seg)</div>
+        <div class="scene-text">Si tienes una idea de negocio y no sabes cómo hacerla digital — escríbeme. Lo hacemos juntos. El link está en mi bio: technocrazy.org.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HASHTAGS -->
+<div class="section" id="hashtags">
+  <div class="section-title">Sets de Hashtags</div>
+  <div class="section-desc">Rota entre los 3 sets — no uses siempre los mismos o Instagram penaliza el alcance</div>
+
+  <div class="hashtag-section">
+    <div class="hashtag-title">🏷️ Set A — Servicios Digitales (para posts de servicio)</div>
+    <div class="hashtag-desc">Ideal para posts de Diseño, Web, Apps, Automatización</div>
+    <div class="hashtag-cloud" id="hashtagA">#NegocioDigital #DesarrolloWeb #DisenoGrafico #AppDevelopment #Automatizacion #Chicago #Emprendedor #MarketingDigital #TechnoCrazy #TransformacionDigital #WebDesign #PaginaWeb #SitioWeb #StartupLatino #NegocioOnline</div>
+    <button class="copy-btn" onclick="copyPost('hashtagA', this)" style="margin-top:12px;">📋 Copiar Set A</button>
+  </div>
+
+  <div class="hashtag-section" style="margin-top:28px;">
+    <div class="hashtag-title">🏷️ Set B — IA y Tecnología</div>
+    <div class="hashtag-desc">Ideal para posts de IA, automatización, herramientas</div>
+    <div class="hashtag-cloud" id="hashtagB">#InteligenciaArtificial #IA #AIBusiness #Chatbot #MachineLearning #FuturoDigital #TechLatino #Automatizacion #HerramientasIA #TechnoCrazy #EmprendimientoDigital #GrowthHacking #WorkSmart #ProductividadDigital #Innovacion</div>
+    <button class="copy-btn" onclick="copyPost('hashtagB', this)" style="margin-top:12px;">📋 Copiar Set B</button>
+  </div>
+
+  <div class="hashtag-section" style="margin-top:28px;">
+    <div class="hashtag-title">🏷️ Set C — Chicago + Latino</div>
+    <div class="hashtag-desc">Ideal para alcance local en Chicago y comunidad latina</div>
+    <div class="hashtag-cloud" id="hashtagC">#ChicagoLatino #LatinoEnUSA #EmprendedorLatino #ChicagoBusiness #LatinoTech #LatinoEntrepreneur #HispanicBusiness #ChicagoSmallBusiness #NegocioLatino #TechnoCrazy #Chicago #Illinois #MarketingLatino #LatinosCAN #EmprendeEnUSA</div>
+    <button class="copy-btn" onclick="copyPost('hashtagC', this)" style="margin-top:12px;">📋 Copiar Set C</button>
+  </div>
+</div>
+
+<script>
+  function showTab(id) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    event.target.classList.add('active');
+  }
+
+  function copyPost(id, btn) {
+    const text = document.getElementById(id).innerText;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(() => flash(btn));
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      document.execCommand('copy'); document.body.removeChild(ta);
+      flash(btn);
+    }
+  }
+
+  function flash(btn) {
+    const orig = btn.innerHTML;
+    btn.innerHTML = '✅ Copiado!';
+    btn.classList.add('done');
+    setTimeout(() => { btn.innerHTML = orig; btn.classList.remove('done'); }, 2000);
+  }
+</script>
+</body>
+</html>

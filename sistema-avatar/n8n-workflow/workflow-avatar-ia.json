@@ -1,0 +1,278 @@
+{
+  "name": "TechnoCrazy — Sistema Avatar IA Completo",
+  "description": "Pipeline completo: Claude genera script → HeyGen genera video → ElevenLabs añade voz → Blotato publica en IG/TikTok/YouTube automáticamente",
+  "version": "1.0.0",
+  "nodes": [
+    {
+      "id": "trigger-lunes",
+      "name": "⏰ Trigger Semanal (Lunes 8AM)",
+      "type": "n8n-nodes-base.cron",
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 8 * * 1"
+            }
+          ]
+        }
+      },
+      "position": [100, 300]
+    },
+    {
+      "id": "claude-genera-scripts",
+      "name": "🧠 Claude — Genera Scripts Semanales",
+      "type": "n8n-nodes-base.httpRequest",
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "headers": {
+          "x-api-key": "={{ $env.ANTHROPIC_API_KEY }}",
+          "anthropic-version": "2023-06-01",
+          "content-type": "application/json"
+        },
+        "body": {
+          "model": "claude-opus-4-8-20251101",
+          "max_tokens": 4000,
+          "messages": [
+            {
+              "role": "user",
+              "content": "Activa /semana-contenido. Genera los 7 scripts de esta semana para TechnoCrazy. Para cada día dame: SCRIPT completo de 30 segundos, COPY del post, PROMPT de imagen. Formato JSON con array de 7 objetos: {dia, tipo, script, copy, prompt_imagen}"
+            }
+          ]
+        }
+      },
+      "position": [300, 300]
+    },
+    {
+      "id": "split-7-dias",
+      "name": "✂️ Dividir en 7 días",
+      "type": "n8n-nodes-base.splitInBatches",
+      "parameters": {
+        "batchSize": 1
+      },
+      "position": [500, 300]
+    },
+    {
+      "id": "heygen-genera-video",
+      "name": "🎬 HeyGen — Genera Video con Cara de Rafael",
+      "type": "n8n-nodes-base.httpRequest",
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.heygen.com/v2/video/generate",
+        "headers": {
+          "X-Api-Key": "={{ $env.HEYGEN_API_KEY }}",
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "video_inputs": [
+            {
+              "character": {
+                "type": "avatar",
+                "avatar_id": "={{ $env.HEYGEN_AVATAR_ID }}",
+                "avatar_style": "normal"
+              },
+              "voice": {
+                "type": "elevenlabs",
+                "voice_id": "={{ $env.ELEVENLABS_VOICE_ID }}",
+                "input_text": "={{ $json.script }}"
+              },
+              "background": {
+                "type": "color",
+                "value": "#0a0a0a"
+              }
+            }
+          ],
+          "dimension": {
+            "width": 1080,
+            "height": 1920
+          },
+          "aspect_ratio": "9:16"
+        }
+      },
+      "position": [700, 200]
+    },
+    {
+      "id": "chatgpt-genera-imagen",
+      "name": "🎨 ChatGPT — Genera Imagen de Rafael",
+      "type": "n8n-nodes-base.httpRequest",
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/images/generations",
+        "headers": {
+          "Authorization": "Bearer {{ $env.OPENAI_API_KEY }}",
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "model": "gpt-image-1",
+          "prompt": "={{ $json.prompt_imagen + ' Style: photorealistic, professional photography, TechnoCrazy brand aesthetic' }}",
+          "n": 1,
+          "size": "1024x1792",
+          "quality": "high"
+        }
+      },
+      "position": [700, 400]
+    },
+    {
+      "id": "wait-heygen",
+      "name": "⏳ Esperar Video HeyGen (3 min)",
+      "type": "n8n-nodes-base.wait",
+      "parameters": {
+        "amount": 3,
+        "unit": "minutes"
+      },
+      "position": [900, 200]
+    },
+    {
+      "id": "heygen-check-status",
+      "name": "✅ Verificar Video Listo",
+      "type": "n8n-nodes-base.httpRequest",
+      "parameters": {
+        "method": "GET",
+        "url": "=https://api.heygen.com/v1/video_status.get?video_id={{ $json.data.video_id }}",
+        "headers": {
+          "X-Api-Key": "={{ $env.HEYGEN_API_KEY }}"
+        }
+      },
+      "position": [1100, 200]
+    },
+    {
+      "id": "guardar-google-drive",
+      "name": "💾 Guardar en Google Drive",
+      "type": "n8n-nodes-base.googleDrive",
+      "parameters": {
+        "operation": "upload",
+        "name": "={{ 'TC_' + $json.dia + '_' + $now.format('YYYY-MM-DD') + '.mp4' }}",
+        "folderId": "={{ $env.GDRIVE_FOLDER_CONTENT }}",
+        "binaryData": true
+      },
+      "position": [1300, 200]
+    },
+    {
+      "id": "programar-publicacion",
+      "name": "📅 Programar Publicación (hora óptima)",
+      "type": "n8n-nodes-base.wait",
+      "parameters": {
+        "amount": "={{ $json.horas_hasta_publicacion }}",
+        "unit": "hours"
+      },
+      "position": [1500, 300]
+    },
+    {
+      "id": "blotato-publicar-video",
+      "name": "🚀 Blotato — Publicar Video en IG + TikTok + YouTube",
+      "type": "n8n-nodes-base.httpRequest",
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.blotato.com/v1/post",
+        "headers": {
+          "Authorization": "Bearer {{ $env.BLOTATO_API_KEY }}",
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "platforms": ["instagram", "tiktok", "youtube_shorts"],
+          "content": {
+            "video_url": "={{ $json.video_url }}",
+            "caption": "={{ $json.copy }}",
+            "hashtags": "={{ $json.hashtags }}"
+          },
+          "schedule": {
+            "publish_at": "now"
+          }
+        }
+      },
+      "position": [1700, 200]
+    },
+    {
+      "id": "blotato-publicar-imagen",
+      "name": "📸 Blotato — Publicar Imagen en IG + Facebook",
+      "type": "n8n-nodes-base.httpRequest",
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.blotato.com/v1/post",
+        "headers": {
+          "Authorization": "Bearer {{ $env.BLOTATO_API_KEY }}",
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "platforms": ["instagram", "facebook"],
+          "content": {
+            "image_url": "={{ $json.imagen_url }}",
+            "caption": "={{ $json.copy_imagen }}",
+            "hashtags": "={{ $json.hashtags }}"
+          }
+        }
+      },
+      "position": [1700, 400]
+    },
+    {
+      "id": "notificacion-telegram",
+      "name": "📱 Notificar a Rafael (Telegram)",
+      "type": "n8n-nodes-base.telegram",
+      "parameters": {
+        "chatId": "={{ $env.TELEGRAM_CHAT_ID }}",
+        "text": "=✅ *TechnoCrazy Content System*\n\n📅 *{{ $json.dia }}* publicado exitosamente\n\n🎬 Video: {{ $json.titulo }}\n📊 Plataformas: IG + TikTok + YouTube\n⏰ Publicado: {{ $now.format('HH:mm') }}\n\n_Sistema corriendo solo. 🤖_"
+      },
+      "position": [1900, 300]
+    },
+    {
+      "id": "actualizar-sheets",
+      "name": "📊 Actualizar Google Sheets (registro)",
+      "type": "n8n-nodes-base.googleSheets",
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "sheetId": "={{ $env.SHEETS_CONTENT_TRACKER }}",
+        "columns": {
+          "dia": "={{ $json.dia }}",
+          "fecha": "={{ $now.format('YYYY-MM-DD') }}",
+          "titulo": "={{ $json.titulo }}",
+          "tipo": "={{ $json.tipo }}",
+          "plataformas": "IG, TikTok, YouTube",
+          "estado": "PUBLICADO",
+          "video_id": "={{ $json.heygen_video_id }}",
+          "url_video": "={{ $json.video_url }}"
+        }
+      },
+      "position": [1900, 450]
+    }
+  ],
+  "connections": {
+    "trigger-lunes": {
+      "main": [["claude-genera-scripts"]]
+    },
+    "claude-genera-scripts": {
+      "main": [["split-7-dias"]]
+    },
+    "split-7-dias": {
+      "main": [["heygen-genera-video", "chatgpt-genera-imagen"]]
+    },
+    "heygen-genera-video": {
+      "main": [["wait-heygen"]]
+    },
+    "wait-heygen": {
+      "main": [["heygen-check-status"]]
+    },
+    "heygen-check-status": {
+      "main": [["guardar-google-drive"]]
+    },
+    "guardar-google-drive": {
+      "main": [["programar-publicacion"]]
+    },
+    "chatgpt-genera-imagen": {
+      "main": [["programar-publicacion"]]
+    },
+    "programar-publicacion": {
+      "main": [["blotato-publicar-video", "blotato-publicar-imagen"]]
+    },
+    "blotato-publicar-video": {
+      "main": [["notificacion-telegram", "actualizar-sheets"]]
+    },
+    "blotato-publicar-imagen": {
+      "main": [["actualizar-sheets"]]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "America/Caracas"
+  }
+}

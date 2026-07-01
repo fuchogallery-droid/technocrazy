@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>5 Herramientas IA Gratuitas — TechnoCrazy</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f0f2ff;
+      color: #1a1a2e;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .page {
+      width: 794px;
+      min-height: 1123px;
+      margin: 0 auto 40px;
+      position: relative;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    /* ── PORTADA ── */
+    .cover {
+      background: linear-gradient(160deg, #0d0d1a 0%, #160d2e 40%, #0d1f3c 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 60px;
+      min-height: 1123px;
+    }
+
+    .cover .badge {
+      background: rgba(0,229,255,0.12);
+      border: 1px solid #00e5ff;
+      color: #00e5ff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      padding: 8px 20px;
+      border-radius: 999px;
+      margin-bottom: 48px;
+    }
+
+    .cover .numero {
+      font-size: 140px;
+      font-weight: 900;
+      line-height: 1;
+      background: linear-gradient(135deg, #2979ff, #7c4dff, #00e5ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 10px;
+    }
+
+    .cover h1 {
+      font-size: 38px;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.15;
+      margin-bottom: 8px;
+      max-width: 600px;
+    }
+
+    .cover h1 span {
+      background: linear-gradient(90deg, #00e5ff, #7c4dff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .cover .subtitle-es {
+      font-size: 16px;
+      color: rgba(255,255,255,0.55);
+      margin-top: 6px;
+      margin-bottom: 48px;
+    }
+
+    .cover .divider {
+      width: 80px;
+      height: 2px;
+      background: linear-gradient(90deg, #2979ff, #00e5ff);
+      margin: 0 auto 48px;
+      border-radius: 999px;
+    }
+
+    .cover .desc {
+      font-size: 15px;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.7;
+      max-width: 480px;
+      margin-bottom: 60px;
+    }
+
+    .cover .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: auto;
+      padding-top: 60px;
+    }
+
+    .cover .brand-dot {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, #2979ff, #7c4dff);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 900;
+      color: #fff;
+    }
+
+    .cover .brand-name {
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .cover .brand-sub {
+      font-size: 11px;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    /* ── PÁGINAS DE HERRAMIENTAS ── */
+    .tool-page {
+      padding: 60px;
+      min-height: 1123px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .tool-header {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+
+    .tool-number {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: 900;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .tool-meta { flex: 1; }
+
+    .tool-tag {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .tool-name {
+      font-size: 30px;
+      font-weight: 900;
+      color: #1a1a2e;
+      line-height: 1.1;
+    }
+
+    .tool-name-en {
+      font-size: 13px;
+      color: #888;
+      font-weight: 500;
+      margin-top: 2px;
+    }
+
+    .tool-hero {
+      width: 100%;
+      border-radius: 16px;
+      padding: 36px;
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .tool-icon {
+      font-size: 72px;
+      flex-shrink: 0;
+    }
+
+    .tool-desc-es {
+      font-size: 16px;
+      line-height: 1.7;
+      color: #fff;
+      flex: 1;
+    }
+
+    .tool-desc-en {
+      font-size: 13px;
+      color: rgba(255,255,255,0.6);
+      margin-top: 8px;
+      font-style: italic;
+    }
+
+    .how-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .how-card {
+      background: #f7f8ff;
+      border: 1.5px solid #e8eaff;
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .how-card h4 {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 8px;
+    }
+
+    .how-card p {
+      font-size: 14px;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    .how-card .en {
+      font-size: 12px;
+      color: #aaa;
+      margin-top: 6px;
+      font-style: italic;
+    }
+
+    .tip-box {
+      border-radius: 12px;
+      padding: 20px 24px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      margin-top: auto;
+    }
+
+    .tip-icon { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
+
+    .tip-text { font-size: 13.5px; line-height: 1.6; }
+
+    .tip-text strong { font-weight: 700; }
+
+    .tip-text .en { opacity: 0.7; display: block; margin-top: 4px; font-style: italic; }
+
+    .page-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 32px;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
+    }
+
+    .page-footer .brand-small {
+      font-size: 11px;
+      font-weight: 700;
+      color: #2979ff;
+      letter-spacing: 1px;
+    }
+
+    .page-footer .page-num {
+      font-size: 11px;
+      color: #ccc;
+    }
+
+    .page-footer .url {
+      font-size: 11px;
+      color: #888;
+    }
+
+    /* ── COLORES POR HERRAMIENTA ── */
+    .t1 { background: linear-gradient(135deg, #1a1a2e, #2d1b4e); }
+    .t1-accent { color: #a78bfa; }
+    .t1-btn { background: linear-gradient(135deg, #7c4dff, #2979ff); }
+    .t1-tip { background: #f3f0ff; border-left: 3px solid #7c4dff; color: #5b21b6; }
+
+    .t2 { background: linear-gradient(135deg, #0a1628, #1a2840); }
+    .t2-accent { color: #60a5fa; }
+    .t2-btn { background: linear-gradient(135deg, #2979ff, #0ea5e9); }
+    .t2-tip { background: #eff6ff; border-left: 3px solid #2979ff; color: #1d4ed8; }
+
+    .t3 { background: linear-gradient(135deg, #0d1f1a, #1a3028); }
+    .t3-accent { color: #34d399; }
+    .t3-btn { background: linear-gradient(135deg, #059669, #10b981); }
+    .t3-tip { background: #ecfdf5; border-left: 3px solid #059669; color: #065f46; }
+
+    .t4 { background: linear-gradient(135deg, #1f1200, #2d1f00); }
+    .t4-accent { color: #fbbf24; }
+    .t4-btn { background: linear-gradient(135deg, #d97706, #f59e0b); }
+    .t4-tip { background: #fffbeb; border-left: 3px solid #d97706; color: #92400e; }
+
+    .t5 { background: linear-gradient(135deg, #1f0a0a, #2d1515); }
+    .t5-accent { color: #f87171; }
+    .t5-btn { background: linear-gradient(135deg, #dc2626, #ef4444); }
+    .t5-tip { background: #fef2f2; border-left: 3px solid #dc2626; color: #991b1b; }
+
+    /* ── PÁGINA CTA FINAL ── */
+    .cta-page {
+      background: linear-gradient(160deg, #0d0d1a 0%, #1a0d2e 50%, #0d1f3c 100%);
+      padding: 60px;
+      min-height: 1123px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .cta-page h2 {
+      font-size: 36px;
+      font-weight: 900;
+      color: #fff;
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+
+    .cta-page h2 span {
+      background: linear-gradient(90deg, #00e5ff, #7c4dff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .cta-page .sub {
+      font-size: 15px;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 52px;
+      max-width: 480px;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 52px;
+      width: 100%;
+      max-width: 620px;
+    }
+
+    .svc-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 14px;
+      padding: 24px 16px;
+      text-align: center;
+    }
+
+    .svc-card .ico { font-size: 30px; margin-bottom: 10px; }
+
+    .svc-card .name {
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.3;
+    }
+
+    .svc-card .name-en {
+      font-size: 10px;
+      color: rgba(255,255,255,0.35);
+      margin-top: 3px;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 48px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #2979ff, #7c4dff);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      padding: 16px 32px;
+      border-radius: 50px;
+      text-decoration: none;
+      border: none;
+      letter-spacing: 0.3px;
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.08);
+      border: 1.5px solid rgba(255,255,255,0.2);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 600;
+      padding: 16px 32px;
+      border-radius: 50px;
+      text-decoration: none;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .social-links span {
+      font-size: 12px;
+      color: rgba(255,255,255,0.4);
+    }
+
+    .social-links a {
+      font-size: 12px;
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    /* ── PRINT ── */
+    @media print {
+      body { background: #fff; }
+      .page { margin: 0; page-break-after: always; }
+      @page { size: A4; margin: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════
+     PORTADA
+════════════════════════════════════════════════════════ -->
+<div class="page cover">
+  <div class="badge">TECHNOCRAZY · GUÍA GRATUITA · FREE GUIDE</div>
+
+  <div class="numero">5</div>
+
+  <h1>Herramientas de <span>IA Gratuitas</span><br>que Están Cambiando<br>los Negocios</h1>
+  <p class="subtitle-es">5 Free AI Tools That Are Changing Business Forever</p>
+
+  <div class="divider"></div>
+
+  <p class="desc">
+    Las mismas herramientas que usan los negocios digitales más exitosos del mundo.<br>
+    Gratis. Sin excusas. Listas para usar hoy.<br><br>
+    <em style="color:rgba(255,255,255,0.4);font-size:13px;">
+      The same tools top digital businesses use worldwide. Free. No excuses. Ready to use today.
+    </em>
+  </p>
+
+  <div class="brand">
+    <div class="brand-dot">TC</div>
+    <div>
+      <div class="brand-name">TechnoCrazy</div>
+      <div class="brand-sub">technocrazy.org</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     HERRAMIENTA 1 — CLAUDE
+════════════════════════════════════════════════════════ -->
+<div class="page tool-page">
+  <div class="tool-header">
+    <div class="tool-number t1-btn">#1</div>
+    <div class="tool-meta">
+      <div class="tool-tag t1-accent">IA · Texto · Estrategia</div>
+      <div class="tool-name">Claude by Anthropic</div>
+      <div class="tool-name-en">claude.ai — Free plan available</div>
+    </div>
+  </div>
+
+  <div class="tool-hero t1">
+    <div class="tool-icon">🤖</div>
+    <div>
+      <p class="tool-desc-es">
+        El asistente de IA más inteligente para negocios. Escribe emails, contratos, contenido, estrategias, código y responde cualquier pregunta con profundidad. Ideal para dueños de negocio que quieren pensar más rápido.
+      </p>
+      <p class="tool-desc-en">
+        The smartest AI assistant for business. Write emails, contracts, content, strategies, and code — think faster than ever.
+      </p>
+    </div>
+  </div>
+
+  <div class="how-grid">
+    <div class="how-card">
+      <h4>Úsalo para / Use it for</h4>
+      <p>Redactar propuestas de negocio, responder clientes, crear contenido para redes sociales, generar ideas de campañas y analizar tu competencia.</p>
+      <p class="en">Draft business proposals, reply to clients, create social content, generate campaign ideas, analyze competitors.</p>
+    </div>
+    <div class="how-card">
+      <h4>Ejemplo real / Real example</h4>
+      <p>Pídele: "Escríbeme un email de ventas para ofrecer diseño de páginas web a restaurantes en Chicago" — y lo hace en segundos.</p>
+      <p class="en">Ask it: "Write me a sales email offering web design to Chicago restaurants" — done in seconds.</p>
+    </div>
+    <div class="how-card">
+      <h4>Gratis vs Pro</h4>
+      <p>El plan gratuito incluye el modelo Sonnet. El plan Pro ($20/mes) da acceso a Opus — el más potente del mundo actualmente.</p>
+      <p class="en">Free plan includes Sonnet model. Pro ($20/mo) unlocks Opus — currently the world's most powerful AI model.</p>
+    </div>
+    <div class="how-card">
+      <h4>Ventaja TechnoCrazy</h4>
+      <p>Todos los sistemas IA que construimos están integrados con Claude API — la misma IA que estarías usando en tu negocio.</p>
+      <p class="en">All our AI systems are built on Claude API — the same AI powering your business from day one.</p>
+    </div>
+  </div>
+
+  <div class="tip-box t1-tip">
+    <span class="tip-icon">💡</span>
+    <div class="tip-text">
+      <strong>Pro tip:</strong> Dile a Claude "Eres un experto en marketing digital para negocios latinos en EE.UU." antes de hacer tu pregunta. Los resultados son 10x más precisos.
+      <span class="en">Tell Claude "You're a digital marketing expert for Latino businesses in the US" before asking. Results are 10x more precise.</span>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span class="brand-small">TECHNOCRAZY</span>
+    <span class="url">technocrazy.org · WhatsApp: +17794318214</span>
+    <span class="page-num">2 / 7</span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     HERRAMIENTA 2 — CHATGPT
+════════════════════════════════════════════════════════ -->
+<div class="page tool-page">
+  <div class="tool-header">
+    <div class="tool-number t2-btn">#2</div>
+    <div class="tool-meta">
+      <div class="tool-tag t2-accent">IA · Productividad · Imagen</div>
+      <div class="tool-name">ChatGPT + GPT-4o</div>
+      <div class="tool-name-en">chatgpt.com — Free plan available</div>
+    </div>
+  </div>
+
+  <div class="tool-hero t2">
+    <div class="tool-icon">💬</div>
+    <div>
+      <p class="tool-desc-es">
+        La IA más conocida del mundo. Genera texto, analiza imágenes, crea imágenes con DALL-E, navega internet en tiempo real y tiene miles de GPTs especializados creados por la comunidad.
+      </p>
+      <p class="tool-desc-en">
+        The world's most popular AI. Generate text, analyze images, create visuals with DALL-E, browse the web in real-time, and access thousands of specialized community GPTs.
+      </p>
+    </div>
+  </div>
+
+  <div class="how-grid">
+    <div class="how-card">
+      <h4>Úsalo para / Use it for</h4>
+      <p>Crear imágenes para tus posts, analizar fotos de productos, investigar tendencias en tiempo real y usar GPTs especializados para tu industria.</p>
+      <p class="en">Create social media images, analyze product photos, research real-time trends, and use industry-specific GPTs.</p>
+    </div>
+    <div class="how-card">
+      <h4>Ejemplo real / Real example</h4>
+      <p>Sube una foto de tu producto y pídele: "Escríbeme 5 captions para Instagram con emojis y hashtags para vender este producto en Chicago."</p>
+      <p class="en">Upload a product photo and ask: "Write 5 Instagram captions with emojis and hashtags to sell this in Chicago."</p>
+    </div>
+    <div class="how-card">
+      <h4>Función estrella</h4>
+      <p>Los "Custom GPTs" — GPTs especializados gratis que otros crearon: uno para SEO, uno para contratos, uno para publicidad. Todos sin costo.</p>
+      <p class="en">Custom GPTs — free specialized AI created by others: SEO GPT, contract writer, ad creator. All free to use.</p>
+    </div>
+    <div class="how-card">
+      <h4>Diferencia con Claude</h4>
+      <p>ChatGPT es mejor para buscar información reciente y crear imágenes. Claude es mejor para análisis profundo y texto largo. Úsalos los dos.</p>
+      <p class="en">ChatGPT is better for recent info and image generation. Claude excels at deep analysis and long-form writing. Use both.</p>
+    </div>
+  </div>
+
+  <div class="tip-box t2-tip">
+    <span class="tip-icon">💡</span>
+    <div class="tip-text">
+      <strong>Pro tip:</strong> Busca en chatgpt.com/gpts el término de tu industria. Hay GPTs especializados para restaurantes, salones, abogados, dentistas — ya entrenados para tu negocio.
+      <span class="en">Search chatgpt.com/gpts for your industry. There are specialized GPTs for restaurants, salons, lawyers, dentists — already trained for your business.</span>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span class="brand-small">TECHNOCRAZY</span>
+    <span class="url">technocrazy.org · WhatsApp: +17794318214</span>
+    <span class="page-num">3 / 7</span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     HERRAMIENTA 3 — CANVA AI
+════════════════════════════════════════════════════════ -->
+<div class="page tool-page">
+  <div class="tool-header">
+    <div class="tool-number t3-btn">#3</div>
+    <div class="tool-meta">
+      <div class="tool-tag t3-accent">Diseño · Redes Sociales · Video</div>
+      <div class="tool-name">Canva Magic Studio</div>
+      <div class="tool-name-en">canva.com — Free plan with AI features</div>
+    </div>
+  </div>
+
+  <div class="tool-hero t3">
+    <div class="tool-icon">🎨</div>
+    <div>
+      <p class="tool-desc-es">
+        La plataforma de diseño más usada del mundo ahora tiene IA integrada. Genera imágenes, elimina fondos, crea presentaciones, videos y posts de redes completos con solo describir lo que quieres.
+      </p>
+      <p class="tool-desc-en">
+        The world's most-used design platform now has built-in AI. Generate images, remove backgrounds, create presentations, videos and full social posts by just describing what you want.
+      </p>
+    </div>
+  </div>
+
+  <div class="how-grid">
+    <div class="how-card">
+      <h4>Úsalo para / Use it for</h4>
+      <p>Posts de Instagram y Facebook, flyers, logos, presentaciones para clientes, videos cortos para Reels y TikTok, todo con plantillas de IA.</p>
+      <p class="en">Instagram/Facebook posts, flyers, logos, client presentations, short videos for Reels and TikTok — all with AI templates.</p>
+    </div>
+    <div class="how-card">
+      <h4>Ejemplo real / Real example</h4>
+      <p>Escribe: "Post de Instagram para promocionar mi servicio de limpieza en Chicago, colores azul y blanco, estilo moderno" — Canva lo diseña solo.</p>
+      <p class="en">Type: "Instagram post for my Chicago cleaning service, blue and white, modern style" — Canva designs it automatically.</p>
+    </div>
+    <div class="how-card">
+      <h4>Funciones IA gratis</h4>
+      <p>Magic Eraser (borra objetos de fotos), Background Remover (quita fondos), Magic Resize (adapta a todos los formatos) y Text to Image.</p>
+      <p class="en">Magic Eraser (remove objects), Background Remover, Magic Resize (adapt to all formats), and Text to Image — all free.</p>
+    </div>
+    <div class="how-card">
+      <h4>Por qué es esencial</h4>
+      <p>Un negocio que no produce contenido visual constante es invisible. Canva AI hace que cualquier persona cree contenido de calidad profesional en minutos.</p>
+      <p class="en">A business with no visual content is invisible. Canva AI lets anyone create pro-quality content in minutes — no design skills needed.</p>
+    </div>
+  </div>
+
+  <div class="tip-box t3-tip">
+    <span class="tip-icon">💡</span>
+    <div class="tip-text">
+      <strong>Pro tip:</strong> Crea un "Brand Kit" gratuito en Canva con tus colores, fuentes y logo. Todos tus diseños serán automáticamente consistentes con tu marca.
+      <span class="en">Create a free Brand Kit in Canva with your colors, fonts, and logo. All your designs will automatically match your brand identity.</span>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span class="brand-small">TECHNOCRAZY</span>
+    <span class="url">technocrazy.org · WhatsApp: +17794318214</span>
+    <span class="page-num">4 / 7</span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     HERRAMIENTA 4 — MAKE.COM
+════════════════════════════════════════════════════════ -->
+<div class="page tool-page">
+  <div class="tool-header">
+    <div class="tool-number t4-btn">#4</div>
+    <div class="tool-meta">
+      <div class="tool-tag t4-accent">Automatización · Flujos · Integraciones</div>
+      <div class="tool-name">Make.com</div>
+      <div class="tool-name-en">make.com — Free 1,000 ops/month</div>
+    </div>
+  </div>
+
+  <div class="tool-hero t4">
+    <div class="tool-icon">⚙️</div>
+    <div>
+      <p class="tool-desc-es">
+        La herramienta de automatización visual más poderosa del mercado. Conecta tus apps sin código: cuando alguien llena un formulario → se guarda en Google Sheets → te llega un WhatsApp → se crea una tarea. Todo automático.
+      </p>
+      <p class="tool-desc-en">
+        The most powerful visual automation tool. Connect your apps without code: form filled → saved to Google Sheets → WhatsApp notification → task created. All automatic.
+      </p>
+    </div>
+  </div>
+
+  <div class="how-grid">
+    <div class="how-card">
+      <h4>Úsalo para / Use it for</h4>
+      <p>Automatizar cotizaciones, notificaciones de pedidos, seguimiento de clientes, publicación en redes sociales, envío de emails y flujos de ventas completos.</p>
+      <p class="en">Automate quotes, order notifications, client follow-up, social posting, email sequences, and complete sales funnels.</p>
+    </div>
+    <div class="how-card">
+      <h4>Ejemplo real / Real example</h4>
+      <p>Cliente llena formulario web → Make envía email de bienvenida automático → agrega contacto a CRM → te notifica en WhatsApp. Todo sin hacer nada.</p>
+      <p class="en">Client fills web form → Make sends welcome email → adds to CRM → WhatsApp notification. All without lifting a finger.</p>
+    </div>
+    <div class="how-card">
+      <h4>Qué conecta</h4>
+      <p>Más de 1,500 apps: Gmail, WhatsApp, Instagram, Shopify, WordPress, Stripe, Google Sheets, Slack, Airtable, y cientos más. Si existe, Make lo conecta.</p>
+      <p class="en">1,500+ apps: Gmail, WhatsApp, Instagram, Shopify, WordPress, Stripe, Google Sheets, Slack, Airtable, and hundreds more.</p>
+    </div>
+    <div class="how-card">
+      <h4>Plan gratis</h4>
+      <p>1,000 operaciones al mes gratis. Para un negocio pequeño en inicio, es más que suficiente para automatizar los procesos más repetitivos.</p>
+      <p class="en">1,000 free operations/month. For a starting small business, that's more than enough to automate your most repetitive processes.</p>
+    </div>
+  </div>
+
+  <div class="tip-box t4-tip">
+    <span class="tip-icon">💡</span>
+    <div class="tip-text">
+      <strong>Pro tip:</strong> Empieza con la automatización más dolorosa de tu negocio — la tarea que más odias hacer manualmente. Make la elimina en menos de 1 hora.
+      <span class="en">Start with the most painful task in your business — the one you hate doing manually. Make eliminates it in under 1 hour.</span>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span class="brand-small">TECHNOCRAZY</span>
+    <span class="url">technocrazy.org · WhatsApp: +17794318214</span>
+    <span class="page-num">5 / 7</span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     HERRAMIENTA 5 — NOTION AI
+════════════════════════════════════════════════════════ -->
+<div class="page tool-page">
+  <div class="tool-header">
+    <div class="tool-number t5-btn">#5</div>
+    <div class="tool-meta">
+      <div class="tool-tag t5-accent">Organización · Wiki · IA Integrada</div>
+      <div class="tool-name">Notion AI</div>
+      <div class="tool-name-en">notion.so — Free plan + AI add-on $10/mo</div>
+    </div>
+  </div>
+
+  <div class="tool-hero t5">
+    <div class="tool-icon">📋</div>
+    <div>
+      <p class="tool-desc-es">
+        El sistema de gestión de negocios todo-en-uno. Notas, base de datos, CRM simple, proyectos, wiki del equipo — y ahora con IA que resume, redacta y organiza todo tu contenido automáticamente.
+      </p>
+      <p class="tool-desc-en">
+        The all-in-one business management system. Notes, databases, simple CRM, projects, team wiki — now with AI that summarizes, drafts, and organizes all your content automatically.
+      </p>
+    </div>
+  </div>
+
+  <div class="how-grid">
+    <div class="how-card">
+      <h4>Úsalo para / Use it for</h4>
+      <p>Gestionar clientes, llevar seguimiento de proyectos, crear una base de conocimiento del negocio, organizar ideas y generar reportes con IA.</p>
+      <p class="en">Manage clients, track projects, build a business knowledge base, organize ideas, and generate AI-powered reports.</p>
+    </div>
+    <div class="how-card">
+      <h4>Ejemplo real / Real example</h4>
+      <p>Tienes 20 clientes. En Notion creas una base de datos con estado de cada proyecto, próximos pasos y la IA te resume automáticamente qué necesita atención.</p>
+      <p class="en">You have 20 clients. In Notion create a database with project status, next steps — and AI automatically summarizes what needs your attention.</p>
+    </div>
+    <div class="how-card">
+      <h4>IA integrada</h4>
+      <p>Notion AI puede resumir reuniones, completar texto, traducir documentos, generar ideas y crear borradores de cualquier documento de negocio.</p>
+      <p class="en">Notion AI summarizes meetings, completes text, translates docs, generates ideas, and creates drafts of any business document.</p>
+    </div>
+    <div class="how-card">
+      <h4>Por qué diferencia</h4>
+      <p>Un negocio organizado escala. Un negocio desorganizado se ahoga. Notion es el cerebro digital de tu empresa — todo en un solo lugar, accesible desde cualquier dispositivo.</p>
+      <p class="en">An organized business scales. A disorganized one drowns. Notion is your company's digital brain — everything in one place, on any device.</p>
+    </div>
+  </div>
+
+  <div class="tip-box t5-tip">
+    <span class="tip-icon">💡</span>
+    <div class="tip-text">
+      <strong>Pro tip:</strong> Busca "Notion templates for small business" en Google — hay cientos de plantillas gratuitas listas para importar: CRM, calendario de contenido, tracker de finanzas.
+      <span class="en">Search "Notion templates for small business" — hundreds of free templates ready to import: CRM, content calendar, finance tracker.</span>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span class="brand-small">TECHNOCRAZY</span>
+    <span class="url">technocrazy.org · WhatsApp: +17794318214</span>
+    <span class="page-num">6 / 7</span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     PÁGINA CTA FINAL
+════════════════════════════════════════════════════════ -->
+<div class="page cta-page">
+  <div style="margin-bottom:16px; font-size:40px;">🚀</div>
+  <h2>¿Listo para <span>Automatizar</span><br>tu Negocio?</h2>
+  <p class="sub">
+    Estas herramientas son el primer paso. El siguiente es construir sistemas que trabajen por ti 24/7.<br>
+    <em style="font-size:13px;">These tools are step one. The next is building systems that work for you 24/7.</em>
+  </p>
+
+  <div class="services-grid">
+    <div class="svc-card">
+      <div class="ico">💻</div>
+      <div class="name">Páginas Web</div>
+      <div class="name-en">Websites</div>
+    </div>
+    <div class="svc-card">
+      <div class="ico">📱</div>
+      <div class="name">Apps Móviles</div>
+      <div class="name-en">Mobile Apps</div>
+    </div>
+    <div class="svc-card">
+      <div class="ico">🤖</div>
+      <div class="name">IA & Chatbots</div>
+      <div class="name-en">AI & Chatbots</div>
+    </div>
+    <div class="svc-card">
+      <div class="ico">⚙️</div>
+      <div class="name">Automatización</div>
+      <div class="name-en">Automation</div>
+    </div>
+    <div class="svc-card">
+      <div class="ico">🎨</div>
+      <div class="name">Diseño Gráfico</div>
+      <div class="name-en">Graphic Design</div>
+    </div>
+    <div class="svc-card">
+      <div class="ico">📊</div>
+      <div class="name">Sistemas</div>
+      <div class="name-en">Business Systems</div>
+    </div>
+  </div>
+
+  <div class="cta-buttons">
+    <a href="https://technocrazy.org" class="btn-primary">Visitar technocrazy.org</a>
+    <a href="https://wa.me/17794318214" class="btn-secondary">WhatsApp Directo</a>
+  </div>
+
+  <div class="social-links">
+    <a href="#">@igtechnocrazy</a>
+    <span>·</span>
+    <a href="#">@tktechnocrazy</a>
+    <span>·</span>
+    <a href="#">@Xtechnocrazy</a>
+  </div>
+
+  <div style="margin-top:48px; padding-top:32px; border-top:1px solid rgba(255,255,255,0.1); width:100%;">
+    <p style="font-size:11px; color:rgba(255,255,255,0.25); text-align:center; line-height:1.8;">
+      © 2026 TechnoCrazy · technocrazy.org · Creado por Rafael Navarro · Chicago, Illinois<br>
+      Guía gratuita — puedes compartirla con quien la necesite · Free guide — share it with anyone who needs it
+    </p>
+  </div>
+</div>
+
+</body>
+</html>
