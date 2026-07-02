@@ -137,7 +137,7 @@ export default function Products() {
             <h3 className="font-black mb-3 relative" style={{ fontSize: "clamp(20px,3vw,26px)", textAlign: "center" }}>
               ¿Y si tuvieras tu propio producto digital?
             </h3>
-            <p className="text-gray-400 mb-7 text-sm max-w-md mx-auto relative" style={{ textAlign: "center" }}>
+            <p style={{ color: "rgba(156,163,175,1)", fontSize: 14, maxWidth: 420, margin: "0 auto 28px", textAlign: "center", lineHeight: 1.6 }}>
               Tu idea + mi código = tu negocio. Trabajemos juntos para construirlo.
             </p>
           <motion.a

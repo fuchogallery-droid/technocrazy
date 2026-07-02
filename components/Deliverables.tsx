@@ -8,7 +8,8 @@ const SVC_VISUAL = [
   { emoji: "🌐", color: "#2979ff" },
   { emoji: "📱", color: "#00b4d8" },
   { emoji: "🔄", color: "#00e676" },
-  { emoji: "🤖", color: "#ff9800" },
+  { emoji: "🧠", color: "#ff9800" },
+  { emoji: "🤖", color: "#f43f5e" },
 ];
 
 export default function Deliverables() {

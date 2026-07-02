@@ -2,13 +2,13 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Palette, Globe, Smartphone, Cpu, Bot,
+  Palette, Globe, Smartphone, Cpu, Bot, Zap,
   Target, Users, TrendingUp, ShieldCheck, Rocket, Heart,
   X, CheckCircle, LayoutGrid, ImageIcon,
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
-type ModalId = "design" | "web" | "apps" | "systems" | "ai";
+type ModalId = "design" | "web" | "apps" | "systems" | "ai" | "robot";
 
 // Visual data only — no translated text
 const SERVICE_VISUAL: Record<ModalId, { icon: React.ReactNode; bg: string; glow: string; accentColor: string }> = {
@@ -17,6 +17,7 @@ const SERVICE_VISUAL: Record<ModalId, { icon: React.ReactNode; bg: string; glow:
   apps:    { icon: <Smartphone size={22} />, bg: "linear-gradient(135deg,#7c4dff,#5722cc)", glow: "rgba(124,77,255,0.2)",  accentColor: "#b388ff" },
   systems: { icon: <Cpu size={22} />,        bg: "linear-gradient(135deg,#00bcd4,#0097a7)", glow: "rgba(0,188,212,0.2)",   accentColor: "#80deea" },
   ai:      { icon: <Bot size={22} />,        bg: "linear-gradient(135deg,#00e676,#00c853)", glow: "rgba(0,230,118,0.2)",   accentColor: "#69f0ae" },
+  robot:   { icon: <Zap size={22} />,        bg: "linear-gradient(135deg,#ec4899,#f43f5e)", glow: "rgba(236,72,153,0.2)",  accentColor: "#f9a8d4" },
 };
 
 const MODAL_VISUAL: Record<ModalId, {
@@ -50,6 +51,11 @@ const MODAL_VISUAL: Record<ModalId, {
     { emoji: "💬", bg: "linear-gradient(135deg,#00e676,#00c853)" }, { emoji: "🧠", bg: "linear-gradient(135deg,#00bcd4,#00e676)" },
     { emoji: "✍️", bg: "linear-gradient(135deg,#7c4dff,#00e676)" }, { emoji: "📈", bg: "linear-gradient(135deg,#2979ff,#00e676)" },
     { emoji: "🎙️", bg: "linear-gradient(135deg,#ec4899,#00e676)" }, { emoji: "🔮", bg: "linear-gradient(135deg,#00c853,#00bcd4)" },
+  ]},
+  robot:   { icon: <Zap size={11} />,        grad: "linear-gradient(135deg,#ec4899,#f43f5e)", solid: "#f9a8d4", rgb: "236,72,153", galleryItems: [
+    { emoji: "📱", bg: "linear-gradient(135deg,#ec4899,#f43f5e)" }, { emoji: "🚀", bg: "linear-gradient(135deg,#f43f5e,#ec4899)" },
+    { emoji: "📊", bg: "linear-gradient(135deg,#7c4dff,#ec4899)" }, { emoji: "🎯", bg: "linear-gradient(135deg,#f43f5e,#7c4dff)" },
+    { emoji: "🔥", bg: "linear-gradient(135deg,#ec4899,#f59e0b)" }, { emoji: "⚡", bg: "linear-gradient(135deg,#f43f5e,#00e676)" },
   ]},
 };
 
@@ -155,31 +161,41 @@ export default function Services() {
               </motion.div>
             ))}
 
-            {/* CTA card */}
-            <motion.div
-              initial={{ opacity: 0, y: 32 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.45, delay: 0.42 }}
-              viewport={{ once: true }}
-              className="rounded-2xl flex flex-col items-center justify-center text-center"
-              style={{ padding: "28px 24px", background: "linear-gradient(135deg,#2979ff,#7c4dff)", boxShadow: "0 20px 60px rgba(41,121,255,0.3)" }}
-            >
-              <div className="mb-4 text-white opacity-80">
-                <Rocket size={36} strokeWidth={1.5} />
-              </div>
-              <h3 className="text-white font-black text-sm sm:text-xl mb-2">¿Tienes un Proyecto?</h3>
-              <p className="text-blue-100 text-xs sm:text-sm mb-5">No vendo cursos. Construyo resultados.</p>
-              <a
-                href="https://wa.me/17794318214"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-white font-bold rounded-full text-sm hover:shadow-xl transition-all hover:-translate-y-1"
-                style={{ color: "#2979ff", padding: "10px 24px" }}
-              >
-                Hablemos
-              </a>
-            </motion.div>
           </div>
+
+          {/* CTA card horizontal */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.45, delay: 0.42 }}
+            viewport={{ once: true }}
+            className="flex flex-col sm:flex-row items-center justify-between gap-6 rounded-2xl"
+            style={{ marginTop: 20, padding: "28px 40px", background: "linear-gradient(135deg,#2979ff,#7c4dff)", boxShadow: "0 20px 60px rgba(41,121,255,0.3)" }}
+          >
+            <div className="flex items-center gap-5">
+              <div className="text-white opacity-80 flex-shrink-0">
+                <Rocket size={40} strokeWidth={1.5} />
+              </div>
+              <div>
+                <h3 className="text-white font-black text-lg sm:text-xl mb-1">¿Tienes un Proyecto?</h3>
+                <p className="text-blue-100 text-sm">No vendo cursos. Construyo resultados.</p>
+              </div>
+            </div>
+            <a
+              href="https://wa.me/17794318214"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-shrink-0 font-bold flex items-center gap-3 rounded-full transition-all hover:brightness-110 hover:-translate-y-0.5"
+              style={{ background: "#25D366", color: "#fff", padding: "13px 28px", fontSize: 15, textDecoration: "none", boxShadow: "0 8px 28px rgba(37,211,102,0.45)" }}
+            >
+              <span style={{ display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(255,255,255,0.2)", borderRadius: "50%", width: 32, height: 32, flexShrink: 0 }}>
+                <svg viewBox="0 0 24 24" fill="white" width={18} height={18}>
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                </svg>
+              </span>
+              Hablemos
+            </a>
+          </motion.div>
 
           {/* Trust bar */}
           <motion.div

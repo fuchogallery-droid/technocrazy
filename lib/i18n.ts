@@ -59,6 +59,7 @@ export const translations = {
         { id: "apps", title: "Apps Móviles", desc: "Aplicaciones nativas para iOS y Android. Experiencias intuitivas y funcionales.", price: "$50 – $199", priceNote: "USD" },
         { id: "systems", title: "Sistemas Automatizados", desc: "Procesos inteligentes que escalan tu negocio y eliminan tareas repetitivas.", price: "$100 – $299", priceNote: "USD" },
         { id: "ai", title: "Inteligencia Artificial", desc: "Chatbots, flujos automatizados y sistemas con IA para llevar tu negocio al siguiente nivel.", price: "$100 – $299", priceNote: "USD" },
+        { id: "robot", title: "Robot de Redes Sociales", desc: "Publica solo en IG, TikTok, Facebook, X y LinkedIn. IA que genera contenido viral mientras tú descansas.", price: "$400", priceNote: "USD · pago único" },
       ],
       modal: {
         design: {
@@ -112,6 +113,16 @@ export const translations = {
           list: ["Trabajadores virtuales 24/7 (llamadas y mensajes)", "Chatbots con IA para atención y ventas", "Agentes de IA personalizados (tipo asistente)", "Integración con Claude, GPT y más", "Generación de contenido con IA", "Análisis inteligente de datos", "Bases de conocimiento (RAG) a tu medida"],
           gallery: ["Chatbot", "Agente IA", "Generador", "Análisis", "Voz", "Asistente"],
         },
+        robot: {
+          title: "Tu robot publica, crece",
+          highlight: "y te hace viral — solo",
+          paragraphs: [
+            "Mientras tú duermes, tu robot trabaja. AutoPost Pro genera contenido adaptado a cada red, programa las publicaciones en los mejores horarios y analiza qué funciona para seguir mejorando — sin que muevas un dedo.",
+            "Una sola herramienta conectada a IG, TikTok, Facebook, X y LinkedIn. Con IA que entiende tu tono de voz, tu marca y tus objetivos. Esto no es programación de posts — es un equipo de marketing automatizado.",
+          ],
+          list: ["Publicación automática en 5 redes sociales desde un panel", "IA genera textos, hashtags e imágenes virales por red", "Calendario editorial inteligente con sugerencias de tendencias", "Análisis de engagement, alcance y horarios óptimos", "Adaptación automática de formato por plataforma", "Banco de contenido reutilizable y plantillas de marca", "Reportes semanales de crecimiento y rendimiento"],
+          gallery: ["Instagram", "TikTok", "Facebook", "Twitter/X", "LinkedIn", "Analytics"],
+        },
       },
     },
     process: {
@@ -147,7 +158,7 @@ export const translations = {
       titleHighlight: "cada servicio",
       sub: "Sin sorpresas. Sabes exactamente qué obtienes.",
       ctaLabel: "Consultar precio →",
-      deliveryNote: "Entrega en días, no semanas",
+      deliveryNote: "Entrega en horas, no días",
       customTitle: "¿Tu proyecto no encaja en ninguna categoría?",
       customDesc: "Escríbeme y definimos juntos qué necesitas — propuesta en menos de 24 horas, sin costo.",
       customCta: "Hablar con Rafael",
@@ -157,6 +168,7 @@ export const translations = {
         { name: "App Móvil", items: ["App funcional iOS + Android", "Link de descarga / APK", "Panel de administración", "Manual de uso en video", "Soporte técnico 30 días"] },
         { name: "Automatización", items: ["Sistema activo y funcionando", "Manual de flujos y procesos", "Accesos de administrador", "Capacitación incluida", "Soporte técnico 30 días"] },
         { name: "IA para tu Negocio", items: ["Chatbot integrado en tu web", "Panel de control de conversaciones", "Entrenamiento personalizado", "Documentación técnica", "Soporte técnico 30 días"] },
+        { name: "Robot de Redes Sociales", items: ["Conexión a IG, TikTok, FB, X y LinkedIn", "IA que genera contenido viral por red", "Calendario editorial automatizado", "Panel de métricas y rendimiento", "Soporte técnico 30 días"] },
       ],
     },
     cta: {
@@ -247,6 +259,7 @@ export const translations = {
         { id: "apps", title: "Mobile Apps", desc: "Native apps for iOS and Android. Intuitive and functional experiences.", price: "$50 – $199", priceNote: "USD" },
         { id: "systems", title: "Automated Systems", desc: "Intelligent processes that scale your business and eliminate repetitive tasks.", price: "$100 – $299", priceNote: "USD" },
         { id: "ai", title: "Artificial Intelligence", desc: "Chatbots, automated flows and AI systems to take your business to the next level.", price: "$100 – $299", priceNote: "USD" },
+        { id: "robot", title: "Social Media Robot", desc: "Auto-publishes on IG, TikTok, Facebook, X and LinkedIn. AI that creates viral content while you rest.", price: "$400", priceNote: "USD · one-time" },
       ],
       modal: {
         design: {
@@ -300,6 +313,16 @@ export const translations = {
           list: ["Virtual workers 24/7 (calls and messages)", "AI chatbots for customer service and sales", "Personalized AI agents (like an assistant)", "Integration with Claude, GPT and more", "AI content generation", "Intelligent data analysis", "Custom knowledge bases (RAG)"],
           gallery: ["Chatbot", "AI Agent", "Generator", "Analytics", "Voice", "Assistant"],
         },
+        robot: {
+          title: "Your robot posts, grows",
+          highlight: "and makes you viral — alone",
+          paragraphs: [
+            "While you sleep, your robot works. AutoPost Pro generates content tailored to each platform, schedules posts at peak hours and analyzes what's working to keep improving — without you lifting a finger.",
+            "One tool connected to IG, TikTok, Facebook, X and LinkedIn. With AI that understands your brand voice, your style and your goals. This isn't post scheduling — it's a fully automated marketing team.",
+          ],
+          list: ["Auto-publish on 5 social networks from one dashboard", "AI generates viral text, hashtags and images per platform", "Smart editorial calendar with trending topic suggestions", "Engagement, reach and optimal timing analytics", "Automatic format adaptation per platform", "Reusable content bank and brand templates", "Weekly growth and performance reports"],
+          gallery: ["Instagram", "TikTok", "Facebook", "Twitter/X", "LinkedIn", "Analytics"],
+        },
       },
     },
     process: {
@@ -335,7 +358,7 @@ export const translations = {
       titleHighlight: "every service",
       sub: "No surprises. You know exactly what you're getting.",
       ctaLabel: "Check pricing →",
-      deliveryNote: "Delivered in days, not weeks",
+      deliveryNote: "Delivered in hours, not days",
       customTitle: "Doesn't fit any category?",
       customDesc: "Write to me and we'll define what you need — proposal in under 24 hours, at no cost.",
       customCta: "Talk to Rafael",
@@ -345,6 +368,7 @@ export const translations = {
         { name: "Mobile App", items: ["Functional iOS + Android app", "Download link / APK", "Admin panel", "Video usage manual", "30 days technical support"] },
         { name: "Automation", items: ["Active and working system", "Workflow and process manual", "Admin access", "Training included", "30 days technical support"] },
         { name: "AI for Your Business", items: ["Chatbot integrated in your site", "Conversation control panel", "Custom training", "Technical documentation", "30 days technical support"] },
+        { name: "Social Media Robot", items: ["Connected to IG, TikTok, FB, X and LinkedIn", "AI generates viral content per platform", "Automated editorial calendar", "Metrics and performance dashboard", "30 days technical support"] },
       ],
     },
     cta: {

@@ -36,24 +36,25 @@ export default function Navbar() {
           </span>
         </a>
 
-        {/* Desktop links */}
-        <ul className="hidden md:flex items-center gap-4">
-          {t.nav.links.map((l) => (
-            <li key={l.href}>
-              <a href={l.href} className="font-medium text-sm transition-colors relative group whitespace-nowrap" style={{ color: "rgba(255,255,255,0.7)" }}
-                onMouseEnter={e => (e.currentTarget.style.color = "#fff")}
-                onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.7)")}
-              >
-                {l.label}
-                <span className="absolute -bottom-0.5 left-0 right-0 h-px scale-x-0 group-hover:scale-x-100 transition-transform origin-left" style={{ background: "#2979ff" }} />
-              </a>
-            </li>
-          ))}
+        {/* Main links: Servicios / Productos */}
+        <ul className="flex items-center gap-5 sm:gap-8">
+          {t.nav.links
+            .filter((l) => l.href === "#servicios" || l.href === "#productos")
+            .map((l) => (
+              <li key={l.href}>
+                <a href={l.href} className="font-medium text-sm transition-colors relative group whitespace-nowrap" style={{ color: "rgba(255,255,255,0.7)" }}
+                  onMouseEnter={e => (e.currentTarget.style.color = "#fff")}
+                  onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.7)")}
+                >
+                  {l.label}
+                  <span className="absolute -bottom-0.5 left-0 right-0 h-px scale-x-0 group-hover:scale-x-100 transition-transform origin-left" style={{ background: "#2979ff" }} />
+                </a>
+              </li>
+            ))}
         </ul>
 
-        {/* Right side: lang toggle + CTA */}
-        <div className="hidden md:flex items-center gap-3">
-          {/* Language toggle */}
+        {/* Right side: lang toggle + hamburger */}
+        <div className="flex items-center gap-2">
           <button
             onClick={() => setLang(lang === "es" ? "en" : "es")}
             className="flex items-center gap-1.5 font-bold text-xs px-3 py-1.5 rounded-full transition-all"
@@ -61,34 +62,26 @@ export default function Navbar() {
           >
             {lang === "es" ? "🇺🇸 EN" : "🇻🇪 ES"}
           </button>
-          <a href="https://wa.me/17794318214" target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ padding: "8px 18px", fontSize: 13 }}>
-            {t.nav.cta}
-          </a>
-        </div>
-
-        {/* Mobile menu button */}
-        <div className="md:hidden flex items-center gap-2">
-          <button onClick={() => setLang(lang === "es" ? "en" : "es")} className="font-bold text-xs px-2.5 py-1 rounded-full" style={{ background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.12)", color: "rgba(255,255,255,0.7)" }}>
-            {lang === "es" ? "EN" : "ES"}
-          </button>
           <button className="text-white p-1" onClick={() => setOpen(!open)} aria-label="Menú">
             {open ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
       </div>
 
-      {/* Mobile menu */}
+      {/* Dropdown menu with remaining options */}
       {open && (
         <div style={{ background: "rgba(4,8,26,0.98)", borderTop: "1px solid rgba(255,255,255,0.07)" }}>
           <div className="px-5 py-3 flex flex-col gap-0">
-            {t.nav.links.map((l) => (
-              <a key={l.href} href={l.href} onClick={() => setOpen(false)}
-                className="font-medium py-3.5 border-b transition-colors flex items-center gap-2"
-                style={{ color: "rgba(255,255,255,0.75)", borderColor: "rgba(255,255,255,0.06)" }}>
-                <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: "#2979ff" }} />
-                {l.label}
-              </a>
-            ))}
+            {t.nav.links
+              .filter((l) => l.href !== "#servicios" && l.href !== "#productos")
+              .map((l) => (
+                <a key={l.href} href={l.href} onClick={() => setOpen(false)}
+                  className="font-medium py-3.5 border-b transition-colors flex items-center gap-2"
+                  style={{ color: "rgba(255,255,255,0.75)", borderColor: "rgba(255,255,255,0.06)" }}>
+                  <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: "#2979ff" }} />
+                  {l.label}
+                </a>
+              ))}
           </div>
           <div className="px-5 pb-5 pt-2">
             <a href="https://wa.me/17794318214" target="_blank" rel="noopener noreferrer" className="btn-primary justify-center w-full" style={{ fontSize: 13 }}>
