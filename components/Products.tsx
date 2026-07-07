@@ -4,7 +4,7 @@ import { ExternalLink, Zap, ShoppingBag, Image as ImageIcon, DollarSign, Monitor
 import { useState } from "react";
 
 const products = [
-  { icon: <Zap size={20} />, name: "AutoPost", desc: "Crea. Conecta. Publica. Programa. Todo tu contenido en un solo lugar con IA.", tag: "Marketing IA", tagColor: "#7c3aed", url: "/proximamente", color: "linear-gradient(135deg,#7c3aed,#a855f7)", glow: "rgba(124,58,237,0.3)", image: "/product-img-1.png" },
+  { icon: <Zap size={20} />, name: "AutoPost", desc: "Crea. Conecta. Publica. Programa. Todo tu contenido en un solo lugar con IA.", tag: "Marketing IA", tagColor: "#7c3aed", url: "https://autopost-plum-five.vercel.app", color: "linear-gradient(135deg,#7c3aed,#a855f7)", glow: "rgba(124,58,237,0.3)", image: "/product-img-1.png" },
   { icon: <ShoppingBag size={20} />, name: "ServiYA", desc: "Marketplace de servicios con 55+ categorías. Tu catálogo profesional en minutos.", tag: "Marketplace", tagColor: "#7c4dff", url: "/proximamente", color: "linear-gradient(135deg,#7c4dff,#2979ff)", glow: "rgba(124,77,255,0.3)", image: "/product-img-2.png" },
   { icon: <ImageIcon size={20} />, name: "GaleríaX", desc: "Tu contenido, tus reglas, tus ganancias. Plataforma de suscripción con Stripe y PayPal.", tag: "Monetización", tagColor: "#ff2d78", url: "/proximamente", color: "linear-gradient(135deg,#ff2d78,#7c3aed)", glow: "rgba(255,45,120,0.35)", image: "/product-img-3.png" },
   { icon: <DollarSign size={20} />, name: "CambioBs", desc: "Tasas USD/Bs en tiempo real. BCV, paralelo, Binance y promedio actualizado.", tag: "Finanzas", tagColor: "#00c853", url: "/proximamente", color: "linear-gradient(135deg,#00e676,#00bcd4)", glow: "rgba(0,230,118,0.3)" },
@@ -97,6 +97,8 @@ export default function Products() {
 
                 <a
                   href={p.url}
+                  target={p.url.startsWith("http") ? "_blank" : undefined}
+                  rel={p.url.startsWith("http") ? "noopener noreferrer" : undefined}
                   className="inline-flex items-center justify-center gap-1 font-semibold group-hover:gap-2 transition-all"
                   style={{ fontSize: 11, color: p.tagColor }}
                 >
