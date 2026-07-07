@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Propuesta de Servicios IA — TechnoCrazy</title>
+<style>
+  :root {
+    --dark: #0A0A0F;
+    --dark2: #13131A;
+    --dark3: #1C1C28;
+    --blue: #4F6EF7;
+    --purple: #7C3AED;
+    --cyan: #06B6D4;
+    --green: #22C55E;
+    --gold: #F59E0B;
+    --text: #F1F5F9;
+    --text2: #94A3B8;
+    --text3: #64748B;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--dark);
+    color: var(--text);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    line-height: 1.6;
+  }
+
+  /* ── PORTADA ── */
+  .cover {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 60px 24px;
+    background: radial-gradient(ellipse at 50% 0%, rgba(79,110,247,.18) 0%, transparent 70%),
+                radial-gradient(ellipse at 80% 100%, rgba(124,58,237,.12) 0%, transparent 60%),
+                var(--dark);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cover::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%234F6EF7' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+
+  .cover-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(79,110,247,.15);
+    border: 1px solid rgba(79,110,247,.3);
+    border-radius: 100px;
+    padding: 6px 18px;
+    font-size: 13px;
+    color: #93A8F7;
+    margin-bottom: 32px;
+    letter-spacing: .5px;
+  }
+
+  .cover-badge span { font-size: 16px; }
+
+  .cover h1 {
+    font-size: clamp(32px, 6vw, 62px);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    letter-spacing: -1px;
+  }
+
+  .gradient-text {
+    background: linear-gradient(135deg, #4F6EF7 0%, #7C3AED 50%, #06B6D4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .cover-sub {
+    font-size: clamp(16px, 2.5vw, 20px);
+    color: var(--text2);
+    max-width: 600px;
+    margin-bottom: 48px;
+  }
+
+  .cover-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 56px;
+  }
+
+  .pill {
+    background: var(--dark3);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 100px;
+    padding: 8px 20px;
+    font-size: 14px;
+    color: var(--text2);
+  }
+
+  .pill strong { color: var(--text); }
+
+  .scroll-hint {
+    color: var(--text3);
+    font-size: 13px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    animation: bounce 2s infinite;
+  }
+
+  @keyframes bounce {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(6px); }
+  }
+
+  /* ── SECCIONES ── */
+  .section {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 80px 24px;
+  }
+
+  .section + .section {
+    border-top: 1px solid rgba(255,255,255,.06);
+  }
+
+  .sec-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 16px;
+  }
+
+  .sec-label::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--blue);
+    border-radius: 2px;
+  }
+
+  h2 {
+    font-size: clamp(26px, 4vw, 40px);
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 16px;
+    letter-spacing: -.5px;
+  }
+
+  .lead {
+    font-size: 17px;
+    color: var(--text2);
+    margin-bottom: 40px;
+    max-width: 640px;
+  }
+
+  /* ── PROBLEMA ── */
+  .problem-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+
+  .problem-card {
+    background: var(--dark2);
+    border: 1px solid rgba(255,255,255,.06);
+    border-radius: 16px;
+    padding: 24px;
+  }
+
+  .problem-card .icon {
+    font-size: 32px;
+    margin-bottom: 12px;
+  }
+
+  .problem-card h4 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  .problem-card p {
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.5;
+  }
+
+  .highlight-box {
+    background: linear-gradient(135deg, rgba(79,110,247,.12), rgba(124,58,237,.08));
+    border: 1px solid rgba(79,110,247,.25);
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin: 32px 0;
+  }
+
+  .highlight-box p {
+    font-size: 18px;
+    line-height: 1.6;
+    font-weight: 500;
+  }
+
+  .highlight-box strong { color: #93A8F7; }
+
+  /* ── QUÉ HAGO ── */
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+  }
+
+  .steps::before {
+    content: '';
+    position: absolute;
+    left: 23px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--blue), var(--purple));
+    border-radius: 2px;
+  }
+
+  .step {
+    display: flex;
+    gap: 20px;
+    padding: 24px 0;
+    position: relative;
+  }
+
+  .step-num {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--blue), var(--purple));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 800;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .step-body h4 {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    padding-top: 10px;
+  }
+
+  .step-body p {
+    font-size: 14px;
+    color: var(--text2);
+    line-height: 1.6;
+  }
+
+  /* ── SERVICIOS ── */
+  .services {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .service-card {
+    background: var(--dark2);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: transform .2s, border-color .2s;
+  }
+
+  .service-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(79,110,247,.3);
+  }
+
+  .service-card.featured {
+    border-color: rgba(79,110,247,.4);
+    box-shadow: 0 0 40px rgba(79,110,247,.08);
+  }
+
+  .service-header {
+    padding: 28px 32px 20px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .service-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(79,110,247,.12);
+    border: 1px solid rgba(79,110,247,.2);
+    border-radius: 100px;
+    padding: 4px 12px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #93A8F7;
+    margin-bottom: 10px;
+  }
+
+  .service-tag.gold { background: rgba(245,158,11,.1); border-color: rgba(245,158,11,.25); color: #F59E0B; }
+  .service-tag.green { background: rgba(34,197,94,.1); border-color: rgba(34,197,94,.25); color: #22C55E; }
+  .service-tag.purple { background: rgba(124,58,237,.15); border-color: rgba(124,58,237,.3); color: #A78BFA; }
+
+  .service-header h3 {
+    font-size: 22px;
+    font-weight: 800;
+    margin-bottom: 6px;
+  }
+
+  .service-header p {
+    font-size: 14px;
+    color: var(--text2);
+    max-width: 460px;
+  }
+
+  .price-badge {
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .price-badge .amount {
+    font-size: 30px;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .price-badge .period {
+    font-size: 13px;
+    color: var(--text3);
+    margin-top: 2px;
+  }
+
+  .service-body {
+    padding: 0 32px 28px;
+  }
+
+  .service-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .service-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 14px;
+    color: var(--text2);
+    line-height: 1.5;
+  }
+
+  .service-item::before {
+    content: '✓';
+    color: var(--green);
+    font-weight: 700;
+    font-size: 13px;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+
+  .service-example {
+    background: var(--dark3);
+    border-radius: 12px;
+    padding: 16px 20px;
+    font-size: 13px;
+    color: var(--text2);
+    border-left: 3px solid var(--blue);
+    margin-top: 16px;
+  }
+
+  .service-example strong { color: var(--text); display: block; margin-bottom: 4px; font-size: 12px; letter-spacing: .5px; text-transform: uppercase; }
+
+  /* ── NICHOS ── */
+  .nicho-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
+    margin: 24px 0;
+  }
+
+  .nicho {
+    background: var(--dark2);
+    border: 1px solid rgba(255,255,255,.06);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    font-size: 14px;
+  }
+
+  .nicho .n-icon { font-size: 28px; margin-bottom: 8px; }
+  .nicho .n-name { font-weight: 700; font-size: 13px; }
+  .nicho .n-sub { font-size: 11px; color: var(--text3); margin-top: 2px; }
+
+  /* ── PROCESO ── */
+  .proceso-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 16px;
+    margin: 32px 0;
+    position: relative;
+  }
+
+  .p-step {
+    background: var(--dark2);
+    border: 1px solid rgba(255,255,255,.06);
+    border-radius: 16px;
+    padding: 24px 20px;
+    text-align: center;
+    position: relative;
+  }
+
+  .p-step .p-num {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--blue), var(--purple));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 800;
+    margin: 0 auto 14px;
+  }
+
+  .p-step h4 { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .p-step p { font-size: 12px; color: var(--text2); line-height: 1.5; }
+
+  /* ── GARANTÍA ── */
+  .garantia {
+    background: linear-gradient(135deg, rgba(34,197,94,.08), rgba(6,182,212,.06));
+    border: 1px solid rgba(34,197,94,.2);
+    border-radius: 20px;
+    padding: 36px;
+    text-align: center;
+    margin: 40px 0;
+  }
+
+  .garantia .g-icon { font-size: 48px; margin-bottom: 16px; }
+  .garantia h3 { font-size: 22px; font-weight: 800; margin-bottom: 12px; color: #4ADE80; }
+  .garantia p { color: var(--text2); max-width: 500px; margin: 0 auto; }
+
+  /* ── CTA FINAL ── */
+  .cta-section {
+    background: radial-gradient(ellipse at 50% 0%, rgba(79,110,247,.15) 0%, transparent 60%),
+                var(--dark2);
+    border-top: 1px solid rgba(255,255,255,.06);
+    padding: 80px 24px;
+    text-align: center;
+  }
+
+  .cta-section h2 {
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight: 800;
+    margin-bottom: 16px;
+  }
+
+  .cta-section p {
+    color: var(--text2);
+    font-size: 17px;
+    margin-bottom: 40px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .cta-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--blue), var(--purple));
+    color: white;
+    border: none;
+    border-radius: 100px;
+    padding: 16px 36px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: opacity .2s, transform .2s;
+    box-shadow: 0 8px 32px rgba(79,110,247,.35);
+  }
+
+  .btn-primary:hover { opacity: .9; transform: translateY(-2px); }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid rgba(255,255,255,.15);
+    border-radius: 100px;
+    padding: 16px 36px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: border-color .2s;
+  }
+
+  .btn-secondary:hover { border-color: rgba(255,255,255,.3); }
+
+  .brand-footer {
+    margin-top: 60px;
+    text-align: center;
+    color: var(--text3);
+    font-size: 13px;
+    padding: 24px;
+    border-top: 1px solid rgba(255,255,255,.05);
+  }
+
+  .brand-footer strong { color: var(--text2); }
+
+  /* ── DIVIDER ── */
+  .divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(79,110,247,.3), transparent);
+    margin: 48px 0;
+  }
+
+  /* ── QUOTE ── */
+  .quote {
+    border-left: 3px solid var(--purple);
+    padding: 16px 24px;
+    background: rgba(124,58,237,.06);
+    border-radius: 0 12px 12px 0;
+    font-size: 16px;
+    font-style: italic;
+    color: var(--text2);
+    margin: 24px 0;
+  }
+
+  .quote cite { display: block; font-style: normal; font-size: 13px; color: var(--text3); margin-top: 8px; }
+
+  /* ── COMPARATIVA ── */
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0;
+    font-size: 14px;
+  }
+
+  .compare-table th {
+    padding: 12px 16px;
+    text-align: left;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text3);
+    border-bottom: 1px solid rgba(255,255,255,.08);
+  }
+
+  .compare-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid rgba(255,255,255,.04);
+    color: var(--text2);
+  }
+
+  .compare-table tr:hover td { background: rgba(255,255,255,.02); }
+  .compare-table .yes { color: var(--green); font-weight: 700; }
+  .compare-table .no { color: var(--text3); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    .service-header { flex-direction: column; }
+    .price-badge { text-align: left; }
+    .service-items { grid-template-columns: 1fr; }
+    .steps::before { display: none; }
+  }
+
+  @media print {
+    body { background: white; color: black; }
+    .cover { background: white; }
+    .btn-primary, .btn-secondary { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ PORTADA ══ -->
+<div class="cover">
+  <div class="cover-badge"><span>🤖</span> Propuesta de Servicios · TechnoCrazy 2026</div>
+
+  <h1>
+    Su negocio puede<br>
+    <span class="gradient-text">trabajar con IA</span><br>
+    desde esta semana.
+  </h1>
+
+  <p class="cover-sub">
+    Le mostramos cómo implementar inteligencia artificial en su negocio para ahorrar tiempo, atraer más clientes y vender más — sin que usted tenga que aprender tecnología.
+  </p>
+
+  <div class="cover-pills">
+    <div class="pill">✦ <strong>Sin conocimientos técnicos</strong></div>
+    <div class="pill">✦ <strong>Resultados en 30 días</strong></div>
+    <div class="pill">✦ <strong>Desde $300/mes</strong></div>
+    <div class="pill">✦ <strong>Garantía de resultados</strong></div>
+  </div>
+
+  <div class="scroll-hint">
+    <span>Ver propuesta completa</span>
+    <span>↓</span>
+  </div>
+</div>
+
+
+<!-- ══ EL PROBLEMA ══ -->
+<div class="section">
+  <div class="sec-label">El contexto</div>
+  <h2>Sus competidores <span class="gradient-text">ya usan IA.</span><br>¿Su negocio también?</h2>
+  <p class="lead">En este momento, miles de negocios en todo el mundo hispanohablante están usando inteligencia artificial para trabajar más rápido, responder más clientes y generar más ventas. Los que no se adaptan, pierden terreno.</p>
+
+  <div class="problem-grid">
+    <div class="problem-card">
+      <div class="icon">⏰</div>
+      <h4>Tiempo perdido en tareas repetitivas</h4>
+      <p>Responder mensajes, crear contenido, redactar correos — horas que podrían invertirse en crecer.</p>
+    </div>
+    <div class="problem-card">
+      <div class="icon">📵</div>
+      <h4>Clientes que no reciben respuesta rápida</h4>
+      <p>El 78% de los clientes elige al proveedor que responde primero. Si tarda, pierde la venta.</p>
+    </div>
+    <div class="problem-card">
+      <div class="icon">📉</div>
+      <h4>Poca presencia en redes sociales</h4>
+      <p>Sin contenido constante, su negocio es invisible para los nuevos clientes que buscan en línea.</p>
+    </div>
+    <div class="problem-card">
+      <div class="icon">💸</div>
+      <h4>Costo alto de contratar personal</h4>
+      <p>Un empleado de marketing o atención al cliente puede costar $800-$2,000/mes. La IA hace lo mismo por mucho menos.</p>
+    </div>
+  </div>
+
+  <div class="highlight-box">
+    <p>La solución no es contratar más personas ni trabajar más horas.<br>
+    <strong>La solución es usar las herramientas correctas de inteligencia artificial — implementadas correctamente en su negocio específico.</strong></p>
+  </div>
+</div>
+
+
+<!-- ══ QUÉ HACEMOS ══ -->
+<div class="section">
+  <div class="sec-label">La solución</div>
+  <h2>¿Qué hacemos <span class="gradient-text">exactamente</span> por su negocio?</h2>
+  <p class="lead">Implementamos sistemas de inteligencia artificial adaptados a su negocio. No vendemos software genérico — configuramos herramientas que trabajan para usted específicamente.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h4>Analizamos su negocio</h4>
+        <p>Entendemos su tipo de cliente, sus procesos actuales y dónde está perdiendo tiempo o ventas. Cada solución es personalizada.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h4>Configuramos las herramientas de IA</h4>
+        <p>Activamos y entrenamos la inteligencia artificial con la voz, el tono y la información de su negocio. Claude AI habla como si fuera parte de su equipo.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h4>Entregamos y capacitamos</h4>
+        <p>Le entregamos todo funcionando y le explicamos (en términos simples) cómo sacarle el máximo provecho. Sin tecnicismos.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h4>Seguimiento y mejora continua</h4>
+        <p>No desaparecemos después de entregar. Hacemos seguimiento mensual para ajustar y mejorar según los resultados reales.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══ NICHOS ══ -->
+<div class="section">
+  <div class="sec-label">¿Para quién es esto?</div>
+  <h2>Trabajamos con <span class="gradient-text">cualquier tipo</span> de negocio</h2>
+  <p class="lead">Si su negocio tiene clientes, tiene procesos y necesita comunicarse — la IA puede ayudarle. Estos son algunos de los sectores donde ya estamos generando resultados:</p>
+
+  <div class="nicho-grid">
+    <div class="nicho"><div class="n-icon">🦷</div><div class="n-name">Clínicas y dentistas</div><div class="n-sub">Citas y seguimiento</div></div>
+    <div class="nicho"><div class="n-icon">🍽️</div><div class="n-name">Restaurantes</div><div class="n-sub">Contenido y reservas</div></div>
+    <div class="nicho"><div class="n-icon">🏋️</div><div class="n-name">Gimnasios y spas</div><div class="n-sub">Captación y fidelización</div></div>
+    <div class="nicho"><div class="n-icon">🏠</div><div class="n-name">Inmobiliarias</div><div class="n-sub">Atención a prospectos</div></div>
+    <div class="nicho"><div class="n-icon">👗</div><div class="n-name">Tiendas y boutiques</div><div class="n-sub">Redes y ventas</div></div>
+    <div class="nicho"><div class="n-icon">⚖️</div><div class="n-name">Abogados</div><div class="n-sub">Consultas iniciales IA</div></div>
+    <div class="nicho"><div class="n-icon">🏗️</div><div class="n-name">Constructoras</div><div class="n-sub">Seguimiento de prospectos</div></div>
+    <div class="nicho"><div class="n-icon">💆</div><div class="n-name">Centros de belleza</div><div class="n-sub">Contenido y agenda</div></div>
+  </div>
+
+  <div class="quote">
+    "Si tiene clientes que buscan en Instagram, WhatsApp o Google — tiene un negocio que puede crecer con inteligencia artificial."
+    <cite>— TechnoCrazy</cite>
+  </div>
+</div>
+
+
+<!-- ══ SERVICIOS ══ -->
+<div class="section">
+  <div class="sec-label">Nuestros servicios</div>
+  <h2>Tres niveles de <span class="gradient-text">implementación</span></h2>
+  <p class="lead">Cada negocio tiene necesidades distintas. Elija el nivel que se adapta a su momento actual — siempre puede escalar después.</p>
+
+  <div class="services">
+
+    <!-- NIVEL 1 -->
+    <div class="service-card">
+      <div class="service-header">
+        <div>
+          <div class="service-tag gold">Nivel 1 · Para empezar</div>
+          <h3>Contenido con IA</h3>
+          <p>Publicaciones, copies y calendarios de redes sociales creados con IA, adaptados a su negocio, listos para publicar cada semana.</p>
+        </div>
+        <div class="price-badge">
+          <div class="amount">$300</div>
+          <div class="period">por mes</div>
+        </div>
+      </div>
+      <div class="service-body">
+        <div class="service-items">
+          <div class="service-item">20 posts mensuales para Instagram y Facebook</div>
+          <div class="service-item">Copies de venta y promociones</div>
+          <div class="service-item">Calendario de contenido organizado</div>
+          <div class="service-item">Hashtags y horarios optimizados</div>
+          <div class="service-item">Adaptado al tono de su marca</div>
+          <div class="service-item">Revisión y ajuste mensual</div>
+        </div>
+        <div class="service-example">
+          <strong>Ejemplo real</strong>
+          Un restaurante recibe cada semana: 5 posts de sus platos, 2 promociones del fin de semana, 1 historia de "detrás de escena" y 2 frases motivacionales — todo listo para publicar con un clic.
+        </div>
+      </div>
+    </div>
+
+    <!-- NIVEL 2 -->
+    <div class="service-card featured">
+      <div class="service-header">
+        <div>
+          <div class="service-tag green">Nivel 2 · Más popular ⭐</div>
+          <h3>Sistema de Automatización</h3>
+          <p>Un sistema inteligente que responde mensajes de WhatsApp, clasifica prospectos y agenda citas automáticamente — activo las 24 horas, los 7 días.</p>
+        </div>
+        <div class="price-badge">
+          <div class="amount">$800</div>
+          <div class="period">por mes</div>
+        </div>
+      </div>
+      <div class="service-body">
+        <div class="service-items">
+          <div class="service-item">Respuesta automática a mensajes en menos de 1 minuto</div>
+          <div class="service-item">Clasificación inteligente de prospectos calientes y fríos</div>
+          <div class="service-item">Agendamiento automático de citas o llamadas</div>
+          <div class="service-item">Seguimiento a clientes que no respondieron</div>
+          <div class="service-item">Integración con WhatsApp Business</div>
+          <div class="service-item">Panel de control para ver toda la actividad</div>
+          <div class="service-item">Todo lo del Nivel 1 incluido</div>
+          <div class="service-item">Reportes semanales de rendimiento</div>
+        </div>
+        <div class="service-example">
+          <strong>Ejemplo real</strong>
+          Una clínica dental recibe 30 consultas por WhatsApp al día. El sistema responde cada una en 30 segundos, pregunta qué servicio necesitan, verifica disponibilidad y agenda la cita — sin que nadie del equipo tenga que hacerlo.
+        </div>
+      </div>
+    </div>
+
+    <!-- NIVEL 3 -->
+    <div class="service-card">
+      <div class="service-header">
+        <div>
+          <div class="service-tag purple">Nivel 3 · Solución completa</div>
+          <h3>Agente IA a Medida</h3>
+          <p>Un asistente de inteligencia artificial completamente personalizado que aprende sobre su negocio y maneja múltiples funciones simultáneamente.</p>
+        </div>
+        <div class="price-badge">
+          <div class="amount">$3,000</div>
+          <div class="period">proyecto único</div>
+        </div>
+      </div>
+      <div class="service-body">
+        <div class="service-items">
+          <div class="service-item">Agente IA entrenado con el conocimiento de su negocio</div>
+          <div class="service-item">Integración con su sistema de ventas o CRM</div>
+          <div class="service-item">Atención al cliente multicanal (WhatsApp, Instagram, email)</div>
+          <div class="service-item">Reportes de ventas generados automáticamente</div>
+          <div class="service-item">Gestión de inventario o agenda conectada</div>
+          <div class="service-item">Flujos de seguimiento post-venta</div>
+          <div class="service-item">Capacitación de su equipo incluida</div>
+          <div class="service-item">3 meses de soporte y ajustes post-entrega</div>
+        </div>
+        <div class="service-example">
+          <strong>Ejemplo real</strong>
+          Una inmobiliaria implementa un agente IA que atiende consultas 24/7, califica prospectos según su presupuesto y zona, envía fichas de propiedades personalizadas y agenda visitas — todo sin intervención del agente humano hasta que el prospecto está listo para comprar.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══ COMPARATIVA ══ -->
+<div class="section">
+  <div class="sec-label">La diferencia</div>
+  <h2>IA vs <span class="gradient-text">forma tradicional</span></h2>
+  <p class="lead">Comparemos lo que cuesta resolver estos problemas de forma tradicional versus implementando inteligencia artificial:</p>
+
+  <table class="compare-table">
+    <tr>
+      <th>Tarea</th>
+      <th>Sin IA (costo mensual)</th>
+      <th>Con IA (nuestro servicio)</th>
+    </tr>
+    <tr>
+      <td>Crear contenido para redes sociales</td>
+      <td class="no">Community manager: $800–$1,500</td>
+      <td class="yes">$300/mes ✓</td>
+    </tr>
+    <tr>
+      <td>Atención al cliente WhatsApp 24/7</td>
+      <td class="no">2 empleados: $1,200–$2,000</td>
+      <td class="yes">$800/mes ✓</td>
+    </tr>
+    <tr>
+      <td>Seguimiento de prospectos</td>
+      <td class="no">Vendedor dedicado: $1,000–$1,800</td>
+      <td class="yes">Incluido en el sistema ✓</td>
+    </tr>
+    <tr>
+      <td>Agendamiento de citas</td>
+      <td class="no">Recepcionista: $600–$900</td>
+      <td class="yes">Automático 24/7 ✓</td>
+    </tr>
+    <tr>
+      <td>Reportes de ventas</td>
+      <td class="no">Horas manuales cada semana</td>
+      <td class="yes">Automáticos y en tiempo real ✓</td>
+    </tr>
+  </table>
+
+  <div class="highlight-box">
+    <p>Un negocio que implementa el <strong>Nivel 2</strong> de nuestro servicio reemplaza funciones que costarían entre <strong>$2,800 y $4,200 al mes</strong> en personal tradicional — pagando solo $800.</p>
+  </div>
+</div>
+
+
+<!-- ══ PROCESO ══ -->
+<div class="section">
+  <div class="sec-label">Cómo trabajamos</div>
+  <h2>De la reunión al sistema <span class="gradient-text">en 7 días</span></h2>
+  <p class="lead">Nuestro proceso es rápido y no interrumpe su operación diaria. No necesita preparar nada — nosotros nos adaptamos a usted.</p>
+
+  <div class="proceso-steps">
+    <div class="p-step">
+      <div class="p-num">1</div>
+      <h4>Diagnóstico gratuito</h4>
+      <p>30 minutos por videollamada o WhatsApp. Analizamos su negocio y le decimos exactamente qué puede mejorar con IA.</p>
+    </div>
+    <div class="p-step">
+      <div class="p-num">2</div>
+      <h4>Propuesta personalizada</h4>
+      <p>Le enviamos un plan específico para su negocio con el servicio recomendado y el retorno esperado.</p>
+    </div>
+    <div class="p-step">
+      <div class="p-num">3</div>
+      <h4>Configuración y prueba</h4>
+      <p>En 5-7 días hábiles entregamos el sistema funcionando. Usted lo prueba antes de pagar.</p>
+    </div>
+    <div class="p-step">
+      <div class="p-num">4</div>
+      <h4>Entrega y seguimiento</h4>
+      <p>Le enseñamos a usar todo en 1 hora y le hacemos seguimiento mensual para garantizar resultados.</p>
+    </div>
+  </div>
+
+  <div class="garantia">
+    <div class="g-icon">🛡️</div>
+    <h3>Garantía de 30 días</h3>
+    <p>Si en los primeros 30 días no ve resultados concretos en su negocio, le devolvemos el dinero completo. Sin preguntas, sin letras pequeñas.</p>
+  </div>
+</div>
+
+
+<!-- ══ CTA FINAL ══ -->
+<div class="cta-section">
+  <div class="sec-label" style="justify-content:center">El siguiente paso</div>
+  <h2>¿Listo para que su negocio<br><span class="gradient-text">trabaje con IA?</span></h2>
+  <p>El diagnóstico es gratuito y sin compromiso. En 30 minutos le mostramos exactamente qué puede automatizar y cuánto puede ahorrar.</p>
+
+  <div class="cta-buttons">
+    <a href="https://wa.me/584120000000" class="btn-primary">💬 Agendar diagnóstico gratuito</a>
+    <a href="https://technocrazy.org" class="btn-secondary">Ver más en technocrazy.org</a>
+  </div>
+</div>
+
+<div class="brand-footer">
+  <strong>TechnoCrazy</strong> · Tecnología que genera dinero · technocrazy.org<br>
+  <span style="color: var(--text3); font-size:11px; margin-top:4px; display:block">Rafael Navarro · rafaelpixel3004@gmail.com</span>
+</div>
+
+</body>
+</html>

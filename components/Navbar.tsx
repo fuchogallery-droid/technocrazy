@@ -36,10 +36,10 @@ export default function Navbar() {
           </span>
         </a>
 
-        {/* Main links: Servicios / Productos */}
+        {/* Main links: Servicios / Productos / Novedades */}
         <ul className="flex items-center gap-5 sm:gap-8">
           {t.nav.links
-            .filter((l) => l.href === "#servicios" || l.href === "#productos")
+            .filter((l) => l.href === "#servicios" || l.href === "#productos" || l.href === "#novedades")
             .map((l) => (
               <li key={l.href}>
                 <a href={l.href} className="font-medium text-sm transition-colors relative group whitespace-nowrap" style={{ color: "rgba(255,255,255,0.7)" }}
@@ -73,7 +73,7 @@ export default function Navbar() {
         <div style={{ background: "rgba(4,8,26,0.98)", borderTop: "1px solid rgba(255,255,255,0.07)" }}>
           <div className="px-5 py-3 flex flex-col gap-0">
             {t.nav.links
-              .filter((l) => l.href !== "#servicios" && l.href !== "#productos")
+              .filter((l) => l.href !== "#servicios" && l.href !== "#productos" && l.href !== "#novedades")
               .map((l) => (
                 <a key={l.href} href={l.href} onClick={() => setOpen(false)}
                   className="font-medium py-3.5 border-b transition-colors flex items-center gap-2"
