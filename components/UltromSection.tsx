@@ -32,9 +32,8 @@ const products: Product[] = [
     subtitle: "PWA · React + Node.js",
     desc: "Accede a Claude Code desde tu celular sin instalar nada. Terminal real, chat integrado y seguridad de 4 capas.",
     tags: ["PWA", "IA", "Terminal"],
-    price: null,
-    url: "https://wa.me/17794318214?text=Hola%20Rafael!%20Quiero%20saber%20cuándo%20lanza%20Claude%20Remote%20🚀",
-    soon: true,
+    price: "$25",
+    url: "https://payhip.com/b/r8Ldk",
   },
   {
     img: "/product-img-3.png",
