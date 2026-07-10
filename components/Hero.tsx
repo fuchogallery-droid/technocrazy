@@ -168,7 +168,7 @@ export default function Hero() {
       <motion.div
         animate={{ y: [0, 6, 0] }}
         transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute bottom-24 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 opacity-30 pointer-events-none"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 opacity-30 pointer-events-none"
       >
         <span className="text-gray-500 text-xs font-medium tracking-widest uppercase">{h.scroll}</span>
         <ChevronDown size={14} className="text-gray-500" />
