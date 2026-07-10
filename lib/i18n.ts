@@ -26,8 +26,8 @@ export const translations = {
       quoteB: "Construimos",
       quoteHighlight: "resultados",
       stats: [
-        { emoji: "🚀", num: "+120", label: "PROYECTOS\nENTREGADOS" },
-        { emoji: "📈", num: "+85", label: "EMPRESAS\nTRANSFORMADAS" },
+        { emoji: "🚀", num: "", label: "PROYECTOS\nENTREGADOS" },
+        { emoji: "⏱️", num: "<24h", label: "TIEMPO DE\nRESPUESTA" },
         { emoji: "⭐", num: "100%", label: "ENFOCADOS EN\nRESULTADOS" },
       ],
       cta: "AGENDA TU ASESORÍA GRATIS",
@@ -228,8 +228,8 @@ export const translations = {
       quoteB: "We build",
       quoteHighlight: "results",
       stats: [
-        { emoji: "🚀", num: "+120", label: "PROJECTS\nDELIVERED" },
-        { emoji: "📈", num: "+85", label: "BUSINESSES\nTRANSFORMED" },
+        { emoji: "🚀", num: "", label: "PROJECTS\nDELIVERED" },
+        { emoji: "⏱️", num: "<24h", label: "RESPONSE\nTIME" },
         { emoji: "⭐", num: "100%", label: "FOCUSED ON\nRESULTS" },
       ],
       cta: "BOOK YOUR FREE CONSULTATION",

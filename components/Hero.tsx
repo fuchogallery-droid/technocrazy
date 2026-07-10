@@ -2,10 +2,12 @@
 import { ArrowRight, Bot, Code2, Zap, ChevronDown } from "lucide-react";
 import { motion } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { products } from "@/components/Products";
 
 export default function Hero() {
   const { t } = useLanguage();
   const h = t.hero;
+  const stats = h.stats.map((s, i) => (i === 0 ? { ...s, num: `${products.length}` } : s));
   return (
     <section
       id="inicio"
@@ -25,7 +27,7 @@ export default function Hero() {
           initial={{ opacity: 0, x: -32 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.72, ease: "easeOut" }}
-          className="w-full lg:flex-none lg:max-w-[52%] lg:basis-[52%] max-lg:flex max-lg:flex-col max-lg:items-center max-lg:text-center"
+          className="w-full lg:flex-none lg:max-w-[46%] lg:basis-[46%] max-lg:flex max-lg:flex-col max-lg:items-center max-lg:text-center"
         >
           {/* Tagline pill */}
           <div style={{ display: "inline-flex", alignItems: "center", gap: 7, borderRadius: 9999, padding: "6px 16px", fontSize: 10, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 22, background: "rgba(41,121,255,0.10)", border: "1px solid rgba(41,121,255,0.24)", color: "rgba(255,255,255,0.65)" }}>
@@ -58,7 +60,7 @@ export default function Hero() {
 
           {/* Stats */}
           <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 10, marginBottom: 28 }}>
-            {h.stats.map((s) => (
+            {stats.map((s) => (
               <motion.div
                 key={s.num}
                 whileHover={{ y: -3, borderColor: "rgba(41,121,255,0.35)" }}
@@ -90,14 +92,15 @@ export default function Hero() {
           initial={{ opacity: 0, x: 32 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.72, delay: 0.15, ease: "easeOut" }}
-          className="flex-1 flex items-center justify-center"
+          className="flex-1 flex items-center justify-center lg:justify-start"
           style={{ position: "relative", minHeight: "clamp(320px, 60vw, 520px)" }}
         >
           {/* Glow detrás de la foto */}
-          <div style={{ position: "absolute", width: 340, height: 340, borderRadius: "50%", background: "radial-gradient(circle,rgba(41,121,255,0.22),transparent 65%)", top: "50%", left: "50%", transform: "translate(-50%,-50%)", zIndex: 0 }} />
+          <div className="hidden lg:block" style={{ position: "absolute", width: 340, height: 340, borderRadius: "50%", background: "radial-gradient(circle,rgba(41,121,255,0.22),transparent 65%)", top: "50%", left: "10%", transform: "translate(-50%,-50%)", zIndex: 0 }} />
+          <div className="lg:hidden" style={{ position: "absolute", width: 340, height: 340, borderRadius: "50%", background: "radial-gradient(circle,rgba(41,121,255,0.22),transparent 65%)", top: "50%", left: "50%", transform: "translate(-50%,-50%)", zIndex: 0 }} />
 
           {/* Foto Rafael */}
-          <div style={{ position: "relative", zIndex: 1, width: "clamp(200px,24vw,280px)", borderRadius: 28, overflow: "hidden", boxShadow: "0 30px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(41,121,255,0.15)" }}>
+          <div className="lg:ml-[6%]" style={{ position: "relative", zIndex: 1, width: "clamp(200px,22vw,260px)", borderRadius: 28, overflow: "hidden", boxShadow: "0 30px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(41,121,255,0.15)" }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/rafael-hero.png" alt="Rafael Navarro · TechnoCrazy" style={{ width: "100%", display: "block", objectFit: "cover", objectPosition: "center top" }} />
             <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "36px 18px 16px", background: "linear-gradient(to top,rgba(4,8,26,0.95),transparent)" }}>
@@ -106,55 +109,58 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Dashboard flotante — esquina superior izquierda */}
-          <motion.div animate={{ y: [0, -6, 0] }} transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }} className="hidden lg:block" style={{ position: "absolute", top: "0%", left: "1%", background: "rgba(255,255,255,0.05)", backdropFilter: "blur(14px)", border: "1px solid rgba(255,255,255,0.10)", borderRadius: 14, padding: "10px 13px", zIndex: 2, maxWidth: 148 }}>
-            <div style={{ fontSize: 8, color: "rgba(255,255,255,0.45)", fontWeight: 700, letterSpacing: "0.06em", marginBottom: 5 }}>{h.floatingDashboard.label}</div>
-            <div style={{ fontSize: 18, fontWeight: 900, color: "#fff", lineHeight: 1 }}>$127,430</div>
-            <div style={{ fontSize: 9, color: "#00e676", marginTop: 3, fontWeight: 600 }}>{h.floatingDashboard.growth}</div>
-            <div style={{ fontSize: 8, color: "rgba(255,255,255,0.35)", marginTop: 4 }}>{h.floatingDashboard.users}</div>
-          </motion.div>
+          {/* Panel de tarjetas flotantes — todas contenidas en una sola columna a la derecha de la foto */}
+          <div className="hidden lg:flex" style={{ flexDirection: "column", gap: 12, marginLeft: 22, position: "relative", zIndex: 2, width: 156 }}>
+            {/* Dashboard */}
+            <motion.div animate={{ y: [0, -6, 0] }} transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }} style={{ background: "rgba(255,255,255,0.05)", backdropFilter: "blur(14px)", border: "1px solid rgba(255,255,255,0.10)", borderRadius: 14, padding: "10px 13px" }}>
+              <div style={{ fontSize: 8, color: "rgba(255,255,255,0.45)", fontWeight: 700, letterSpacing: "0.06em", marginBottom: 5 }}>{h.floatingDashboard.label}</div>
+              <div style={{ fontSize: 18, fontWeight: 900, color: "#fff", lineHeight: 1 }}>$127,430</div>
+              <div style={{ fontSize: 9, color: "#00e676", marginTop: 3, fontWeight: 600 }}>{h.floatingDashboard.growth}</div>
+              <div style={{ fontSize: 8, color: "rgba(255,255,255,0.35)", marginTop: 4 }}>{h.floatingDashboard.users}</div>
+            </motion.div>
 
-          {/* IA Agent — esquina superior derecha */}
-          <motion.div animate={{ y: [0, -6, 0] }} transition={{ duration: 3.8, repeat: Infinity, ease: "easeInOut", delay: 0.6 }} className="hidden lg:block" style={{ position: "absolute", top: "0%", right: "1%", background: "rgba(41,121,255,0.12)", backdropFilter: "blur(14px)", border: "1px solid rgba(41,121,255,0.28)", borderRadius: 14, padding: "10px 12px", zIndex: 2, maxWidth: 138 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 7 }}>
-              <div style={{ width: 22, height: 22, borderRadius: 7, background: "rgba(41,121,255,0.3)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                <Bot size={11} style={{ color: "#82b1ff" }} />
-              </div>
-              <div>
-                <div style={{ fontSize: 9, fontWeight: 700, color: "#fff", lineHeight: 1 }}>{h.floatingAgent.title}</div>
-                <div style={{ fontSize: 7, color: "rgba(255,255,255,0.45)" }}>{h.floatingAgent.sub}</div>
-              </div>
-            </div>
-            <div style={{ fontSize: 10, color: "rgba(255,255,255,0.75)", background: "rgba(255,255,255,0.06)", borderRadius: 8, padding: "6px 9px", lineHeight: 1.5 }}>
-              {h.floatingAgent.msg.split("\n").map((line, i) => <span key={i}>{line}{i === 0 && <br />}</span>)}
-            </div>
-          </motion.div>
-
-          {/* Automatización — esquina inferior izquierda */}
-          <motion.div animate={{ y: [0, -6, 0] }} transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1.2 }} className="hidden lg:block" style={{ position: "absolute", bottom: "1%", left: "1%", background: "rgba(124,77,255,0.10)", backdropFilter: "blur(14px)", border: "1px solid rgba(124,77,255,0.22)", borderRadius: 14, padding: "10px 12px", zIndex: 2, maxWidth: 138 }}>
-            <div style={{ fontSize: 8, fontWeight: 700, color: "#b388ff", letterSpacing: "0.08em", marginBottom: 7 }}>{h.floatingAuto.title}</div>
-            <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-              {h.floatingAuto.steps.map((label, i) => ({ label, green: i === 2 })).map((step) => (
-                <div key={step.label} style={{ display: "flex", alignItems: "center", gap: 7 }}>
-                  <div style={{ width: 6, height: 6, borderRadius: "50%", flexShrink: 0, background: step.green ? "#00e676" : "rgba(124,77,255,0.7)" }} />
-                  <span style={{ fontSize: 8, color: step.green ? "rgba(0,230,118,0.9)" : "rgba(255,255,255,0.6)" }}>{step.label}</span>
+            {/* IA Agent */}
+            <motion.div animate={{ y: [0, -6, 0] }} transition={{ duration: 3.8, repeat: Infinity, ease: "easeInOut", delay: 0.6 }} style={{ background: "rgba(41,121,255,0.12)", backdropFilter: "blur(14px)", border: "1px solid rgba(41,121,255,0.28)", borderRadius: 14, padding: "10px 12px" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 7 }}>
+                <div style={{ width: 22, height: 22, borderRadius: 7, background: "rgba(41,121,255,0.3)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                  <Bot size={11} style={{ color: "#82b1ff" }} />
                 </div>
-              ))}
-            </div>
-          </motion.div>
+                <div>
+                  <div style={{ fontSize: 9, fontWeight: 700, color: "#fff", lineHeight: 1 }}>{h.floatingAgent.title}</div>
+                  <div style={{ fontSize: 7, color: "rgba(255,255,255,0.45)" }}>{h.floatingAgent.sub}</div>
+                </div>
+              </div>
+              <div style={{ fontSize: 10, color: "rgba(255,255,255,0.75)", background: "rgba(255,255,255,0.06)", borderRadius: 8, padding: "6px 9px", lineHeight: 1.5 }}>
+                {h.floatingAgent.msg.split("\n").map((line, i) => <span key={i}>{line}{i === 0 && <br />}</span>)}
+              </div>
+            </motion.div>
 
-          {/* API badge — esquina inferior derecha */}
-          <motion.div animate={{ y: [0, -6, 0] }} transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut", delay: 0.9 }} className="hidden lg:block" style={{ position: "absolute", bottom: "1%", right: "1%", background: "linear-gradient(135deg,#2979ff,#00b8d4)", borderRadius: 13, padding: "10px 16px", zIndex: 2, boxShadow: "0 8px 24px rgba(41,121,255,0.50)", textAlign: "center", minWidth: 76 }}>
-            <div style={{ fontSize: 18, fontWeight: 900, color: "#fff", letterSpacing: "0.04em" }}>API</div>
-            <div style={{ fontSize: 7, color: "rgba(255,255,255,0.75)", marginTop: 3, letterSpacing: "0.06em" }}>{h.floatingApi.sub}</div>
-            <Code2 size={9} style={{ color: "rgba(255,255,255,0.6)", marginTop: 4 }} />
-          </motion.div>
+            {/* Tiempo real */}
+            <motion.div animate={{ y: [0, -6, 0] }} transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut", delay: 1.8 }} className="flex items-center" style={{ background: "rgba(0,229,255,0.1)", border: "1px solid rgba(0,229,255,0.2)", borderRadius: 10, padding: "8px 12px", gap: 6, alignSelf: "flex-start" }}>
+              <Zap size={11} style={{ color: "#00e5ff" }} />
+              <span style={{ fontSize: 8, color: "rgba(0,229,255,0.9)", fontWeight: 700 }}>{h.floatingRt}</span>
+            </motion.div>
 
-          {/* Zap — lateral derecho centro */}
-          <motion.div animate={{ y: [0, -6, 0] }} transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut", delay: 1.8 }} className="hidden lg:flex items-center" style={{ position: "absolute", top: "46%", right: "3%", background: "rgba(0,229,255,0.1)", border: "1px solid rgba(0,229,255,0.2)", borderRadius: 10, padding: "6px 10px", zIndex: 2, gap: 5 }}>
-            <Zap size={11} style={{ color: "#00e5ff" }} />
-            <span style={{ fontSize: 8, color: "rgba(0,229,255,0.9)", fontWeight: 700 }}>{h.floatingRt}</span>
-          </motion.div>
+            {/* API */}
+            <motion.div animate={{ y: [0, -6, 0] }} transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut", delay: 0.9 }} style={{ background: "linear-gradient(135deg,#2979ff,#00b8d4)", borderRadius: 13, padding: "10px 16px", boxShadow: "0 8px 24px rgba(41,121,255,0.50)", textAlign: "center", alignSelf: "flex-start" }}>
+              <div style={{ fontSize: 18, fontWeight: 900, color: "#fff", letterSpacing: "0.04em" }}>API</div>
+              <div style={{ fontSize: 7, color: "rgba(255,255,255,0.75)", marginTop: 3, letterSpacing: "0.06em" }}>{h.floatingApi.sub}</div>
+              <Code2 size={9} style={{ color: "rgba(255,255,255,0.6)", marginTop: 4 }} />
+            </motion.div>
+
+            {/* Automatización */}
+            <motion.div animate={{ y: [0, -6, 0] }} transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1.2 }} style={{ background: "rgba(124,77,255,0.10)", backdropFilter: "blur(14px)", border: "1px solid rgba(124,77,255,0.22)", borderRadius: 14, padding: "10px 12px" }}>
+              <div style={{ fontSize: 8, fontWeight: 700, color: "#b388ff", letterSpacing: "0.08em", marginBottom: 7 }}>{h.floatingAuto.title}</div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+                {h.floatingAuto.steps.map((label, i) => ({ label, green: i === 2 })).map((step) => (
+                  <div key={step.label} style={{ display: "flex", alignItems: "center", gap: 7 }}>
+                    <div style={{ width: 6, height: 6, borderRadius: "50%", flexShrink: 0, background: step.green ? "#00e676" : "rgba(124,77,255,0.7)" }} />
+                    <span style={{ fontSize: 8, color: step.green ? "rgba(0,230,118,0.9)" : "rgba(255,255,255,0.6)" }}>{step.label}</span>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          </div>
         </motion.div>
       </div>
 
