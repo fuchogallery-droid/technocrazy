@@ -20,7 +20,7 @@ export default function Hero() {
         <div className="absolute rounded-full blur-3xl" style={{ width: 400, height: 400, bottom: 0, right: 0, background: "radial-gradient(circle,rgba(124,77,255,0.08),transparent 70%)" }} />
       </div>
 
-      <div className="tc-wrap relative z-10 flex flex-col lg:flex-row items-center gap-6 lg:gap-0 pt-6 pb-10 lg:py-14 min-h-[calc(100vh-4.5rem)]">
+      <div className="tc-wrap relative z-10 flex flex-col lg:flex-row items-center gap-6 lg:gap-12 pt-6 pb-10 lg:py-14 min-h-[calc(100vh-4.5rem)]">
 
         {/* ── IZQUIERDA ── */}
         <motion.div
