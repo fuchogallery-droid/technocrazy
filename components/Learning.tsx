@@ -77,7 +77,7 @@ export default function Learning() {
       id="tienda"
       style={{
         background: "linear-gradient(180deg, #f9fafb 0%, #ffffff 100%)",
-        padding: "clamp(60px,8vw,100px) 0",
+        padding: "clamp(40px,6vw,64px) 0",
         position: "relative",
         overflow: "hidden",
       }}

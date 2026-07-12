@@ -499,7 +499,7 @@ export default function Novedades() {
         className="relative overflow-hidden"
         style={{
           background: "linear-gradient(160deg,#07091a 0%,#0b0e28 60%,#07091a 100%)",
-          padding: "clamp(64px,10vw,100px) 0",
+          padding: "clamp(40px,6vw,64px) 0",
         }}
       >
         <div className="absolute pointer-events-none" style={{ top: "50%", left: "50%", transform: "translate(-50%,-50%)", width: 700, height: 400, borderRadius: "50%", background: "radial-gradient(ellipse, rgba(41,121,255,0.06) 0%, transparent 70%)" }} />

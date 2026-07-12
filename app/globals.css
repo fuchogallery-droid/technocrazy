@@ -157,8 +157,8 @@ body {
 }
 
 .section-py {
-  padding-top: 72px;
-  padding-bottom: 72px;
+  padding-top: 48px;
+  padding-bottom: 48px;
 }
 
 /* ── SECTION HEADERS ── */
@@ -211,8 +211,8 @@ body {
 /* ── MOBILE OVERRIDES ─────────────────────────── */
 @media (max-width: 767px) {
   .section-py {
-    padding-top: 44px;
-    padding-bottom: 44px;
+    padding-top: 32px;
+    padding-bottom: 32px;
   }
   .tc-header {
     margin-bottom: 28px;
@@ -230,8 +230,8 @@ body {
 /* ── EXTRA SMALL PHONES (<480px) ── */
 @media (max-width: 479px) {
   .section-py {
-    padding-top: 36px;
-    padding-bottom: 36px;
+    padding-top: 28px;
+    padding-bottom: 28px;
   }
   .tc-h2 {
     font-size: clamp(22px, 7vw, 32px);

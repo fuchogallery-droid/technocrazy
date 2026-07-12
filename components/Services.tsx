@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Palette, Globe, Smartphone, Cpu, Bot, Zap,
@@ -66,6 +66,19 @@ export default function Services() {
   const ts = t.services;
   const [activeModal, setActiveModal] = useState<ModalId | null>(null);
 
+  const titleVariants = ts.titleVariants ?? [{ a: ts.title, b: ts.titleHighlight }];
+  const [titleIndex, setTitleIndex] = useState(0);
+
+  useEffect(() => {
+    setTitleIndex(0);
+    const id = setInterval(() => {
+      setTitleIndex((i) => (i + 1) % titleVariants.length);
+    }, 4500);
+    return () => clearInterval(id);
+  }, [titleVariants.length, ts.title]);
+
+  const heading = titleVariants[titleIndex] ?? titleVariants[0];
+
   // Merge visual + translation data
   const services = ts.cards.map(card => ({
     ...SERVICE_VISUAL[card.id as ModalId],
@@ -110,10 +123,21 @@ export default function Services() {
             <div className="tc-badge" style={{ background: "rgba(41,121,255,0.12)", border: "1px solid rgba(41,121,255,0.25)", color: "#00e5ff" }}>
               {ts.badge}
             </div>
-            <h2 className="tc-h2 text-white">
-              {ts.title}{" "}
-              <br />
-              <span className="gradient-text-cyan">{ts.titleHighlight}</span>
+            <h2 className="tc-h2 text-white" style={{ minHeight: "clamp(70px,9vw,110px)" }}>
+              <AnimatePresence mode="wait">
+                <motion.span
+                  key={titleIndex}
+                  initial={{ opacity: 0, y: 14 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -14 }}
+                  transition={{ duration: 0.45, ease: "easeOut" }}
+                  style={{ display: "block" }}
+                >
+                  {heading.a}
+                  <br />
+                  <span className="gradient-text-cyan">{heading.b}</span>
+                </motion.span>
+              </AnimatePresence>
             </h2>
             <p className="tc-sub text-gray-400">{ts.sub}</p>
           </motion.div>

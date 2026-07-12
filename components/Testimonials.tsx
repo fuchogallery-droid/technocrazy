@@ -38,13 +38,13 @@ export default function Testimonials() {
     <section
       id="testimonios"
       className="section-py relative overflow-hidden"
-      style={{ background: "linear-gradient(160deg, #ffffff 0%, #f4f7ff 50%, #ece6ff 100%)" }}
+      style={{ background: "linear-gradient(160deg,#0a0a1a 0%,#12122a 60%,#0d0d24 100%)" }}
     >
       {/* Soft blobs */}
-      <div className="absolute top-0 right-0 w-80 h-80 rounded-full pointer-events-none opacity-[0.05] blur-3xl" style={{ background: "#2979ff" }} />
-      <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full pointer-events-none opacity-[0.05] blur-3xl" style={{ background: "#7c4dff" }} />
+      <div className="absolute top-0 right-0 w-80 h-80 rounded-full pointer-events-none opacity-[0.08] blur-3xl" style={{ background: "#2979ff" }} />
+      <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full pointer-events-none opacity-[0.08] blur-3xl" style={{ background: "#7c4dff" }} />
 
-      <div className="tc-wrap">
+      <div className="tc-wrap relative z-10">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -53,14 +53,14 @@ export default function Testimonials() {
           viewport={{ once: true }}
           className="tc-header"
         >
-          <div className="tc-badge" style={{ background: "#eff4ff", border: "1px solid #c7d9ff", color: "#2979ff" }}>
+          <div className="tc-badge" style={{ background: "rgba(41,121,255,0.10)", border: "1px solid rgba(41,121,255,0.28)", color: "#82b1ff" }}>
             Testimonios
           </div>
-          <h2 className="tc-h2 text-gray-900">
+          <h2 className="tc-h2 text-white">
             Resultados que{" "}
             <span className="gradient-text">Hablan</span>
           </h2>
-          <p className="tc-sub text-gray-500">
+          <p className="tc-sub" style={{ color: "rgba(255,255,255,0.45)" }}>
             Clientes que confiaron en el proceso y transformaron su negocio digital.
           </p>
         </motion.div>
@@ -75,11 +75,12 @@ export default function Testimonials() {
               transition={{ duration: 0.45, delay: i * 0.1 }}
               viewport={{ once: true }}
               whileHover={{ y: -5 }}
-              className="bg-white rounded-2xl relative overflow-hidden"
+              className="rounded-2xl relative overflow-hidden"
               style={{
                 padding: "28px 24px",
-                border: "1px solid #f0f0f0",
-                boxShadow: "0 4px 24px rgba(0,0,0,0.06)",
+                background: "rgba(255,255,255,0.03)",
+                border: "1px solid rgba(255,255,255,0.08)",
+                backdropFilter: "blur(14px)",
               }}
             >
               {/* Top accent */}
@@ -98,7 +99,7 @@ export default function Testimonials() {
               </div>
 
               {/* Text */}
-              <p className="text-gray-600 text-sm leading-relaxed mb-6">
+              <p className="text-sm leading-relaxed mb-6" style={{ color: "rgba(255,255,255,0.65)" }}>
                 &ldquo;{t.text}&rdquo;
               </p>
 
@@ -111,8 +112,8 @@ export default function Testimonials() {
                   {t.avatar}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <div className="font-bold text-gray-900 text-sm">{t.name}</div>
-                  <div className="text-gray-400 text-xs">{t.role}</div>
+                  <div className="font-bold text-white text-sm">{t.name}</div>
+                  <div className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>{t.role}</div>
                 </div>
                 <span
                   className="text-xs font-semibold rounded-full flex-shrink-0"
@@ -131,7 +132,8 @@ export default function Testimonials() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.55, delay: 0.3 }}
           viewport={{ once: true }}
-          className="grid grid-cols-3 gap-6 mt-12 pt-10 border-t border-gray-100"
+          className="grid grid-cols-3 gap-6 mt-12 pt-10"
+          style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}
         >
           {[
             { num: "10+", label: "Proyectos entregados", color: "#2979ff" },
@@ -140,7 +142,7 @@ export default function Testimonials() {
           ].map((s) => (
             <div key={s.label} className="text-center">
               <div className="font-black mb-1" style={{ fontSize: "clamp(24px, 4vw, 36px)", color: s.color }}>{s.num}</div>
-              <div className="text-gray-500 text-xs leading-snug">{s.label}</div>
+              <div className="text-xs leading-snug" style={{ color: "rgba(255,255,255,0.45)" }}>{s.label}</div>
             </div>
           ))}
         </motion.div>

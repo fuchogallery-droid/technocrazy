@@ -1,6 +1,7 @@
 "use client";
+import { useEffect, useState } from "react";
 import { ArrowRight, Bot, Code2, Zap, ChevronDown } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { products } from "@/components/Products";
 
@@ -8,10 +9,23 @@ export default function Hero() {
   const { t } = useLanguage();
   const h = t.hero;
   const stats = h.stats.map((s, i) => (i === 0 ? { ...s, num: `${products.length}` } : s));
+
+  const variants = h.h1Variants ?? [{ a: h.h1a, b: h.h1b, c: h.h1c }];
+  const [headlineIndex, setHeadlineIndex] = useState(0);
+
+  useEffect(() => {
+    setHeadlineIndex(0);
+    const id = setInterval(() => {
+      setHeadlineIndex((i) => (i + 1) % variants.length);
+    }, 4500);
+    return () => clearInterval(id);
+  }, [variants.length, t.hero.h1a]);
+
+  const headline = variants[headlineIndex] ?? variants[0];
   return (
     <section
       id="inicio"
-      className="relative min-h-screen overflow-hidden"
+      className="relative overflow-hidden"
       style={{ background: "linear-gradient(145deg,#04081a 0%,#080e26 55%,#04081a 100%)", paddingTop: "4.5rem" }}
     >
       {/* Glows */}
@@ -20,7 +34,7 @@ export default function Hero() {
         <div className="absolute rounded-full blur-3xl" style={{ width: 400, height: 400, bottom: 0, right: 0, background: "radial-gradient(circle,rgba(124,77,255,0.08),transparent 70%)" }} />
       </div>
 
-      <div className="tc-wrap relative z-10 flex flex-col lg:flex-row items-center gap-6 lg:gap-12 pt-6 pb-10 lg:py-14 min-h-[calc(100vh-4.5rem)]">
+      <div className="tc-wrap relative z-10 flex flex-col lg:flex-row items-center lg:items-start gap-6 lg:gap-12 pt-6 pb-10 lg:py-14">
 
         {/* ── IZQUIERDA ── */}
         <motion.div
@@ -35,23 +49,35 @@ export default function Hero() {
             {h.tagline}
           </div>
 
-          {/* H1 */}
-          <h1 style={{ fontWeight: 900, lineHeight: 1.1, marginBottom: 18, letterSpacing: "-0.025em" }}>
-            <span className="max-lg:inline lg:block" style={{ fontSize: "clamp(28px,4.2vw,60px)", color: "#ffffff" }}>{h.h1a}{" "}</span>
-            <span className="max-lg:inline lg:block" style={{ fontSize: "clamp(28px,4.2vw,60px)", color: "#ffffff" }}>{h.h1b}{" "}</span>
-            <span className="max-lg:inline lg:block" style={{ fontSize: "clamp(30px,4.8vw,68px)", background: "linear-gradient(135deg,#2979ff 30%,#7c4dff 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-              {h.h1c}
-            </span>
+          {/* H1 — 2 líneas: blanca + azul, rota entre variaciones */}
+          <h1 style={{ fontWeight: 900, lineHeight: 1.18, marginBottom: 14, letterSpacing: "-0.02em", minHeight: "clamp(64px,9vw,100px)" }}>
+            <AnimatePresence mode="wait">
+              <motion.span
+                key={headlineIndex}
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -14 }}
+                transition={{ duration: 0.45, ease: "easeOut" }}
+                style={{ display: "block" }}
+              >
+                <span className="block" style={{ fontSize: "clamp(15px,2vw,22px)", color: "#ffffff" }}>
+                  {headline.a} {headline.b}
+                </span>
+                <span className="block" style={{ fontSize: "clamp(24px,3.8vw,32px)", background: "linear-gradient(135deg,#2979ff 30%,#7c4dff 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+                  {headline.c}
+                </span>
+              </motion.span>
+            </AnimatePresence>
           </h1>
 
           {/* Subtítulo */}
-          <p style={{ fontSize: "clamp(13px,1.4vw,16px)", color: "rgba(255,255,255,0.58)", lineHeight: 1.8, marginBottom: 26, maxWidth: 480 }}>
+          <p className="hidden lg:block" style={{ fontSize: "clamp(13px,1.4vw,16px)", color: "rgba(255,255,255,0.58)", lineHeight: 1.8, marginBottom: 16, maxWidth: 480 }}>
             {h.subtitle}{" "}
             <span style={{ color: "#2979ff", fontWeight: 600 }}>{h.subtitleHighlight}</span>.
           </p>
 
           {/* Quote */}
-          <div style={{ borderLeft: "3px solid #2979ff", paddingLeft: 20, marginBottom: 36 }}>
+          <div className="hidden lg:block" style={{ borderLeft: "3px solid #2979ff", paddingLeft: 20, marginBottom: 22 }}>
             <p style={{ fontSize: "clamp(13px,1.3vw,16px)", fontWeight: 600, color: "rgba(255,255,255,0.88)", lineHeight: 1.6 }}>
               {h.quoteA}<br />
               {h.quoteB} <span style={{ color: "#2979ff" }}>{h.quoteHighlight}</span>.
@@ -59,7 +85,7 @@ export default function Hero() {
           </div>
 
           {/* Stats */}
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 10, marginBottom: 28 }}>
+          <div className="hidden lg:grid" style={{ gridTemplateColumns: "repeat(3, 1fr)", gap: 10, marginBottom: 20 }}>
             {stats.map((s) => (
               <motion.div
                 key={s.num}
@@ -80,7 +106,8 @@ export default function Hero() {
             rel="noopener noreferrer"
             whileHover={{ scale: 1.03, y: -2 }}
             whileTap={{ scale: 0.97 }}
-            style={{ display: "inline-flex", alignItems: "center", gap: 10, background: "linear-gradient(135deg,#2979ff,#7c4dff)", color: "#fff", fontWeight: 700, fontSize: 14, padding: "15px 30px", borderRadius: 14, boxShadow: "0 14px 40px rgba(41,121,255,0.45)", textDecoration: "none", letterSpacing: "0.01em" }}
+            className="hidden lg:inline-flex"
+            style={{ alignItems: "center", gap: 10, background: "linear-gradient(135deg,#2979ff,#7c4dff)", color: "#fff", fontWeight: 700, fontSize: 14, padding: "15px 30px", borderRadius: 14, boxShadow: "0 14px 40px rgba(41,121,255,0.45)", textDecoration: "none", letterSpacing: "0.01em" }}
           >
             {h.cta}
             <ArrowRight size={16} />
@@ -93,7 +120,7 @@ export default function Hero() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.72, delay: 0.15, ease: "easeOut" }}
           className="flex-1 flex items-center justify-center lg:justify-start"
-          style={{ position: "relative", minHeight: "clamp(320px, 60vw, 520px)" }}
+          style={{ position: "relative" }}
         >
           {/* Glow detrás de la foto */}
           <div className="hidden lg:block" style={{ position: "absolute", width: 340, height: 340, borderRadius: "50%", background: "radial-gradient(circle,rgba(41,121,255,0.22),transparent 65%)", top: "50%", left: "10%", transform: "translate(-50%,-50%)", zIndex: 0 }} />
@@ -110,7 +137,7 @@ export default function Hero() {
           </div>
 
           {/* Panel de tarjetas flotantes — todas contenidas en una sola columna a la derecha de la foto */}
-          <div className="hidden lg:flex" style={{ flexDirection: "column", gap: 12, marginLeft: 22, position: "relative", zIndex: 2, width: 156 }}>
+          <div className="flex" style={{ flexDirection: "column", gap: 12, marginLeft: 22, position: "relative", zIndex: 2, width: 156 }}>
             {/* Dashboard */}
             <motion.div animate={{ y: [0, -6, 0] }} transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }} style={{ background: "rgba(255,255,255,0.05)", backdropFilter: "blur(14px)", border: "1px solid rgba(255,255,255,0.10)", borderRadius: 14, padding: "10px 13px" }}>
               <div style={{ fontSize: 8, color: "rgba(255,255,255,0.45)", fontWeight: 700, letterSpacing: "0.06em", marginBottom: 5 }}>{h.floatingDashboard.label}</div>
