@@ -119,7 +119,7 @@ export default function Hero() {
           initial={{ opacity: 0, x: 32 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.72, delay: 0.15, ease: "easeOut" }}
-          className="flex-1 flex items-center justify-center lg:justify-start"
+          className="flex-1 flex items-start justify-center lg:items-center lg:justify-start"
           style={{ position: "relative" }}
         >
           {/* Glow detrás de la foto */}
@@ -127,7 +127,7 @@ export default function Hero() {
           <div className="lg:hidden" style={{ position: "absolute", width: 340, height: 340, borderRadius: "50%", background: "radial-gradient(circle,rgba(41,121,255,0.22),transparent 65%)", top: "50%", left: "50%", transform: "translate(-50%,-50%)", zIndex: 0 }} />
 
           {/* Foto Rafael */}
-          <div className="lg:ml-[6%]" style={{ position: "relative", zIndex: 1, width: "clamp(200px,22vw,260px)", borderRadius: 28, overflow: "hidden", boxShadow: "0 30px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(41,121,255,0.15)" }}>
+          <div className="lg:ml-[6%] w-[clamp(150px,38vw,260px)] lg:w-[clamp(200px,22vw,260px)]" style={{ position: "relative", zIndex: 1, borderRadius: 28, overflow: "hidden", boxShadow: "0 30px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(41,121,255,0.15)" }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/rafael-hero.png" alt="Rafael Navarro · TechnoCrazy" style={{ width: "100%", display: "block", objectFit: "cover", objectPosition: "center top" }} />
             <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "36px 18px 16px", background: "linear-gradient(to top,rgba(4,8,26,0.95),transparent)" }}>
@@ -137,7 +137,7 @@ export default function Hero() {
           </div>
 
           {/* Panel de tarjetas flotantes — todas contenidas en una sola columna a la derecha de la foto */}
-          <div className="flex" style={{ flexDirection: "column", gap: 12, marginLeft: 22, position: "relative", zIndex: 2, width: 156 }}>
+          <div className="flex gap-2 w-[130px] lg:gap-3 lg:w-[156px]" style={{ flexDirection: "column", position: "relative", zIndex: 2, marginLeft: "clamp(12px,3vw,22px)" }}>
             {/* Dashboard */}
             <motion.div animate={{ y: [0, -6, 0] }} transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }} style={{ background: "rgba(255,255,255,0.05)", backdropFilter: "blur(14px)", border: "1px solid rgba(255,255,255,0.10)", borderRadius: 14, padding: "10px 13px" }}>
               <div style={{ fontSize: 8, color: "rgba(255,255,255,0.45)", fontWeight: 700, letterSpacing: "0.06em", marginBottom: 5 }}>{h.floatingDashboard.label}</div>
