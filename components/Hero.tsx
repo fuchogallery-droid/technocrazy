@@ -126,14 +126,29 @@ export default function Hero() {
           <div className="hidden lg:block" style={{ position: "absolute", width: 340, height: 340, borderRadius: "50%", background: "radial-gradient(circle,rgba(41,121,255,0.22),transparent 65%)", top: "50%", left: "10%", transform: "translate(-50%,-50%)", zIndex: 0 }} />
           <div className="lg:hidden" style={{ position: "absolute", width: 340, height: 340, borderRadius: "50%", background: "radial-gradient(circle,rgba(41,121,255,0.22),transparent 65%)", top: "50%", left: "50%", transform: "translate(-50%,-50%)", zIndex: 0 }} />
 
-          {/* Foto Rafael */}
-          <div className="lg:ml-[6%] w-[clamp(150px,38vw,260px)] lg:w-[clamp(200px,22vw,260px)]" style={{ position: "relative", zIndex: 1, borderRadius: 28, overflow: "hidden", boxShadow: "0 30px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(41,121,255,0.15)" }}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/rafael-hero.png" alt="Rafael Navarro · TechnoCrazy" style={{ width: "100%", display: "block", objectFit: "cover", objectPosition: "center top" }} />
-            <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "36px 18px 16px", background: "linear-gradient(to top,rgba(4,8,26,0.95),transparent)" }}>
-              <div style={{ fontFamily: "Georgia,serif", color: "#fff", fontSize: 16, fontWeight: 700 }}>Rafael</div>
-              <div style={{ color: "rgba(255,255,255,0.45)", fontSize: 8, letterSpacing: "0.18em", fontWeight: 700, marginTop: 2 }}>FUNDADOR · TECHNOCRAZY</div>
+          {/* Foto Rafael + Automatización debajo (mobile) */}
+          <div className="flex flex-col gap-2 lg:contents">
+            <div className="lg:ml-[6%] w-[clamp(150px,38vw,260px)] lg:w-[clamp(200px,22vw,260px)]" style={{ position: "relative", zIndex: 1, borderRadius: 28, overflow: "hidden", boxShadow: "0 30px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(41,121,255,0.15)" }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/rafael-hero.png" alt="Rafael Navarro · TechnoCrazy" style={{ width: "100%", display: "block", objectFit: "cover", objectPosition: "center top" }} />
+              <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "36px 18px 16px", background: "linear-gradient(to top,rgba(4,8,26,0.95),transparent)" }}>
+                <div style={{ fontFamily: "Georgia,serif", color: "#fff", fontSize: 16, fontWeight: 700 }}>Rafael</div>
+                <div style={{ color: "rgba(255,255,255,0.45)", fontSize: 8, letterSpacing: "0.18em", fontWeight: 700, marginTop: 2 }}>FUNDADOR · TECHNOCRAZY</div>
+              </div>
             </div>
+
+            {/* Automatización — debajo de la foto, solo mobile */}
+            <motion.div animate={{ y: [0, -6, 0] }} transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1.2 }} className="lg:hidden" style={{ background: "rgba(124,77,255,0.10)", backdropFilter: "blur(14px)", border: "1px solid rgba(124,77,255,0.22)", borderRadius: 14, padding: "10px 12px" }}>
+              <div style={{ fontSize: 8, fontWeight: 700, color: "#b388ff", letterSpacing: "0.08em", marginBottom: 7 }}>{h.floatingAuto.title}</div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+                {h.floatingAuto.steps.map((label, i) => ({ label, green: i === 2 })).map((step) => (
+                  <div key={step.label} style={{ display: "flex", alignItems: "center", gap: 7 }}>
+                    <div style={{ width: 6, height: 6, borderRadius: "50%", flexShrink: 0, background: step.green ? "#00e676" : "rgba(124,77,255,0.7)" }} />
+                    <span style={{ fontSize: 8, color: step.green ? "rgba(0,230,118,0.9)" : "rgba(255,255,255,0.6)" }}>{step.label}</span>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
           </div>
 
           {/* Panel de tarjetas flotantes — todas contenidas en una sola columna a la derecha de la foto */}
@@ -175,8 +190,8 @@ export default function Hero() {
               <Code2 size={9} style={{ color: "rgba(255,255,255,0.6)", marginTop: 4 }} />
             </motion.div>
 
-            {/* Automatización */}
-            <motion.div animate={{ y: [0, -6, 0] }} transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1.2 }} style={{ background: "rgba(124,77,255,0.10)", backdropFilter: "blur(14px)", border: "1px solid rgba(124,77,255,0.22)", borderRadius: 14, padding: "10px 12px" }}>
+            {/* Automatización — en desktop se queda en el panel; en mobile vive debajo de la foto */}
+            <motion.div animate={{ y: [0, -6, 0] }} transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1.2 }} className="hidden lg:block" style={{ background: "rgba(124,77,255,0.10)", backdropFilter: "blur(14px)", border: "1px solid rgba(124,77,255,0.22)", borderRadius: 14, padding: "10px 12px" }}>
               <div style={{ fontSize: 8, fontWeight: 700, color: "#b388ff", letterSpacing: "0.08em", marginBottom: 7 }}>{h.floatingAuto.title}</div>
               <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
                 {h.floatingAuto.steps.map((label, i) => ({ label, green: i === 2 })).map((step) => (
