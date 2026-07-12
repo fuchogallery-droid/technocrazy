@@ -22,7 +22,7 @@ TechnoCrazy es una agencia de soluciones digitales integrales. No vende cursos �
 ## Productos disponibles
 - **AutoPost** → autopost-plum-five.vercel.app — Programa publicaciones con IA, 5 tonos, infografías
 - **ServiYA** → serviya-phi.vercel.app — Marketplace de servicios, 55+ categorías
-- **GaleríaX** → galeriax.vercel.app — Plataforma contenido exclusivo por suscripción (Stripe/PayPal)
+- **GaleríaX** → galeriax.technocrazy.org — Plataforma contenido exclusivo por suscripción (Stripe/PayPal)
 - **CambioBs** → cambiobs.vercel.app — Cotizaciones USD/Bs en tiempo real (BCV, paralelo, Binance)
 - **HK-PC Organizer** → hk-pc-smart-organizer.vercel.app — Organizador automático de archivos para Windows
 - **Guías Claude** — En desarrollo — Guías de aprendizaje de IA con Claude
