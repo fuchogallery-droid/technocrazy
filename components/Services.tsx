@@ -1,10 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Palette, Globe, Smartphone, Cpu, Bot, Zap,
   Target, Users, TrendingUp, ShieldCheck, Rocket, Heart,
-  X, CheckCircle, LayoutGrid, ImageIcon,
+  X, CheckCircle, LayoutGrid, ImageIcon, ZoomIn,
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -12,7 +13,7 @@ type ModalId = "design" | "web" | "apps" | "systems" | "ai" | "robot";
 
 // Visual data only — no translated text
 const SERVICE_VISUAL: Record<ModalId, { icon: React.ReactNode; bg: string; glow: string; accentColor: string }> = {
-  design:  { icon: <Palette size={22} />,   bg: "linear-gradient(135deg,#ff6b6b,#ee5a24)", glow: "rgba(255,107,107,0.2)", accentColor: "#ff8a80" },
+  design:  { icon: <Palette size={22} />,   bg: "linear-gradient(135deg,#a855f7,#7c3aed)", glow: "rgba(168,85,247,0.2)",  accentColor: "#d8b4fe" },
   web:     { icon: <Globe size={22} />,      bg: "linear-gradient(135deg,#2979ff,#0050c8)", glow: "rgba(41,121,255,0.2)",  accentColor: "#82b1ff" },
   apps:    { icon: <Smartphone size={22} />, bg: "linear-gradient(135deg,#7c4dff,#5722cc)", glow: "rgba(124,77,255,0.2)",  accentColor: "#b388ff" },
   systems: { icon: <Cpu size={22} />,        bg: "linear-gradient(135deg,#00bcd4,#0097a7)", glow: "rgba(0,188,212,0.2)",   accentColor: "#80deea" },
@@ -22,40 +23,55 @@ const SERVICE_VISUAL: Record<ModalId, { icon: React.ReactNode; bg: string; glow:
 
 const MODAL_VISUAL: Record<ModalId, {
   icon: React.ReactNode; grad: string; solid: string; rgb: string; galleryLive?: boolean;
-  galleryItems: { emoji: string; bg: string; url?: string; cta?: boolean }[];
+  galleryItems: { emoji: string; bg: string; url?: string; cta?: boolean; img?: string }[];
 }> = {
-  design:  { icon: <Palette size={11} />,   grad: "linear-gradient(135deg,#ff6b6b,#ee5a24)", solid: "#ff8a80", rgb: "255,107,107", galleryItems: [
-    { emoji: "🎨", bg: "linear-gradient(135deg,#ff6b6b,#ee5a24)" }, { emoji: "✨", bg: "linear-gradient(135deg,#7c4dff,#5722cc)" },
-    { emoji: "📱", bg: "linear-gradient(135deg,#2979ff,#00bcd4)" }, { emoji: "🖼️", bg: "linear-gradient(135deg,#00bcd4,#00e676)" },
-    { emoji: "📦", bg: "linear-gradient(135deg,#f59e0b,#ff6b6b)" }, { emoji: "🪄", bg: "linear-gradient(135deg,#ec4899,#7c4dff)" },
+  design:  { icon: <Palette size={11} />,   grad: "linear-gradient(135deg,#a855f7,#7c3aed)", solid: "#c084fc", rgb: "168,85,247", galleryItems: [
+    { emoji: "🎨", bg: "linear-gradient(135deg,#a855f7,#7c3aed)", img: "/images/servicios/diseno/identidad-marca.png" },
+    { emoji: "✨", bg: "linear-gradient(135deg,#a855f7,#7c3aed)", img: "/images/servicios/diseno/logotipos.png" },
+    { emoji: "📱", bg: "linear-gradient(135deg,#a855f7,#7c3aed)", img: "/images/servicios/diseno/redes-sociales.png" },
+    { emoji: "🖼️", bg: "linear-gradient(135deg,#a855f7,#7c3aed)", img: "/images/servicios/diseno/piezas-publicitarias.png" },
+    { emoji: "📦", bg: "linear-gradient(135deg,#a855f7,#7c3aed)", img: "/images/servicios/diseno/packaging.png" },
+    { emoji: "🪄", bg: "linear-gradient(135deg,#a855f7,#7c3aed)", img: "/images/servicios/diseno/ilustracion.png" },
   ]},
   web:     { icon: <Globe size={11} />,      grad: "linear-gradient(135deg,#2979ff,#0050c8)", solid: "#82b1ff", rgb: "41,121,255",  galleryLive: true, galleryItems: [
-    { emoji: "🏪", bg: "linear-gradient(135deg,#2979ff,#7c4dff)", url: "https://technocrazy.org" },
-    { emoji: "🚀", bg: "linear-gradient(135deg,#7c4dff,#2979ff)", url: "https://autopost-plum-five.vercel.app" },
-    { emoji: "📊", bg: "linear-gradient(135deg,#00bcd4,#2979ff)", url: "https://elgestor.vercel.app" },
-    { emoji: "🛠️", bg: "linear-gradient(135deg,#00e676,#00bcd4)", url: "https://serviya.vercel.app" },
-    { emoji: "💱", bg: "linear-gradient(135deg,#0050c8,#00bcd4)", url: "https://cambiobs.vercel.app" },
+    { emoji: "🏪", bg: "linear-gradient(135deg,#2979ff,#7c4dff)", url: "https://technocrazy.org", img: "/images/servicios/web/technocrazy.png" },
+    { emoji: "🚀", bg: "linear-gradient(135deg,#7c4dff,#2979ff)", url: "https://autopost-plum-five.vercel.app", img: "/images/servicios/web/autopost.png" },
+    { emoji: "📊", bg: "linear-gradient(135deg,#00bcd4,#2979ff)", url: "https://elgestor.vercel.app", img: "/images/servicios/web/elgestor.png" },
+    { emoji: "🛠️", bg: "linear-gradient(135deg,#00e676,#00bcd4)", url: "https://serviya.vercel.app", img: "/images/servicios/web/serviya.png" },
+    { emoji: "💱", bg: "linear-gradient(135deg,#0050c8,#00bcd4)", url: "https://cambiobs.vercel.app", img: "/images/servicios/web/cambiobs.png" },
     { emoji: "➕", bg: "transparent",                              url: "https://wa.me/17794318214", cta: true },
   ]},
   apps:    { icon: <Smartphone size={11} />, grad: "linear-gradient(135deg,#7c4dff,#5722cc)", solid: "#b388ff", rgb: "124,77,255", galleryItems: [
-    { emoji: "🍔", bg: "linear-gradient(135deg,#7c4dff,#5722cc)" }, { emoji: "💪", bg: "linear-gradient(135deg,#ec4899,#7c4dff)" },
-    { emoji: "💰", bg: "linear-gradient(135deg,#00e676,#00bcd4)" }, { emoji: "💬", bg: "linear-gradient(135deg,#2979ff,#7c4dff)" },
-    { emoji: "📅", bg: "linear-gradient(135deg,#f59e0b,#ec4899)" }, { emoji: "🛍️", bg: "linear-gradient(135deg,#5722cc,#2979ff)" },
+    { emoji: "🍔", bg: "linear-gradient(135deg,#7c4dff,#5722cc)", img: "/images/servicios/apps/delivery.png" },
+    { emoji: "💪", bg: "linear-gradient(135deg,#ec4899,#7c4dff)", img: "/images/servicios/apps/fitness.png" },
+    { emoji: "💰", bg: "linear-gradient(135deg,#00e676,#00bcd4)", img: "/images/servicios/apps/finanzas.png" },
+    { emoji: "💬", bg: "linear-gradient(135deg,#2979ff,#7c4dff)", img: "/images/servicios/apps/social.png" },
+    { emoji: "📅", bg: "linear-gradient(135deg,#f59e0b,#ec4899)", img: "/images/servicios/apps/reservas.png" },
+    { emoji: "🛍️", bg: "linear-gradient(135deg,#5722cc,#2979ff)", img: "/images/servicios/apps/tienda.png" },
   ]},
   systems: { icon: <Cpu size={11} />,        grad: "linear-gradient(135deg,#00bcd4,#0097a7)", solid: "#80deea", rgb: "0,188,212",  galleryItems: [
-    { emoji: "🤖", bg: "linear-gradient(135deg,#00bcd4,#0097a7)" }, { emoji: "📇", bg: "linear-gradient(135deg,#2979ff,#00bcd4)" },
-    { emoji: "📊", bg: "linear-gradient(135deg,#00e676,#00bcd4)" }, { emoji: "🧾", bg: "linear-gradient(135deg,#0097a7,#2979ff)" },
-    { emoji: "📦", bg: "linear-gradient(135deg,#f59e0b,#00bcd4)" }, { emoji: "⚙️", bg: "linear-gradient(135deg,#7c4dff,#00bcd4)" },
+    { emoji: "🤖", bg: "linear-gradient(135deg,#00bcd4,#0097a7)", img: "/images/servicios/sistemas/bot-whatsapp.png" },
+    { emoji: "📇", bg: "linear-gradient(135deg,#2979ff,#00bcd4)", img: "/images/servicios/sistemas/crm.png" },
+    { emoji: "📊", bg: "linear-gradient(135deg,#00e676,#00bcd4)", img: "/images/servicios/sistemas/dashboards.png" },
+    { emoji: "🧾", bg: "linear-gradient(135deg,#0097a7,#2979ff)", img: "/images/servicios/sistemas/facturacion.png" },
+    { emoji: "📦", bg: "linear-gradient(135deg,#f59e0b,#00bcd4)", img: "/images/servicios/sistemas/inventario.png" },
+    { emoji: "⚙️", bg: "linear-gradient(135deg,#7c4dff,#00bcd4)", img: "/images/servicios/sistemas/flujos.png" },
   ]},
   ai:      { icon: <Bot size={11} />,        grad: "linear-gradient(135deg,#00e676,#00c853)", solid: "#69f0ae", rgb: "0,230,118",  galleryItems: [
-    { emoji: "💬", bg: "linear-gradient(135deg,#00e676,#00c853)" }, { emoji: "🧠", bg: "linear-gradient(135deg,#00bcd4,#00e676)" },
-    { emoji: "✍️", bg: "linear-gradient(135deg,#7c4dff,#00e676)" }, { emoji: "📈", bg: "linear-gradient(135deg,#2979ff,#00e676)" },
-    { emoji: "🎙️", bg: "linear-gradient(135deg,#ec4899,#00e676)" }, { emoji: "🔮", bg: "linear-gradient(135deg,#00c853,#00bcd4)" },
+    { emoji: "💬", bg: "linear-gradient(135deg,#00e676,#00c853)", img: "/images/servicios/ia/chatbot.png" },
+    { emoji: "🧠", bg: "linear-gradient(135deg,#00bcd4,#00e676)", img: "/images/servicios/ia/agente-ia.png" },
+    { emoji: "✍️", bg: "linear-gradient(135deg,#7c4dff,#00e676)", img: "/images/servicios/ia/generador.png" },
+    { emoji: "📈", bg: "linear-gradient(135deg,#2979ff,#00e676)", img: "/images/servicios/ia/analisis.png" },
+    { emoji: "🎙️", bg: "linear-gradient(135deg,#ec4899,#00e676)", img: "/images/servicios/ia/voz.png" },
+    { emoji: "🔮", bg: "linear-gradient(135deg,#00c853,#00bcd4)", img: "/images/servicios/ia/asistente.png" },
   ]},
   robot:   { icon: <Zap size={11} />,        grad: "linear-gradient(135deg,#ec4899,#f43f5e)", solid: "#f9a8d4", rgb: "236,72,153", galleryItems: [
-    { emoji: "📱", bg: "linear-gradient(135deg,#ec4899,#f43f5e)" }, { emoji: "🚀", bg: "linear-gradient(135deg,#f43f5e,#ec4899)" },
-    { emoji: "📊", bg: "linear-gradient(135deg,#7c4dff,#ec4899)" }, { emoji: "🎯", bg: "linear-gradient(135deg,#f43f5e,#7c4dff)" },
-    { emoji: "🔥", bg: "linear-gradient(135deg,#ec4899,#f59e0b)" }, { emoji: "⚡", bg: "linear-gradient(135deg,#f43f5e,#00e676)" },
+    { emoji: "📱", bg: "linear-gradient(135deg,#ec4899,#f43f5e)", img: "/images/servicios/robot/instagram.png" },
+    { emoji: "🚀", bg: "linear-gradient(135deg,#f43f5e,#ec4899)", img: "/images/servicios/robot/tiktok.png" },
+    { emoji: "📊", bg: "linear-gradient(135deg,#7c4dff,#ec4899)", img: "/images/servicios/robot/facebook.png" },
+    { emoji: "🎯", bg: "linear-gradient(135deg,#f43f5e,#7c4dff)", img: "/images/servicios/robot/twitter-x.png" },
+    { emoji: "🔥", bg: "linear-gradient(135deg,#ec4899,#f59e0b)", img: "/images/servicios/robot/linkedin.png" },
+    { emoji: "⚡", bg: "linear-gradient(135deg,#f43f5e,#00e676)", img: "/images/servicios/robot/analytics.png" },
   ]},
 };
 
@@ -65,6 +81,7 @@ export default function Services() {
   const { t, lang } = useLanguage();
   const ts = t.services;
   const [activeModal, setActiveModal] = useState<ModalId | null>(null);
+  const [lightbox, setLightbox] = useState<{ src: string; label: string } | null>(null);
 
   const titleVariants = ts.titleVariants ?? [{ a: ts.title, b: ts.titleHighlight }];
   const [titleIndex, setTitleIndex] = useState(0);
@@ -90,10 +107,26 @@ export default function Services() {
 
   const mv = activeModal ? MODAL_VISUAL[activeModal] : null;
   const mt = activeModal ? ts.modal[activeModal] : null;
-  const m = mv && mt ? {
+  const modalTitleVariants = mt
+    ? ("titleVariants" in mt ? (mt as unknown as { titleVariants: { title: string; highlight: string }[] }).titleVariants : [{ title: mt.title, highlight: mt.highlight }])
+    : null;
+  const [modalTitleIndex, setModalTitleIndex] = useState(0);
+
+  useEffect(() => {
+    setModalTitleIndex(0);
+    if (!modalTitleVariants || modalTitleVariants.length <= 1) return;
+    const id = setInterval(() => {
+      setModalTitleIndex((i) => (i + 1) % modalTitleVariants.length);
+    }, 4500);
+    return () => clearInterval(id);
+  }, [activeModal, modalTitleVariants?.length]);
+
+  const modalHeading = modalTitleVariants ? (modalTitleVariants[modalTitleIndex] ?? modalTitleVariants[0]) : null;
+
+  const m = mv && mt && modalHeading ? {
     ...mv,
-    title: mt.title,
-    highlight: mt.highlight,
+    title: modalHeading.title,
+    highlight: modalHeading.highlight,
     paragraphs: mt.paragraphs,
     list: mt.list,
     gallery: mv.galleryItems.map((g, i) => ({
@@ -103,6 +136,7 @@ export default function Services() {
     })),
   } : null;
   const activeService = activeModal ? services.find(s => s.id === activeModal) : null;
+  const hasRealImages = m ? m.gallery.some(g => g.img) : false;
 
   return (
     <>
@@ -296,11 +330,22 @@ export default function Services() {
                     </div>
 
                     {/* Título */}
-                    <h2 className="font-black text-white leading-tight mb-5" style={{ fontSize: "clamp(20px,2.2vw,30px)" }}>
-                      {m.title}{" "}
-                      <span style={{ background: m.grad, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-                        {m.highlight}
-                      </span>
+                    <h2 className="font-black text-white leading-tight mb-5" style={{ fontSize: "clamp(20px,2.2vw,30px)", minHeight: "clamp(50px,6vw,74px)" }}>
+                      <AnimatePresence mode="wait">
+                        <motion.span
+                          key={modalTitleIndex}
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          transition={{ duration: 0.4, ease: "easeOut" }}
+                          style={{ display: "block" }}
+                        >
+                          {m.title}{" "}
+                          <span style={{ background: m.grad, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+                            {m.highlight}
+                          </span>
+                        </motion.span>
+                      </AnimatePresence>
                     </h2>
 
                     {/* Primer párrafo */}
@@ -380,8 +425,8 @@ export default function Services() {
                       className="text-xs font-semibold rounded-full px-3 py-1 inline-flex items-center gap-1.5"
                       style={{ background: `rgba(${m.rgb},0.12)`, border: `1px solid rgba(${m.rgb},0.25)`, color: m.solid }}
                     >
-                      {m.galleryLive && <span style={{ width: 6, height: 6, borderRadius: "50%", background: m.solid, display: "inline-block" }} />}
-                      {m.galleryLive ? (lang === "en" ? "Live" : "En vivo") : (lang === "en" ? "Coming Soon" : "Próximamente")}
+                      {(m.galleryLive || hasRealImages) && <span style={{ width: 6, height: 6, borderRadius: "50%", background: m.solid, display: "inline-block" }} />}
+                      {m.galleryLive ? (lang === "en" ? "Live" : "En vivo") : hasRealImages ? (lang === "en" ? "Portfolio" : "Portafolio") : (lang === "en" ? "Coming Soon" : "Próximamente")}
                     </span>
                   </div>
 
@@ -405,6 +450,24 @@ export default function Services() {
                           <span className="font-semibold" style={{ fontSize: 11, color: m.solid, marginTop: 4 }}>{g.label}</span>
                           <span style={{ fontSize: 9, color: "rgba(255,255,255,0.4)", marginTop: 2 }}>{(g as {ctaMsg?: string}).ctaMsg ?? (lang === "en" ? "Let's talk →" : "Hablemos →")}</span>
                         </motion.a>
+                      ) : g.url && g.img ? (
+                        <motion.a
+                          key={idx}
+                          href={g.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          initial={{ opacity: 0, scale: 0.92 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={{ duration: 0.4, delay: 0.15 + idx * 0.08 }}
+                          whileHover={{ scale: 1.03, y: -2 }}
+                          className="rounded-2xl relative overflow-hidden flex items-center justify-center cursor-pointer"
+                          style={{ minHeight: 96, boxShadow: "0 8px 24px rgba(0,0,0,0.25)" }}
+                        >
+                          <Image src={g.img} alt={g.label} fill sizes="(max-width: 1024px) 45vw, 220px" style={{ objectFit: "cover" }} />
+                          <div className="absolute bottom-0 left-0 right-0" style={{ padding: "8px 18px 11px", background: "linear-gradient(to top, rgba(0,0,0,0.6), transparent)" }}>
+                            <span className="text-white font-semibold" style={{ fontSize: 10 }}>{g.label}</span>
+                          </div>
+                        </motion.a>
                       ) : g.url ? (
                         <motion.a
                           key={idx}
@@ -424,6 +487,25 @@ export default function Services() {
                             <span className="text-white font-semibold" style={{ fontSize: 10 }}>{g.label}</span>
                           </div>
                         </motion.a>
+                      ) : g.img ? (
+                        <motion.div
+                          key={idx}
+                          initial={{ opacity: 0, scale: 0.92 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={{ duration: 0.4, delay: 0.15 + idx * 0.08 }}
+                          whileHover={{ scale: 1.03, y: -2 }}
+                          onClick={() => setLightbox({ src: g.img!, label: g.label })}
+                          className="rounded-2xl relative overflow-hidden flex items-center justify-center cursor-pointer group/tile"
+                          style={{ minHeight: 96, boxShadow: "0 8px 24px rgba(0,0,0,0.25)" }}
+                        >
+                          <Image src={g.img} alt={g.label} fill sizes="(max-width: 1024px) 45vw, 220px" style={{ objectFit: "cover" }} />
+                          <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/tile:opacity-100 transition-opacity" style={{ background: "rgba(0,0,0,0.35)" }}>
+                            <ZoomIn size={22} className="text-white" />
+                          </div>
+                          <div className="absolute bottom-0 left-0 right-0" style={{ padding: "8px 18px 11px", background: "linear-gradient(to top, rgba(0,0,0,0.6), transparent)" }}>
+                            <span className="text-white font-semibold" style={{ fontSize: 10 }}>{g.label}</span>
+                          </div>
+                        </motion.div>
                       ) : (
                         <motion.div
                           key={idx}
@@ -447,12 +529,52 @@ export default function Services() {
                   <div className="flex items-center justify-center gap-2 mt-5">
                     <ImageIcon size={13} style={{ color: m.solid, opacity: 0.7 }} />
                     <p className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>
-                      {m.galleryLive ? "Haz clic para visitar cada proyecto en vivo" : "Carrusel interactivo con zoom — muy pronto"}
+                      {m.galleryLive ? "Haz clic para visitar cada proyecto en vivo" : hasRealImages ? "Haz clic en una imagen para verla en grande" : "Carrusel interactivo con zoom — muy pronto"}
                     </p>
                   </div>
                 </div>
 
               </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* ── Lightbox de imagen ── */}
+      <AnimatePresence>
+        {lightbox && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-[70] flex items-center justify-center p-4 sm:p-8"
+            style={{ background: "rgba(0,0,0,0.92)", backdropFilter: "blur(8px)" }}
+            onClick={() => setLightbox(null)}
+          >
+            <button
+              onClick={() => setLightbox(null)}
+              className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full flex items-center justify-center transition-all hover:bg-white/10"
+              style={{ color: "rgba(255,255,255,0.7)", border: "1px solid rgba(255,255,255,0.15)" }}
+            >
+              <X size={18} />
+            </button>
+            <motion.div
+              initial={{ scale: 0.94, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.94, opacity: 0 }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
+              className="relative flex flex-col items-center"
+              style={{ maxWidth: "90vw", maxHeight: "90vh" }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <img
+                src={lightbox.src}
+                alt={lightbox.label}
+                className="rounded-xl object-contain"
+                style={{ maxWidth: "90vw", maxHeight: "80vh", boxShadow: "0 20px 60px rgba(0,0,0,0.6)" }}
+              />
+              <p className="text-white font-semibold mt-4 text-sm">{lightbox.label}</p>
             </motion.div>
           </motion.div>
         )}
