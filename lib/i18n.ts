@@ -4,14 +4,13 @@ export const translations = {
   es: {
     nav: {
       links: [
-        { label: "Inicio", href: "#inicio" },
-        { label: "Servicios", href: "#servicios" },
-        { label: "Productos", href: "#productos" },
-        { label: "Qué recibes", href: "#entregables" },
-        { label: "Sobre mí", href: "#sobre-mi" },
-        { label: "Novedades", href: "#novedades" },
-        { label: "📅 Calendario", href: "/calendario" },
-        { label: "🤖 Propuesta IA", href: "/propuesta-ia.html" },
+        { label: "Inicio", href: "#inicio", icon: "home" },
+        { label: "Servicios", href: "#servicios", icon: "layers" },
+        { label: "Testimonios", href: "#testimonios", icon: "star" },
+        { label: "Sobre mí", href: "#sobre-mi", icon: "user" },
+        { label: "Proceso", href: "#proceso", icon: "route" },
+        { label: "Calendario", href: "/calendario", icon: "calendar" },
+        { label: "Propuesta IA", href: "/propuesta-ia.html", icon: "bot" },
       ],
       cta: "Hablemos",
     },
@@ -246,7 +245,6 @@ export const translations = {
       links: [
         { label: "Inicio", href: "#inicio" },
         { label: "Servicios", href: "#servicios" },
-        { label: "Productos", href: "#productos" },
         { label: "Testimonios", href: "#testimonios" },
         { label: "Sobre mí", href: "#sobre-mi" },
         { label: "Proceso", href: "#proceso" },
@@ -256,20 +254,25 @@ export const translations = {
       contactTitle: "Contacto",
       copy: "Todos los derechos reservados.",
       cta: "Hablemos ⚡",
+      legal: [
+        { label: "Términos y Condiciones", href: "/terminos" },
+        { label: "Privacidad", href: "/privacidad" },
+        { label: "Cookies", href: "/cookies" },
+        { label: "Contrato de Servicios", href: "/contrato" },
+      ],
     },
   },
 
   en: {
     nav: {
       links: [
-        { label: "Home", href: "#inicio" },
-        { label: "Services", href: "#servicios" },
-        { label: "Products", href: "#productos" },
-        { label: "What You Get", href: "#entregables" },
-        { label: "About Me", href: "#sobre-mi" },
-        { label: "Novedades", href: "#novedades" },
-        { label: "📅 Calendar", href: "/calendario" },
-        { label: "🤖 AI Proposal", href: "/propuesta-ia.html" },
+        { label: "Home", href: "#inicio", icon: "home" },
+        { label: "Services", href: "#servicios", icon: "layers" },
+        { label: "Testimonials", href: "#testimonios", icon: "star" },
+        { label: "About Me", href: "#sobre-mi", icon: "user" },
+        { label: "Process", href: "#proceso", icon: "route" },
+        { label: "Calendar", href: "/calendario", icon: "calendar" },
+        { label: "AI Proposal", href: "/propuesta-ia.html", icon: "bot" },
       ],
       cta: "Let's Talk",
     },
@@ -504,7 +507,6 @@ export const translations = {
       links: [
         { label: "Home", href: "#inicio" },
         { label: "Services", href: "#servicios" },
-        { label: "Products", href: "#productos" },
         { label: "Testimonials", href: "#testimonios" },
         { label: "About Me", href: "#sobre-mi" },
         { label: "Process", href: "#proceso" },
@@ -514,6 +516,12 @@ export const translations = {
       contactTitle: "Contact",
       copy: "All rights reserved.",
       cta: "Let's Talk ⚡",
+      legal: [
+        { label: "Terms & Conditions", href: "/terminos" },
+        { label: "Privacy", href: "/privacidad" },
+        { label: "Cookies", href: "/cookies" },
+        { label: "Service Agreement", href: "/contrato" },
+      ],
     },
   },
 } as const;

@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paquete Legal Mínimo — TechnoCrazy</title>
+<style>
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  :root{
+    --azul:#2979ff; --morado:#7c4dff; --oscuro:#0a0a1a; --texto:#1a1a2e; --suave:#5a5a75; --linea:#e2e4ee;
+  }
+  body{ font-family:'Segoe UI','Arial',sans-serif; background:#e9ebf3; color:var(--texto); font-size:13.5px; line-height:1.65; }
+
+  .toolbar{ position:sticky; top:0; z-index:20; background:var(--oscuro); color:#fff; padding:12px 24px; display:flex; align-items:center; justify-content:space-between; }
+  .toolbar b{ color:var(--azul); }
+  .toolbar button{ background:linear-gradient(135deg,var(--azul),var(--morado)); color:#fff; border:none; padding:8px 18px; border-radius:8px; font-weight:700; font-size:12.5px; cursor:pointer; }
+
+  .doc{ width:794px; min-height:1123px; background:#fff; margin:24px auto; padding:56px 60px 70px; box-shadow:0 8px 30px rgba(0,0,0,.12); page-break-after:always; position:relative; }
+  .doc-head{ display:flex; align-items:center; justify-content:space-between; border-bottom:2px solid var(--linea); padding-bottom:14px; margin-bottom:26px; }
+  .brand{ display:flex; align-items:center; gap:8px; }
+  .brand .mark{ width:30px; height:30px; border-radius:8px; background:linear-gradient(135deg,var(--azul),var(--morado)); display:flex; align-items:center; justify-content:center; color:#fff; font-weight:900; font-size:13px; }
+  .brand span{ font-weight:900; font-size:15px; }
+  .brand span em{ font-style:normal; color:var(--azul); }
+  .doc-num{ font-size:11px; color:var(--suave); font-weight:700; letter-spacing:.5px; text-transform:uppercase; }
+
+  h1.title{ font-size:24px; font-weight:900; margin-bottom:4px; }
+  .subtitle{ color:var(--suave); font-size:13px; margin-bottom:22px; }
+
+  h2{ font-size:14.5px; font-weight:800; color:var(--oscuro); margin:20px 0 8px; padding-top:2px; }
+  h2::before{ content:''; display:inline-block; width:6px; height:6px; background:var(--azul); border-radius:2px; margin-right:8px; }
+  p{ margin-bottom:10px; }
+  ul, ol{ margin:0 0 12px 22px; }
+  li{ margin-bottom:5px; }
+  strong{ color:var(--oscuro); }
+  .field{ color:var(--morado); font-weight:700; }
+
+  table{ width:100%; border-collapse:collapse; margin:10px 0 16px; font-size:12px; }
+  th, td{ border:1px solid var(--linea); padding:7px 9px; text-align:left; vertical-align:top; }
+  th{ background:#f3f4fa; font-weight:800; }
+
+  .checkbox{ display:inline-block; width:11px; height:11px; border:1.5px solid var(--suave); border-radius:2px; margin-right:6px; vertical-align:middle; }
+
+  .box{ border:1.5px solid var(--linea); border-radius:10px; padding:14px 16px; margin:14px 0; background:#f8f9fd; }
+  .box.warn{ border-color:#ffb300; background:#fff8e6; }
+  .box.warn b{ color:#a06400; }
+
+  .sign-row{ display:flex; gap:40px; margin-top:40px; }
+  .sign{ flex:1; }
+  .sign .line{ border-top:1.5px solid var(--texto); margin-top:38px; padding-top:6px; font-size:11.5px; color:var(--suave); }
+
+  .foot{ position:absolute; bottom:26px; left:60px; right:60px; display:flex; justify-content:space-between; font-size:9.5px; color:#9a9ab0; border-top:1px solid var(--linea); padding-top:8px; }
+
+  /* PORTADA */
+  .cover{ background:linear-gradient(135deg,#0a0a1a 0%,#141438 45%,#0d1535 100%); color:#fff; padding:70px 60px; display:flex; flex-direction:column; }
+  .cover .brand span{ color:#fff; }
+  .cover h1{ font-size:38px; font-weight:900; line-height:1.15; margin:50px 0 10px; }
+  .cover h1 em{ font-style:normal; background:linear-gradient(135deg,var(--azul),var(--morado)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+  .cover .lead{ color:#b8bad0; font-size:14.5px; max-width:520px; margin-bottom:30px; }
+  .cover .idx{ margin-top:10px; }
+  .cover .idx div{ display:flex; justify-content:space-between; padding:9px 0; border-bottom:1px solid rgba(255,255,255,.1); font-size:13px; }
+  .cover .idx span.n{ color:#7c8; opacity:.7; margin-right:10px; }
+
+  @media print{
+    body{ background:#fff; }
+    .toolbar{ display:none; }
+    .doc{ box-shadow:none; margin:0; width:auto; min-height:auto; }
+  }
+  @page{ size:A4; margin:0; }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <div><b>TechnoCrazy</b> · Paquete Legal Mínimo — 12 documentos</div>
+  <button onclick="window.print()">🖨️ Guardar como PDF</button>
+</div>
+
+<!-- ═══════════════ PORTADA ═══════════════ -->
+<div class="doc cover">
+  <div class="brand"><div class="mark">TC</div><span>Techno<em>Crazy</em></span></div>
+  <h1>Paquete Legal <em>Mínimo</em></h1>
+  <p class="lead">12 documentos base para poder aceptar clientes con seguridad: contratos, políticas, formularios y checklists de acción, redactados a partir de los servicios y precios actuales de TechnoCrazy.</p>
+
+  <div class="box warn" style="background:rgba(255,179,0,.12); border-color:rgba(255,179,0,.5); color:#ffe4a3;">
+    <b style="color:#ffcf5c;">⚠ Aviso importante:</b> Estas plantillas fueron generadas con asistencia de IA a partir de la información disponible de TechnoCrazy. <strong style="color:#fff;">No constituyen asesoría legal</strong> ni sustituyen la revisión de un abogado con licencia en Illinois (o el estado donde opere formalmente el negocio) antes de usarlas con clientes reales.
+  </div>
+
+  <div class="idx">
+    <div><span><span class="n">01</span>Guía — Formar la LLC y cuenta bancaria comercial</span><span>Acción</span></div>
+    <div><span><span class="n">02</span>Contrato Maestro de Desarrollo Web</span><span>Plantilla</span></div>
+    <div><span><span class="n">03</span>Documento de Alcance de Proyecto</span><span>Plantilla</span></div>
+    <div><span><span class="n">04</span>Política de Cambios y Revisiones</span><span>Plantilla</span></div>
+    <div><span><span class="n">05</span>Política de Pagos, Retrasos y Cancelaciones</span><span>Plantilla</span></div>
+    <div><span><span class="n">06</span>Acuerdo de Mantenimiento</span><span>Plantilla</span></div>
+    <div><span><span class="n">07</span>Formulario de Entrega y Aceptación</span><span>Plantilla</span></div>
+    <div><span><span class="n">08</span>Transferencia de Dominio y Credenciales</span><span>Plantilla</span></div>
+    <div><span><span class="n">09</span>Inventario de Licencias y Servicios de Terceros</span><span>Plantilla</span></div>
+    <div><span><span class="n">10</span>Guía — Seguro Profesional</span><span>Acción</span></div>
+    <div><span><span class="n">11</span>Checklist de Accesibilidad y Seguridad</span><span>Plantilla</span></div>
+    <div><span><span class="n">12</span>Términos, Privacidad y Cookies</span><span>✅ Ya en el sitio</span></div>
+  </div>
+  <p style="margin-top:auto; padding-top:30px; color:#7a7c96; font-size:11px;">Generado el 31 de julio de 2026 · technocrazy.org</p>
+</div>
+
+<!-- ═══════════════ 01 — LLC ═══════════════ -->
+<div class="doc">
+  <div class="doc-head"><div class="brand"><div class="mark">TC</div><span>Techno<em>Crazy</em></span></div><div class="doc-num">Documento 01 · Guía de acción</div></div>
+  <h1 class="title">Formar la LLC y abrir cuenta bancaria comercial</h1>
+  <p class="subtitle">Esto no es un contrato para firmar — es una checklist de pasos a seguir antes o al mismo tiempo que se empiezan a aceptar clientes formalmente.</p>
+
+  <h2>Por qué importa</h2>
+  <p>Sin una LLC, Rafael Navarro responde con su patrimonio personal ante cualquier reclamo de un cliente. La LLC separa el negocio de la persona, da acceso a cuenta bancaria comercial, seguro profesional y crédito comercial, y da más credibilidad frente a clientes y proveedores (Stripe, bancos, aseguradoras).</p>
+
+  <h2>Pasos sugeridos</h2>
+  <ol>
+    <li><span class="checkbox"></span>Elegir estado de registro — recomendado <strong>Illinois</strong>, donde opera el negocio actualmente.</li>
+    <li><span class="checkbox"></span>Verificar disponibilidad del nombre <strong>"TechnoCrazy LLC"</strong> en el buscador de Illinois Secretary of State.</li>
+    <li><span class="checkbox"></span>Designar un <em>registered agent</em> (puede ser Rafael mismo con dirección en Illinois, o un servicio pago).</li>
+    <li><span class="checkbox"></span>Presentar los <em>Articles of Organization</em> ante Illinois Secretary of State (costo aprox. $150).</li>
+    <li><span class="checkbox"></span>Obtener el <strong>EIN</strong> (número de identificación fiscal) gratis en irs.gov.</li>
+    <li><span class="checkbox"></span>Redactar un <em>Operating Agreement</em> simple (aunque sea LLC de un solo dueño, protege la separación legal).</li>
+    <li><span class="checkbox"></span>Abrir cuenta bancaria comercial a nombre de la LLC + EIN (opciones: Chase, Bluevine, Mercury).</li>
+    <li><span class="checkbox"></span>Actualizar Stripe, el sitio web, y todos los contratos con el nombre legal de la LLC una vez formada.</li>
+  </ol>
+
+  <div class="box">Costo estimado total: <strong>$150–$500</strong> para formar la LLC + <strong>~$75/año</strong> de reporte anual en Illinois.</div>
+  <div class="foot"><span>TechnoCrazy — Paquete Legal Mínimo</span><span>Doc. 01 · No es asesoría legal</span></div>
+</div>
+
+<!-- ═══════════════ 02 — CONTRATO MAESTRO ═══════════════ -->
+<div class="doc">
+  <div class="doc-head"><div class="brand"><div class="mark">TC</div><span>Techno<em>Crazy</em></span></div><div class="doc-num">Documento 02 · Plantilla</div></div>
+  <h1 class="title">Contrato Maestro de Desarrollo Web</h1>
+  <p class="subtitle">Master Service Agreement — rige la relación general entre TechnoCrazy y el cliente. Cada proyecto puntual se detalla aparte en el Documento de Alcance (Doc. 03).</p>
+
+  <p>Entre <strong>Rafael Navarro</strong>, individuo que opera bajo el nombre comercial &quot;TechnoCrazy&quot; (&quot;el Proveedor&quot;), con contacto Rafaelpixel3004@gmail.com, y <span class="field">[Nombre del Cliente / Empresa]</span> (&quot;el Cliente&quot;), con fecha <span class="field">[Fecha]</span>, se acuerda lo siguiente:</p>
+  <p style="font-size:.85em;color:#666">El Proveedor opera actualmente como negocio individual (no como LLC ni corporación). El Cliente reconoce que contrata directamente con Rafael Navarro, quien responde con su patrimonio personal en los términos y límites establecidos en la Sección 8.</p>
+
+  <h2>1. Objeto</h2>
+  <p>El Proveedor prestará servicios de Diseño Gráfico, Páginas Web, Apps Móviles, Sistemas Automatizados y/o IA &amp; Automatización, según se detalle en cada Documento de Alcance firmado bajo este contrato.</p>
+
+  <h2>2. Alcance por proyecto</h2>
+  <p>Cada proyecto se rige por su propio Documento de Alcance (entregables, plazo y precio). Este Contrato Maestro cubre los términos generales aplicables a todos los proyectos entre las partes.</p>
+
+  <h2>3. Honorarios y forma de pago</h2>
+  <p>Según la Política de Pagos, Retrasos y Cancelaciones (Doc. 05). Salvo acuerdo distinto: 50% de depósito para iniciar, 50% contra entrega.</p>
+
+  <h2>4. Revisiones</h2>
+  <p>Según la Política de Cambios y Revisiones (Doc. 04). Cambios fuera del alcance original se cotizan por separado.</p>
+
+  <h2>5. Propiedad intelectual</h2>
+  <p>Al completarse el pago total, el Cliente recibe el producto final entregado para uso comercial. El código propietario, plantillas y componentes reutilizables del Proveedor no se transfieren salvo compra explícita del código fuente pactada por escrito.</p>
+
+  <h2>6. Confidencialidad</h2>
+  <p>Ambas partes se comprometen a mantener confidencial la información de negocio, credenciales y datos compartidos durante el proyecto, usándola únicamente para ejecutar el trabajo contratado.</p>
+
+  <h2>7. Relación entre las partes</h2>
+  <p>El Proveedor actúa como contratista independiente. Nada en este contrato crea una relación de empleo, sociedad o joint venture entre las partes.</p>
+
+  <h2>8. Garantías y limitación de responsabilidad</h2>
+  <p>Los servicios se entregan con el mejor esfuerzo profesional, sin garantía de resultados de negocio específicos, de tráfico, ventas, posicionamiento en buscadores ni cumplimiento total de ADA/WCAG (solo se aplican buenas prácticas razonables de accesibilidad, sin certificación). La responsabilidad total del Proveedor ante cualquier reclamo, de cualquier tipo, se limita al monto efectivamente pagado por el Cliente por el proyecto en cuestión, salvo en casos de negligencia grave, dolo o violación de confidencialidad, donde no aplica este tope.</p>
+
+  <h2>9. Dominio, credenciales y entrega final</h2>
+  <p>El Proveedor no publicará el proyecto en el dominio final del Cliente, ni entregará código fuente, credenciales de hosting/CMS ni archivos finales, hasta recibir el pago completo indicado en el Documento de Alcance correspondiente.</p>
+
+  <h2>10. Terminación</h2>
+  <p>Cualquiera de las partes puede terminar este contrato con <span class="field">15 días</span> de aviso por escrito. El trabajo entregado hasta la fecha de terminación se factura de forma proporcional, y el depósito ya pagado no es reembolsable salvo que el Proveedor sea quien termine sin causa atribuible al Cliente.</p>
+
+  <h2>11. Fuerza mayor</h2>
+  <p>Ninguna parte será responsable por retrasos causados por eventos fuera de su control razonable (fallas de proveedores externos, desastres naturales, cortes de servicio, etc.).</p>
+
+  <h2>12. Firma electrónica</h2>
+  <p>Las partes aceptan que este contrato pueda firmarse electrónicamente y que dicha firma tiene la misma validez que una firma manuscrita, conforme al E-SIGN Act federal y al Illinois Uniform Electronic Transactions Act (815 ILCS 333).</p>
+
+  <h2>13. Ley aplicable y foro</h2>
+  <p>Este contrato se rige por las leyes del Estado de Illinois, Estados Unidos. Cualquier disputa se resolverá en el Circuit Court del condado de <span class="field">Cook</span>, Illinois — incluyendo, cuando aplique, el procedimiento de small claims para montos hasta $10,000.</p>
+
+  <div class="sign-row">
+    <div class="sign"><div class="line">Firma del Proveedor — TechnoCrazy / Fecha</div></div>
+    <div class="sign"><div class="line">Firma del Cliente / Fecha</div></div>
+  </div>
+  <div class="foot"><span>TechnoCrazy — Paquete Legal Mínimo</span><span>Doc. 02 · No es asesoría legal</span></div>
+</div>
+
+<!-- ═══════════════ 03 — ALCANCE ═══════════════ -->
+<div class="doc">
+  <div class="doc-head"><div class="brand"><div class="mark">TC</div><span>Techno<em>Crazy</em></span></div><div class="doc-num">Documento 03 · Plantilla</div></div>
+  <h1 class="title">Documento de Alcance de Proyecto</h1>
+  <p class="subtitle">Statement of Work (SOW) — se llena y firma para cada proyecto individual, bajo el Contrato Maestro (Doc. 02).</p>
+
+  <table>
+    <tr><th style="width:32%">Cliente</th><td class="field">[Nombre / Empresa]</td></tr>
+    <tr><th>Fecha</th><td class="field">[Fecha]</td></tr>
+    <tr><th>Nombre del proyecto</th><td class="field">[Nombre del proyecto]</td></tr>
+    <tr><th>Tipo de servicio</th><td>
+      <span class="checkbox"></span> Diseño Gráfico ($149) &nbsp;
+      <span class="checkbox"></span> Página Web ($299) &nbsp;
+      <span class="checkbox"></span> App Móvil ($499)<br>
+      <span class="checkbox"></span> Sistema Automatizado ($299) &nbsp;
+      <span class="checkbox"></span> IA &amp; Automatización ($199) &nbsp;
+      <span class="checkbox"></span> Personalizado ($<span class="field">___</span>)
+    </td></tr>
+  </table>
+
+  <h2>Objetivos del proyecto</h2>
+  <p class="field">[Describir en 2-3 líneas qué problema resuelve el proyecto para el cliente]</p>
+
+  <h2>Entregables incluidos</h2>
+  <ul>
+    <li><span class="checkbox"></span> <span class="field">[Entregable 1]</span></li>
+    <li><span class="checkbox"></span> <span class="field">[Entregable 2]</span></li>
+    <li><span class="checkbox"></span> <span class="field">[Entregable 3]</span></li>
+  </ul>
+
+  <h2>Explícitamente fuera de alcance</h2>
+  <p class="field">[Ej: hosting a largo plazo, contenido/copywriting, fotografía profesional, integraciones no listadas arriba]</p>
+
+  <table>
+    <tr><th style="width:32%">Rondas de revisión incluidas</th><td class="field">[Número]</td></tr>
+    <tr><th>Plazo estimado de entrega</th><td class="field">[Semanas]</td></tr>
+    <tr><th>Precio total</th><td class="field">[$Monto]</td></tr>
+    <tr><th>Calendario de pago</th><td>50% al iniciar ($<span class="field">__</span>) · 50% contra entrega ($<span class="field">__</span>)</td></tr>
+    <tr><th>Accesos que debe proveer el Cliente</th><td class="field">[Dominio, hosting, cuentas, contenido, imágenes, etc.]</td></tr>
+  </table>
+
+  <div class="sign-row">
+    <div class="sign"><div class="line">Firma del Proveedor — TechnoCrazy / Fecha</div></div>
+    <div class="sign"><div class="line">Firma del Cliente / Fecha</div></div>
+  </div>
+  <div class="foot"><span>TechnoCrazy — Paquete Legal Mínimo</span><span>Doc. 03 · No es asesoría legal</span></div>
+</div>
+
+<!-- ═══════════════ 04 — CAMBIOS ═══════════════ -->
+<div class="doc">
+  <div class="doc-head"><div class="brand"><div class="mark">TC</div><span>Techno<em>Crazy</em></span></div><div class="doc-num">Documento 04 · Plantilla</div></div>
+  <h1 class="title">Política de Cambios y Revisiones</h1>
+  <p class="subtitle">Define qué se considera revisión incluida y qué se cotiza como cambio de alcance adicional.</p>
+
+  <h2>Revisiones incluidas</h2>
+  <p>Cada proyecto incluye el número de rondas de revisión indicado en su Documento de Alcance (Doc. 03). Se consideran revisión incluida los ajustes menores dentro del diseño/funcionalidad ya aprobada: cambios de texto, color, tamaño, orden de elementos, correcciones puntuales.</p>
+
+  <h2>Qué se considera cambio de alcance (se cotiza aparte)</h2>
+  <ul>
+    <li>Agregar funcionalidades, páginas o secciones no incluidas en el Documento de Alcance original.</li>
+    <li>Rediseños completos o cambio de dirección visual del proyecto ya aprobado.</li>
+    <li>Integraciones nuevas con servicios de terceros no contemplados.</li>
+  </ul>
+
+  <h2>Proceso</h2>
+  <ol>
+    <li>El Cliente solicita el cambio por escrito (correo o WhatsApp).</li>
+    <li>TechnoCrazy confirma en un plazo de <span class="field">48 horas</span> si el cambio está dentro o fuera del alcance contratado.</li>
+    <li>Si está fuera de alcance, se envía una cotización antes de ejecutar cualquier trabajo adicional.</li>
+    <li>Tarifa sugerida para cambios fuera de alcance: $<span class="field">___</span>/hora, o cotización fija según el cambio.</li>
+  </ol>
+  <div class="foot"><span>TechnoCrazy — Paquete Legal Mínimo</span><span>Doc. 04 · No es asesoría legal</span></div>
+</div>
+
+<!-- ═══════════════ 05 — PAGOS ═══════════════ -->
+<div class="doc">
+  <div class="doc-head"><div class="brand"><div class="mark">TC</div><span>Techno<em>Crazy</em></span></div><div class="doc-num">Documento 05 · Plantilla</div></div>
+  <h1 class="title">Política de Pagos, Retrasos y Cancelaciones</h1>
+
+  <h2>Forma de pago — proyectos a medida</h2>
+  <p><strong>50%</strong> de depósito para iniciar el proyecto (no reembolsable, cubre el trabajo de arranque) y <strong>50%</strong> contra entrega, antes de la publicación final o entrega de archivos. Métodos aceptados: Stripe, transferencia bancaria, Zelle.</p>
+
+  <h2>Forma de pago — productos digitales</h2>
+  <p>Pago único procesado por Stripe o Payhip antes de recibir acceso o descarga. Reembolso disponible dentro de los primeros <span class="field">7-14</span> días si el producto no funciona como se describe, sujeto a verificación técnica.</p>
+
+  <h2>Retrasos de pago</h2>
+  <p>Si el Cliente no paga el saldo final acordado, el proyecto queda pausado: no se entregan archivos ni se publica el trabajo hasta regularizar el pago. Recargo por mora tras 15 días de atraso: <strong>1.5% mensual, o el máximo permitido por la ley de Illinois, el que sea menor</strong> (esta fórmula se autoajusta automáticamente al tope legal vigente sin necesidad de reescribir el contrato).</p>
+
+  <h2>Cancelación por parte del Cliente</h2>
+  <p>El depósito inicial no es reembolsable. Si se cancela después de iniciado más del 50% del trabajo, se factura de forma proporcional al avance real.</p>
+
+  <h2>Cancelación por parte de TechnoCrazy</h2>
+  <p>Se reembolsa la parte del depósito correspondiente al trabajo no realizado.</p>
+  <div class="foot"><span>TechnoCrazy — Paquete Legal Mínimo</span><span>Doc. 05 · No es asesoría legal</span></div>
+</div>
+
+<!-- ═══════════════ 06 — MANTENIMIENTO ═══════════════ -->
+<div class="doc">
+  <div class="doc-head"><div class="brand"><div class="mark">TC</div><span>Techno<em>Crazy</em></span></div><div class="doc-num">Documento 06 · Plantilla</div></div>
+  <h1 class="title">Acuerdo de Mantenimiento</h1>
+  <p class="subtitle">Servicio separado del proyecto inicial — se firma solo si el Cliente contrata mantenimiento continuo.</p>
+
+  <p>El mantenimiento (actualizaciones, monitoreo, hosting, soporte y cambios menores) <strong>no está incluido</strong> en el precio del proyecto inicial salvo que se indique expresamente en el Documento de Alcance.</p>
+
+  <h2>Planes sugeridos</h2>
+  <table>
+    <tr><th>Plan</th><th>Precio</th><th>Incluye</th></tr>
+    <tr><td>Básico</td><td class="field">$__/mes</td><td>Hosting + monitoreo + 1 cambio menor al mes</td></tr>
+    <tr><td>Estándar</td><td class="field">$__/mes</td><td>Todo lo anterior + soporte prioritario + 3 cambios menores al mes</td></tr>
+    <tr><td>A demanda</td><td class="field">$__/hora</td><td>Sin mensualidad, se factura por trabajo puntual solicitado</td></tr>
+  </table>
+
+  <h2>Duración y cancelación</h2>
+  <p>Renovación mensual automática. Cualquiera de las partes puede cancelar con <span class="field">30 días</span> de aviso previo por escrito.</p>
+
+  <h2>Qué NO cubre el mantenimiento</h2>
+  <p>Rediseños completos, nuevas funcionalidades grandes o cambios de dirección del proyecto — esos se cotizan como un nuevo Documento de Alcance.</p>
+  <div class="foot"><span>TechnoCrazy — Paquete Legal Mínimo</span><span>Doc. 06 · No es asesoría legal</span></div>
+</div>
+
+<!-- ═══════════════ 07 — ENTREGA ═══════════════ -->
+<div class="doc">
+  <div class="doc-head"><div class="brand"><div class="mark">TC</div><span>Techno<em>Crazy</em></span></div><div class="doc-num">Documento 07 · Plantilla</div></div>
+  <h1 class="title">Formulario de Entrega y Aceptación</h1>
+
+  <table>
+    <tr><th style="width:32%">Proyecto</th><td class="field">[Nombre del proyecto]</td></tr>
+    <tr><th>Cliente</th><td class="field">[Nombre / Empresa]</td></tr>
+    <tr><th>Fecha de entrega</th><td class="field">[Fecha]</td></tr>
+  </table>
+
+  <h2>Checklist de entregables</h2>
+  <ul>
+    <li><span class="checkbox"></span> <span class="field">[Entregable 1]</span> — entregado</li>
+    <li><span class="checkbox"></span> <span class="field">[Entregable 2]</span> — entregado</li>
+    <li><span class="checkbox"></span> <span class="field">[Entregable 3]</span> — entregado</li>
+  </ul>
+
+  <h2>Declaración de aceptación</h2>
+  <p><span class="checkbox"></span> El Cliente confirma haber revisado el proyecto entregado y lo acepta como completo y conforme al Documento de Alcance firmado (Doc. 03).</p>
+  <p><span class="checkbox"></span> Se identifican las siguientes pendientes antes de la aceptación final: <span class="field">[detallar]</span></p>
+
+  <div class="box">La firma de aceptación activa el inicio de cualquier garantía o período de soporte gratuito acordado.</div>
+
+  <div class="sign-row">
+    <div class="sign"><div class="line">Firma del Proveedor — TechnoCrazy / Fecha</div></div>
+    <div class="sign"><div class="line">Firma del Cliente / Fecha</div></div>
+  </div>
+  <div class="foot"><span>TechnoCrazy — Paquete Legal Mínimo</span><span>Doc. 07 · No es asesoría legal</span></div>
+</div>
+
+<!-- ═══════════════ 08 — TRANSFERENCIA ═══════════════ -->
+<div class="doc">
+  <div class="doc-head"><div class="brand"><div class="mark">TC</div><span>Techno<em>Crazy</em></span></div><div class="doc-num">Documento 08 · Plantilla</div></div>
+  <h1 class="title">Transferencia de Dominio y Credenciales</h1>
+
+  <table>
+    <tr><th style="width:32%">Proyecto</th><td class="field">[Nombre del proyecto]</td></tr>
+    <tr><th>Cliente</th><td class="field">[Nombre / Empresa]</td></tr>
+    <tr><th>Fecha</th><td class="field">[Fecha]</td></tr>
+  </table>
+
+  <table>
+    <tr><th>Servicio</th><th>Usuario / cuenta</th><th>Método de transferencia</th><th>Fecha</th><th>Confirmado</th></tr>
+    <tr><td>Dominio (registrador)</td><td class="field">[__]</td><td class="field">[__]</td><td class="field">[__]</td><td><span class="checkbox"></span></td></tr>
+    <tr><td>Hosting / Vercel</td><td class="field">[__]</td><td class="field">[__]</td><td class="field">[__]</td><td><span class="checkbox"></span></td></tr>
+    <tr><td>Repositorio (GitHub)</td><td class="field">[__]</td><td class="field">[__]</td><td class="field">[__]</td><td><span class="checkbox"></span></td></tr>
+    <tr><td>Base de datos</td><td class="field">[__]</td><td class="field">[__]</td><td class="field">[__]</td><td><span class="checkbox"></span></td></tr>
+    <tr><td>Correo / Email</td><td class="field">[__]</td><td class="field">[__]</td><td class="field">[__]</td><td><span class="checkbox"></span></td></tr>
+    <tr><td>Redes sociales conectadas</td><td class="field">[__]</td><td class="field">[__]</td><td class="field">[__]</td><td><span class="checkbox"></span></td></tr>
+    <tr><td>APIs de terceros (Stripe, etc.)</td><td class="field">[__]</td><td class="field">[__]</td><td class="field">[__]</td><td><span class="checkbox"></span></td></tr>
+  </table>
+
+  <div class="box warn">Recomendación de seguridad: el Cliente debe cambiar todas las contraseñas recibidas inmediatamente después de tomar posesión de los accesos.</div>
+
+  <div class="sign-row">
+    <div class="sign"><div class="line">Firma del Proveedor — TechnoCrazy / Fecha</div></div>
+    <div class="sign"><div class="line">Firma del Cliente / Fecha</div></div>
+  </div>
+  <div class="foot"><span>TechnoCrazy — Paquete Legal Mínimo</span><span>Doc. 08 · No es asesoría legal</span></div>
+</div>
+
+<!-- ═══════════════ 09 — LICENCIAS ═══════════════ -->
+<div class="doc">
+  <div class="doc-head"><div class="brand"><div class="mark">TC</div><span>Techno<em>Crazy</em></span></div><div class="doc-num">Documento 09 · Plantilla</div></div>
+  <h1 class="title">Inventario de Licencias y Servicios de Terceros</h1>
+  <p class="subtitle">Evita sorpresas: deja claro quién paga qué después de que el proyecto se entrega.</p>
+
+  <table>
+    <tr><th>Servicio / Librería</th><th>Tipo de licencia</th><th>Costo</th><th>Responsable de pago post-entrega</th></tr>
+    <tr><td>Dominio (Namecheap)</td><td>Anual</td><td class="field">[$__/año]</td><td class="field">[Cliente / TechnoCrazy]</td></tr>
+    <tr><td>Hosting (Vercel)</td><td>Mensual / Free tier</td><td class="field">[$__/mes]</td><td class="field">[__]</td></tr>
+    <tr><td>Base de datos (Firebase / Supabase)</td><td>Mensual / Free tier</td><td class="field">[$__/mes]</td><td class="field">[__]</td></tr>
+    <tr><td>Pagos (Stripe)</td><td>Comisión por transacción</td><td>~2.9% + $0.30</td><td class="field">[__]</td></tr>
+    <tr><td>Automatización (Twilio / ManyChat)</td><td>Mensual / por uso</td><td class="field">[$__/mes]</td><td class="field">[__]</td></tr>
+    <tr><td>APIs de IA (Anthropic / OpenAI)</td><td>Por uso</td><td class="field">[$__/mes]</td><td class="field">[__]</td></tr>
+    <tr><td>Fuentes / imágenes con licencia</td><td class="field">[__]</td><td class="field">[__]</td><td class="field">[__]</td></tr>
+    <tr><td class="field">[Otro]</td><td class="field">[__]</td><td class="field">[__]</td><td class="field">[__]</td></tr>
+  </table>
+  <div class="foot"><span>TechnoCrazy — Paquete Legal Mínimo</span><span>Doc. 09 · No es asesoría legal</span></div>
+</div>
+
+<!-- ═══════════════ 10 — SEGURO ═══════════════ -->
+<div class="doc">
+  <div class="doc-head"><div class="brand"><div class="mark">TC</div><span>Techno<em>Crazy</em></span></div><div class="doc-num">Documento 10 · Guía de acción</div></div>
+  <h1 class="title">Seguro Profesional</h1>
+  <p class="subtitle">Guía de acción, no un documento para firmar — para cotizar una vez formada la LLC (Doc. 01).</p>
+
+  <h2>Por qué importa</h2>
+  <p>Protege al negocio ante reclamos de clientes por errores, omisiones, retrasos o pérdida de datos durante un proyecto, y ante reclamos generales de responsabilidad civil.</p>
+
+  <h2>Tipos recomendados</h2>
+  <ol>
+    <li><strong>Professional Liability / Errors &amp; Omissions (E&amp;O)</strong> — el más importante para trabajo de desarrollo/software/consultoría.</li>
+    <li><strong>General Liability Insurance</strong> — cobertura general de responsabilidad civil del negocio.</li>
+    <li><strong>Cyber Liability Insurance</strong> — recomendado si se manejan datos de clientes o pagos.</li>
+  </ol>
+
+  <h2>Proveedores comunes en EE.UU. para negocios pequeños</h2>
+  <p>Hiscox, Next Insurance, The Hartford, Progressive Commercial — cotizar con al menos 2-3 antes de elegir.</p>
+
+  <div class="box">Costo aproximado de referencia: E&amp;O para un freelancer/negocio pequeño de software suele rondar <strong>$500–$1,500 al año</strong>, según cobertura. Confirmar cifra real al cotizar.</div>
+  <div class="foot"><span>TechnoCrazy — Paquete Legal Mínimo</span><span>Doc. 10 · No es asesoría legal</span></div>
+</div>
+
+<!-- ═══════════════ 11 — CHECKLIST ═══════════════ -->
+<div class="doc">
+  <div class="doc-head"><div class="brand"><div class="mark">TC</div><span>Techno<em>Crazy</em></span></div><div class="doc-num">Documento 11 · Plantilla</div></div>
+  <h1 class="title">Checklist de Accesibilidad y Seguridad</h1>
+  <p class="subtitle">Revisar antes de entregar cualquier proyecto al Cliente (usar junto al Doc. 07).</p>
+
+  <h2>Accesibilidad (WCAG básico)</h2>
+  <ul>
+    <li><span class="checkbox"></span> Contraste de color suficiente entre texto y fondo</li>
+    <li><span class="checkbox"></span> Todas las imágenes tienen texto alternativo (alt)</li>
+    <li><span class="checkbox"></span> El sitio es navegable con teclado</li>
+    <li><span class="checkbox"></span> Los formularios tienen etiquetas (labels) asociadas a cada campo</li>
+    <li><span class="checkbox"></span> Tamaño de texto legible y responsive en móvil</li>
+    <li><span class="checkbox"></span> Videos con subtítulos o transcripción cuando aplique</li>
+  </ul>
+
+  <h2>Seguridad</h2>
+  <ul>
+    <li><span class="checkbox"></span> HTTPS activo en todo el sitio</li>
+    <li><span class="checkbox"></span> Dependencias/paquetes actualizados, sin vulnerabilidades conocidas</li>
+    <li><span class="checkbox"></span> Claves API y variables de entorno nunca expuestas en el código del cliente (frontend)</li>
+    <li><span class="checkbox"></span> Formularios protegidos contra spam/inyección (validación en servidor)</li>
+    <li><span class="checkbox"></span> Backups o control de versiones del proyecto entregado</li>
+    <li><span class="checkbox"></span> Contraseñas por defecto cambiadas antes de la entrega</li>
+  </ul>
+  <div class="foot"><span>TechnoCrazy — Paquete Legal Mínimo</span><span>Doc. 11 · No es asesoría legal</span></div>
+</div>
+
+<!-- ═══════════════ 12 — TÉRMINOS/PRIVACIDAD/COOKIES ═══════════════ -->
+<div class="doc" style="page-break-after:auto;">
+  <div class="doc-head"><div class="brand"><div class="mark">TC</div><span>Techno<em>Crazy</em></span></div><div class="doc-num">Documento 12 · Ya publicado</div></div>
+  <h1 class="title">Términos, Privacidad y Cookies</h1>
+  <p class="subtitle">Estas tres plantillas ya están redactadas, publicadas y en vivo en el sitio web — no se duplican en este paquete impreso.</p>
+
+  <table>
+    <tr><th style="width:32%">Términos y Condiciones</th><td>technocrazy.org/terminos</td></tr>
+    <tr><th>Política de Privacidad</th><td>technocrazy.org/privacidad</td></tr>
+    <tr><th>Política de Cookies</th><td>technocrazy.org/cookies</td></tr>
+  </table>
+
+  <div class="box warn"><b>Recordatorio final:</b> este paquete completo (12 documentos) es un punto de partida redactado con IA. Antes de usarlo con clientes reales, revísalo con un abogado con licencia en Illinois para confirmar que cumple con la ley local y protege correctamente al negocio.</div>
+  <div class="foot"><span>TechnoCrazy — Paquete Legal Mínimo</span><span>Doc. 12 · No es asesoría legal</span></div>
+</div>
+
+</body>
+</html>
