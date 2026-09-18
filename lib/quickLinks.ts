@@ -1,4 +1,4 @@
-import { Globe, Monitor, Smartphone, type LucideIcon } from "lucide-react";
+import { Globe, Monitor, Smartphone, Server, type LucideIcon } from "lucide-react";
 
 // Enlaces de la página /links (estilo "link in bio" para Instagram). Viven en
 // el documento `config/site` de Firestore (campo `quickLinks`), igual que
@@ -6,7 +6,7 @@ import { Globe, Monitor, Smartphone, type LucideIcon } from "lucide-react";
 // así que no hace falta publicar reglas nuevas, y /links los recibe en vivo
 // por el onSnapshot de SiteConfigContext, sin volver a desplegar.
 
-export type QuickLinkCategory = "web" | "pc" | "app";
+export type QuickLinkCategory = "web" | "pc" | "app" | "servers";
 
 export type QuickLink = {
   id: string;
@@ -17,10 +17,15 @@ export type QuickLink = {
   visible: boolean;
 };
 
+// "Servidores": productos con cobro real. Su `url` no apunta a un archivo ni
+// a la página del producto en sí, sino a su ficha en /precios-productos/[id]
+// (Firestore `products`, admin → Precios y Productos), que ya tiene título,
+// descripción y checkout de Stripe con el precio que se fije ahí.
 export const QUICK_LINK_CATEGORIES: { id: QuickLinkCategory; label: string; Icon: LucideIcon }[] = [
   { id: "web", label: "Páginas web", Icon: Globe },
   { id: "pc", label: "Programas PC", Icon: Monitor },
   { id: "app", label: "Aplicaciones móviles", Icon: Smartphone },
+  { id: "servers", label: "Servidores", Icon: Server },
 ];
 
 export const QUICK_LINK_CATEGORY_LABELS: Record<QuickLinkCategory, string> = Object.fromEntries(
