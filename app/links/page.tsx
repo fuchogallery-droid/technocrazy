@@ -1,38 +1,22 @@
-import type { Metadata } from "next";
-import { ArrowUpRight, MessageCircle } from "lucide-react";
-
-export const metadata: Metadata = {
-  title: "Enlaces — Rafael Navarro | TechnoCrazy",
-  description: "Todos los proyectos y productos de Rafael Navarro en un solo lugar.",
-};
-
-const links: { name: string; desc: string; url: string }[] = [
-  { name: "TechnoCrazy", desc: "Sitio principal — servicios y productos", url: "https://technocrazy.org" },
-  { name: "R.A.D.I.", desc: "App de walkie-talkie — descargar", url: "https://radi.technocrazy.org" },
-  { name: "GaleriaX", desc: "Plataforma para creadores de contenido", url: "https://galeriax.vercel.app" },
-  { name: "MonitorDealer", desc: "Gestión para concesionarios de autos", url: "https://monitordealer.technocrazy.org" },
-  { name: "TuEntrenador", desc: "SaaS para entrenadores personales", url: "https://tuentrenador.technocrazy.org" },
-  { name: "AutoPost", desc: "Publicación automática en redes sociales", url: "https://autopost-plum-five.vercel.app" },
-  { name: "SaaS Hub", desc: "Plataforma para restaurantes", url: "https://saas-hub-web.vercel.app" },
-  { name: "ElGestor", desc: "Gestión de negocio", url: "https://elgestor.vercel.app" },
-  { name: "ServiYA", desc: "Servicios a domicilio", url: "https://serviya.vercel.app" },
-  { name: "CambioBs", desc: "Tasas de cambio Bolívar", url: "https://cambiobs.vercel.app" },
-  { name: "Trading Tools", desc: "Herramientas para traders", url: "https://tradingtools-nine.vercel.app" },
-  { name: "Emily Navarro", desc: "Sitio personal", url: "https://emily-navarro.vercel.app" },
-];
+"use client";
+import { useState } from "react";
+import { ChevronDown, ArrowUpRight } from "lucide-react";
+import { useSiteConfig } from "@/contexts/SiteConfigContext";
+import { QUICK_LINK_CATEGORIES, type QuickLinkCategory } from "@/lib/quickLinks";
 
 export default function LinksPage() {
+  const { config } = useSiteConfig();
+  const quickLinks = config?.quickLinks ?? [];
+  const [open, setOpen] = useState<QuickLinkCategory | null>(null);
+
   return (
     <main
       className="min-h-screen flex flex-col items-center relative overflow-hidden"
-      style={{ background: "#05050f", padding: "56px 20px 40px" }}
+      style={{ background: "#05050f", padding: "56px 20px 48px" }}
     >
       <div
         className="absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(600px circle at 50% 0%, rgba(41,121,255,0.18), transparent 60%)",
-        }}
+        style={{ background: "radial-gradient(600px circle at 50% 0%, rgba(212,175,55,0.16), transparent 60%)" }}
       />
 
       <div className="relative z-10 w-full flex flex-col items-center" style={{ maxWidth: 480 }}>
@@ -54,52 +38,114 @@ export default function LinksPage() {
         <h1 className="font-black text-white text-center" style={{ fontSize: 22, marginBottom: 4 }}>
           Rafael Navarro
         </h1>
-        <p className="text-center" style={{ color: "#8b93a7", fontSize: 14, marginBottom: 36 }}>
+        <p className="text-center" style={{ color: "#8b93a7", fontSize: 14, marginBottom: 32 }}>
           @elpanitafucho · TechnoCrazy
         </p>
 
-        <div className="w-full flex flex-col" style={{ gap: 12 }}>
-          {links.map((link) => (
-            <a
-              key={link.url}
-              href={link.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full flex items-center justify-between rounded-2xl transition-all hover:-translate-y-0.5"
-              style={{
-                padding: "16px 20px",
-                background: "rgba(255,255,255,0.04)",
-                border: "1px solid rgba(255,255,255,0.08)",
-                textDecoration: "none",
-              }}
-            >
-              <span className="flex flex-col">
-                <span className="font-bold text-white" style={{ fontSize: 15 }}>
-                  {link.name}
-                </span>
-                <span style={{ color: "#8b93a7", fontSize: 13 }}>{link.desc}</span>
-              </span>
-              <ArrowUpRight size={18} color="#2979ff" style={{ flexShrink: 0, marginLeft: 12 }} />
-            </a>
-          ))}
+        {/* Botón principal — TechnoCrazy, en dorado */}
+        <a
+          href="https://technocrazy.org"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="w-full flex items-center justify-center gap-2 font-black rounded-2xl transition-all hover:-translate-y-0.5"
+          style={{
+            padding: "18px 20px",
+            background: "linear-gradient(135deg,#d4af37,#f4e5a3,#d4af37)",
+            color: "#1a1400",
+            boxShadow: "0 12px 40px rgba(212,175,55,0.35)",
+            fontSize: 17,
+            textDecoration: "none",
+            marginBottom: 16,
+          }}
+        >
+          TechnoCrazy — sitio principal
+        </a>
 
-          <a
-            href="https://wa.me/17794318214"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-full flex items-center justify-center gap-2 font-bold rounded-2xl text-white transition-all hover:-translate-y-0.5"
-            style={{
-              marginTop: 12,
-              padding: "16px 20px",
-              background: "linear-gradient(135deg,#2979ff,#7c4dff)",
-              boxShadow: "0 12px 40px rgba(41,121,255,0.3)",
-              fontSize: 15,
-              textDecoration: "none",
-            }}
-          >
-            <MessageCircle size={18} />
-            Contáctame por WhatsApp
-          </a>
+        {/* Persianas por categoría */}
+        <div className="w-full flex flex-col" style={{ gap: 12 }}>
+          {QUICK_LINK_CATEGORIES.map((cat) => {
+            const items = quickLinks.filter((l) => l.category === cat.id && l.visible);
+            const isOpen = open === cat.id;
+            return (
+              <div
+                key={cat.id}
+                className="w-full rounded-2xl overflow-hidden"
+                style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}
+              >
+                <button
+                  type="button"
+                  onClick={() => setOpen(isOpen ? null : cat.id)}
+                  className="w-full flex items-center justify-between"
+                  style={{ padding: "18px 20px", background: "transparent", border: "none", cursor: "pointer" }}
+                >
+                  <span className="flex items-center gap-3">
+                    <cat.Icon size={18} color="#2979ff" />
+                    <span className="font-bold text-white" style={{ fontSize: 15 }}>
+                      {cat.label}
+                    </span>
+                    {items.length > 0 && (
+                      <span style={{ fontSize: 11, color: "#8b93a7" }}>({items.length})</span>
+                    )}
+                  </span>
+                  <ChevronDown
+                    size={18}
+                    color="rgba(255,255,255,0.5)"
+                    style={{ transition: "transform 250ms ease", transform: isOpen ? "rotate(180deg)" : "rotate(0deg)" }}
+                  />
+                </button>
+
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateRows: isOpen ? "1fr" : "0fr",
+                    transition: "grid-template-rows 280ms ease",
+                  }}
+                >
+                  <div style={{ overflow: "hidden" }}>
+                    <div className="flex flex-col" style={{ padding: "0 12px 12px", gap: 6 }}>
+                      {items.map((l) => (
+                        <a
+                          key={l.id}
+                          href={l.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="w-full flex items-center justify-between rounded-xl transition-colors"
+                          style={{
+                            padding: "10px 12px",
+                            background: "rgba(255,255,255,0.03)",
+                            textDecoration: "none",
+                          }}
+                        >
+                          <span className="flex items-center gap-3 min-w-0">
+                            <span
+                              className="rounded-full overflow-hidden flex items-center justify-center flex-shrink-0"
+                              style={{ width: 34, height: 34, background: "rgba(255,255,255,0.08)" }}
+                            >
+                              {l.imageUrl ? (
+                                // eslint-disable-next-line @next/next/no-img-element
+                                <img src={l.imageUrl} alt="" className="w-full h-full object-cover" />
+                              ) : (
+                                <cat.Icon size={15} color="rgba(255,255,255,0.4)" />
+                              )}
+                            </span>
+                            <span className="font-semibold text-white truncate" style={{ fontSize: 14 }}>
+                              {l.name}
+                            </span>
+                          </span>
+                          <ArrowUpRight size={16} color="#2979ff" style={{ flexShrink: 0, marginLeft: 8 }} />
+                        </a>
+                      ))}
+                      {items.length === 0 && (
+                        <p style={{ color: "#4b5163", fontSize: 12, padding: "4px 12px 8px" }}>
+                          Todavía no hay nada aquí.
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
 
         <p className="text-center" style={{ color: "#4b5163", fontSize: 12, marginTop: 40 }}>
