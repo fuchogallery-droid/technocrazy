@@ -1,12 +1,42 @@
 "use client";
 import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import {
+  Menu, X, Home, Layers, Star, User, Route, Calendar, Bot,
+  UserCircle, DollarSign, BookOpen, Images, Quote, HelpCircle, Lightbulb, Newspaper,
+  type LucideIcon,
+} from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useSiteConfig } from "@/contexts/SiteConfigContext";
+
+const NAV_ICONS: Record<string, LucideIcon> = {
+  home: Home,
+  layers: Layers,
+  star: Star,
+  user: User,
+  route: Route,
+  calendar: Calendar,
+  bot: Bot,
+  "user-circle": UserCircle,
+  "dollar-sign": DollarSign,
+  book: BookOpen,
+  images: Images,
+  quote: Quote,
+  "help-circle": HelpCircle,
+  lightbulb: Lightbulb,
+  newspaper: Newspaper,
+};
 
 export default function Navbar() {
   const { lang, setLang, t } = useLanguage();
+  const { config } = useSiteConfig();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+
+  const navLinks = config?.navLinks?.length
+    ? config.navLinks.map((l) => ({ href: l.href, label: lang === "en" ? l.labelEN : l.labelES, icon: l.icon }))
+    : t.nav.links;
+  const ctaLabel = (lang === "en" ? config?.cta?.en : config?.cta?.es) || t.nav.cta;
+  const whatsapp = config?.contact?.whatsapp || "https://wa.me/17794318214";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 48);
@@ -26,7 +56,7 @@ export default function Navbar() {
     >
       <div className="tc-wrap h-16 flex items-center justify-between" style={{ paddingTop: 0, paddingBottom: 0 }}>
         {/* Logo */}
-        <a href="#inicio" className="flex items-center gap-2 flex-shrink-0">
+        <a href="/#inicio" className="flex items-center gap-2 flex-shrink-0">
           <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: "linear-gradient(135deg,#2979ff,#7c4dff)" }}>
             <span className="text-white font-black text-sm">TC</span>
           </div>
@@ -35,23 +65,6 @@ export default function Navbar() {
             <span className="gradient-text">Crazy</span>
           </span>
         </a>
-
-        {/* Main links: Servicios / Productos / Novedades */}
-        <ul className="flex items-center gap-5 sm:gap-8">
-          {t.nav.links
-            .filter((l) => l.href === "#servicios" || l.href === "#productos" || l.href === "#novedades")
-            .map((l) => (
-              <li key={l.href}>
-                <a href={l.href} className="font-medium text-sm transition-colors relative group whitespace-nowrap" style={{ color: "rgba(255,255,255,0.7)" }}
-                  onMouseEnter={e => (e.currentTarget.style.color = "#fff")}
-                  onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.7)")}
-                >
-                  {l.label}
-                  <span className="absolute -bottom-0.5 left-0 right-0 h-px scale-x-0 group-hover:scale-x-100 transition-transform origin-left" style={{ background: "#2979ff" }} />
-                </a>
-              </li>
-            ))}
-        </ul>
 
         {/* Right side: lang toggle + hamburger */}
         <div className="flex items-center gap-2">
@@ -70,26 +83,56 @@ export default function Navbar() {
 
       {/* Dropdown menu with remaining options */}
       {open && (
-        <div style={{ background: "rgba(4,8,26,0.98)", borderTop: "1px solid rgba(255,255,255,0.07)" }}>
-          <div className="px-5 py-3 flex flex-col gap-0">
-            {t.nav.links
-              .filter((l) => l.href !== "#servicios" && l.href !== "#productos" && l.href !== "#novedades")
-              .map((l) => (
-                <a key={l.href} href={l.href} onClick={() => setOpen(false)}
-                  className="font-medium py-3.5 border-b transition-colors flex items-center gap-2"
-                  style={{ color: "rgba(255,255,255,0.75)", borderColor: "rgba(255,255,255,0.06)" }}>
-                  <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: "#2979ff" }} />
-                  {l.label}
-                </a>
-              ))}
+        <div
+          style={{
+            background: "linear-gradient(180deg, rgba(4,8,26,0.99) 0%, rgba(8,10,32,0.99) 100%)",
+            borderTop: "1px solid rgba(255,255,255,0.07)",
+            animation: "navDropIn 0.22s ease-out",
+          }}
+        >
+          <div className="px-5 pt-4 pb-2 grid grid-cols-2 gap-2.5">
+            {navLinks
+              .map((l, i) => {
+                const Icon = NAV_ICONS[l.icon] ?? Home;
+                return (
+                  <a
+                    key={l.href}
+                    href={l.href}
+                    onClick={() => setOpen(false)}
+                    className="flex flex-col gap-2 rounded-2xl p-3.5 transition-all group"
+                    style={{
+                      background: "rgba(255,255,255,0.04)",
+                      border: "1px solid rgba(255,255,255,0.07)",
+                      animation: `navItemIn 0.3s ease-out ${i * 0.04}s both`,
+                    }}
+                    onMouseEnter={e => { e.currentTarget.style.background = "rgba(41,121,255,0.12)"; e.currentTarget.style.borderColor = "rgba(41,121,255,0.35)"; }}
+                    onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.04)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.07)"; }}
+                  >
+                    <div
+                      className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
+                      style={{ background: "linear-gradient(135deg,#2979ff,#7c4dff)" }}
+                    >
+                      <Icon size={17} color="#fff" strokeWidth={2.2} />
+                    </div>
+                    <span className="font-semibold text-sm" style={{ color: "rgba(255,255,255,0.9)" }}>
+                      {l.label}
+                    </span>
+                  </a>
+                );
+              })}
           </div>
-          <div className="px-5 pb-5 pt-2">
-            <a href="https://wa.me/17794318214" target="_blank" rel="noopener noreferrer" className="btn-primary justify-center w-full" style={{ fontSize: 13 }}>
-              {t.nav.cta}
+          <div className="px-5 pb-5 pt-3">
+            <a href={whatsapp} target="_blank" rel="noopener noreferrer" className="btn-primary justify-center w-full" style={{ fontSize: 13 }}>
+              {ctaLabel}
             </a>
           </div>
         </div>
       )}
+
+      <style>{`
+        @keyframes navDropIn { from { opacity:0; transform:translateY(-8px);} to { opacity:1; transform:translateY(0);} }
+        @keyframes navItemIn { from { opacity:0; transform:translateY(6px);} to { opacity:1; transform:translateY(0);} }
+      `}</style>
     </nav>
   );
 }

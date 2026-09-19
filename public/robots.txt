@@ -1,6 +1,7 @@
 # *
 User-agent: *
 Allow: /
+Disallow: /privado
 
 # Host
 Host: https://technocrazy.org

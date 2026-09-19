@@ -1,14 +1,27 @@
 "use client";
 import { useEffect, useState } from "react";
-import { ArrowRight, Bot, Code2, Zap, ChevronDown } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight, Bot, Code2, Zap, ChevronDown, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { products } from "@/components/Products";
+
+// Indicador de que la tarjeta flotante es clicable y abre su página de solución.
+function VerMas({ color }: { color: string }) {
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: 3, marginTop: 7, opacity: 0.75 }}>
+      <span style={{ fontSize: 7, fontWeight: 800, letterSpacing: "0.1em", color }}>VER MÁS</span>
+      <ChevronRight size={8} style={{ color }} />
+    </div>
+  );
+}
 
 export default function Hero() {
   const { t } = useLanguage();
   const h = t.hero;
-  const stats = h.stats.map((s, i) => (i === 0 ? { ...s, num: `${products.length}` } : s));
+  // El número de "proyectos entregados" salía del array de productos que estaba
+  // escrito dentro de Products.tsx. Ahora los productos se administran desde el
+  // panel, así que el número vive en lib/i18n.ts (editable con el candado).
+  const stats = h.stats;
 
   const variants = h.h1Variants ?? [{ a: h.h1a, b: h.h1b, c: h.h1c }];
   const [headlineIndex, setHeadlineIndex] = useState(0);
@@ -138,44 +151,53 @@ export default function Hero() {
             </div>
 
             {/* Automatización — debajo de la foto, solo mobile */}
-            <motion.div animate={{ y: [0, -6, 0] }} transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1.2 }} className="lg:hidden" style={{ background: "rgba(124,77,255,0.10)", backdropFilter: "blur(14px)", border: "1px solid rgba(124,77,255,0.22)", borderRadius: 14, padding: "10px 12px" }}>
-              <div style={{ fontSize: 8, fontWeight: 700, color: "#b388ff", letterSpacing: "0.08em", marginBottom: 7 }}>{h.floatingAuto.title}</div>
-              <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-                {h.floatingAuto.steps.map((label, i) => ({ label, green: i === 2 })).map((step) => (
-                  <div key={step.label} style={{ display: "flex", alignItems: "center", gap: 7 }}>
-                    <div style={{ width: 6, height: 6, borderRadius: "50%", flexShrink: 0, background: step.green ? "#00e676" : "rgba(124,77,255,0.7)" }} />
-                    <span style={{ fontSize: 8, color: step.green ? "rgba(0,230,118,0.9)" : "rgba(255,255,255,0.6)" }}>{step.label}</span>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
+            <Link href="/soluciones/automatizacion" className="lg:hidden" style={{ textDecoration: "none" }}>
+              <motion.div whileTap={{ scale: 0.97 }} animate={{ y: [0, -6, 0] }} transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1.2 }} style={{ background: "rgba(124,77,255,0.10)", backdropFilter: "blur(14px)", border: "1px solid rgba(124,77,255,0.22)", borderRadius: 14, padding: "10px 12px", cursor: "pointer" }}>
+                <div style={{ fontSize: 8, fontWeight: 700, color: "#b388ff", letterSpacing: "0.08em", marginBottom: 7 }}>{h.floatingAuto.title}</div>
+                <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+                  {h.floatingAuto.steps.map((label, i) => ({ label, green: i === 2 })).map((step) => (
+                    <div key={step.label} style={{ display: "flex", alignItems: "center", gap: 7 }}>
+                      <div style={{ width: 6, height: 6, borderRadius: "50%", flexShrink: 0, background: step.green ? "#00e676" : "rgba(124,77,255,0.7)" }} />
+                      <span style={{ fontSize: 8, color: step.green ? "rgba(0,230,118,0.9)" : "rgba(255,255,255,0.6)" }}>{step.label}</span>
+                    </div>
+                  ))}
+                </div>
+                <VerMas color="#b388ff" />
+              </motion.div>
+            </Link>
           </div>
 
           {/* Panel de tarjetas flotantes — todas contenidas en una sola columna a la derecha de la foto */}
           <div className="flex gap-2 w-[130px] lg:gap-3 lg:w-[156px]" style={{ flexDirection: "column", position: "relative", zIndex: 2, marginLeft: "clamp(12px,3vw,22px)" }}>
             {/* Dashboard */}
-            <motion.div animate={{ y: [0, -6, 0] }} transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }} style={{ background: "rgba(255,255,255,0.05)", backdropFilter: "blur(14px)", border: "1px solid rgba(255,255,255,0.10)", borderRadius: 14, padding: "10px 13px" }}>
-              <div style={{ fontSize: 8, color: "rgba(255,255,255,0.45)", fontWeight: 700, letterSpacing: "0.06em", marginBottom: 5 }}>{h.floatingDashboard.label}</div>
-              <div style={{ fontSize: 18, fontWeight: 900, color: "#fff", lineHeight: 1 }}>$127,430</div>
-              <div style={{ fontSize: 9, color: "#00e676", marginTop: 3, fontWeight: 600 }}>{h.floatingDashboard.growth}</div>
-              <div style={{ fontSize: 8, color: "rgba(255,255,255,0.35)", marginTop: 4 }}>{h.floatingDashboard.users}</div>
-            </motion.div>
+            <Link href="/soluciones/dashboard" style={{ textDecoration: "none", display: "block" }}>
+              <motion.div whileHover={{ scale: 1.05, borderColor: "rgba(41,121,255,0.5)" }} whileTap={{ scale: 0.97 }} animate={{ y: [0, -6, 0] }} transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }} style={{ background: "rgba(255,255,255,0.05)", backdropFilter: "blur(14px)", border: "1px solid rgba(255,255,255,0.10)", borderRadius: 14, padding: "10px 13px", cursor: "pointer" }}>
+                <div style={{ fontSize: 8, color: "rgba(255,255,255,0.45)", fontWeight: 700, letterSpacing: "0.06em", marginBottom: 5 }}>{h.floatingDashboard.label}</div>
+                <div style={{ fontSize: 18, fontWeight: 900, color: "#fff", lineHeight: 1 }}>$127,430</div>
+                <div style={{ fontSize: 9, color: "#00e676", marginTop: 3, fontWeight: 600 }}>{h.floatingDashboard.growth}</div>
+                <div style={{ fontSize: 8, color: "rgba(255,255,255,0.35)", marginTop: 4 }}>{h.floatingDashboard.users}</div>
+                <VerMas color="#82b1ff" />
+              </motion.div>
+            </Link>
 
             {/* IA Agent */}
-            <motion.div animate={{ y: [0, -6, 0] }} transition={{ duration: 3.8, repeat: Infinity, ease: "easeInOut", delay: 0.6 }} style={{ background: "rgba(41,121,255,0.12)", backdropFilter: "blur(14px)", border: "1px solid rgba(41,121,255,0.28)", borderRadius: 14, padding: "10px 12px" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 7 }}>
-                <div style={{ width: 22, height: 22, borderRadius: 7, background: "rgba(41,121,255,0.3)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                  <Bot size={11} style={{ color: "#82b1ff" }} />
+            <Link href="/soluciones/agente-ia" style={{ textDecoration: "none", display: "block" }}>
+              <motion.div whileHover={{ scale: 1.05, borderColor: "rgba(41,121,255,0.6)" }} whileTap={{ scale: 0.97 }} animate={{ y: [0, -6, 0] }} transition={{ duration: 3.8, repeat: Infinity, ease: "easeInOut", delay: 0.6 }} style={{ background: "rgba(41,121,255,0.12)", backdropFilter: "blur(14px)", border: "1px solid rgba(41,121,255,0.28)", borderRadius: 14, padding: "10px 12px", cursor: "pointer" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 7 }}>
+                  <div style={{ width: 22, height: 22, borderRadius: 7, background: "rgba(41,121,255,0.3)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                    <Bot size={11} style={{ color: "#82b1ff" }} />
+                  </div>
+                  <div>
+                    <div style={{ fontSize: 9, fontWeight: 700, color: "#fff", lineHeight: 1 }}>{h.floatingAgent.title}</div>
+                    <div style={{ fontSize: 7, color: "rgba(255,255,255,0.45)" }}>{h.floatingAgent.sub}</div>
+                  </div>
                 </div>
-                <div>
-                  <div style={{ fontSize: 9, fontWeight: 700, color: "#fff", lineHeight: 1 }}>{h.floatingAgent.title}</div>
-                  <div style={{ fontSize: 7, color: "rgba(255,255,255,0.45)" }}>{h.floatingAgent.sub}</div>
+                <div style={{ fontSize: 10, color: "rgba(255,255,255,0.75)", background: "rgba(255,255,255,0.06)", borderRadius: 8, padding: "6px 9px", lineHeight: 1.5 }}>
+                  {h.floatingAgent.msg.split("\n").map((line, i) => <span key={i}>{line}{i === 0 && <br />}</span>)}
                 </div>
-              </div>
-              <div style={{ fontSize: 10, color: "rgba(255,255,255,0.75)", background: "rgba(255,255,255,0.06)", borderRadius: 8, padding: "6px 9px", lineHeight: 1.5 }}>
-                {h.floatingAgent.msg.split("\n").map((line, i) => <span key={i}>{line}{i === 0 && <br />}</span>)}
-              </div>
-            </motion.div>
+                <VerMas color="#82b1ff" />
+              </motion.div>
+            </Link>
 
             {/* Tiempo real */}
             <motion.div animate={{ y: [0, -6, 0] }} transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut", delay: 1.8 }} className="flex items-center" style={{ background: "rgba(0,229,255,0.1)", border: "1px solid rgba(0,229,255,0.2)", borderRadius: 10, padding: "8px 12px", gap: 6, alignSelf: "flex-start" }}>
@@ -184,24 +206,33 @@ export default function Hero() {
             </motion.div>
 
             {/* API */}
-            <motion.div animate={{ y: [0, -6, 0] }} transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut", delay: 0.9 }} style={{ background: "linear-gradient(135deg,#2979ff,#00b8d4)", borderRadius: 13, padding: "10px 16px", boxShadow: "0 8px 24px rgba(41,121,255,0.50)", textAlign: "center", alignSelf: "flex-start" }}>
-              <div style={{ fontSize: 18, fontWeight: 900, color: "#fff", letterSpacing: "0.04em" }}>API</div>
-              <div style={{ fontSize: 7, color: "rgba(255,255,255,0.75)", marginTop: 3, letterSpacing: "0.06em" }}>{h.floatingApi.sub}</div>
-              <Code2 size={9} style={{ color: "rgba(255,255,255,0.6)", marginTop: 4 }} />
-            </motion.div>
+            <Link href="/soluciones/api" style={{ textDecoration: "none", display: "block", alignSelf: "flex-start" }}>
+              <motion.div whileHover={{ scale: 1.06 }} whileTap={{ scale: 0.97 }} animate={{ y: [0, -6, 0] }} transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut", delay: 0.9 }} style={{ background: "linear-gradient(135deg,#2979ff,#00b8d4)", borderRadius: 13, padding: "10px 16px", boxShadow: "0 8px 24px rgba(41,121,255,0.50)", textAlign: "center", cursor: "pointer" }}>
+                <div style={{ fontSize: 18, fontWeight: 900, color: "#fff", letterSpacing: "0.04em" }}>API</div>
+                <div style={{ fontSize: 7, color: "rgba(255,255,255,0.75)", marginTop: 3, letterSpacing: "0.06em" }}>{h.floatingApi.sub}</div>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 3, marginTop: 5 }}>
+                  <Code2 size={9} style={{ color: "rgba(255,255,255,0.6)" }} />
+                  <span style={{ fontSize: 7, fontWeight: 800, letterSpacing: "0.1em", color: "rgba(255,255,255,0.85)" }}>VER MÁS</span>
+                  <ChevronRight size={8} style={{ color: "rgba(255,255,255,0.85)" }} />
+                </div>
+              </motion.div>
+            </Link>
 
             {/* Automatización — en desktop se queda en el panel; en mobile vive debajo de la foto */}
-            <motion.div animate={{ y: [0, -6, 0] }} transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1.2 }} className="hidden lg:block" style={{ background: "rgba(124,77,255,0.10)", backdropFilter: "blur(14px)", border: "1px solid rgba(124,77,255,0.22)", borderRadius: 14, padding: "10px 12px" }}>
-              <div style={{ fontSize: 8, fontWeight: 700, color: "#b388ff", letterSpacing: "0.08em", marginBottom: 7 }}>{h.floatingAuto.title}</div>
-              <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-                {h.floatingAuto.steps.map((label, i) => ({ label, green: i === 2 })).map((step) => (
-                  <div key={step.label} style={{ display: "flex", alignItems: "center", gap: 7 }}>
-                    <div style={{ width: 6, height: 6, borderRadius: "50%", flexShrink: 0, background: step.green ? "#00e676" : "rgba(124,77,255,0.7)" }} />
-                    <span style={{ fontSize: 8, color: step.green ? "rgba(0,230,118,0.9)" : "rgba(255,255,255,0.6)" }}>{step.label}</span>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
+            <Link href="/soluciones/automatizacion" className="hidden lg:block" style={{ textDecoration: "none" }}>
+              <motion.div whileHover={{ scale: 1.05, borderColor: "rgba(124,77,255,0.55)" }} whileTap={{ scale: 0.97 }} animate={{ y: [0, -6, 0] }} transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1.2 }} style={{ background: "rgba(124,77,255,0.10)", backdropFilter: "blur(14px)", border: "1px solid rgba(124,77,255,0.22)", borderRadius: 14, padding: "10px 12px", cursor: "pointer" }}>
+                <div style={{ fontSize: 8, fontWeight: 700, color: "#b388ff", letterSpacing: "0.08em", marginBottom: 7 }}>{h.floatingAuto.title}</div>
+                <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+                  {h.floatingAuto.steps.map((label, i) => ({ label, green: i === 2 })).map((step) => (
+                    <div key={step.label} style={{ display: "flex", alignItems: "center", gap: 7 }}>
+                      <div style={{ width: 6, height: 6, borderRadius: "50%", flexShrink: 0, background: step.green ? "#00e676" : "rgba(124,77,255,0.7)" }} />
+                      <span style={{ fontSize: 8, color: step.green ? "rgba(0,230,118,0.9)" : "rgba(255,255,255,0.6)" }}>{step.label}</span>
+                    </div>
+                  ))}
+                </div>
+                <VerMas color="#b388ff" />
+              </motion.div>
+            </Link>
           </div>
         </motion.div>
       </div>

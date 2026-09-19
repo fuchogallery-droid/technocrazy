@@ -7,12 +7,12 @@ import "./globals.css";
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID || "";
 
 export const metadata: Metadata = {
-  title: "TechnoCrazy — Transformo Ideas en Negocios Digitales",
-  description: "Diseño gráfico, desarrollo web, apps móviles, sistemas automatizados e IA. Un servicio completo para convertir tu idea en un negocio digital exitoso.",
-  keywords: "diseño gráfico, desarrollo web, apps móviles, inteligencia artificial, automatización, negocio digital",
+  title: "TechnoCrazy — Turning Ideas into Digital Businesses",
+  description: "Graphic design, web development, mobile apps, automated systems and AI. A complete service to turn your idea into a successful digital business.",
+  keywords: "graphic design, web development, mobile apps, artificial intelligence, automation, digital business",
   openGraph: {
-    title: "TechnoCrazy — Transformo Ideas en Negocios Digitales",
-    description: "Diseño. Código. Automatización. IA. Todo en un solo lugar.",
+    title: "TechnoCrazy — Turning Ideas into Digital Businesses",
+    description: "Design. Code. Automation. AI. All in one place.",
     url: "https://technocrazy.org",
     siteName: "TechnoCrazy",
     type: "website",
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="es">
+    <html lang="en">
       <body>
         <Providers>{children}</Providers>
         {GA_ID && (

@@ -1,24 +1,28 @@
 "use client";
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Palette, Globe, Smartphone, Cpu, Bot, Zap,
+  Palette, Globe, Smartphone, Cpu, Bot, Zap, Nfc,
   Target, Users, TrendingUp, ShieldCheck, Rocket, Heart,
   X, CheckCircle, LayoutGrid, ImageIcon, ZoomIn,
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useSiteConfig } from "@/contexts/SiteConfigContext";
 
 type ModalId = "design" | "web" | "apps" | "systems" | "ai" | "robot";
+type CardId = ModalId | "nfc";
 
 // Visual data only — no translated text
-const SERVICE_VISUAL: Record<ModalId, { icon: React.ReactNode; bg: string; glow: string; accentColor: string }> = {
+const SERVICE_VISUAL: Record<CardId, { icon: React.ReactNode; bg: string; glow: string; accentColor: string }> = {
   design:  { icon: <Palette size={22} />,   bg: "linear-gradient(135deg,#a855f7,#7c3aed)", glow: "rgba(168,85,247,0.2)",  accentColor: "#d8b4fe" },
   web:     { icon: <Globe size={22} />,      bg: "linear-gradient(135deg,#2979ff,#0050c8)", glow: "rgba(41,121,255,0.2)",  accentColor: "#82b1ff" },
   apps:    { icon: <Smartphone size={22} />, bg: "linear-gradient(135deg,#7c4dff,#5722cc)", glow: "rgba(124,77,255,0.2)",  accentColor: "#b388ff" },
   systems: { icon: <Cpu size={22} />,        bg: "linear-gradient(135deg,#00bcd4,#0097a7)", glow: "rgba(0,188,212,0.2)",   accentColor: "#80deea" },
   ai:      { icon: <Bot size={22} />,        bg: "linear-gradient(135deg,#00e676,#00c853)", glow: "rgba(0,230,118,0.2)",   accentColor: "#69f0ae" },
   robot:   { icon: <Zap size={22} />,        bg: "linear-gradient(135deg,#ec4899,#f43f5e)", glow: "rgba(236,72,153,0.2)",  accentColor: "#f9a8d4" },
+  nfc:     { icon: <Nfc size={22} />,        bg: "linear-gradient(135deg,#f59e0b,#fb923c)", glow: "rgba(245,158,11,0.2)",  accentColor: "#fcd34d" },
 };
 
 const MODAL_VISUAL: Record<ModalId, {
@@ -79,6 +83,8 @@ const TRUST_ICONS = [<Target size={16} />, <Users size={16} />, <TrendingUp size
 
 export default function Services() {
   const { t, lang } = useLanguage();
+  const { config } = useSiteConfig();
+  const router = useRouter();
   const ts = t.services;
   const [activeModal, setActiveModal] = useState<ModalId | null>(null);
   const [lightbox, setLightbox] = useState<{ src: string; label: string } | null>(null);
@@ -96,12 +102,25 @@ export default function Services() {
 
   const heading = titleVariants[titleIndex] ?? titleVariants[0];
 
-  // Merge visual + translation data
-  const services = ts.cards.map(card => ({
-    ...SERVICE_VISUAL[card.id as ModalId],
-    ...card,
-    hasModal: true,
-  }));
+  // Merge visual + translation data + Firestore price overrides (panel /admin)
+  const services = ts.cards.map(card => {
+    const override = config?.services?.[card.id];
+    const price = lang === "en" ? override?.priceEN : override?.priceES;
+    const priceNote = lang === "en" ? override?.priceNoteEN : override?.priceNoteES;
+    const title = lang === "en" ? override?.titleEN : override?.titleES;
+    const desc = lang === "en" ? override?.descEN : override?.descES;
+    const isNfc = card.id === "nfc";
+    return {
+      ...SERVICE_VISUAL[card.id as CardId],
+      ...card,
+      title: title || card.title,
+      desc: desc || card.desc,
+      price: price || card.price,
+      priceNote: priceNote || card.priceNote,
+      hasModal: !isNfc,
+      href: isNfc ? "/nfc" : undefined,
+    };
+  });
 
   const trust = ts.trust.map((label, i) => ({ icon: TRUST_ICONS[i], label }));
 
@@ -186,8 +205,11 @@ export default function Services() {
                 transition={{ duration: 0.45, delay: i * 0.07 }}
                 viewport={{ once: true }}
                 whileHover={{ y: -6 }}
-                onClick={() => s.hasModal && setActiveModal(s.id as ModalId)}
-                className={`glass-dark rounded-2xl relative overflow-hidden group text-center ${s.hasModal ? "cursor-pointer" : "cursor-default"}`}
+                onClick={() => {
+                  if (s.href) { router.push(s.href); return; }
+                  if (s.hasModal) setActiveModal(s.id as ModalId);
+                }}
+                className={`glass-dark rounded-2xl relative overflow-hidden group text-center ${s.hasModal || s.href ? "cursor-pointer" : "cursor-default"}`}
                 style={{ padding: "16px 12px" }}
               >
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" style={{ background: `radial-gradient(circle at 50% 0%,${s.glow},transparent 65%)` }} />
@@ -211,9 +233,9 @@ export default function Services() {
                   <span style={{ fontSize: 9, color: "rgba(255,255,255,0.3)" }}>{s.priceNote}</span>
                 </div>
 
-                {s.hasModal && (
+                {(s.hasModal || s.href) && (
                   <p className="mt-1 transition-opacity opacity-60 group-hover:opacity-100" style={{ fontSize: 9, color: s.accentColor }}>
-                    Ver detalles →
+                    {ts.detailsLink}
                   </p>
                 )}
               </motion.div>
@@ -235,8 +257,8 @@ export default function Services() {
                 <Rocket size={40} strokeWidth={1.5} />
               </div>
               <div>
-                <h3 className="text-white font-black text-lg sm:text-xl mb-1">¿Tienes un Proyecto?</h3>
-                <p className="text-blue-100 text-sm">No vendo cursos. Construyo resultados.</p>
+                <h3 className="text-white font-black text-lg sm:text-xl mb-1">{ts.ctaCard.title}</h3>
+                <p className="text-blue-100 text-sm">{ts.ctaCard.sub}</p>
               </div>
             </div>
             <a
@@ -251,7 +273,7 @@ export default function Services() {
                   <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
                 </svg>
               </span>
-              Hablemos
+              {ts.ctaCard.btn}
             </a>
           </motion.div>
 
@@ -309,16 +331,16 @@ export default function Services() {
                 <X size={17} />
               </button>
 
-              <div className="flex flex-col lg:flex-row" style={{ height: "90vh", maxHeight: "90vh" }}>
+              <div className="flex flex-col lg:flex-row lg:h-[90vh] overflow-y-auto lg:overflow-hidden" style={{ maxHeight: "90vh" }}>
 
                 {/* ── Lado izquierdo ── */}
-                <div className="flex flex-col min-h-0" style={{ width: "50%", borderRight: "1px solid rgba(255,255,255,0.06)" }}>
+                <div className="flex flex-col w-full lg:w-1/2 lg:min-h-0 border-b lg:border-b-0 lg:border-r" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
 
                   {/* Barra de acento superior */}
                   <div style={{ height: 4, background: m.grad, flexShrink: 0 }} />
 
                   {/* Todo el contenido en un solo scroll — footer sigue al contenido sin vacío */}
-                  <div className="flex-1 overflow-y-auto" style={{ padding: "38px 40px 36px" }}>
+                  <div className="lg:flex-1 lg:overflow-y-auto" style={{ padding: "clamp(24px,7vw,38px) clamp(20px,6vw,40px) clamp(24px,6vw,36px)" }}>
 
                     {/* Badge */}
                     <div
@@ -412,8 +434,8 @@ export default function Services() {
 
                 {/* ── Lado derecho: teaser de galería ── */}
                 <div
-                  className="flex-1 flex flex-col min-h-0 overflow-y-auto"
-                  style={{ padding: "32px 32px 28px", background: `linear-gradient(160deg, rgba(${m.rgb},0.08), rgba(255,255,255,0.01))` }}
+                  className="flex-1 flex flex-col lg:min-h-0 lg:overflow-y-auto"
+                  style={{ padding: "clamp(22px,6vw,32px) clamp(20px,6vw,32px) clamp(20px,6vw,28px)", background: `linear-gradient(160deg, rgba(${m.rgb},0.08), rgba(255,255,255,0.01))` }}
                 >
                   {/* Encabezado galería */}
                   <div className="flex items-center justify-between mb-5">

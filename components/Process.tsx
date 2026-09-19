@@ -1,15 +1,18 @@
 "use client";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { MessageCircle, Lightbulb, Code2, Rocket, TrendingUp } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { PROCESO_ES } from "@/components/proceso/data";
 
 const STEP_ICONS = [<MessageCircle size={22} />, <Lightbulb size={22} />, <Code2 size={22} />, <Rocket size={22} />, <TrendingUp size={22} />];
 const STEP_COLORS = ["#2979ff", "#7c4dff", "#00e5ff", "#00e676", "#ff9800"];
+const STEP_SLUGS = PROCESO_ES.map((p) => p.slug);
 
 export default function Process() {
   const { t } = useLanguage();
   const tp = t.process;
-  const steps = tp.steps.map((s, i) => ({ num: i + 1, icon: STEP_ICONS[i], color: STEP_COLORS[i], ...s }));
+  const steps = tp.steps.map((s, i) => ({ num: i + 1, icon: STEP_ICONS[i], color: STEP_COLORS[i], slug: STEP_SLUGS[i], ...s }));
   return (
     <section id="proceso" className="section-dark section-py relative overflow-hidden">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-12 opacity-30" style={{ background: "linear-gradient(to bottom,#00e5ff,transparent)" }} />
@@ -50,36 +53,45 @@ export default function Process() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.45, delay: i * 0.09 }}
                 viewport={{ once: true }}
-                className={`flex flex-col items-center text-center ${
+                whileHover={{ y: -4 }}
+                className={`${
                   // Centra el 5to elemento en la segunda fila del grid de 2 cols en mobile
                   i === 4 ? "col-span-2 md:col-span-1" : ""
                 }`}
               >
-                <motion.div
-                  whileHover={{ scale: 1.08 }}
-                  transition={{ type: "spring", stiffness: 280 }}
-                  className="relative mb-5"
+                <Link
+                  href={`/proceso/${s.slug}`}
+                  className="group flex flex-col items-center text-center"
+                  style={{ textDecoration: "none" }}
                 >
-                  <div
-                    className="rounded-2xl flex items-center justify-center text-white"
-                    style={{
-                      width: 76,
-                      height: 76,
-                      background: `linear-gradient(135deg,${s.color},${s.color}88)`,
-                      boxShadow: `0 12px 30px ${s.color}40`,
-                    }}
+                  <motion.div
+                    whileHover={{ scale: 1.08 }}
+                    transition={{ type: "spring", stiffness: 280 }}
+                    className="relative mb-5"
                   >
-                    {s.icon}
-                  </div>
-                  <div
-                    className="absolute rounded-full flex items-center justify-center text-xs font-black text-white"
-                    style={{ width: 26, height: 26, top: -8, right: -8, background: s.color, boxShadow: `0 4px 12px ${s.color}60` }}
-                  >
-                    {s.num}
-                  </div>
-                </motion.div>
-                <h3 className="text-white font-bold text-sm mb-2">{s.title}</h3>
-                <p className="text-gray-400 text-xs leading-relaxed">{s.desc}</p>
+                    <div
+                      className="rounded-2xl flex items-center justify-center text-white"
+                      style={{
+                        width: 76,
+                        height: 76,
+                        background: `linear-gradient(135deg,${s.color},${s.color}88)`,
+                        boxShadow: `0 12px 30px ${s.color}40`,
+                      }}
+                    >
+                      {s.icon}
+                    </div>
+                    <div
+                      className="absolute rounded-full flex items-center justify-center text-xs font-black text-white"
+                      style={{ width: 26, height: 26, top: -8, right: -8, background: s.color, boxShadow: `0 4px 12px ${s.color}60` }}
+                    >
+                      {s.num}
+                    </div>
+                  </motion.div>
+                  <h3 className="text-white font-bold text-sm mb-2 transition-colors group-hover:text-[color:var(--step-color)]" style={{ ["--step-color" as string]: s.color }}>
+                    {s.title}
+                  </h3>
+                  <p className="text-gray-400 text-xs leading-relaxed">{s.desc}</p>
+                </Link>
               </motion.div>
             ))}
           </div>

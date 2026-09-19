@@ -118,28 +118,6 @@ export default function About() {
               &ldquo;Si tienes una idea — yo tengo la tecnología.&rdquo;
             </blockquote>
 
-            {/* Mini journey timeline */}
-            <div className="flex flex-col gap-2 mb-5">
-              {[
-                { year: "2023", text: "Primeras apps personales — aprendiendo a construir" },
-                { year: "2024", text: "Primeros clientes — proyectos reales en producción" },
-                { year: "2025", text: "TechnoCrazy — plataforma de servicios digitales completa" },
-                { year: "2026", text: "10+ proyectos LIVE · Chicago, IL & servicio mundial" },
-              ].map((item) => (
-                <div key={item.year} className="flex items-start gap-3">
-                  <span className="font-black text-xs rounded-full px-2 py-0.5 flex-shrink-0 mt-0.5"
-                    style={{ background: "#eff4ff", color: "#2979ff", minWidth: 38, textAlign: "center" }}>
-                    {item.year}
-                  </span>
-                  <span className="text-gray-500 text-sm">{item.text}</span>
-                </div>
-              ))}
-            </div>
-
-            <p className="text-gray-500 leading-relaxed mb-5 text-sm">
-              No vendo cursos. Construyo contigo, paso a paso, hasta que tu negocio opere solo.
-            </p>
-
             {/* Skills tags */}
             <div className="flex flex-wrap gap-1.5 mb-6">
               {skills.map((skill) => (
@@ -177,24 +155,6 @@ export default function About() {
               ))}
             </div>
 
-            <div className="flex flex-wrap gap-4">
-              <a
-                href="https://instagram.com/igTechnoCrazy"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm font-medium text-gray-500 hover:text-blue-500 transition-colors flex items-center gap-1.5"
-              >
-                @igTechnoCrazy
-              </a>
-              <a
-                href="https://wa.me/17794318214"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm font-medium text-gray-500 hover:text-green-500 transition-colors flex items-center gap-1.5"
-              >
-                +1 779 431 8214
-              </a>
-            </div>
           </motion.div>
         </div>
       </div>
