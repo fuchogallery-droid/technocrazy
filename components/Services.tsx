@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useSiteConfig } from "@/contexts/SiteConfigContext";
+import { useWhatsAppUrl } from "@/lib/useWhatsApp";
 
 type ModalId = "design" | "web" | "apps" | "systems" | "ai" | "robot";
 type CardId = ModalId | "nfc";
@@ -82,6 +83,7 @@ const MODAL_VISUAL: Record<ModalId, {
 const TRUST_ICONS = [<Target size={16} />, <Users size={16} />, <TrendingUp size={16} />, <ShieldCheck size={16} />, <Rocket size={16} />, <Heart size={16} />];
 
 export default function Services() {
+  const whatsappUrl = useWhatsAppUrl();
   const { t, lang } = useLanguage();
   const { config } = useSiteConfig();
   const router = useRouter();
@@ -262,7 +264,7 @@ export default function Services() {
               </div>
             </div>
             <a
-              href="https://wa.me/17794318214"
+              href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="flex-shrink-0 font-bold flex items-center gap-3 rounded-full transition-all hover:brightness-110 hover:-translate-y-0.5"
@@ -419,7 +421,7 @@ export default function Services() {
                       </p>
 
                       <a
-                        href="https://wa.me/17794318214"
+                        href={whatsappUrl}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="block text-center font-bold text-white transition-all hover:opacity-90 hover:-translate-y-0.5"
@@ -458,7 +460,7 @@ export default function Services() {
                       g.cta ? (
                         <motion.a
                           key={idx}
-                          href={g.url}
+                          href={whatsappUrl}
                           target="_blank"
                           rel="noopener noreferrer"
                           initial={{ opacity: 0, scale: 0.92 }}

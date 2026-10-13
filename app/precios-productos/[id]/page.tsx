@@ -8,6 +8,7 @@ import { db } from "@/lib/firebase";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
+import { readStoredReferral } from "@/components/ReferralCapture";
 import { useLanguage } from "@/contexts/LanguageContext";
 import type { Product } from "@/lib/collections";
 
@@ -68,7 +69,7 @@ export default function ProductDetailPage() {
       const res = await fetch("/api/stripe/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ productId: id }),
+        body: JSON.stringify({ productId: id, ref: readStoredReferral() }),
       });
       const data = await res.json();
       if (!res.ok || !data.url) throw new Error(data.error || tp.buyError);

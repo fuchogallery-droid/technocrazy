@@ -72,7 +72,8 @@ export default function SolucionView({ slug }: { slug: string }) {
 
               <div className="flex flex-wrap gap-3">
                 <motion.a
-                  href={WA} target="_blank" rel="noopener noreferrer"
+                  href={sol.slug === "agente-ia" ? "/propuesta-ia.html" : WA}
+                  {...(sol.slug === "agente-ia" ? {} : { target: "_blank", rel: "noopener noreferrer" })}
                   whileHover={{ scale: 1.03, y: -2 }} whileTap={{ scale: 0.97 }}
                   className="inline-flex items-center gap-2"
                   style={{ background: `linear-gradient(135deg,${sol.accent},${sol.accent2})`, color: "#fff", fontWeight: 700, fontSize: 14, padding: "14px 28px", borderRadius: 13, boxShadow: `0 14px 40px ${sol.accent}55`, textDecoration: "none" }}

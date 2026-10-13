@@ -4,6 +4,7 @@ import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import type { HomeProduct } from "@/lib/homeProducts";
 import type { QuickLink } from "@/lib/quickLinks";
+import type { Promoter } from "@/lib/promoters";
 
 export type ServiceOverride = {
   priceES?: string;
@@ -29,6 +30,9 @@ export type SiteConfig = {
   // Enlaces de la página /links (link in bio), administrados desde
   // /admin → Enlaces. Ver lib/quickLinks.ts.
   quickLinks?: QuickLink[];
+  // Promotores de la comunidad, administrados desde /admin, pestaña Promotores.
+  // Ver lib/promoters.ts.
+  promoters?: Promoter[];
 };
 
 const SiteConfigContext = createContext<{ config: SiteConfig | null; loading: boolean }>({

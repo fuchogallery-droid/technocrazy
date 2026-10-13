@@ -1,0 +1,35 @@
+﻿
+> technocrazy@0.1.0 dev
+> next dev
+
+▲ Next.js 16.2.9 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://100.73.208.1:3000
+- Environments: .env.local
+✓ Ready in 696ms
+
+ GET /soluciones/dashboard 200 in 1317ms (next.js: 780ms, generate-params: 534ms, application-code: 537ms)
+ GET /icon?a8f30027e6393646 200 in 322ms (next.js: 88ms, application-code: 233ms)
+ GET /muro 200 in 127ms (next.js: 42ms, application-code: 85ms)
+ GET /icon?a8f30027e6393646 200 in 17ms (next.js: 3ms, application-code: 15ms)
+ GET /biblioteca 200 in 1001ms (next.js: 927ms, application-code: 74ms)
+ GET /icon?a8f30027e6393646 200 in 15ms (next.js: 3ms, application-code: 12ms)
+ GET /preguntas 200 in 850ms (next.js: 785ms, application-code: 65ms)
+ GET /icon?a8f30027e6393646 200 in 15ms (next.js: 3ms, application-code: 12ms)
+node.exe : [browser] [useCollection:questions] permission-denied Missing or insufficient permissions. 
+En línea: 1 Carácter: 1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([browser] [useC...t permissions. :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+    at useCollection.useEffect.unsub (lib/useCollection.ts:57:17)
+  55 |         // Antes se ignoraba en silencio y la página simplemente decía "no hay
+  56 |         // nada" — imposible de diagnosticar desde el navegador.
+> 57 |         console.error(`[useCollection:${name}]`, err.code, err.message);
+     |                 ^
+  58 |         setError(err.code || "error");
+  59 |         setLoading(false);
+  60 |       } (lib/useCollection.ts:57:17)
+ GET /precios-productos 200 in 669ms (next.js: 602ms, application-code: 67ms)
+ GET /icon?a8f30027e6393646 200 in 16ms (next.js: 4ms, application-code: 12ms)

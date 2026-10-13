@@ -1,0 +1,21 @@
+
+> technocrazy@0.1.0 dev
+> next dev
+
+⚠ Port 3000 is in use by process 39860, using available port 3002 instead.
+▲ Next.js 16.2.9 (Turbopack)
+- Local:         http://localhost:3002
+- Network:       http://100.73.208.1:3002
+- Environments: .env.local
+✓ Ready in 915ms
+
+ GET /nfc 200 in 2.0s (next.js: 1571ms, application-code: 454ms)
+ GET /icon?a8f30027e6393646 200 in 562ms (next.js: 164ms, application-code: 397ms)
+ GET / 200 in 417ms (next.js: 82ms, application-code: 334ms)
+ GET /icon?a8f30027e6393646 200 in 32ms (next.js: 7ms, application-code: 26ms)
+ GET /nfc 200 in 62ms (next.js: 10ms, application-code: 52ms)
+ GET /icon?a8f30027e6393646 200 in 41ms (next.js: 4ms, application-code: 37ms)
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+ GET /nfc 200 in 146ms (next.js: 6ms, application-code: 140ms)
+ GET /icon?a8f30027e6393646 200 in 28ms (next.js: 6ms, application-code: 22ms)
+[?25h

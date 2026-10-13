@@ -4,6 +4,7 @@ import { Clock, Download, ExternalLink, X } from "lucide-react";
 import { useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useSiteConfig } from "@/contexts/SiteConfigContext";
+import { useWhatsAppUrl } from "@/lib/useWhatsApp";
 import {
   FALLBACK_PRODUCT_ICON,
   PLATFORM_ICON_MAP,
@@ -268,6 +269,7 @@ function ProductCard({
 }
 
 export default function Products() {
+  const whatsappUrl = useWhatsAppUrl();
   const { lang } = useLanguage();
   const copy = COPY[lang] ?? COPY.es;
   const { config } = useSiteConfig();
@@ -344,7 +346,7 @@ export default function Products() {
               {copy.ctaText}
             </p>
             <motion.a
-              href="https://wa.me/17794318214"
+              href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-primary inline-flex relative"

@@ -2,9 +2,11 @@
 import { motion } from "framer-motion";
 import { ArrowRight, MessageCircle, Mail } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useWhatsAppUrl } from "@/lib/useWhatsApp";
 
 export default function CTAFinal() {
   const { t } = useLanguage();
+  const whatsappUrl = useWhatsAppUrl();
   const tc = t.cta;
   return (
     <section className="section-py relative overflow-hidden" style={{ background: "linear-gradient(160deg,#0a0a1a 0%,#12122a 60%,#0d0d24 100%)" }}>
@@ -48,7 +50,7 @@ export default function CTAFinal() {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center" style={{ marginBottom: 40 }}>
             <motion.a
-              href="https://wa.me/17794318214"
+              href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 font-bold rounded-full"

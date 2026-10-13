@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import {
   Menu, X, Home, Layers, Star, User, Route, Calendar, Bot,
-  UserCircle, DollarSign, BookOpen, Images, Quote, HelpCircle, Lightbulb, Newspaper,
+  Users, UserCircle, DollarSign, BookOpen, Images, Quote, HelpCircle, Lightbulb, Newspaper,
   type LucideIcon,
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -21,6 +21,7 @@ const NAV_ICONS: Record<string, LucideIcon> = {
   book: BookOpen,
   images: Images,
   quote: Quote,
+  users: Users,
   "help-circle": HelpCircle,
   lightbulb: Lightbulb,
   newspaper: Newspaper,

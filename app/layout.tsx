@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import Providers from "@/components/Providers";
+import IntroVideo from "@/components/IntroVideo";
 import "./globals.css";
 
 // GA4 Measurement ID — reemplazar con el real desde analytics.google.com
@@ -23,6 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
+        <IntroVideo />
         <Providers>{children}</Providers>
         {GA_ID && (
           <>

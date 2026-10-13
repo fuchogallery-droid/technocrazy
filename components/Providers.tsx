@@ -3,6 +3,7 @@ import { usePathname } from "next/navigation";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { SiteConfigProvider } from "@/contexts/SiteConfigContext";
 import { AdminModeProvider } from "@/contexts/AdminModeContext";
+import ReferralCapture from "@/components/ReferralCapture";
 import EditModeToggle from "@/components/admin/EditModeToggle";
 import VisualEditor from "@/components/admin/VisualEditor";
 import { ReactNode } from "react";
@@ -26,6 +27,7 @@ export default function Providers({ children }: { children: ReactNode }) {
       <SiteConfigProvider>
         <AdminModeProvider>
           {children}
+          <ReferralCapture />
           {/* Se auto-ocultan si no hay sesión de admin: para un visitante
               normal no renderizan absolutamente nada. */}
           <AdminOverlays />

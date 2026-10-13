@@ -6,7 +6,10 @@ import { useLanguage } from "@/contexts/LanguageContext";
 const VALUE_ICONS = [<Shield size={17} />, <Target size={17} />, <Users size={17} />, <Zap size={17} />];
 const VALUE_COLORS = ["#2979ff", "#7c4dff", "#00e5ff", "#00e676"];
 
-const skills = ["Next.js", "React", "Tailwind", "Claude AI", "Framer Motion", "Firebase", "Vercel", "Figma"];
+const skills = [
+  "Next.js", "React", "TypeScript", "Tailwind", "Claude AI", "Framer Motion", "Firebase", "Vercel", "Figma",
+  "Node.js", "Stripe", "Twilio", "Kotlin", "Jetpack Compose", "PostgreSQL", "Prisma", "Railway", "Cloudflare", "GitHub", "Playwright",
+];
 
 export default function About() {
   const { t } = useLanguage();
@@ -104,11 +107,7 @@ export default function About() {
             className="flex-1 min-w-0"
           >
             <p className="text-gray-600 leading-relaxed mb-3" style={{ fontSize: 15 }}>
-              Soy <strong className="text-gray-900">Rafael Navarro</strong>, venezolano en Chicago, diseñador gráfico, desarrollador web y creador de apps. Llegué a esta ciudad sin conocer a nadie — y construí un negocio digital desde cero.
-            </p>
-
-            <p className="text-gray-500 leading-relaxed mb-4 text-sm">
-              Aprendí a programar. Aprendí a usar IA. Construí mis primeras herramientas, las probé, las mejoré. Y me di cuenta de que lo que yo hacía para mí mismo — podía hacerlo para otros también.
+              Soy <strong className="text-gray-900">Rafael Navarro</strong>, venezolano en Chicago, diseñador gráfico, desarrollador web y creador de apps.
             </p>
 
             <blockquote
@@ -119,6 +118,7 @@ export default function About() {
             </blockquote>
 
             {/* Skills tags */}
+            <div className="font-bold text-gray-900 text-sm" style={{ marginBottom: 8 }}>{ta.skillsTitle}</div>
             <div className="flex flex-wrap gap-1.5 mb-6">
               {skills.map((skill) => (
                 <span

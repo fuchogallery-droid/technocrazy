@@ -3,9 +3,10 @@ import Stripe from "stripe";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import type { Product } from "@/lib/collections";
+import { normalizeCode, type Promoter } from "@/lib/promoters";
 
 export async function POST(request: Request) {
-  const { productId } = await request.json().catch(() => ({ productId: null }));
+  const { productId, ref } = await request.json().catch(() => ({ productId: null, ref: "" }));
   if (!productId || typeof productId !== "string") {
     return NextResponse.json({ error: "Falta el producto." }, { status: 400 });
   }
@@ -24,6 +25,16 @@ export async function POST(request: Request) {
   const product = snap.data() as Product;
   if (!product.active) {
     return NextResponse.json({ error: "Este producto ya no está disponible." }, { status: 400 });
+  }
+
+  // Atribución a un promotor: el código viene del navegador, así que solo se
+  // acepta si existe en config/site.promoters. Un código inventado no marca nada.
+  let promoter = "";
+  if (typeof ref === "string" && ref) {
+    const code = normalizeCode(ref);
+    const siteSnap = await getDoc(doc(db, "config", "site"));
+    const promoters = (siteSnap.exists() ? siteSnap.data().promoters : []) as Promoter[] | undefined;
+    if (promoters?.some((p) => p.code === code)) promoter = code;
   }
 
   const stripe = new Stripe(secretKey);
@@ -46,7 +57,7 @@ export async function POST(request: Request) {
     ],
     success_url: `${origin}/precios-productos/gracias?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${origin}/precios-productos/${productId}`,
-    metadata: { productId },
+    metadata: promoter ? { productId, promoter } : { productId },
   });
 
   return NextResponse.json({ url: session.url });

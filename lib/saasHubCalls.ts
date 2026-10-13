@@ -131,6 +131,88 @@ export async function listAgentCalls(limit = 50): Promise<AgentCallSummary[]> {
     .map((d) => toSummary(d.document!.name.split("/").pop()!, decodeFields(d.document!.fields)));
 }
 
+export type LeadStatus = "new" | "contacted" | "won" | "discarded";
+
+export interface AgentLead {
+  id: string;
+  name: string;
+  phone: string;
+  interest: string;
+  summary: string;
+  budget: string | null;
+  status: LeadStatus;
+  notes: string;
+  fromNumber: string;
+  callId: string | null;
+  createdAt: number;
+}
+
+function toLead(id: string, f: Record<string, any>): AgentLead {
+  return {
+    id,
+    name: f.name ?? "",
+    phone: f.phone ?? "",
+    interest: f.interest ?? "",
+    summary: f.summary ?? "",
+    budget: f.budget ?? null,
+    status: (f.status as LeadStatus) ?? "new",
+    notes: f.notes ?? "",
+    fromNumber: f.fromNumber ?? "",
+    callId: f.callId ?? null,
+    createdAt: f.createdAt ?? 0,
+  };
+}
+
+/** Solicitudes que el agente registra con la herramienta registrar_solicitud (colección `leads`). */
+export async function listAgentLeads(limit = 100): Promise<AgentLead[]> {
+  const tok = await serviceToken();
+  const res = await fetch(`${BASE}/businesses/${BUSINESS_ID}:runQuery`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Authorization: `Bearer ${tok}` },
+    body: JSON.stringify({
+      structuredQuery: {
+        from: [{ collectionId: "leads" }],
+        orderBy: [{ field: { fieldPath: "createdAt" }, direction: "DESCENDING" }],
+        limit,
+      },
+    }),
+  });
+  if (!res.ok) throw new Error(`listAgentLeads: ${res.status} ${await res.text()}`);
+
+  const data = (await res.json()) as Array<{ document?: { name: string; fields: Record<string, FsVal> } }>;
+  return data
+    .filter((d) => d.document?.fields)
+    .map((d) => toLead(d.document!.name.split("/").pop()!, decodeFields(d.document!.fields)));
+}
+
+const VALID_STATUS: LeadStatus[] = ["new", "contacted", "won", "discarded"];
+
+/** Cambia el estado y/o las notas internas de una solicitud. Solo toca esos dos campos. */
+export async function updateAgentLead(
+  leadId: string,
+  patch: { status?: string; notes?: string }
+): Promise<boolean> {
+  const fields: Record<string, FsVal> = {};
+  if (patch.status !== undefined) {
+    if (!VALID_STATUS.includes(patch.status as LeadStatus)) throw new Error("estado inválido");
+    fields.status = { stringValue: patch.status };
+  }
+  if (patch.notes !== undefined) fields.notes = { stringValue: patch.notes.slice(0, 2000) };
+  const paths = Object.keys(fields);
+  if (paths.length === 0) return false;
+
+  const tok = await serviceToken();
+  const mask = paths.map((p) => `updateMask.fieldPaths=${p}`).join("&");
+  const res = await fetch(`${BASE}/businesses/${BUSINESS_ID}/leads/${encodeURIComponent(leadId)}?${mask}&currentDocument.exists=true`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json", Authorization: `Bearer ${tok}` },
+    body: JSON.stringify({ fields }),
+  });
+  if (res.status === 404) return false;
+  if (!res.ok) throw new Error(`updateAgentLead: ${res.status} ${await res.text()}`);
+  return true;
+}
+
 export interface AgentCallDetail extends AgentCallSummary {
   transcript: { role: "user" | "assistant"; text: string; ts: number }[];
 }

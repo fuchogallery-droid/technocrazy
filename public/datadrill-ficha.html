@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ficha de Proyecto DATADRILL</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EAEEF0; --panel:#FFFFFF; --ink:#14212B; --ink-2:#4A5C68; --line:#C9D3D9; --grid:#DCE3E7;
+  --steel:#1F4E66; --accent:#E4570F; --accent-ink:#FFFFFF; --ok:#1E7A4C; --err:#B3261E; --field:#F6F8F9;
+  --font-d:'Barlow Condensed','Arial Narrow',Arial,sans-serif;
+  --font-b:'IBM Plex Sans',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;
+  --font-m:'IBM Plex Mono',ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0E171D; --panel:#152430; --ink:#E7EEF2; --ink-2:#98AAB6; --line:#2A3E4C; --grid:#1B2D39;
+    --steel:#6FB4D6; --accent:#FF7A33; --accent-ink:#1A0B02; --ok:#4CC58A; --err:#FF8A80; --field:#0F1C25;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0E171D; --panel:#152430; --ink:#E7EEF2; --ink-2:#98AAB6; --line:#2A3E4C; --grid:#1B2D39;
+  --steel:#6FB4D6; --accent:#FF7A33; --accent-ink:#1A0B02; --ok:#4CC58A; --err:#FF8A80; --field:#0F1C25;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 var(--font-b);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:28px 28px;padding-inline:16px;padding-block:0 64px}
+.wrap{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:200px minmax(0,1fr);gap:40px}
+header.top{max-width:1080px;margin:0 auto;padding-block:36px 28px;border-bottom:2px solid var(--ink)}
+.eyebrow{font:500 12px/1 var(--font-m);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+h1{font:700 clamp(38px,7vw,68px)/.95 var(--font-d);text-transform:uppercase;letter-spacing:.01em;margin:12px 0 14px;text-wrap:balance}
+h1 span{color:var(--accent)}
+.lead{max-width:62ch;color:var(--ink-2);margin:0}
+.meta{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:20px;font:400 13px var(--font-m);color:var(--ink-2)}
+.meta b{color:var(--ink);font-weight:500}
+
+nav.rail{position:sticky;top:20px;align-self:start;padding-top:28px}
+nav.rail ol{list-style:none;margin:0;padding:0 0 0 18px;border-left:2px solid var(--line);display:grid;gap:4px}
+nav.rail a{display:block;position:relative;padding:6px 8px;color:var(--ink-2);text-decoration:none;font:500 13px/1.3 var(--font-b);border-radius:3px}
+nav.rail a::before{content:"";position:absolute;left:-24px;top:50%;width:10px;height:10px;margin-top:-5px;border-radius:50%;background:var(--bg);border:2px solid var(--line)}
+nav.rail a.done::before{background:var(--ok);border-color:var(--ok)}
+nav.rail a.cur{color:var(--ink);background:var(--panel)}
+nav.rail a.cur::before{border-color:var(--accent);background:var(--accent)}
+nav.rail a:hover{color:var(--ink)}
+.prog{margin-top:18px;font:400 12px var(--font-m);color:var(--ink-2)}
+.bar{height:6px;background:var(--line);margin-top:6px;border-radius:3px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .3s}
+
+main{padding-top:28px;display:grid;gap:28px;min-width:0}
+section.blk{background:var(--panel);border:1px solid var(--line);border-top:4px solid var(--steel);padding:26px clamp(16px,3vw,32px) 30px;scroll-margin-top:16px}
+section.blk>h2{font:700 30px/1 var(--font-d);text-transform:uppercase;letter-spacing:.02em;margin:0 0 4px;display:flex;align-items:baseline;gap:12px}
+h2 .tag{font:500 12px var(--font-m);letter-spacing:.1em;color:var(--accent);border:1px solid var(--accent);padding:2px 7px;border-radius:2px}
+.hint{color:var(--ink-2);font-size:14px;margin:0 0 20px;max-width:64ch}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 20px}
+.full{grid-column:1/-1}
+.f{display:flex;flex-direction:column;gap:6px;min-width:0}
+label,.lbl{font:600 14px/1.35 var(--font-b);color:var(--ink)}
+.sub{font-weight:400;color:var(--ink-2);font-size:13px}
+input[type=text],input[type=email],input[type=tel],input[type=url],input[type=date],select,textarea{
+  width:100%;font:400 16px var(--font-b);color:var(--ink);background:var(--field);border:1px solid var(--line);
+  border-bottom:2px solid var(--ink-2);border-radius:2px;padding:10px 12px;min-height:44px}
+textarea{min-height:92px;resize:vertical}
+input:focus,select:focus,textarea:focus,button:focus-visible,summary:focus-visible,.drop:focus-within{outline:3px solid var(--accent);outline-offset:1px}
+input:focus,select:focus,textarea:focus{border-bottom-color:var(--accent)}
+.chk{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px 16px}
+.chk label{display:flex;gap:10px;align-items:flex-start;font-weight:400;font-size:15px;padding:8px 10px;border:1px solid var(--line);background:var(--field);cursor:pointer;border-radius:2px}
+.chk label:has(input:checked){border-color:var(--accent);background:color-mix(in srgb,var(--accent) 10%,var(--field))}
+input[type=checkbox],input[type=radio]{width:18px;height:18px;margin:2px 0 0;accent-color:var(--accent);flex:none}
+.q{padding-block:14px;border-top:1px dashed var(--line)}
+.q:first-of-type{border-top:0;padding-top:0}
+.num{font:500 12px var(--font-m);color:var(--steel);margin-right:6px}
+
+.drop{border:2px dashed var(--line);background:var(--field);padding:16px;border-radius:2px;display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center}
+.drop.over{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 8%,var(--field))}
+.drop input[type=file]{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.pick{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 14px;background:var(--ink);color:var(--bg);font:600 14px var(--font-b);cursor:pointer;border-radius:2px}
+.drop small{color:var(--ink-2);font-size:13px}
+.files{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:6px;width:100%}
+.files li{display:flex;align-items:center;gap:10px;font:400 13px var(--font-m);padding:6px 10px;background:var(--panel);border:1px solid var(--line);min-width:0}
+.files li span{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.files button{border:0;background:none;color:var(--err);cursor:pointer;font:600 13px var(--font-b);padding:4px 6px}
+
+.omitbar{display:flex;justify-content:flex-end;align-items:center;gap:10px;margin:-4px 0 2px}
+.omit{background:none;border:1px solid var(--line);color:var(--ink-2);font:500 12px var(--font-b);min-height:30px;padding:0 10px;cursor:pointer;border-radius:2px}
+.omit:hover{border-color:var(--ink-2);color:var(--ink)}
+.omitted>.omitbar .omit{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.omitted>.omitbar::before{content:"Omitido: no aplica a la página";font:500 12px var(--font-m);color:var(--ink-2);margin-right:auto}
+.omitted>*:not(.omitbar){opacity:.35;pointer-events:none}
+.q.omitted,.f.omitted{position:relative}
+.rows{display:grid;gap:14px}
+.row{border:1px solid var(--line);background:var(--field);padding:16px;position:relative;border-left:4px solid var(--steel)}
+.row h3{margin:0 0 12px;font:600 13px var(--font-m);letter-spacing:.08em;text-transform:uppercase;color:var(--steel)}
+.rm{position:absolute;top:8px;right:8px;border:0;background:none;color:var(--err);cursor:pointer;font:600 13px var(--font-b);min-height:32px;padding:0 8px}
+.add{margin-top:14px;min-height:44px;padding:0 16px;background:transparent;border:2px solid var(--ink);color:var(--ink);font:600 14px var(--font-b);cursor:pointer;border-radius:2px}
+.add:hover{background:var(--ink);color:var(--bg)}
+.note{border-left:4px solid var(--accent);background:color-mix(in srgb,var(--accent) 9%,var(--panel));padding:12px 14px;font-size:14px;margin:0 0 18px}
+.cap{display:flex;flex-wrap:wrap;gap:6px 16px;justify-content:space-between;font:400 13px var(--font-m);color:var(--ink-2);margin-top:10px}
+.cap b.over{color:var(--err)}
+
+.sendrow{margin-top:26px;padding-top:20px;border-top:2px solid var(--ink);display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px}
+.sendrow .cap{margin:0;flex:1 1 220px}
+.sendrow .status{flex:1 1 100%;margin:0}
+nav.rail a.sent::before{background:var(--ok);border-color:var(--ok);box-shadow:0 0 0 3px color-mix(in srgb,var(--ok) 25%,transparent)}
+nav.rail a.sent::after{content:" · enviado";color:var(--ok);font:500 11px var(--font-m)}
+.btn{min-height:52px;padding:0 28px;background:var(--accent);color:var(--accent-ink);border:0;font:700 22px var(--font-d);text-transform:uppercase;letter-spacing:.06em;cursor:pointer;border-radius:2px}
+.btn[disabled]{opacity:.55;cursor:wait}
+.status{margin-top:14px;font-size:15px}
+.status.err{color:var(--err)} .status.ok{color:var(--ok)}
+.draft{font:400 12px var(--font-m);color:var(--ink-2);margin-top:12px}
+.done{display:none;text-align:left;padding:34px clamp(16px,3vw,32px);background:var(--panel);border:1px solid var(--line);border-top:4px solid var(--ok)}
+.done h2{font:700 40px/1 var(--font-d);text-transform:uppercase;margin:0 0 10px}
+.hp{position:absolute;left:-9999px;height:0;overflow:hidden}
+@media (max-width:820px){
+  .wrap{grid-template-columns:1fr;gap:0}
+  nav.rail{position:static;padding-top:16px}
+  nav.rail ol{display:flex;flex-wrap:wrap;border-left:0;padding:0;gap:6px}
+  nav.rail a{border:1px solid var(--line);background:var(--panel)}
+  nav.rail a::before{display:none}
+  .grid{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.bar i{transition:none}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="eyebrow">Maturín · Estado Monagas · Venezuela</div>
+  <h1>Ficha de proyecto<br><span>DATADRILL, C.A.</span></h1>
+  <p class="lead">Gracias por lo que ya nos enviaste (empresa, panel, máquinas y público: módulos 1, 3, 4 y 5). Aquí quedan solo los 3 módulos que faltan: el 2 (equipo y presentación), el 6 (fechas y presupuesto) y el 7 (conexión con la máquina). Son independientes: llena uno, pulsa su botón "Enviar módulo" y sigue con el siguiente cuando puedas. No tienes que hacerlo todo de una vez. Tus respuestas se guardan en este equipo mientras escribes.</p>
+  <div class="meta"><span>Tiempo por módulo: <b>2–5 min</b></span><span>Adjuntos: <b>logo, fotos, capturas</b></span><span>Confidencial: <b>solo lo vemos nosotros</b></span></div>
+</header>
+
+<div class="wrap">
+<nav class="rail" aria-label="Secciones">
+  <ol id="rail"></ol>
+  <div class="prog"><b id="sentn">0</b> de 3 módulos enviados<br><span id="pct">0%</span> respondido<div class="bar"><i id="barfill"></i></div></div>
+</nav>
+
+<main>
+<form id="f" novalidate autocomplete="off">
+<div class="hp" aria-hidden="true"><label>No llenar<input type="text" name="_honey" tabindex="-1" autocomplete="off"></label></div>
+
+<!-- datos de contacto ya entregados por Alberto: van ocultos en cada envío -->
+<input type="hidden" id="contacto" name="contacto" value="Alberto Morgado — C.I.O.">
+<input type="hidden" id="correo" name="correo" value="albertomorgui@gmail.com">
+
+<!-- 2 -->
+<section class="blk" id="s2" data-title="Equipo y empresa">
+  <h2><span class="tag">2</span>Equipo y presentación</h2>
+  <p class="hint">Quiénes son, qué muestran y qué no.</p>
+  <div class="q"><span class="lbl">Personas de la empresa</span><p class="hint" style="margin:2px 0 12px">Agrega a quienes aparecerán en la página (directivos, jefes, ingenieros).</p>
+    <div class="rows" id="rows-equipo"></div><button type="button" class="add" data-add="equipo">+ Agregar persona</button></div>
+  <div class="q"><label for="aliados">Aliados, clientes y contratos que SÍ se pueden mostrar públicamente</label>
+    <textarea id="aliados" name="publico_clientes_contratos" placeholder="Ej.: San Antonio Internacional, BH Ensign…"></textarea></div>
+  <div class="q"><label for="privado">Lo que NO debe aparecer públicamente <span class="sub">(confidencial)</span></label>
+    <textarea id="privado" name="confidencial" placeholder="Ej.: nombres de clientes en algunos pozos, precios de contratos…"></textarea></div>
+  <div class="q"><label for="certs">Certificaciones, permisos o reconocimientos que deban aparecer</label>
+    <textarea id="certs" name="certificaciones"></textarea></div>
+  <div class="q"><span class="lbl">Fotos o videos de taladros, equipos y trabajos</span>
+    <div class="drop" data-cap="fotos"><label class="pick">Elegir archivos<input type="file" name="fotos_trabajos" multiple accept="image/*,video/*"></label><small>o arrástralos aquí</small><ul class="files"></ul></div></div>
+  <div class="q"><span class="lbl">Documentos de la empresa <span class="sub">(brochure, certificados, otros)</span></span>
+    <div class="drop" data-cap="docs"><label class="pick">Elegir archivos<input type="file" name="documentos" multiple accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,image/*"></label><small>o arrástralos aquí</small><ul class="files"></ul></div></div>
+</section>
+
+<!-- 6 -->
+<section class="blk" id="s6" data-title="Fechas y costos">
+  <h2><span class="tag">6</span>Fechas y presupuesto</h2>
+  <div class="grid">
+    <div class="f"><label for="fecha">¿Fecha límite o evento?</label><input type="text" id="fecha" name="fecha_limite"></div>
+    <div class="f"><label for="urg">¿Qué es lo más urgente?</label>
+      <select id="urg" name="prioridad"><option value="">Elegir…</option><option>Página informativa</option><option>Panel de administración</option><option>Dashboard en tiempo real</option><option>Todo a la vez</option></select></div>
+    <div class="f"><label for="presu">Presupuesto o rango para la primera etapa</label><input type="text" id="presu" name="presupuesto"></div>
+    <div class="f"><label for="tecnico">Contacto técnico para la conexión con las máquinas <span class="sub">(nombre y teléfono)</span></label><input type="text" id="tecnico" name="contacto_tecnico"></div>
+    <div class="f full"><label for="extra">Algo más que debamos saber</label><textarea id="extra" name="comentarios"></textarea></div>
+    <div class="f full"><label for="enlace">¿Archivos muy pesados? Pega aquí el enlace <span class="sub">(Google Drive, WeTransfer, Dropbox)</span></label><input type="url" id="enlace" name="enlace_archivos" placeholder="https://"></div>
+  </div>
+</section>
+
+<!-- 7 -->
+<section class="blk" id="s7" data-title="Conexión y ajustes">
+  <h2><span class="tag">7</span>Conexión con la máquina y ajustes finales</h2>
+  <p class="hint">Ya vimos la foto de tu software (rig HP-116, pozo full-34). Con esto podemos conectar los datos reales y dejar el dashboard igual a lo que ves hoy.</p>
+  <div class="grid">
+    <div class="f"><label for="rigconf">En la foto aparece <b>Rig HP-116</b> y <b>Well full-34</b>. ¿Es la misma máquina que pusiste como DAD-01?</label>
+      <select id="rigconf" name="confirmar_rig"><option value="">Elegir…</option><option>Sí, es la misma</option><option>No, son máquinas distintas</option><option>DAD-01 es el nombre de la empresa para esa máquina</option></select></div>
+    <div class="f"><label for="cfpmodelo">Modelo exacto del equipo que lee los sensores <span class="sub">(en la foto dice cFP)</span></label><input type="text" id="cfpmodelo" name="cfp_modelo" placeholder="cFP-1804…"></div>
+    <div class="f"><label for="cfpip">Dirección IP del cFP en la red de la máquina</label><input type="text" id="cfpip" name="cfp_ip" placeholder="En la foto se ve 192.168.0.10"></div>
+    <div class="f"><label for="proto">¿Cómo entrega los datos el software actual?</label>
+      <select id="proto" name="protocolo"><option value="">Elegir…</option><option>WITS</option><option>Modbus</option><option>OPC</option><option>Directo del cFP (NI FieldPoint)</option><option>No sé</option></select></div>
+    <div class="f"><label for="dbtipo">Base de datos que usa el software <span class="sub">(en la foto hay un botón "Data Base")</span></label><input type="text" id="dbtipo" name="base_datos_actual" placeholder="Access, SQL Server, MySQL, no sé…"></div>
+    <div class="f"><label for="pcsist">Sistema de la computadora junto a la máquina</label>
+      <select id="pcsist" name="pc_sistema"><option value="">Elegir…</option><option>Windows 11</option><option>Windows 10</option><option>Windows 7 u otro más viejo</option><option>No sé</option></select></div>
+  </div>
+  <div class="q"><label for="remoto">Acceso remoto a esa computadora <span class="sub">Solo para conectar los datos. Por seguridad NO escribas aquí claves ni códigos: los dictas por WhatsApp.</span></label>
+    <select id="remoto" name="acceso_remoto"><option value="">Elegir…</option><option>Ya tenemos AnyDesk instalado</option><option>Ya tenemos TeamViewer instalado</option><option>Podemos instalar AnyDesk</option><option>Solo se puede estando presentes</option><option>No lo permiten</option></select></div>
+  <div class="q"><label for="quienpc">¿Quién puede estar presente al momento de instalar y conectar?</label><input type="text" id="quienpc" name="quien_instala" placeholder="Nombre y teléfono"></div>
+  <div class="q"><label for="varsfalta">Las variables de la foto son unas 30. ¿Falta alguna o sobra alguna en el dashboard?</label>
+    <textarea id="varsfalta" name="variables_ajuste" placeholder="Ej.: quitar Pill Tank, agregar Torque…"></textarea></div>
+  <div class="grid q">
+    <div class="f"><label for="unid">Unidades en el dashboard</label>
+      <select id="unid" name="unidades"><option value="">Elegir…</option><option>Igual que el software (ft, klbs, psi, bls)</option><option>Sistema métrico (m, kN, bar, m³)</option><option>Poder cambiar entre ambos</option></select></div>
+    <div class="f"><label for="idioma">Idioma de la página</label>
+      <select id="idioma" name="idioma"><option value="">Elegir…</option><option>Solo español</option><option>Español e inglés</option></select></div>
+  </div>
+  <div class="q"><label for="alarmas">¿Cuáles variables necesitan alerta si pasan de cierto valor? <span class="sub">Ej.: H2S, presión de bomba, ganancia/pérdida de lodo</span></label>
+    <textarea id="alarmas" name="alertas_variables"></textarea></div>
+  <div class="grid q">
+    <div class="f"><label for="freq">¿Cada cuánto deben actualizarse los datos en la página?</label>
+      <select id="freq" name="frecuencia"><option value="">Elegir…</option><option>Cada segundo</option><option>Cada 5 segundos</option><option>Cada 30 segundos</option><option>Cada minuto</option><option>No estoy seguro</option></select></div>
+    <div class="f"><label for="hist">¿Se guarda el historial de cada pozo?</label>
+      <select id="hist" name="historial"><option value="">Elegir…</option><option>Sí, historial completo</option><option>Solo los últimos días</option><option>Solo el momento actual</option></select></div>
+    <div class="f"><label for="dominio">¿Tienes dominio web? <span class="sub">Si no, ¿cuál nombre prefieres?</span></label><input type="text" id="dominio" name="dominio" placeholder="datadrill.com"></div>
+  </div>
+  <div class="q"><span class="lbl">Logo original de DATADRILL</span>
+    <p class="hint" style="margin:2px 0 10px">El que mandaste es una captura de WhatsApp. Sube el archivo original (PNG con fondo transparente, SVG o PDF) si lo tienes.</p>
+    <div class="drop" data-cap="logo2"><label class="pick">Elegir archivo<input type="file" name="logo_original" multiple accept="image/*,.pdf,.svg,.ai"></label><small>o arrástralo aquí</small><ul class="files"></ul></div></div>
+</section>
+
+<div class="draft" id="dr"></div>
+</form>
+
+<div class="done" id="done" tabindex="-1">
+  <h2>Ficha completa</h2>
+  <p class="lead">Gracias, Alberto. Ya recibimos todo lo que faltaba. Revisaremos todo y te enviaremos la propuesta con el plan, los plazos y el costo.</p>
+</div>
+</main>
+</div>
+
+<template id="t-equipo"><div class="row"><h3>Persona <span class="n"></span></h3><button type="button" class="rm">Quitar</button>
+  <div class="grid">
+    <div class="f"><label>Nombre completo</label><input type="text" data-k="nombre"></div>
+    <div class="f"><label>Cargo</label><input type="text" data-k="cargo"></div>
+    <div class="f"><label>¿Aparece en la web?</label><select data-k="publico"><option>Sí</option><option>No</option></select></div>
+    <div class="f"><label>Foto</label><div class="drop" data-cap="foto"><label class="pick">Elegir foto<input type="file" data-k="foto" accept="image/*"></label><ul class="files"></ul></div></div>
+  </div></div></template>
+<script>
+(function(){
+'use strict';
+var ENDPOINT='https://formsubmit.co/ajax/rafaelpixel3004@gmail.com';
+var MAXTOTAL=4.5*1024*1024;
+var $=function(s,r){return (r||document).querySelector(s)}, $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+var form=$('#f'), KEY='datadrill_ficha_v2', NUMS=[2,6,7];
+var store={}, inputsById={}; // fileInput -> File[]
+function fmt(b){return b>1048576?(b/1048576).toFixed(1)+' MB':Math.max(1,Math.round(b/1024))+' KB'}
+
+/* rail */
+var secs=$$('section.blk'), rail=$('#rail');
+secs.forEach(function(s){var li=document.createElement('li'),a=document.createElement('a');a.href='#'+s.id;a.textContent=s.dataset.title;li.appendChild(a);rail.appendChild(li);s._a=a});
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){secs.forEach(function(s){s._a.classList.toggle('cur',s===e.target)})}})},{rootMargin:'-30% 0px -60% 0px'});
+secs.forEach(function(s){io.observe(s)});
+
+/* repeatable rows */
+var counters={};
+function addRow(kind,vals){
+  var host=$('#rows-'+kind); counters[kind]=(counters[kind]||0)+1;
+  var node=$('#t-'+kind).content.firstElementChild.cloneNode(true);
+  node.dataset.kind=kind; $('.n',node).textContent=counters[kind];
+  $$('input,select',node).forEach(function(el,i){el.id=kind+counters[kind]+'_'+el.dataset.k; var l=el.closest('.f').querySelector('label'); if(l&&!l.classList.contains('pick'))l.htmlFor=el.id;
+    if(vals&&vals[el.dataset.k]!=null&&el.type!=='file')el.value=vals[el.dataset.k]});
+  $('.rm',node).onclick=function(){node.remove();renumber(kind);save();totals()};
+  host.appendChild(node); bindDrops(node); return node;
+}
+function renumber(kind){$$('#rows-'+kind+' .row').forEach(function(r,i){$('.n',r).textContent=i+1});counters[kind]=$$('#rows-'+kind+' .row').length}
+$$('[data-add]').forEach(function(b){b.onclick=function(){addRow(b.dataset.add);}});
+
+/* drops */
+function bindDrops(root){
+  $$('.drop',root).forEach(function(d){
+    if(d._b)return; d._b=1;
+    var inp=$('input[type=file]',d), list=$('.files',d); store[inp.id||inp.name]=[]; inp._k=inp.id||inp.name; inputsById[inp._k]=inp;
+    function add(files){
+      Array.prototype.forEach.call(files,function(f){store[inp._k].push(f)});
+      if(!inp.multiple)store[inp._k]=store[inp._k].slice(-1);
+      render();totals();
+    }
+    function render(){
+      list.innerHTML='';
+      store[inp._k].forEach(function(f,i){
+        var li=document.createElement('li'),sp=document.createElement('span'),b=document.createElement('button');
+        sp.textContent=f.name+'  ·  '+fmt(f.size); b.type='button'; b.textContent='Quitar'; b.setAttribute('aria-label','Quitar '+f.name);
+        b.onclick=function(){store[inp._k].splice(i,1);render();totals()};
+        li.appendChild(sp);li.appendChild(b);list.appendChild(li);
+      });
+    }
+    inp.addEventListener('change',function(){add(inp.files);inp.value=''});
+    ['dragenter','dragover'].forEach(function(ev){d.addEventListener(ev,function(e){e.preventDefault();d.classList.add('over')})});
+    ['dragleave','drop'].forEach(function(ev){d.addEventListener(ev,function(e){e.preventDefault();d.classList.remove('over')})});
+    d.addEventListener('drop',function(e){if(e.dataTransfer&&e.dataTransfer.files)add(e.dataTransfer.files)});
+  });
+}
+bindDrops(document);
+
+/* omitir: botón en cada punto */
+var units=$$('.q:not(.grid), .q.grid > .f, section.blk .f').filter(function(u){
+  if(u.closest('.row')||u.querySelector('#contacto,#correo'))return false;
+  if(u.classList.contains('f')&&u.parentElement.closest('.q:not(.grid)'))return false;
+  return true;
+});
+function unitLabel(u){var l=$('.lbl,label',u);return l?l.textContent.replace(/\s+/g,' ').trim():'(sin título)'}
+function setOmit(u,on){
+  u.classList.toggle('omitted',on);
+  $$('input,select,textarea',u).forEach(function(el){el.disabled=on});
+  var b=$('.omit',u); b.textContent=on?'Incluir de nuevo':'Omitir: no es necesario para la página';
+  b.setAttribute('aria-pressed',on?'true':'false');
+}
+units.forEach(function(u){
+  var bar=document.createElement('div'),b=document.createElement('button');
+  bar.className='omitbar'; b.type='button'; b.className='omit'; b.textContent='Omitir: no es necesario para la página';
+  b.addEventListener('click',function(){setOmit(u,!u.classList.contains('omitted'));progress();totals();save()});
+  bar.appendChild(b); u.insertBefore(bar,u.firstChild);
+});
+function isOmitted(el){return !!el.closest('.omitted')}
+function secOf(inp){return inp.closest('section.blk')}
+function total(sec){var t=0;Object.keys(store).forEach(function(k){var inp=inputsById[k];if(!inp||!document.contains(inp)||isOmitted(inp)||secOf(inp)!==sec)return;store[k].forEach(function(f){t+=f.size})});return t}
+function totals(){secs.forEach(function(s){var t=total(s),c=s._cap;if(!c)return;
+  c.innerHTML='Adjuntos de este módulo: <b'+(t>MAXTOTAL?' class="over"':'')+'>'+fmt(t)+'</b> de 4.5 MB'+(t>MAXTOTAL?' — quita archivos o usa el enlace de Drive':'')})}
+
+/* botón de envío por módulo */
+var SENT={};
+secs.forEach(function(s,i){
+  var row=document.createElement('div'); row.className='sendrow';
+  var cap=document.createElement('div'); cap.className='cap'; s._cap=cap;
+  var b=document.createElement('button'); b.type='button'; b.className='btn'; b.textContent='Enviar módulo '+NUMS[i];
+  var st=document.createElement('div'); st.className='status'; st.setAttribute('role','status'); st.setAttribute('aria-live','polite');
+  row.appendChild(cap); row.appendChild(b); row.appendChild(st); s.appendChild(row);
+  s._btn=b; s._st=st; b.addEventListener('click',function(){sendModule(s,i)});
+});
+function markSent(){
+  var n=0; secs.forEach(function(s,i){var on=!!SENT[i]; if(on)n++; s._a.classList.toggle('sent',on);
+    s._btn.textContent=on?'Enviar de nuevo el módulo '+NUMS[i]:'Enviar módulo '+NUMS[i];
+    if(on&&!s._st.textContent){s._st.className='status ok';s._st.textContent='Módulo enviado. Puedes seguir con el siguiente.'}});
+  $('#sentn').textContent=n; $('#done').style.display=n===secs.length?'block':'none';
+}
+
+/* progress + draft */
+function fields(){return $$('input:not([type=file]):not([type=hidden]):not([name=_honey]),select,textarea',form)}
+function progress(){
+  var seen={},done=0,n=0;
+  fields().forEach(function(el){
+    var key=el.type==='radio'||el.type==='checkbox'?(el.name||el.id):el.id; if(seen[key])return; seen[key]=1; n++;
+    var ok; if(el.type==='radio'||el.type==='checkbox'){ok=$$('[name="'+el.name.replace(/"/g,'\\"')+'"]:checked',form).length>0}else ok=el.value.trim()!=='';
+    if(ok||isOmitted(el))done++;
+  });
+  var p=n?Math.round(done/n*100):0; $('#pct').textContent=p+'%'; $('#barfill').style.width=p+'%';
+  secs.forEach(function(s){var els=$$('input:not([type=file]):not([name=_honey]),select,textarea',s);var any=els.some(function(e){return isOmitted(e)||((e.type==='radio'||e.type==='checkbox')?e.checked:e.value.trim()!=='')});s._a.classList.toggle('done',any)});
+}
+function save(){
+  try{
+    var d={f:{},rows:{},omit:[],sent:SENT};
+    units.forEach(function(u,i){if(u.classList.contains('omitted'))d.omit.push(i)});
+    $$('input:not([type=file]),select,textarea',form).forEach(function(el){
+      if(el.closest('.row')||el.name==='_honey')return;
+      if(el.type==='radio'||el.type==='checkbox'){ if(el.checked)(d.f[el.name]=d.f[el.name]||[]).push(el.value)} else d.f[el.id]=el.value});
+    ['equipo'].forEach(function(k){d.rows[k]=$$('#rows-'+k+' .row').map(function(r){var o={};$$('[data-k]',r).forEach(function(e){if(e.type!=='file')o[e.dataset.k]=e.value});return o})});
+    localStorage.setItem(KEY,JSON.stringify(d));
+    $('#dr').textContent='Borrador guardado en este equipo. Los archivos adjuntos no se guardan: si cierras la página tendrás que volver a subirlos.';
+  }catch(e){}
+}
+function load(){
+  var d=null;try{d=JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){}
+  ['equipo'].forEach(function(k){var rs=d&&d.rows&&d.rows[k];if(rs&&rs.length)rs.forEach(function(v){addRow(k,v)});else addRow(k)});
+  if(!d)return;
+  SENT=d.sent||{};
+  $$('input:not([type=file]),select,textarea',form).forEach(function(el){
+    if(el.closest('.row')||el.name==='_honey')return;
+    if(el.type==='radio'||el.type==='checkbox'){el.checked=!!(d.f[el.name]&&d.f[el.name].indexOf(el.value)>-1)} else if(d.f[el.id]!=null)el.value=d.f[el.id]});
+  (d.omit||[]).forEach(function(i){if(units[i])setOmit(units[i],true)});
+}
+load(); progress(); totals(); markSent();
+var t;form.addEventListener('input',function(){progress();clearTimeout(t);t=setTimeout(save,400)});
+form.addEventListener('change',function(){progress();save()});
+
+/* envío por módulo */
+form.addEventListener('submit',function(e){e.preventDefault()});
+var TITLES=['Equipo y presentación','Fechas y presupuesto','Conexión y ajustes'];
+var ROWLBL={equipo:'Persona',maquina:'Maquina',ing:'Ingeniero'};
+function sendModule(sec,idx){
+  var st=sec._st,btn=sec._btn; st.className='status'; st.textContent='';
+  if($('input[name=_honey]').value)return;
+  var contacto=$('#contacto').value.trim(),correo=$('#correo').value.trim();
+  if(!contacto||!/\S+@\S+\.\S+/.test(correo)){
+    st.className='status err';st.textContent='Falta el nombre o el correo de contacto. Recarga la página e inténtalo de nuevo.';
+    $('#'+(contacto?'correo':'contacto')).focus();return}
+  if(total(sec)>MAXTOTAL){st.className='status err';st.textContent='Los adjuntos de este módulo superan 4.5 MB. Quita algunos o pega un enlace de Drive/WeTransfer.';return}
+
+  var out=document.createElement('form'); out.method='POST'; out.action='https://formsubmit.co/rafaelpixel3004@gmail.com'; out.enctype='multipart/form-data'; out.hidden=true;
+  var fname='fsframe'+idx+'_'+Date.now(); out.target=fname;
+  var data=0;
+  function put(n,v,count){var i=document.createElement('input');i.type='hidden';i.name=n;i.value=v;out.appendChild(i);if(count)data++}
+  put('_subject','Ficha DATADRILL — Módulo '+NUMS[idx]+' de 7: '+TITLES[idx]+' — '+contacto);
+  put('_template','table'); put('_captcha','false'); put('_replyto',correo);
+  put('email',correo);
+  put('_autoresponse','Hola. Recibimos el módulo '+NUMS[idx]+' ('+TITLES[idx]+') de tu ficha de proyecto DATADRILL, C.A. Gracias. Si ya enviaste todos los módulos, te escribiremos con la propuesta.');
+  put('modulo',NUMS[idx]+' de 7 — '+TITLES[idx]);
+  put('contacto',contacto);put('correo',correo)
+
+  $$('input:not([type=file]),select,textarea',sec).forEach(function(el){
+    if(el.closest('.row')||!el.name||isOmitted(el))return;
+    if(el.type==='radio'||el.type==='checkbox'){if(el.checked)put(el.name.replace('[]',''),el.value,true)}
+    else if(el.value.trim()!=='')put(el.name,el.value,true)});
+  $$('.rows',sec).forEach(function(host){
+    var kind=host.id.replace('rows-','');
+    $$('.row',host).forEach(function(r,i){
+      if(isOmitted(r))return;
+      var parts=[],text=false;$$('[data-k]',r).forEach(function(x){if(x.type==='file')return;var v=x.value.trim();if(v!==''){parts.push(x.dataset.k+': '+v);if(x.tagName!=='SELECT')text=true}});
+      if(text)put(ROWLBL[kind]+' '+(i+1),parts.join(' | '),true);
+    })});
+  var om=units.filter(function(u){return secOf(u)===sec&&u.classList.contains('omitted')}).map(unitLabel);
+  if(om.length)put('OMITIDO (no necesario para la pagina)',om.join(' || '),true);
+  var files=0;
+  Object.keys(store).forEach(function(k){
+    var inp=inputsById[k]; if(!inp||!document.contains(inp)||isOmitted(inp)||secOf(inp)!==sec)return;
+    store[k].forEach(function(f,i){
+      var fi=document.createElement('input');fi.type='file';fi.name=k.replace(/[^a-z0-9_]/gi,'_')+'_'+(i+1);
+      var dt=new DataTransfer();dt.items.add(f);fi.files=dt.files;out.appendChild(fi);files++});
+  });
+  if(!data&&!files){st.className='status err';st.textContent='Este módulo está vacío. Responde algo, sube un archivo u omite los puntos que no aplican.';return}
+
+  btn.disabled=true; st.textContent='Enviando el módulo '+NUMS[idx]+'… no cierres la página.';
+  var fr=document.createElement('iframe');fr.name=fname;fr.hidden=true;fr.title='envio';document.body.appendChild(fr);document.body.appendChild(out);
+  var settled=false;
+  var to=setTimeout(function(){if(settled)return;settled=true;btn.disabled=false;st.className='status err';st.textContent='El envío tardó demasiado. Revisa tu conexión, quita adjuntos pesados y vuelve a intentarlo. Tus respuestas siguen guardadas.'},120000);
+  fr.addEventListener('load',function(){
+    if(settled)return; settled=true; clearTimeout(to); btn.disabled=false;
+    SENT[idx]=1; st.className='status ok'; st.textContent='Módulo '+NUMS[idx]+' enviado. Gracias. '+(idx<secs.length-1?'Puedes seguir con el siguiente.':'');
+    save(); markSent();
+    setTimeout(function(){fr.remove();out.remove()},1000);
+  });
+  out.submit();
+}
+})();
+</script>
+</body>
+</html>

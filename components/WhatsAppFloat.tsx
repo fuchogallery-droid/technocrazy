@@ -1,10 +1,12 @@
 "use client";
 import { motion } from "framer-motion";
+import { useWhatsAppUrl } from "@/lib/useWhatsApp";
 
 export default function WhatsAppFloat() {
+  const whatsappUrl = useWhatsAppUrl();
   return (
     <motion.a
-      href="https://wa.me/17794318214"
+      href={whatsappUrl}
       target="_blank"
       rel="noopener noreferrer"
       className="whatsapp-float"

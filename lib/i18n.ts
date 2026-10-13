@@ -6,8 +6,7 @@ export const translations = {
       links: [
         { label: "Inicio", href: "#inicio", icon: "home" },
         { label: "Servicios", href: "#servicios", icon: "layers" },
-        { label: "Testimonios", href: "#testimonios", icon: "star" },
-        { label: "Sobre mí", href: "#sobre-mi", icon: "user" },
+        { label: "Promotores", href: "#promotores", icon: "users" },
         { label: "Proceso", href: "#proceso", icon: "route" },
         { label: "Calendario", href: "/calendario", icon: "calendar" },
         { label: "Propuesta IA", href: "/propuesta-ia.html", icon: "bot" },
@@ -233,6 +232,7 @@ export const translations = {
       badge: "Sobre mí",
       title: "El Rostro Detrás de",
       titleHighlight: "TechnoCrazy",
+      skillsTitle: "Amplia experiencia en:",
       values: [
         { title: "Confianza", desc: "Tu proyecto es mi responsabilidad. Trabajo con transparencia total." },
         { title: "Resultados", desc: "No vendo promesas. Entrego soluciones que funcionan." },
@@ -277,8 +277,7 @@ export const translations = {
       links: [
         { label: "Inicio", href: "#inicio" },
         { label: "Servicios", href: "#servicios" },
-        { label: "Testimonios", href: "#testimonios" },
-        { label: "Sobre mí", href: "#sobre-mi" },
+        { label: "Promotores", href: "#promotores" },
         { label: "Proceso", href: "#proceso" },
         { label: "📅 Calendario", href: "/calendario" },
         { label: "🤖 Propuesta IA", href: "/propuesta-ia.html" },
@@ -619,8 +618,7 @@ export const translations = {
       links: [
         { label: "Home", href: "#inicio", icon: "home" },
         { label: "Services", href: "#servicios", icon: "layers" },
-        { label: "Testimonials", href: "#testimonios", icon: "star" },
-        { label: "About Me", href: "#sobre-mi", icon: "user" },
+        { label: "Promoters", href: "#promotores", icon: "users" },
         { label: "Process", href: "#proceso", icon: "route" },
         { label: "Calendar", href: "/calendario", icon: "calendar" },
         { label: "AI Proposal", href: "/propuesta-ia.html", icon: "bot" },
@@ -846,6 +844,7 @@ export const translations = {
       badge: "About Me",
       title: "The Face Behind",
       titleHighlight: "TechnoCrazy",
+      skillsTitle: "Extensive experience in:",
       values: [
         { title: "Trust", desc: "Your project is my responsibility. I work with full transparency." },
         { title: "Results", desc: "I don't sell promises. I deliver solutions that work." },
@@ -890,8 +889,7 @@ export const translations = {
       links: [
         { label: "Home", href: "#inicio" },
         { label: "Services", href: "#servicios" },
-        { label: "Testimonials", href: "#testimonios" },
-        { label: "About Me", href: "#sobre-mi" },
+        { label: "Promoters", href: "#promotores" },
         { label: "Process", href: "#proceso" },
         { label: "📅 Calendar", href: "/calendario" },
         { label: "🤖 AI Proposal", href: "/propuesta-ia.html" },

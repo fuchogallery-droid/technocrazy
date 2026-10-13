@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowRight, Bot, Code2, Zap, ChevronDown, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useWhatsAppUrl } from "@/lib/useWhatsApp";
 
 // Indicador de que la tarjeta flotante es clicable y abre su página de solución.
 function VerMas({ color }: { color: string }) {
@@ -17,6 +18,7 @@ function VerMas({ color }: { color: string }) {
 
 export default function Hero() {
   const { t } = useLanguage();
+  const whatsappUrl = useWhatsAppUrl();
   const h = t.hero;
   // El número de "proyectos entregados" salía del array de productos que estaba
   // escrito dentro de Products.tsx. Ahora los productos se administran desde el
@@ -114,7 +116,7 @@ export default function Hero() {
 
           {/* CTA */}
           <motion.a
-            href="https://wa.me/17794318214"
+            href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.03, y: -2 }}

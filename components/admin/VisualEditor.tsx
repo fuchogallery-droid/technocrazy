@@ -111,6 +111,19 @@ export default function VisualEditor() {
     return () => document.removeEventListener("click", onClick, true);
   }, [editing, findMatch, strings, clearHighlight]);
 
+  // Ctrl+K abre la búsqueda de textos (sin barra superior)
+  useEffect(() => {
+    if (!editing) return;
+    function onKey(e: KeyboardEvent) {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        setPanelOpen(true);
+      }
+    }
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [editing]);
+
   // Cerrar con Escape
   useEffect(() => {
     if (!target && !panelOpen) return;
@@ -170,32 +183,6 @@ export default function VisualEditor() {
 
   return (
     <div data-tc-editor>
-      {/* ─── Barra de estado del modo edición ─── */}
-      <div
-        className="fixed top-0 left-0 right-0 z-[60] flex items-center justify-center gap-3 px-4"
-        style={{
-          height: 34,
-          background: "linear-gradient(90deg,#2979ff,#7c4dff)",
-          fontSize: 11.5,
-          fontWeight: 700,
-          color: "#fff",
-          letterSpacing: "0.02em",
-        }}
-      >
-        <span>MODO EDICIÓN · haz clic en cualquier texto para cambiarlo</span>
-        <button
-          type="button"
-          onClick={() => setPanelOpen(true)}
-          className="inline-flex items-center gap-1.5 rounded-full transition-opacity hover:opacity-80"
-          style={{ background: "rgba(255,255,255,0.22)", padding: "3px 11px", fontSize: 10.5 }}
-        >
-          <Search size={11} /> Buscar texto
-        </button>
-        <span style={{ opacity: 0.75, fontSize: 10.5 }}>
-          Editando: {lang === "es" ? "ESPAÑOL" : "INGLÉS"}
-        </span>
-      </div>
-
       {/* ─── Modal de edición de un texto ─── */}
       {target && (
         <div

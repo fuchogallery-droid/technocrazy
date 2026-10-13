@@ -3,8 +3,7 @@ import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import Services from "@/components/Services";
 import Products from "@/components/Products";
-import Testimonials from "@/components/Testimonials";
-import About from "@/components/About";
+import Promoters from "@/components/Promoters";
 import Process from "@/components/Process";
 import CTAFinal from "@/components/CTAFinal";
 import Footer from "@/components/Footer";
@@ -19,8 +18,11 @@ export default function Home() {
       <Services />
       {/* Solo se dibuja si hay productos cargados desde /admin. */}
       <Products />
-      <Testimonials />
-      <About />
+      {/* Solo se dibuja si hay promotores visibles cargados desde /admin. */}
+      <Promoters />
+      {/* ARCHIVADAS (05/10/2026, a pedido de Rafael): <Testimonials /> y <About />.
+          Los componentes siguen en components/; para volver a mostrarlas solo hay
+          que descomentar el import y devolverlas aquí. */}
       <Process />
       <CTAFinal />
       <Footer />

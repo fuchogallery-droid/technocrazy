@@ -21,6 +21,7 @@ import { auth, db } from "@/lib/firebase";
 import { useCollection } from "@/lib/useCollection";
 import AdminTabShell, { type AdminTabDef } from "@/components/admin/AdminTabShell";
 import LlamadasTab from "@/components/admin/LlamadasTab";
+import SolicitudesTab from "@/components/admin/SolicitudesTab";
 import ImageUploadField from "@/components/shared/ImageUploadField";
 import FileUploadField, { type UploadedFile } from "@/components/admin/FileUploadField";
 import { StarRatingDisplay, StarRatingInput } from "@/components/shared/StarRating";
@@ -56,6 +57,7 @@ import {
   Search,
   Share2,
   Phone,
+  Inbox,
   MessageSquare,
   Mail,
   MessageCircle,
@@ -63,6 +65,7 @@ import {
   UserPlus,
   Coins,
   Wifi,
+  Users,
   type LucideIcon,
 } from "lucide-react";
 import { NFC_TYPES, getTypeDef, resolveChipTarget, type NfcChipType } from "@/lib/nfcTypes";
@@ -80,6 +83,8 @@ import {
   type HomeProductAction,
 } from "@/lib/homeProducts";
 import { QUICK_LINK_CATEGORIES, emptyQuickLink, type QuickLink } from "@/lib/quickLinks";
+import { emptyPromoter, normalizeCode, referralLink, type Promoter } from "@/lib/promoters";
+import { usePromoterStats } from "@/lib/usePromoterStats";
 import type {
   Post,
   Product,
@@ -154,6 +159,7 @@ type AdminTab =
   | "perfil"
   | "inicio"
   | "enlaces"
+  | "promotores"
   | "precios"
   | "biblioteca"
   | "galeria"
@@ -162,6 +168,7 @@ type AdminTab =
   | "feedback"
   | "noticias"
   | "chips"
+  | "solicitudes"
   | "llamadas"
   | "config"
   | "contratos";
@@ -170,6 +177,7 @@ const ADMIN_TABS: AdminTabDef<AdminTab>[] = [
   { id: "perfil", label: "Perfil y Muro", icon: UserCircle },
   { id: "inicio", label: "Productos del Inicio", icon: Package },
   { id: "enlaces", label: "Enlaces (/links)", icon: Link2 },
+  { id: "promotores", label: "Promotores", icon: Users },
   { id: "precios", label: "Precios y Productos", icon: DollarSign },
   { id: "biblioteca", label: "Biblioteca", icon: Library },
   { id: "galeria", label: "Galería", icon: Images },
@@ -178,6 +186,7 @@ const ADMIN_TABS: AdminTabDef<AdminTab>[] = [
   { id: "feedback", label: "Feedback", icon: Lightbulb },
   { id: "noticias", label: "Noticias", icon: Newspaper },
   { id: "chips", label: "Chips NFC", icon: Nfc },
+  { id: "solicitudes", label: "Solicitudes del Agente", icon: Inbox },
   { id: "llamadas", label: "Agente IA (Llamadas)", icon: Phone },
   { id: "config", label: "Config", icon: Settings },
   { id: "contratos", label: "Contratos y Recibos", icon: FileText },
@@ -191,6 +200,7 @@ export default function AdminDashboard() {
       {activeTab === "perfil" && <PerfilMuroTab />}
       {activeTab === "inicio" && <ProductosInicioTab />}
       {activeTab === "enlaces" && <EnlacesTab />}
+      {activeTab === "promotores" && <PromotoresTab />}
       {activeTab === "precios" && <PreciosProductosTab />}
       {activeTab === "biblioteca" && <BibliotecaTab />}
       {activeTab === "galeria" && <GaleriaTab />}
@@ -199,6 +209,7 @@ export default function AdminDashboard() {
       {activeTab === "feedback" && <FeedbackTab />}
       {activeTab === "noticias" && <NoticiasTab />}
       {activeTab === "chips" && <NfcChipsTab />}
+      {activeTab === "solicitudes" && <SolicitudesTab />}
       {activeTab === "llamadas" && <LlamadasTab />}
       {activeTab === "config" && <ConfigTab />}
       {activeTab === "contratos" && <ContratosTab />}
@@ -976,6 +987,299 @@ function EnlacesTab() {
           </Card>
         );
       })}
+    </>
+  );
+}
+
+// ── Promotores (página /promotores) ──────────────────────────────────────
+// La comunidad que promueve los servicios y productos. Viven en config/site
+// (campo promoters). Las ventas se cuentan solas en Stripe por el enlace de
+// referido; aquí solo se ve el total y se puede sumar un ajuste manual.
+function PromotoresTab() {
+  const [items, setItems] = useState<Promoter[] | null>(null);
+  const [form, setForm] = useState<Promoter>(emptyPromoter());
+  const [photo, setPhoto] = useState<string[]>([]);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [saving, setSaving] = useState(false);
+  const [msg, setMsg] = useState("");
+  const [error, setError] = useState("");
+  const { totals, loading: statsLoading } = usePromoterStats();
+
+  useEffect(() => {
+    (async () => {
+      const snap = await getDoc(doc(db, "config", "site"));
+      const data = snap.exists() ? snap.data() : {};
+      setItems(Array.isArray(data.promoters) ? (data.promoters as Promoter[]) : []);
+    })();
+  }, []);
+
+  async function persist(next: Promoter[]) {
+    setItems(next);
+    await setDoc(doc(db, "config", "site"), { promoters: next }, { merge: true });
+    setMsg("Guardado ✓");
+    setTimeout(() => setMsg(""), 2000);
+  }
+
+  function reset() {
+    setForm(emptyPromoter());
+    setPhoto([]);
+    setEditingId(null);
+    setError("");
+  }
+
+  function startEdit(p: Promoter) {
+    setEditingId(p.id);
+    setForm({ ...emptyPromoter(), ...p });
+    setPhoto(p.photoUrl ? [p.photoUrl] : []);
+    setError("");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  async function save() {
+    if (items === null) return;
+    setError("");
+    const code = normalizeCode(form.code || form.name);
+    if (!form.name.trim() || !code) {
+      setError("Hace falta al menos el nombre del promotor.");
+      return;
+    }
+    if (items.some((p) => p.code === code && p.id !== editingId)) {
+      setError("Ya hay otro promotor con ese código de enlace. Cámbialo.");
+      return;
+    }
+    const promoter: Promoter = {
+      id: editingId || crypto.randomUUID(),
+      code,
+      name: form.name.trim(),
+      role: (form.role || "").trim(),
+      bio: (form.bio || "").trim(),
+      whatsapp: (form.whatsapp || "").trim(),
+      photoUrl: photo[0] || "",
+      profileUrl: form.profileUrl.trim(),
+      visible: form.visible,
+      salesAdjust: Number(form.salesAdjust) || 0,
+      productsAdjust: Number(form.productsAdjust) || 0,
+    };
+    setSaving(true);
+    await persist(editingId ? items.map((p) => (p.id === editingId ? promoter : p)) : [...items, promoter]);
+    setSaving(false);
+    reset();
+  }
+
+  async function toggleVisible(id: string) {
+    if (!items) return;
+    await persist(items.map((p) => (p.id === id ? { ...p, visible: !p.visible } : p)));
+  }
+
+  async function move(id: string, dir: -1 | 1) {
+    if (!items) return;
+    const i = items.findIndex((p) => p.id === id);
+    const j = i + dir;
+    if (i < 0 || j < 0 || j >= items.length) return;
+    const next = [...items];
+    [next[i], next[j]] = [next[j], next[i]];
+    await persist(next);
+  }
+
+  async function remove(id: string) {
+    if (!items) return;
+    if (!confirm("¿Quitar este promotor? Su enlace de referido dejará de atribuir ventas nuevas.")) return;
+    await persist(items.filter((p) => p.id !== id));
+    if (editingId === id) reset();
+  }
+
+  async function copyLink(code: string) {
+    try {
+      await navigator.clipboard.writeText(referralLink(code));
+      setMsg("Enlace copiado ✓");
+    } catch {
+      setMsg(referralLink(code));
+    }
+    setTimeout(() => setMsg(""), 2500);
+  }
+
+  if (items === null) return <p className="text-white/50 text-sm">Cargando…</p>;
+
+  const previewCode = normalizeCode(form.code || form.name);
+
+  return (
+    <>
+      {msg && <p className="text-green-400 text-xs font-semibold" style={{ marginBottom: 16 }}>{msg}</p>}
+
+      <Card
+        title={editingId ? "Editar promotor" : "Nuevo promotor"}
+        subtitle="Aparece en technocrazy.org/promotores con su foto, un botón a su perfil profesional y sus ventas. Cada promotor recibe un enlace de referido propio."
+      >
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <Field label="Nombre">
+            <input className={inputClass()} value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder="Ej. María Pérez" />
+          </Field>
+          <Field label="Rol o especialidad (opcional)">
+            <input className={inputClass()} value={form.role || ""} onChange={(e) => setForm({ ...form, role: e.target.value })} placeholder="Ej. Diseñadora gráfica" />
+          </Field>
+          <Field label="Perfil profesional (URL)">
+            <input
+              className={inputClass()}
+              value={form.profileUrl}
+              onChange={(e) => setForm({ ...form, profileUrl: e.target.value })}
+              placeholder="https://…"
+              style={{ fontFamily: "monospace", fontSize: 12 }}
+            />
+          </Field>
+          <Field label="WhatsApp del promotor (URL wa.me, opcional)">
+            <input
+              className={inputClass()}
+              value={form.whatsapp || ""}
+              onChange={(e) => setForm({ ...form, whatsapp: e.target.value })}
+              placeholder="https://wa.me/58412…"
+              style={{ fontFamily: "monospace", fontSize: 12 }}
+            />
+          </Field>
+          <Field label="Reseña corta (se ve en la tarjeta)">
+            <textarea
+              className={inputClass()}
+              rows={3}
+              value={form.bio || ""}
+              onChange={(e) => setForm({ ...form, bio: e.target.value })}
+              placeholder="A qué se dedica y qué promueve"
+            />
+          </Field>
+          <Field label="Código del enlace de referido">
+            <input
+              className={inputClass()}
+              value={form.code}
+              onChange={(e) => setForm({ ...form, code: e.target.value })}
+              placeholder="Se arma solo con el nombre"
+              style={{ fontFamily: "monospace", fontSize: 12 }}
+            />
+          </Field>
+        </div>
+        {previewCode && (
+          <p className="text-white/40 text-xs" style={{ marginTop: 10, fontFamily: "monospace" }}>
+            {referralLink(previewCode)}
+          </p>
+        )}
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4" style={{ marginTop: 20 }}>
+          <Field label="Ajuste manual de ventas (se suma a las de Stripe)">
+            <input
+              type="number"
+              min={0}
+              className={inputClass()}
+              value={form.salesAdjust ?? 0}
+              onChange={(e) => setForm({ ...form, salesAdjust: Number(e.target.value) })}
+            />
+          </Field>
+          <Field label="Ajuste manual de productos">
+            <input
+              type="number"
+              min={0}
+              className={inputClass()}
+              value={form.productsAdjust ?? 0}
+              onChange={(e) => setForm({ ...form, productsAdjust: Number(e.target.value) })}
+            />
+          </Field>
+        </div>
+
+        <div style={{ marginTop: 20 }}>
+          <Field label="¿Se ve en el sitio?">
+            <button
+              type="button"
+              onClick={() => setForm({ ...form, visible: !form.visible })}
+              className="flex items-center gap-1.5 font-bold"
+              style={{
+                fontSize: 12,
+                borderRadius: 10,
+                padding: "10px 14px",
+                background: form.visible ? "rgba(74,222,128,0.14)" : "rgba(251,146,60,0.16)",
+                border: `1px solid ${form.visible ? "rgba(74,222,128,0.35)" : "rgba(251,146,60,0.4)"}`,
+                color: form.visible ? "#4ade80" : "#fdba74",
+              }}
+            >
+              {form.visible ? <Eye size={13} /> : <EyeOff size={13} />}
+              {form.visible ? "VISIBLE" : "OCULTO"}
+            </button>
+          </Field>
+        </div>
+
+        <div style={{ marginTop: 20 }}>
+          <Field label="Foto de perfil">
+            <ImageUploadField value={photo} onChange={setPhoto} />
+          </Field>
+        </div>
+
+        {error && <p className="text-red-400 font-semibold" style={{ fontSize: 12, marginTop: 20 }}>{error}</p>}
+
+        <div className="flex gap-3 items-center" style={{ marginTop: 20 }}>
+          <button onClick={save} disabled={saving} className="adm-btn adm-btn-primary">
+            {saving ? "Guardando…" : editingId ? "Guardar cambios" : "Agregar promotor"}
+          </button>
+          {editingId && (
+            <button onClick={reset} className="text-white/50 text-xs font-semibold">
+              Cancelar
+            </button>
+          )}
+        </div>
+      </Card>
+
+      <Card
+        title="Promotores de la comunidad"
+        subtitle="Ventas = compras pagadas en Stripe con su enlace de referido + el ajuste manual. Se actualizan cada 5 minutos."
+      >
+        <div className="flex flex-col gap-2">
+          {items.map((p) => {
+            const t = totals(p);
+            return (
+              <div key={p.id} className="adm-row flex items-center gap-3">
+                <div
+                  className="flex items-center justify-center flex-shrink-0 rounded-full overflow-hidden"
+                  style={{ width: 40, height: 40, background: "rgba(255,255,255,0.06)" }}
+                >
+                  {p.photoUrl ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={p.photoUrl} alt="" className="w-full h-full object-cover" />
+                  ) : (
+                    <Users size={16} color="rgba(255,255,255,0.4)" />
+                  )}
+                </div>
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <p className="text-white text-sm font-semibold truncate">{p.name}</p>
+                    <button
+                      onClick={() => toggleVisible(p.id)}
+                      title={p.visible ? "Se ve en el sitio — clic para ocultarlo" : "NO se ve en el sitio — clic para mostrarlo"}
+                      className="flex items-center gap-1 flex-shrink-0"
+                      style={{
+                        fontSize: 10,
+                        fontWeight: 700,
+                        borderRadius: 6,
+                        padding: "3px 8px",
+                        background: p.visible ? "rgba(74,222,128,0.14)" : "rgba(251,146,60,0.16)",
+                        border: `1px solid ${p.visible ? "rgba(74,222,128,0.35)" : "rgba(251,146,60,0.4)"}`,
+                        color: p.visible ? "#4ade80" : "#fdba74",
+                      }}
+                    >
+                      {p.visible ? <Eye size={10} /> : <EyeOff size={10} />}
+                      {p.visible ? "VISIBLE" : "OCULTO"}
+                    </button>
+                  </div>
+                  <p className="text-white/40 text-xs truncate" style={{ marginTop: 2 }}>
+                    {statsLoading ? "…" : `${t.sales} ventas · ${t.products} productos`} · ?ref={p.code}
+                  </p>
+                </div>
+                <div className="flex gap-1.5 flex-shrink-0">
+                  <IconBtn onClick={() => copyLink(p.code)} label="Copiar enlace de referido"><Copy size={13} /></IconBtn>
+                  <IconBtn onClick={() => move(p.id, -1)} label="Subir"><ArrowUp size={13} /></IconBtn>
+                  <IconBtn onClick={() => move(p.id, 1)} label="Bajar"><ArrowDown size={13} /></IconBtn>
+                  <IconBtn onClick={() => startEdit(p)} label="Editar"><Pencil size={13} /></IconBtn>
+                  <IconBtn onClick={() => remove(p.id)} label="Quitar" danger><Trash2 size={13} /></IconBtn>
+                </div>
+              </div>
+            );
+          })}
+          {items.length === 0 && <p className="text-white/30 text-xs">Todavía no hay promotores.</p>}
+        </div>
+      </Card>
     </>
   );
 }
@@ -2223,8 +2527,7 @@ function ConfigTab() {
           : [
               { href: "#inicio", labelES: "Inicio", labelEN: "Home", icon: "home" },
               { href: "#servicios", labelES: "Servicios", labelEN: "Services", icon: "layers" },
-              { href: "#testimonios", labelES: "Testimonios", labelEN: "Testimonials", icon: "star" },
-              { href: "#sobre-mi", labelES: "Sobre mí", labelEN: "About Me", icon: "user" },
+              { href: "#promotores", labelES: "Promotores", labelEN: "Promoters", icon: "users" },
               { href: "#proceso", labelES: "Proceso", labelEN: "Process", icon: "route" },
               { href: "/calendario", labelES: "Calendario", labelEN: "Calendar", icon: "calendar" },
               { href: "/propuesta-ia.html", labelES: "Propuesta IA", labelEN: "AI Proposal", icon: "bot" },

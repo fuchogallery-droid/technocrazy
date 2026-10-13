@@ -1,0 +1,14 @@
+
+> technocrazy@0.1.0 dev
+> next dev
+
+⚠ Port 3000 is in use by process 39860, using available port 3002 instead.
+▲ Next.js 16.2.9 (Turbopack)
+- Local:         http://localhost:3002
+- Network:       http://100.73.208.1:3002
+- Environments: .env.local
+✓ Ready in 712ms
+
+ GET /nfc 200 in 580ms (next.js: 192ms, application-code: 388ms)
+ GET /icon?a8f30027e6393646 200 in 320ms (next.js: 89ms, application-code: 232ms)
+[?25h
