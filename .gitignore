@@ -42,3 +42,5 @@ next-env.d.ts
 
 .vercel
 .env*
+sistema-avatar/n8n-workflow/variables-entorno.env
+**/*.env
