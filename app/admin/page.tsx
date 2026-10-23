@@ -21,6 +21,8 @@ import { auth, db } from "@/lib/firebase";
 import { useCollection } from "@/lib/useCollection";
 import AdminTabShell, { type AdminTabDef } from "@/components/admin/AdminTabShell";
 import LlamadasTab from "@/components/admin/LlamadasTab";
+import OficinaTab from "@/components/admin/OficinaTab";
+import { Building2 } from "lucide-react";
 import SolicitudesTab from "@/components/admin/SolicitudesTab";
 import ImageUploadField from "@/components/shared/ImageUploadField";
 import FileUploadField, { type UploadedFile } from "@/components/admin/FileUploadField";
@@ -169,6 +171,7 @@ type AdminTab =
   | "noticias"
   | "chips"
   | "solicitudes"
+  | "oficina"
   | "llamadas"
   | "config"
   | "contratos";
@@ -187,6 +190,7 @@ const ADMIN_TABS: AdminTabDef<AdminTab>[] = [
   { id: "noticias", label: "Noticias", icon: Newspaper },
   { id: "chips", label: "Chips NFC", icon: Nfc },
   { id: "solicitudes", label: "Solicitudes del Agente", icon: Inbox },
+  { id: "oficina", label: "Oficina TEC", icon: Building2 },
   { id: "llamadas", label: "Agente IA (Llamadas)", icon: Phone },
   { id: "config", label: "Config", icon: Settings },
   { id: "contratos", label: "Contratos y Recibos", icon: FileText },
@@ -210,7 +214,8 @@ export default function AdminDashboard() {
       {activeTab === "noticias" && <NoticiasTab />}
       {activeTab === "chips" && <NfcChipsTab />}
       {activeTab === "solicitudes" && <SolicitudesTab />}
-      {activeTab === "llamadas" && <LlamadasTab />}
+      {activeTab === "oficina" && <OficinaTab />}
+        {activeTab === "llamadas" && <LlamadasTab />}
       {activeTab === "config" && <ConfigTab />}
       {activeTab === "contratos" && <ContratosTab />}
     </AdminTabShell>

@@ -3,10 +3,30 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
+    // Admin = Rafael (panel), la cuenta de la empresa y el usuario propio de la Oficina TEC (por uid).
+    // Antes bastaba cualquier sesion (el registro por correo esta abierto), lo que dejaba escribir a cualquiera.
+    function isAdmin() {
+      return request.auth != null && (
+        request.auth.uid == 'gRmNRPvdEaVgcCtkqFpKEj2XAMo2'
+        || request.auth.token.email in ['rafaelpixel3004@gmail.com', 'fuchogallery@gmail.com', 'technocrazyteam@gmail.com']);
+    }
+
+    // Colecciones de la Oficina TEC (privadas): clientes, servicios, productos, agenda, indagacion y rastro.
+    match /officeClients/{id} { allow read, write: if isAdmin(); }
+    match /officeServices/{id} { allow read, write: if isAdmin(); }
+    match /officeProducts/{id} { allow read, write: if isAdmin(); }
+    match /officeResearch/{id} { allow read, write: if isAdmin(); }
+    match /officeLog/{id} { allow read, write: if isAdmin(); }
+    // Agenda: la lee el panel; si un evento se marca publico lo ve cualquiera (calendario del sitio).
+    match /agenda/{id} {
+      allow read: if resource.data.public == true || isAdmin();
+      allow write: if isAdmin();
+    }
+
     // Config del sitio (precios/contacto/CTA/menú) — ya existente.
     match /config/{doc} {
       allow read: if true;
-      allow write: if request.auth != null;
+      allow write: if isAdmin();
     }
 
     // Textos del sitio editados con el editor visual (candado). Un documento
@@ -14,43 +34,43 @@ service cloud.firestore {
     // los aplica sobre lib/i18n.ts en cada visita; escritura solo con sesión.
     match /content/{lang} {
       allow read: if true;
-      allow write: if request.auth != null;
+      allow write: if isAdmin();
     }
 
     // Contratos y recibos — ya existente, solo admin.
     match /contracts/{id} {
-      allow read, write: if request.auth != null;
+      allow read, write: if isAdmin();
     }
     match /receipts/{id} {
-      allow read, write: if request.auth != null;
+      allow read, write: if isAdmin();
     }
 
     // Perfil y Muro — solo Rafael publica, cualquiera ve lo publicado.
     match /posts/{id} {
-      allow read: if resource.data.published == true || request.auth != null;
-      allow write: if request.auth != null;
+      allow read: if resource.data.published == true || isAdmin();
+      allow write: if isAdmin();
     }
 
     // Precios y Productos — lectura pública de productos activos, solo admin escribe.
     match /products/{id} {
-      allow read: if resource.data.active == true || request.auth != null;
-      allow write: if request.auth != null;
+      allow read: if resource.data.active == true || isAdmin();
+      allow write: if isAdmin();
     }
 
     // Biblioteca y Galería — lectura pública total, solo admin escribe.
     match /libraryItems/{id} {
       allow read: if true;
-      allow write: if request.auth != null;
+      allow write: if isAdmin();
     }
     match /galleryImages/{id} {
       allow read: if true;
-      allow write: if request.auth != null;
+      allow write: if isAdmin();
     }
 
     // Testimonios — cualquiera puede enviar uno (validado), solo se ve si está aprobado
     // o si es el admin. Solo el admin puede aprobar/editar/borrar.
     match /testimonials/{id} {
-      allow read: if resource.data.approved == true || request.auth != null;
+      allow read: if resource.data.approved == true || isAdmin();
       allow create: if request.resource.data.name is string
         && request.resource.data.name.size() > 0
         && request.resource.data.name.size() <= 80
@@ -61,40 +81,40 @@ service cloud.firestore {
         && request.resource.data.rating >= 1
         && request.resource.data.rating <= 5
         && request.resource.data.approved == false;
-      allow update, delete: if request.auth != null;
+      allow update, delete: if isAdmin();
     }
 
     // Preguntas — cualquiera puede enviar una, solo se ve si ya tiene respuesta
     // o si es el admin. Solo el admin puede responder/borrar.
     match /questions/{id} {
-      allow read: if (resource.data.answer is string && resource.data.answer.size() > 0) || request.auth != null;
+      allow read: if (resource.data.answer is string && resource.data.answer.size() > 0) || isAdmin();
       allow create: if request.resource.data.question is string
         && request.resource.data.question.size() > 0
         && request.resource.data.question.size() <= 1000
         && !("answer" in request.resource.data);
-      allow update, delete: if request.auth != null;
+      allow update, delete: if isAdmin();
     }
 
     // Feedback — cualquiera puede enviar, solo el admin lo lee.
     match /feedback/{id} {
-      allow read: if request.auth != null;
+      allow read: if isAdmin();
       allow create: if request.resource.data.message is string
         && request.resource.data.message.size() > 0
         && request.resource.data.message.size() <= 2000;
-      allow update, delete: if request.auth != null;
+      allow update, delete: if isAdmin();
     }
 
     // Noticias — curadas por el admin, lectura pública.
     match /news/{id} {
       allow read: if true;
-      allow write: if request.auth != null;
+      allow write: if isAdmin();
     }
 
     // Chips NFC — lectura pública (necesaria para que app/c/[code] resuelva
     // el destino sin sesión), solo el admin crea/edita/borra el chip.
     match /nfcChips/{chipId} {
       allow read: if true;
-      allow write: if request.auth != null;
+      allow write: if isAdmin();
 
       // Cada escaneo lo registra la ruta de redirección sin sesión (igual
       // que testimonials/questions) — validado por forma, no por contenido.
@@ -107,7 +127,7 @@ service cloud.firestore {
           && request.resource.data.country is string && request.resource.data.country.size() <= 100
           && request.resource.data.city is string && request.resource.data.city.size() <= 100
           && request.resource.data.region is string && request.resource.data.region.size() <= 100;
-        allow read, update, delete: if request.auth != null;
+        allow read, update, delete: if isAdmin();
       }
     }
   }
