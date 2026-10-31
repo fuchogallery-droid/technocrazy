@@ -33,6 +33,7 @@ type Copy = {
   view: string;
   soon: string;
   zoom: string;
+  winNote: string;
   ctaTitle: string;
   ctaText: string;
   ctaBtn: string;
@@ -47,6 +48,7 @@ const COPY: Record<"es" | "en", Copy> = {
     view: "Ver producto",
     soon: "Próximamente",
     zoom: "Ver imagen",
+    winNote: "Windows puede avisar que es un programa nuevo. Toca \"Más información\" → \"Ejecutar de todas formas\": es normal y seguro.",
     ctaTitle: "¿Y si tuvieras tu propio producto digital?",
     ctaText: "Tu idea + mi código = tu negocio. Trabajemos juntos para construirlo.",
     ctaBtn: "Quiero mi producto",
@@ -59,6 +61,7 @@ const COPY: Record<"es" | "en", Copy> = {
     view: "View product",
     soon: "Coming soon",
     zoom: "View image",
+    winNote: "Windows may warn this is a new app. Click \"More info\" → \"Run anyway\": it's normal and safe.",
     ctaTitle: "What if you had your own digital product?",
     ctaText: "Your idea + my code = your business. Let's build it together.",
     ctaBtn: "I want my product",
@@ -89,6 +92,7 @@ function ProductCard({
 
   const canDownload = p.action === "download" && !!p.fileUrl;
   const canLink = p.action === "link" && !!p.linkUrl;
+  const isWindowsExe = canDownload && (p.fileName || p.fileUrl || "").toLowerCase().endsWith(".exe");
 
   return (
     <motion.div
@@ -112,8 +116,8 @@ function ProductCard({
           horizontal (16:10) para que todas las tarjetas midan igual, pero la
           foto se ve ENTERA dentro de ella — nunca recortada. Lo que sobra a los
           lados lo rellena la misma foto ampliada y desenfocada, así no quedan
-          franjas negras. Encima va la etiqueta de "qué es" (app de teléfono,
-          programa de PC…). */}
+          franjas negras. La etiqueta de "qué es" (app de teléfono, programa de
+          PC…) va abajo, en la info de la tarjeta, no superpuesta a la foto. */}
       <div className="relative">
       {p.imageUrl ? (
         <button
@@ -211,6 +215,20 @@ function ProductCard({
             >
               <Download size={12} /> {copy.download}
             </a>
+          )}
+
+          {isWindowsExe && (
+            <p
+              style={{
+                fontSize: "clamp(10px, 2.4vw, 11px)",
+                lineHeight: 1.5,
+                color: "rgba(255,255,255,0.4)",
+                marginTop: 8,
+                textAlign: "center",
+              }}
+            >
+              {copy.winNote}
+            </p>
           )}
 
           {canLink && (
