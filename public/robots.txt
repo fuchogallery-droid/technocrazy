@@ -2,6 +2,9 @@
 User-agent: *
 Allow: /
 Disallow: /privado
+Disallow: /admin
+Disallow: /api
+Disallow: /c/
 
 # Host
 Host: https://technocrazy.org

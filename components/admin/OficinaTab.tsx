@@ -1,11 +1,15 @@
 "use client";
 import { useState } from "react";
-import { Building2, Users, Boxes, CalendarDays, Search, ScrollText, LayoutDashboard, AlertTriangle, ExternalLink } from "lucide-react";
+import { Building2, Users, Boxes, CalendarDays, Search, ScrollText, LayoutDashboard, AlertTriangle, ExternalLink, Copy, Check, Plus, Trash2 } from "lucide-react";
+import { addDoc, collection, deleteDoc, doc, serverTimestamp } from "firebase/firestore";
+import { db } from "@/lib/firebase";
 import { useCollection } from "@/lib/useCollection";
+import { FIRESTORE_RULES_TEXT } from "@/lib/firestoreRulesText";
+import { inputClass } from "./ui";
 
 // Panel de la Oficina TEC dentro de technocrazy.org. La oficina (usuario propio de Firebase) escribe estas
 // colecciones por REST desde jarvis; aqui Rafael ve en vivo lo que registro, agendo, investigo y publico.
-// Solo lectura a proposito: el control es de la oficina, el panel es la ventana.
+// Clientes y agenda se pueden agregar/quitar aqui; servicios, indagacion y rastro los escribe la oficina.
 
 type Row = { id: string; [k: string]: unknown };
 type SubTab = "resumen" | "clientes" | "catalogo" | "agenda" | "indagacion" | "rastro";
@@ -64,6 +68,36 @@ export default function OficinaTab() {
   const research = useCollection<Row>("officeResearch", [], "createdAt");
   const log = useCollection<Row>("officeLog", [], "at");
 
+  const [rulesCopied, setRulesCopied] = useState(false);
+  const [newClient, setNewClient] = useState({ name: "", phone: "", email: "", notes: "" });
+  const [newEvent, setNewEvent] = useState({ title: "", start: "", notes: "" });
+  const [err, setErr] = useState("");
+
+  function copyRules() {
+    try { navigator.clipboard.writeText(FIRESTORE_RULES_TEXT); } catch { /* sin portapapeles */ }
+    setRulesCopied(true);
+    setTimeout(() => setRulesCopied(false), 2500);
+  }
+  async function run(fn: () => Promise<unknown>) {
+    setErr("");
+    try { await fn(); } catch (e) {
+      setErr((e as { code?: string })?.code === "permission-denied" ? "Sin permiso: publica primero las reglas (aviso naranja de arriba)." : "No se pudo guardar. Intentalo de nuevo.");
+    }
+  }
+  const addClient = () => run(async () => {
+    if (!newClient.name.trim()) return;
+    await addDoc(collection(db, "officeClients"), { ...newClient, name: newClient.name.trim(), status: "prospecto", totalCents: 0, paidCents: 0, updatedAt: serverTimestamp() });
+    setNewClient({ name: "", phone: "", email: "", notes: "" });
+  });
+  const addEvent = () => run(async () => {
+    if (!newEvent.title.trim() || !newEvent.start) return;
+    await addDoc(collection(db, "agenda"), { title: newEvent.title.trim(), start: new Date(newEvent.start).toISOString(), notes: newEvent.notes, kind: "tarea", public: false });
+    setNewEvent({ title: "", start: "", notes: "" });
+  });
+  const remove = (col: string, id: string, label: string) => {
+    if (confirm(`¿Quitar «${label}»?`)) run(() => deleteDoc(doc(db, col, id)));
+  };
+
   const blocked = [clients, services, products, agenda, research, log].some((c) => c.error === "permission-denied");
   const upcoming = agenda.items
     .filter((e) => (toDate(e.start)?.getTime() ?? 0) >= now - 3600e3)
@@ -80,11 +114,24 @@ export default function OficinaTab() {
       </div>
 
       {blocked && (
-        <div style={{ ...card, borderColor: "rgba(245,158,11,0.4)", background: "rgba(245,158,11,0.08)" }} className="flex items-start gap-2">
-          <AlertTriangle size={16} color="#f59e0b" style={{ flexShrink: 0, marginTop: 2 }} />
-          <p className="text-white/80" style={{ fontSize: 13 }}>
-            Faltan publicar las reglas de Firestore con las colecciones de la oficina (archivo <b>firestore.rules</b> del proyecto). Hasta entonces la oficina no puede registrar clientes, agenda ni indagacion aqui.
-          </p>
+        <div style={{ ...card, borderColor: "rgba(245,158,11,0.4)", background: "rgba(245,158,11,0.08)" }} className="flex flex-col" >
+          <div className="flex items-start gap-2">
+            <AlertTriangle size={16} color="#f59e0b" style={{ flexShrink: 0, marginTop: 2 }} />
+            <p className="text-white/80" style={{ fontSize: 13 }}>
+              Faltan publicar las reglas de Firestore con las colecciones de la oficina. Hasta entonces la oficina no puede registrar clientes, agenda ni indagacion aqui. Son 3 pasos: copia las reglas, abre Firebase, pegalas en la pestana Reglas y toca Publicar.
+            </p>
+          </div>
+          <div className="flex flex-wrap" style={{ gap: 8, marginTop: 12 }}>
+            <button type="button" onClick={copyRules} className="flex items-center gap-1.5 font-bold text-white"
+              style={{ minHeight: 44, padding: "0 16px", borderRadius: 10, fontSize: 13.5, background: "linear-gradient(135deg,#f59e0b,#fb923c)" }}>
+              {rulesCopied ? <Check size={15} /> : <Copy size={15} />} {rulesCopied ? "Reglas copiadas" : "1. Copiar reglas"}
+            </button>
+            <a href="https://console.firebase.google.com/project/technocrazy-admin/firestore/rules" target="_blank" rel="noreferrer"
+              className="flex items-center gap-1.5 font-bold text-white/80"
+              style={{ minHeight: 44, padding: "0 16px", borderRadius: 10, fontSize: 13.5, background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.14)" }}>
+              2. Abrir Firebase <ExternalLink size={13} />
+            </a>
+          </div>
         </div>
       )}
 
@@ -123,13 +170,34 @@ export default function OficinaTab() {
         </div>
       )}
 
-      {sub === "clientes" && (clients.items.length === 0 ? <Empty>Aun no hay clientes. La oficina los registra desde sus cotizaciones y prospectos.</Empty> : (
+      {err && <p style={{ fontSize: 13, color: "#fdba74" }} role="alert">{err}</p>}
+
+      {sub === "clientes" && (
+        <div style={card} className="flex flex-col">
+          <p className="text-white" style={{ fontWeight: 600, fontSize: 14, marginBottom: 10 }}>Registrar cliente o prospecto</p>
+          <div style={grid}>
+            <input className={inputClass()} placeholder="Nombre" value={newClient.name} onChange={(e) => setNewClient({ ...newClient, name: e.target.value })} />
+            <input className={inputClass()} placeholder="Telefono" value={newClient.phone} onChange={(e) => setNewClient({ ...newClient, phone: e.target.value })} />
+            <input className={inputClass()} placeholder="Correo" value={newClient.email} onChange={(e) => setNewClient({ ...newClient, email: e.target.value })} />
+            <input className={inputClass()} placeholder="Notas" value={newClient.notes} onChange={(e) => setNewClient({ ...newClient, notes: e.target.value })} />
+          </div>
+          <button type="button" onClick={addClient} disabled={!newClient.name.trim()} className="flex items-center gap-1.5 font-bold text-white self-start"
+            style={{ minHeight: 44, padding: "0 16px", borderRadius: 10, marginTop: 12, background: "linear-gradient(135deg,#2979ff,#7c4dff)", opacity: newClient.name.trim() ? 1 : 0.5 }}>
+            <Plus size={15} /> Agregar
+          </button>
+        </div>
+      )}
+
+      {sub === "clientes" && (clients.items.length === 0 ? <Empty>Aun no hay clientes. La oficina los registra desde sus cotizaciones y prospectos, o agregalos arriba.</Empty> : (
         <div style={grid}>
           {clients.items.map((c) => (
             <div key={c.id} style={card}>
               <div className="flex items-center justify-between gap-2">
                 <p className="text-white" style={{ fontWeight: 600 }}>{text(c.name)}</p>
-                <Pill color={c.status === "cliente" ? "#22c55e" : "#f59e0b"}>{text(c.status) || "prospecto"}</Pill>
+                <div className="flex items-center gap-1.5">
+                  <Pill color={c.status === "cliente" ? "#22c55e" : "#f59e0b"}>{text(c.status) || "prospecto"}</Pill>
+                  <button type="button" onClick={() => remove("officeClients", c.id, text(c.name))} aria-label="Quitar cliente" className="text-white/40" style={{ width: 28, height: 28, display: "flex", alignItems: "center", justifyContent: "center" }}><Trash2 size={13} /></button>
+                </div>
               </div>
               <p className="text-white/50" style={{ fontSize: 12, marginTop: 4 }}>{[text(c.phone), text(c.email)].filter(Boolean).join(" · ") || "Sin contacto"}</p>
               <p className="text-white/70" style={{ fontSize: 12.5, marginTop: 6 }}>Cotizado {money(c.totalCents)} · Cobrado {money(c.paidCents)}</p>
@@ -168,7 +236,22 @@ export default function OficinaTab() {
         </div>
       )}
 
-      {sub === "agenda" && (upcoming.length === 0 ? <Empty>No hay eventos proximos agendados por la oficina.</Empty> : (
+      {sub === "agenda" && (
+        <div style={card} className="flex flex-col">
+          <p className="text-white" style={{ fontWeight: 600, fontSize: 14, marginBottom: 10 }}>Agendar evento</p>
+          <div style={grid}>
+            <input className={inputClass()} placeholder="Titulo" value={newEvent.title} onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })} />
+            <input className={inputClass()} type="datetime-local" aria-label="Fecha y hora" value={newEvent.start} onChange={(e) => setNewEvent({ ...newEvent, start: e.target.value })} />
+            <input className={inputClass()} placeholder="Notas" value={newEvent.notes} onChange={(e) => setNewEvent({ ...newEvent, notes: e.target.value })} />
+          </div>
+          <button type="button" onClick={addEvent} disabled={!newEvent.title.trim() || !newEvent.start} className="flex items-center gap-1.5 font-bold text-white self-start"
+            style={{ minHeight: 44, padding: "0 16px", borderRadius: 10, marginTop: 12, background: "linear-gradient(135deg,#2979ff,#7c4dff)", opacity: newEvent.title.trim() && newEvent.start ? 1 : 0.5 }}>
+            <Plus size={15} /> Agendar
+          </button>
+        </div>
+      )}
+
+      {sub === "agenda" && (upcoming.length === 0 ? <Empty>No hay eventos proximos agendados.</Empty> : (
         <div className="flex flex-col" style={{ gap: 8 }}>
           {upcoming.map((e) => (
             <div key={e.id} style={card} className="flex items-start justify-between gap-3">
@@ -177,7 +260,10 @@ export default function OficinaTab() {
                 <p className="text-white/50" style={{ fontSize: 12.5, marginTop: 2 }}>{when(e.start, true)}{e.end ? ` – ${toDate(e.end)?.toLocaleTimeString("es-ES", { hour: "2-digit", minute: "2-digit" })}` : ""}</p>
                 {text(e.notes) && <p className="text-white/60" style={{ fontSize: 12.5, marginTop: 4 }}>{text(e.notes)}</p>}
               </div>
-              <Pill>{text(e.kind) || "tarea"}</Pill>
+              <div className="flex items-center gap-1.5">
+                <Pill>{text(e.kind) || "tarea"}</Pill>
+                <button type="button" onClick={() => remove("agenda", e.id, text(e.title))} aria-label="Quitar evento" className="text-white/40" style={{ width: 28, height: 28, display: "flex", alignItems: "center", justifyContent: "center" }}><Trash2 size={13} /></button>
+              </div>
             </div>
           ))}
         </div>

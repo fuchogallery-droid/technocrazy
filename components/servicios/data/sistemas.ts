@@ -1,0 +1,215 @@
+import type { ServicioDef } from "../types";
+
+const IMG = "/images/servicios/sistemas";
+
+export const SISTEMAS: ServicioDef = {
+  slug: "sistemas",
+  hero: "systems",
+  theme: { accent: "#00bcd4", accent2: "#0e7490", soft: "#80deea" },
+  meta: {
+    title: "Sistemas Automatizados · TechnoCrazy",
+    description: "Chatbots de WhatsApp, CRM, dashboards, facturación e inventario conectados entre sí. Que tu negocio trabaje mientras tú descansas.",
+  },
+  copy: {
+    es: {
+      back: "Volver a servicios",
+      badge: "SISTEMAS AUTOMATIZADOS",
+      titleA: "Que tu negocio trabaje",
+      titleB: "mientras tú descansas",
+      tagline: "Procesos inteligentes que eliminan las tareas repetitivas: responder lo mismo, pasar datos de un lado a otro, cobrar, avisar. Tú te ocupas de crecer.",
+      ctaWant: "Quiero automatizar mi negocio",
+      ctaPortfolio: "Ver sistemas",
+      chips: ["WhatsApp", "CRM", "Facturación", "Inventario"],
+
+      areasA: "Lo que podemos",
+      areasB: "automatizar",
+      areasSub: "Piezas que se conectan entre sí para que los datos fluyan solos.",
+      areas: [
+        { icon: "message", title: "Bot de WhatsApp", desc: "Atiende, responde y vende 24/7 con inteligencia artificial.", tags: ["Atención", "Ventas"] },
+        { icon: "users", title: "CRM", desc: "Pipeline de ventas y contactos ordenados en un solo lugar.", tags: ["Contactos", "Pipeline"] },
+        { icon: "dashboard", title: "Dashboards", desc: "Métricas e ingresos en tiempo real, sin armar reportes a mano.", tags: ["Métricas", "Tiempo real"] },
+        { icon: "receipt", title: "Facturación", desc: "Facturas y seguimiento de pagos que se generan solos.", tags: ["Cobros", "Recordatorios"] },
+        { icon: "package", title: "Inventario", desc: "Control de stock en tiempo real, con avisos cuando algo se agota.", tags: ["Stock", "Alertas"] },
+        { icon: "workflow", title: "Flujos sin código", desc: "Un constructor visual para conectar tus herramientas y automatizar tareas.", tags: ["Integraciones", "Automático"] },
+      ],
+
+      explainA: "Cómo se ve",
+      explainB: "un flujo automático",
+      explainSub: "Toca cada sistema y mira el camino que recorre la información, paso a paso.",
+      explainIdealFor: "Ideal para",
+      explain: [
+        { name: "Bot", what: "Un cliente escribe, el bot entiende, responde y, si hace falta, pasa la conversación a una persona.", ideal: "Negocios que reciben las mismas preguntas todos los días.", demo: { kind: "flow", steps: [{ icon: "message", label: "Escribe" }, { icon: "bot", label: "Entiende" }, { icon: "send", label: "Responde" }, { icon: "users", label: "Humano" }] } },
+        { name: "CRM", what: "Cada contacto nuevo se guarda solo, se clasifica y se le hace seguimiento hasta cerrar la venta.", ideal: "Quien vende con seguimiento y no quiere perder clientes por olvido.", demo: { kind: "flow", steps: [{ icon: "user", label: "Contacto" }, { icon: "database", label: "Se guarda" }, { icon: "bell", label: "Seguimiento" }, { icon: "check", label: "Venta" }] } },
+        { name: "Facturas", what: "Al cerrar una venta se crea la factura, se envía y se recuerda el pago hasta cobrar.", ideal: "Quien cobra a clientes y pierde tiempo reclamando pagos.", demo: { kind: "flow", steps: [{ icon: "cart", label: "Venta" }, { icon: "receipt", label: "Factura" }, { icon: "send", label: "Envío" }, { icon: "wallet", label: "Cobro" }] } },
+        { name: "Inventario", what: "Cada venta descuenta el stock y el sistema avisa antes de que se agote un producto.", ideal: "Tiendas y negocios con productos que se reponen.", demo: { kind: "flow", steps: [{ icon: "cart", label: "Venta" }, { icon: "package", label: "Descuenta" }, { icon: "bell", label: "Alerta" }, { icon: "repeat", label: "Reposición" }] } },
+      ],
+
+      processA: "Cómo",
+      processB: "trabajamos",
+      processSub: "Primero entendemos tu operación; después la automatizamos pieza por pieza.",
+      steps: [
+        { icon: "search", title: "Diagnóstico", desc: "Miramos qué tareas se repiten y cuánto tiempo te quitan cada semana." },
+        { icon: "layers", title: "Mapa del proceso", desc: "Dibujamos cómo viaja hoy la información y cómo debería viajar." },
+        { icon: "cpu", title: "Construcción", desc: "Armamos los sistemas y los conectamos con las herramientas que ya usas." },
+        { icon: "eye", title: "Pruebas", desc: "Lo probamos con casos reales antes de dejarlo trabajando solo." },
+        { icon: "rocket", title: "Puesta en marcha", desc: "Lo activamos, te enseñamos a usarlo y vigilamos que todo fluya." },
+      ],
+
+      receiveA: "Qué",
+      receiveB: "recibes",
+      receiveSub: "Sistemas funcionando y tú sabiendo manejarlos.",
+      files: [
+        { icon: "workflow", title: "Sistemas conectados", desc: "Tus herramientas hablando entre sí, sin copiar y pegar." },
+        { icon: "dashboard", title: "Panel de control", desc: "Ves lo que pasa en tu negocio en un solo lugar." },
+        { icon: "book", title: "Guía de uso", desc: "Explicación clara de cómo funciona cada automatización." },
+        { icon: "support", title: "Soporte", desc: "Ayuda y ajustes continuos mientras tu negocio cambia." },
+      ],
+
+      portfolioA: "Sistemas",
+      portfolioB: "en acción",
+      portfolioSub: "Algunas de las piezas que construimos.",
+      portfolioHint: "Toca una imagen para verla en grande",
+      portfolio: [
+        { img: `${IMG}/bot-whatsapp.png`, label: "Bot de WhatsApp" },
+        { img: `${IMG}/crm.png`, label: "CRM" },
+        { img: `${IMG}/dashboards.png`, label: "Dashboards" },
+        { img: `${IMG}/facturacion.png`, label: "Facturación" },
+        { img: `${IMG}/inventario.png`, label: "Inventario" },
+        { img: `${IMG}/flujos.png`, label: "Flujos" },
+      ],
+
+      priceA: "Cuánto",
+      priceB: "cuesta",
+      priceSub: "Depende de cuántas piezas conectemos. Empezar por una automatización cuesta menos.",
+      priceFrom: "$100",
+      priceTo: "$299",
+      priceUnit: "USD",
+      priceSteps: [
+        { label: "Una automatización", desc: "Un proceso resuelto" },
+        { label: "Varias conectadas", desc: "Datos fluyendo entre sistemas" },
+        { label: "Sistema completo", desc: "CRM, facturas y paneles" },
+      ],
+      factorsTitle: "Qué define el precio",
+      factors: [
+        { icon: "workflow", title: "Cantidad de procesos", desc: "Cada proceso automatizado suma trabajo de construcción." },
+        { icon: "link", title: "Integraciones", desc: "Conectar más herramientas requiere más configuración." },
+        { icon: "brain", title: "Uso de IA", desc: "Un bot que entiende lenguaje natural lleva más ajuste." },
+      ],
+      priceNote: "Cotización personalizada y sin compromiso. Cuéntame qué te quita tiempo y te doy el precio exacto.",
+
+      faqA: "Preguntas",
+      faqB: "frecuentes",
+      faq: [
+        { q: "¿Qué procesos conviene automatizar primero?", a: "Los que se repiten todos los días: responder las mismas preguntas, registrar clientes, enviar facturas. Ahí se nota el ahorro desde la primera semana." },
+        { q: "¿Tengo que cambiar las herramientas que uso?", a: "No necesariamente. Conectamos las que ya usas siempre que sea posible." },
+        { q: "¿El bot reemplaza a mi equipo?", a: "No. Resuelve lo repetitivo y pasa a una persona lo que necesita criterio humano." },
+        { q: "¿Qué pasa si algo falla?", a: "El sistema avisa y puedes pedirme ajustes. Por eso incluimos soporte." },
+        { q: "¿Mis datos están seguros?", a: "Se configuran accesos y permisos desde el inicio, y los datos quedan en cuentas a tu nombre." },
+      ],
+
+      finalCtaTitle: "¿Listo para recuperar las horas que se te van en tareas repetidas?",
+      finalCtaDesc: "Escríbeme y cuéntame qué te quita tiempo. La primera asesoría es gratis y sin compromiso.",
+      finalCtaBtn: "Hablar por WhatsApp",
+    },
+    en: {
+      back: "Back to services",
+      badge: "AUTOMATED SYSTEMS",
+      titleA: "Let your business work",
+      titleB: "while you rest",
+      tagline: "Smart processes that remove repetitive tasks: answering the same thing, moving data around, billing, notifying. You focus on growing.",
+      ctaWant: "I want to automate my business",
+      ctaPortfolio: "See systems",
+      chips: ["WhatsApp", "CRM", "Invoicing", "Inventory"],
+
+      areasA: "What we can",
+      areasB: "automate",
+      areasSub: "Pieces that connect to each other so data flows by itself.",
+      areas: [
+        { icon: "message", title: "WhatsApp bot", desc: "Answers, supports and sells 24/7 with artificial intelligence.", tags: ["Support", "Sales"] },
+        { icon: "users", title: "CRM", desc: "Sales pipeline and contacts organized in one place.", tags: ["Contacts", "Pipeline"] },
+        { icon: "dashboard", title: "Dashboards", desc: "Real-time metrics and revenue, no manual reports.", tags: ["Metrics", "Real time"] },
+        { icon: "receipt", title: "Invoicing", desc: "Invoices and payment follow-up that generate themselves.", tags: ["Billing", "Reminders"] },
+        { icon: "package", title: "Inventory", desc: "Real-time stock control with alerts when something runs low.", tags: ["Stock", "Alerts"] },
+        { icon: "workflow", title: "No-code flows", desc: "A visual builder to connect your tools and automate tasks.", tags: ["Integrations", "Automatic"] },
+      ],
+
+      explainA: "What an automatic flow",
+      explainB: "looks like",
+      explainSub: "Tap each system and watch the path the information takes, step by step.",
+      explainIdealFor: "Best for",
+      explain: [
+        { name: "Bot", what: "A customer writes, the bot understands, replies and, if needed, hands the chat to a person.", ideal: "Businesses that get the same questions every day.", demo: { kind: "flow", steps: [{ icon: "message", label: "Writes" }, { icon: "bot", label: "Understands" }, { icon: "send", label: "Replies" }, { icon: "users", label: "Human" }] } },
+        { name: "CRM", what: "Every new contact is saved automatically, classified and followed up until the sale closes.", ideal: "Anyone who sells with follow-up and does not want to lose customers by forgetting.", demo: { kind: "flow", steps: [{ icon: "user", label: "Contact" }, { icon: "database", label: "Saved" }, { icon: "bell", label: "Follow-up" }, { icon: "check", label: "Sale" }] } },
+        { name: "Invoices", what: "When a sale closes, the invoice is created, sent and the payment is chased until collected.", ideal: "Anyone who bills customers and wastes time chasing payments.", demo: { kind: "flow", steps: [{ icon: "cart", label: "Sale" }, { icon: "receipt", label: "Invoice" }, { icon: "send", label: "Sent" }, { icon: "wallet", label: "Paid" }] } },
+        { name: "Inventory", what: "Each sale deducts stock and the system warns you before a product runs out.", ideal: "Stores and businesses with products that need restocking.", demo: { kind: "flow", steps: [{ icon: "cart", label: "Sale" }, { icon: "package", label: "Deducts" }, { icon: "bell", label: "Alert" }, { icon: "repeat", label: "Restock" }] } },
+      ],
+
+      processA: "How we",
+      processB: "work",
+      processSub: "First we understand your operation; then we automate it piece by piece.",
+      steps: [
+        { icon: "search", title: "Diagnosis", desc: "We look at which tasks repeat and how much time they take each week." },
+        { icon: "layers", title: "Process map", desc: "We draw how information travels today and how it should travel." },
+        { icon: "cpu", title: "Build", desc: "We build the systems and connect them to the tools you already use." },
+        { icon: "eye", title: "Testing", desc: "We test with real cases before leaving it running on its own." },
+        { icon: "rocket", title: "Go live", desc: "We switch it on, teach you to use it and watch that everything flows." },
+      ],
+
+      receiveA: "What you",
+      receiveB: "get",
+      receiveSub: "Working systems and you knowing how to run them.",
+      files: [
+        { icon: "workflow", title: "Connected systems", desc: "Your tools talking to each other, no copy and paste." },
+        { icon: "dashboard", title: "Control panel", desc: "See what happens in your business in one place." },
+        { icon: "book", title: "Usage guide", desc: "A clear explanation of how each automation works." },
+        { icon: "support", title: "Support", desc: "Ongoing help and tweaks as your business changes." },
+      ],
+
+      portfolioA: "Systems",
+      portfolioB: "in action",
+      portfolioSub: "Some of the pieces we build.",
+      portfolioHint: "Tap an image to see it larger",
+      portfolio: [
+        { img: `${IMG}/bot-whatsapp.png`, label: "WhatsApp bot" },
+        { img: `${IMG}/crm.png`, label: "CRM" },
+        { img: `${IMG}/dashboards.png`, label: "Dashboards" },
+        { img: `${IMG}/facturacion.png`, label: "Invoicing" },
+        { img: `${IMG}/inventario.png`, label: "Inventory" },
+        { img: `${IMG}/flujos.png`, label: "Flows" },
+      ],
+
+      priceA: "How much",
+      priceB: "does it cost",
+      priceSub: "It depends on how many pieces we connect. Starting with one automation costs less.",
+      priceFrom: "$100",
+      priceTo: "$299",
+      priceUnit: "USD",
+      priceSteps: [
+        { label: "One automation", desc: "One process solved" },
+        { label: "Several connected", desc: "Data flowing between systems" },
+        { label: "Full system", desc: "CRM, invoices and dashboards" },
+      ],
+      factorsTitle: "What sets the price",
+      factors: [
+        { icon: "workflow", title: "Number of processes", desc: "Each automated process adds build work." },
+        { icon: "link", title: "Integrations", desc: "Connecting more tools takes more setup." },
+        { icon: "brain", title: "AI usage", desc: "A bot that understands natural language takes more tuning." },
+      ],
+      priceNote: "Custom quote with no commitment. Tell me what eats your time and I will give you the exact price.",
+
+      faqA: "Frequently asked",
+      faqB: "questions",
+      faq: [
+        { q: "Which processes should I automate first?", a: "The ones that repeat every day: answering the same questions, logging customers, sending invoices. The savings show from the first week." },
+        { q: "Do I have to change the tools I use?", a: "Not necessarily. We connect the ones you already use whenever possible." },
+        { q: "Does the bot replace my team?", a: "No. It handles the repetitive part and hands over to a person whatever needs human judgment." },
+        { q: "What if something fails?", a: "The system alerts you and you can ask me for adjustments. That is why support is included." },
+        { q: "Is my data safe?", a: "Access and permissions are set up from the start, and data stays in accounts under your name." },
+      ],
+
+      finalCtaTitle: "Ready to get back the hours lost to repeated tasks?",
+      finalCtaDesc: "Message me and tell me what eats your time. The first consultation is free and with no commitment.",
+      finalCtaBtn: "Chat on WhatsApp",
+    },
+  },
+};

@@ -1,0 +1,114 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Config del sitio (precios/contacto/CTA/menú) — ya existente.
+    match /config/{doc} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    // Textos del sitio editados con el editor visual (candado). Un documento
+    // por idioma: content/es y content/en. Lectura pública porque el sitio
+    // los aplica sobre lib/i18n.ts en cada visita; escritura solo con sesión.
+    match /content/{lang} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    // Contratos y recibos — ya existente, solo admin.
+    match /contracts/{id} {
+      allow read, write: if request.auth != null;
+    }
+    match /receipts/{id} {
+      allow read, write: if request.auth != null;
+    }
+
+    // Perfil y Muro — solo Rafael publica, cualquiera ve lo publicado.
+    match /posts/{id} {
+      allow read: if resource.data.published == true || request.auth != null;
+      allow write: if request.auth != null;
+    }
+
+    // Precios y Productos — lectura pública de productos activos, solo admin escribe.
+    match /products/{id} {
+      allow read: if resource.data.active == true || request.auth != null;
+      allow write: if request.auth != null;
+    }
+
+    // Biblioteca y Galería — lectura pública total, solo admin escribe.
+    match /libraryItems/{id} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    match /galleryImages/{id} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    // Testimonios — cualquiera puede enviar uno (validado), solo se ve si está aprobado
+    // o si es el admin. Solo el admin puede aprobar/editar/borrar.
+    match /testimonials/{id} {
+      allow read: if resource.data.approved == true || request.auth != null;
+      allow create: if request.resource.data.name is string
+        && request.resource.data.name.size() > 0
+        && request.resource.data.name.size() <= 80
+        && request.resource.data.comment is string
+        && request.resource.data.comment.size() > 0
+        && request.resource.data.comment.size() <= 2000
+        && request.resource.data.rating is int
+        && request.resource.data.rating >= 1
+        && request.resource.data.rating <= 5
+        && request.resource.data.approved == false;
+      allow update, delete: if request.auth != null;
+    }
+
+    // Preguntas — cualquiera puede enviar una, solo se ve si ya tiene respuesta
+    // o si es el admin. Solo el admin puede responder/borrar.
+    match /questions/{id} {
+      allow read: if (resource.data.answer is string && resource.data.answer.size() > 0) || request.auth != null;
+      allow create: if request.resource.data.question is string
+        && request.resource.data.question.size() > 0
+        && request.resource.data.question.size() <= 1000
+        && !("answer" in request.resource.data);
+      allow update, delete: if request.auth != null;
+    }
+
+    // Feedback — cualquiera puede enviar, solo el admin lo lee.
+    match /feedback/{id} {
+      allow read: if request.auth != null;
+      allow create: if request.resource.data.message is string
+        && request.resource.data.message.size() > 0
+        && request.resource.data.message.size() <= 2000;
+      allow update, delete: if request.auth != null;
+    }
+
+    // Noticias — curadas por el admin, lectura pública.
+    match /news/{id} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    // Chips NFC — lectura pública (necesaria para que app/c/[code] resuelva
+    // el destino sin sesión), solo el admin crea/edita/borra el chip.
+    match /nfcChips/{chipId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+
+      // Cada escaneo lo registra la ruta de redirección sin sesión (igual
+      // que testimonials/questions) — validado por forma, no por contenido.
+      // Solo el admin lee el historial (estadísticas del panel).
+      match /scans/{scanId} {
+        allow create: if request.resource.data.timestamp == request.time
+          && request.resource.data.ip is string && request.resource.data.ip.size() <= 100
+          && request.resource.data.userAgent is string && request.resource.data.userAgent.size() <= 500
+          && request.resource.data.referrer is string && request.resource.data.referrer.size() <= 500
+          && request.resource.data.country is string && request.resource.data.country.size() <= 100
+          && request.resource.data.city is string && request.resource.data.city.size() <= 100
+          && request.resource.data.region is string && request.resource.data.region.size() <= 100;
+        allow read, update, delete: if request.auth != null;
+      }
+    }
+  }
+}

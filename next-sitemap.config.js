@@ -4,10 +4,10 @@ module.exports = {
   generateRobotsTxt: true,
   changefreq: "weekly",
   priority: 0.7,
-  exclude: ["/privado", "/privado/*"],
+  exclude: ["/privado", "/privado/*", "/admin", "/admin/*", "/api/*", "/c/*", "/icon", "/apple-icon"],
   robotsTxtOptions: {
     policies: [
-      { userAgent: "*", allow: "/", disallow: ["/privado"] },
+      { userAgent: "*", allow: "/", disallow: ["/privado", "/admin", "/api", "/c/"] },
     ],
   },
 };

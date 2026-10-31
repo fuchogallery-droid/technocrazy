@@ -22,6 +22,10 @@ const nextConfig: NextConfig = {
       {
         // Refuerzo a nivel de cabecera para las páginas personales:
         // ningún buscador debe indexarlas ni guardarlas en caché.
+        source: "/admin/:path*",
+        headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
+      },
+      {
         source: "/privado/:path*",
         headers: [
           { key: "X-Robots-Tag", value: "noindex, nofollow, noarchive, nosnippet" },

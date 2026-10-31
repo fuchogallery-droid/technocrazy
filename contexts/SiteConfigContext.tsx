@@ -5,8 +5,10 @@ import { db } from "@/lib/firebase";
 import type { HomeProduct } from "@/lib/homeProducts";
 import type { QuickLink } from "@/lib/quickLinks";
 import type { Promoter } from "@/lib/promoters";
+import type { CustomService, NfcFeature, WebPageItem } from "@/lib/homeSections";
 
 export type ServiceOverride = {
+  hidden?: boolean;
   priceES?: string;
   priceNoteES?: string;
   priceEN?: string;
@@ -33,6 +35,10 @@ export type SiteConfig = {
   // Promotores de la comunidad, administrados desde /admin, pestaña Promotores.
   // Ver lib/promoters.ts.
   promoters?: Promoter[];
+  // Secciones del inicio administradas desde /admin (ver lib/homeSections.ts).
+  webPages?: WebPageItem[];
+  customServices?: CustomService[];
+  nfcFeatures?: NfcFeature[];
 };
 
 const SiteConfigContext = createContext<{ config: SiteConfig | null; loading: boolean }>({

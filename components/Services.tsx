@@ -11,6 +11,8 @@ import {
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useSiteConfig } from "@/contexts/SiteConfigContext";
 import { useWhatsAppUrl } from "@/lib/useWhatsApp";
+import { SERVICE_ICON_MAP } from "@/lib/homeSections";
+import { accentOf } from "@/lib/homeProducts";
 
 type ModalId = "design" | "web" | "apps" | "systems" | "ai" | "robot";
 type CardId = ModalId | "nfc";
@@ -105,13 +107,23 @@ export default function Services() {
   const heading = titleVariants[titleIndex] ?? titleVariants[0];
 
   // Merge visual + translation data + Firestore price overrides (panel /admin)
-  const services = ts.cards.map(card => {
+  const coreServices = ts.cards.filter(card => !config?.services?.[card.id]?.hidden).map(card => {
     const override = config?.services?.[card.id];
     const price = lang === "en" ? override?.priceEN : override?.priceES;
     const priceNote = lang === "en" ? override?.priceNoteEN : override?.priceNoteES;
     const title = lang === "en" ? override?.titleEN : override?.titleES;
     const desc = lang === "en" ? override?.descEN : override?.descES;
-    const isNfc = card.id === "nfc";
+    // Páginas completas (estilo NFC): se abren como ruta en vez de modal.
+    const PAGE_HREF: Record<string, string> = {
+      nfc: "/nfc",
+      design: "/servicios/diseno",
+      web: "/servicios/web",
+      apps: "/servicios/apps",
+      systems: "/servicios/sistemas",
+      ai: "/servicios/ia",
+      robot: "/servicios/robot",
+    };
+    const pageHref = PAGE_HREF[card.id];
     return {
       ...SERVICE_VISUAL[card.id as CardId],
       ...card,
@@ -119,10 +131,34 @@ export default function Services() {
       desc: desc || card.desc,
       price: price || card.price,
       priceNote: priceNote || card.priceNote,
-      hasModal: !isNfc,
-      href: isNfc ? "/nfc" : undefined,
+      hasModal: !pageHref,
+      href: pageHref,
+      external: undefined as string | undefined,
     };
   });
+
+  // Servicios propios agregados desde /admin → Servicios. Abren su enlace, o WhatsApp si no tienen.
+  const extraServices = (config?.customServices ?? [])
+    .filter(c => c && c.visible !== false && c.title)
+    .map(c => {
+      const accent = accentOf(c.accent);
+      const Icon = SERVICE_ICON_MAP[c.icon] ?? Rocket;
+      return {
+        id: c.id,
+        icon: <Icon size={22} />,
+        bg: accent.grad,
+        glow: accent.glow,
+        accentColor: accent.solid,
+        title: c.title,
+        desc: c.desc,
+        price: c.price,
+        priceNote: c.priceNote,
+        hasModal: false,
+        href: undefined as string | undefined,
+        external: c.linkUrl || whatsappUrl,
+      };
+    });
+  const services = [...coreServices, ...extraServices];
 
   const trust = ts.trust.map((label, i) => ({ icon: TRUST_ICONS[i], label }));
 
@@ -201,17 +237,18 @@ export default function Services() {
           <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
             {services.map((s, i) => (
               <motion.div
-                key={s.title}
+                key={s.id}
                 initial={{ opacity: 0, y: 32 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.45, delay: i * 0.07 }}
                 viewport={{ once: true }}
                 whileHover={{ y: -6 }}
                 onClick={() => {
+                  if (s.external) { window.open(s.external, "_blank", "noopener,noreferrer"); return; }
                   if (s.href) { router.push(s.href); return; }
                   if (s.hasModal) setActiveModal(s.id as ModalId);
                 }}
-                className={`glass-dark rounded-2xl relative overflow-hidden group text-center ${s.hasModal || s.href ? "cursor-pointer" : "cursor-default"}`}
+                className={`glass-dark rounded-2xl relative overflow-hidden group text-center ${s.hasModal || s.href || s.external ? "cursor-pointer" : "cursor-default"}`}
                 style={{ padding: "16px 12px" }}
               >
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" style={{ background: `radial-gradient(circle at 50% 0%,${s.glow},transparent 65%)` }} />
@@ -235,7 +272,7 @@ export default function Services() {
                   <span style={{ fontSize: 9, color: "rgba(255,255,255,0.3)" }}>{s.priceNote}</span>
                 </div>
 
-                {(s.hasModal || s.href) && (
+                {(s.hasModal || s.href || s.external) && (
                   <p className="mt-1 transition-opacity opacity-60 group-hover:opacity-100" style={{ fontSize: 9, color: s.accentColor }}>
                     {ts.detailsLink}
                   </p>

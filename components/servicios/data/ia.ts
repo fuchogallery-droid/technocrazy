@@ -1,0 +1,215 @@
+import type { ServicioDef } from "../types";
+
+const IMG = "/images/servicios/ia";
+
+export const IA: ServicioDef = {
+  slug: "ia",
+  hero: "ai",
+  theme: { accent: "#10b981", accent2: "#047857", soft: "#6ee7b7" },
+  meta: {
+    title: "Inteligencia Artificial · TechnoCrazy",
+    description: "Chatbots, agentes, generadores de contenido y voz con inteligencia artificial para atender y vender mientras tu negocio duerme.",
+  },
+  copy: {
+    es: {
+      back: "Volver a servicios",
+      badge: "INTELIGENCIA ARTIFICIAL",
+      titleA: "El poder de la IA",
+      titleB: "al servicio de tu negocio",
+      tagline: "Asistentes que atienden a tus clientes, crean contenido y analizan tus datos a cualquier hora, con el tono de tu marca y conectados a lo que ya usas.",
+      ctaWant: "Quiero IA en mi negocio",
+      ctaPortfolio: "Ver ejemplos",
+      chips: ["Chatbots", "Agentes", "Contenido", "Voz"],
+
+      areasA: "Lo que la IA",
+      areasB: "puede hacer por ti",
+      areasSub: "Seis usos que cualquier negocio puede aprovechar desde el primer día.",
+      areas: [
+        { icon: "message", title: "Chatbots", desc: "Atienden en WhatsApp y redes con respuestas naturales, a cualquier hora.", tags: ["WhatsApp", "Redes"] },
+        { icon: "brain", title: "Agentes de IA", desc: "Asistentes con una profesión: marketing, ventas o soporte.", tags: ["Ventas", "Soporte"] },
+        { icon: "pen", title: "Generador de contenido", desc: "Textos, imágenes, video y audio creados con IA para tu marca.", tags: ["Texto", "Imagen", "Video"] },
+        { icon: "chart", title: "Análisis de datos", desc: "Patrones y predicciones que se ven en un panel inteligente.", tags: ["Predicción", "Paneles"] },
+        { icon: "mic", title: "Voz con IA", desc: "Convierte texto en voz natural, incluso con una voz propia.", tags: ["Texto a voz", "Clonación"] },
+        { icon: "sparkles", title: "Asistente a tu medida", desc: "Un asistente que conoce tu negocio, tus precios y tus preguntas frecuentes.", tags: ["Tu información", "RAG"] },
+      ],
+
+      explainA: "Cómo piensa",
+      explainB: "una IA",
+      explainSub: "Toca cada tipo y mira el camino desde la pregunta hasta el resultado.",
+      explainIdealFor: "Ideal para",
+      explain: [
+        { name: "Chatbot", what: "Recibe la pregunta del cliente, busca la respuesta en la información de tu negocio y contesta con naturalidad.", ideal: "Atender consultas y tomar pedidos fuera de horario.", demo: { kind: "flow", steps: [{ icon: "message", label: "Pregunta" }, { icon: "database", label: "Tu info" }, { icon: "brain", label: "Piensa" }, { icon: "send", label: "Responde" }] } },
+        { name: "Agente", what: "Además de responder, actúa: agenda citas, envía cotizaciones o actualiza tu CRM.", ideal: "Equipos pequeños que necesitan un asistente que ejecute tareas.", demo: { kind: "flow", steps: [{ icon: "message", label: "Pide" }, { icon: "brain", label: "Decide" }, { icon: "calendar", label: "Actúa" }, { icon: "check", label: "Confirma" }] } },
+        { name: "Contenido", what: "Le das una idea y genera el texto, la imagen o el guion listos para revisar y publicar.", ideal: "Marcas que publican seguido y no tienen tiempo de crear todo.", demo: { kind: "flow", steps: [{ icon: "sparkles", label: "Idea" }, { icon: "brain", label: "Crea" }, { icon: "eye", label: "Revisas" }, { icon: "share", label: "Publicas" }] } },
+        { name: "Voz", what: "Convierte tus textos en audio con una voz natural, lista para videos, llamadas o locuciones.", ideal: "Videos, anuncios, mensajes de bienvenida y atención telefónica.", demo: { kind: "flow", steps: [{ icon: "file", label: "Texto" }, { icon: "brain", label: "Procesa" }, { icon: "mic", label: "Voz" }, { icon: "support", label: "Audio" }] } },
+      ],
+
+      processA: "Cómo",
+      processB: "trabajamos",
+      processSub: "Una IA útil se entrena con tu negocio. Estos son los pasos.",
+      steps: [
+        { icon: "message", title: "Conversamos", desc: "Me cuentas qué quieres que la IA haga y con qué tono debe hablar." },
+        { icon: "database", title: "Tu información", desc: "Reunimos precios, preguntas frecuentes y documentos que debe conocer." },
+        { icon: "brain", title: "Configuración", desc: "Armamos el asistente, su personalidad y las acciones que puede realizar." },
+        { icon: "eye", title: "Pruebas", desc: "Le hacemos preguntas reales y corregimos lo que no responda bien." },
+        { icon: "rocket", title: "Puesta en marcha", desc: "Lo conectamos a tu WhatsApp o redes y lo dejamos atendiendo." },
+      ],
+
+      receiveA: "Qué",
+      receiveB: "recibes",
+      receiveSub: "Una IA ya entrenada y funcionando con tu información.",
+      files: [
+        { icon: "bot", title: "Tu asistente de IA", desc: "Conectado a tu WhatsApp o redes, con el tono de tu marca." },
+        { icon: "database", title: "Base de conocimiento", desc: "La información de tu negocio organizada para que la IA la consulte." },
+        { icon: "dashboard", title: "Panel de conversaciones", desc: "Ves qué preguntan tus clientes y cómo se les responde." },
+        { icon: "support", title: "Ajustes continuos", desc: "Mejoramos las respuestas conforme aprendemos de tus clientes." },
+      ],
+
+      portfolioA: "IA",
+      portfolioB: "en acción",
+      portfolioSub: "Ejemplos de lo que podemos construir.",
+      portfolioHint: "Toca una imagen para verla en grande",
+      portfolio: [
+        { img: `${IMG}/chatbot.png`, label: "Chatbot" },
+        { img: `${IMG}/agente-ia.png`, label: "Agente IA" },
+        { img: `${IMG}/generador.png`, label: "Generador" },
+        { img: `${IMG}/analisis.png`, label: "Análisis" },
+        { img: `${IMG}/voz.png`, label: "Voz" },
+        { img: `${IMG}/asistente.png`, label: "Asistente" },
+      ],
+
+      priceA: "Cuánto",
+      priceB: "cuesta",
+      priceSub: "Depende del tipo de asistente y de lo que deba hacer.",
+      priceFrom: "$100",
+      priceTo: "$299",
+      priceUnit: "USD",
+      priceSteps: [
+        { label: "Chatbot básico", desc: "Responde preguntas frecuentes" },
+        { label: "Agente", desc: "Responde y ejecuta acciones" },
+        { label: "Solución a medida", desc: "Varias funciones y voz o análisis" },
+      ],
+      factorsTitle: "Qué define el precio",
+      factors: [
+        { icon: "database", title: "Tu información", desc: "Más documentos y casos, más trabajo de entrenamiento." },
+        { icon: "link", title: "Conexiones", desc: "WhatsApp, redes y herramientas que deba usar." },
+        { icon: "zap", title: "Acciones", desc: "Agendar, cotizar o cobrar suma funciones." },
+      ],
+      priceNote: "Cotización personalizada y sin compromiso. Dime qué quieres que haga tu IA y te doy el precio exacto.",
+
+      faqA: "Preguntas",
+      faqB: "frecuentes",
+      faq: [
+        { q: "¿La IA va a inventar respuestas?", a: "Se configura para responder con la información de tu negocio. Si no sabe algo, pasa la conversación a una persona." },
+        { q: "¿Puede hablar como mi marca?", a: "Sí. Definimos el tono: formal, cercano, divertido, lo que corresponda a tu negocio." },
+        { q: "¿Funciona en mi WhatsApp?", a: "Sí, se puede conectar al WhatsApp de tu negocio y a tus redes." },
+        { q: "¿Tengo que saber de tecnología?", a: "No. Yo configuro todo y te enseño a revisar las conversaciones." },
+        { q: "¿Qué pasa con los datos de mis clientes?", a: "Se manejan con accesos restringidos y quedan en cuentas a tu nombre." },
+      ],
+
+      finalCtaTitle: "¿Listo para que tu negocio atienda a cualquier hora?",
+      finalCtaDesc: "Escríbeme y cuéntame qué quieres que haga tu IA. La primera asesoría es gratis y sin compromiso.",
+      finalCtaBtn: "Hablar por WhatsApp",
+    },
+    en: {
+      back: "Back to services",
+      badge: "ARTIFICIAL INTELLIGENCE",
+      titleA: "The power of AI",
+      titleB: "at the service of your business",
+      tagline: "Assistants that serve your customers, create content and analyze your data at any hour, with your brand's tone and connected to what you already use.",
+      ctaWant: "I want AI in my business",
+      ctaPortfolio: "See examples",
+      chips: ["Chatbots", "Agents", "Content", "Voice"],
+
+      areasA: "What AI",
+      areasB: "can do for you",
+      areasSub: "Six uses any business can take advantage of from day one.",
+      areas: [
+        { icon: "message", title: "Chatbots", desc: "They answer on WhatsApp and social media with natural replies, at any hour.", tags: ["WhatsApp", "Social"] },
+        { icon: "brain", title: "AI agents", desc: "Assistants with a profession: marketing, sales or support.", tags: ["Sales", "Support"] },
+        { icon: "pen", title: "Content generator", desc: "Text, images, video and audio created with AI for your brand.", tags: ["Text", "Image", "Video"] },
+        { icon: "chart", title: "Data analysis", desc: "Patterns and predictions shown on a smart dashboard.", tags: ["Prediction", "Dashboards"] },
+        { icon: "mic", title: "AI voice", desc: "Turns text into natural voice, even with a voice of your own.", tags: ["Text to speech", "Cloning"] },
+        { icon: "sparkles", title: "Tailored assistant", desc: "An assistant that knows your business, your prices and your FAQs.", tags: ["Your data", "RAG"] },
+      ],
+
+      explainA: "How an AI",
+      explainB: "thinks",
+      explainSub: "Tap each type and follow the path from question to result.",
+      explainIdealFor: "Best for",
+      explain: [
+        { name: "Chatbot", what: "It takes the customer's question, looks up the answer in your business information and replies naturally.", ideal: "Handling inquiries and taking orders outside business hours.", demo: { kind: "flow", steps: [{ icon: "message", label: "Question" }, { icon: "database", label: "Your info" }, { icon: "brain", label: "Thinks" }, { icon: "send", label: "Replies" }] } },
+        { name: "Agent", what: "Besides answering, it acts: books appointments, sends quotes or updates your CRM.", ideal: "Small teams that need an assistant that carries out tasks.", demo: { kind: "flow", steps: [{ icon: "message", label: "Asks" }, { icon: "brain", label: "Decides" }, { icon: "calendar", label: "Acts" }, { icon: "check", label: "Confirms" }] } },
+        { name: "Content", what: "You give it an idea and it produces the text, image or script ready to review and publish.", ideal: "Brands that post often and have no time to create everything.", demo: { kind: "flow", steps: [{ icon: "sparkles", label: "Idea" }, { icon: "brain", label: "Creates" }, { icon: "eye", label: "You review" }, { icon: "share", label: "You post" }] } },
+        { name: "Voice", what: "Turns your texts into audio with a natural voice, ready for videos, calls or voice-overs.", ideal: "Videos, ads, welcome messages and phone support.", demo: { kind: "flow", steps: [{ icon: "file", label: "Text" }, { icon: "brain", label: "Processes" }, { icon: "mic", label: "Voice" }, { icon: "support", label: "Audio" }] } },
+      ],
+
+      processA: "How we",
+      processB: "work",
+      processSub: "A useful AI is trained with your business. These are the steps.",
+      steps: [
+        { icon: "message", title: "We talk", desc: "You tell me what you want the AI to do and what tone it should use." },
+        { icon: "database", title: "Your information", desc: "We gather prices, FAQs and documents it must know." },
+        { icon: "brain", title: "Setup", desc: "We build the assistant, its personality and the actions it can perform." },
+        { icon: "eye", title: "Testing", desc: "We ask it real questions and fix whatever it does not answer well." },
+        { icon: "rocket", title: "Go live", desc: "We connect it to your WhatsApp or social media and leave it working." },
+      ],
+
+      receiveA: "What you",
+      receiveB: "get",
+      receiveSub: "An AI already trained and working with your information.",
+      files: [
+        { icon: "bot", title: "Your AI assistant", desc: "Connected to your WhatsApp or social media, in your brand's tone." },
+        { icon: "database", title: "Knowledge base", desc: "Your business information organized for the AI to consult." },
+        { icon: "dashboard", title: "Conversation panel", desc: "See what your customers ask and how they are answered." },
+        { icon: "support", title: "Ongoing tuning", desc: "We improve answers as we learn from your customers." },
+      ],
+
+      portfolioA: "AI",
+      portfolioB: "in action",
+      portfolioSub: "Examples of what we can build.",
+      portfolioHint: "Tap an image to see it larger",
+      portfolio: [
+        { img: `${IMG}/chatbot.png`, label: "Chatbot" },
+        { img: `${IMG}/agente-ia.png`, label: "AI agent" },
+        { img: `${IMG}/generador.png`, label: "Generator" },
+        { img: `${IMG}/analisis.png`, label: "Analysis" },
+        { img: `${IMG}/voz.png`, label: "Voice" },
+        { img: `${IMG}/asistente.png`, label: "Assistant" },
+      ],
+
+      priceA: "How much",
+      priceB: "does it cost",
+      priceSub: "It depends on the type of assistant and what it has to do.",
+      priceFrom: "$100",
+      priceTo: "$299",
+      priceUnit: "USD",
+      priceSteps: [
+        { label: "Basic chatbot", desc: "Answers frequent questions" },
+        { label: "Agent", desc: "Answers and performs actions" },
+        { label: "Custom solution", desc: "Several functions plus voice or analysis" },
+      ],
+      factorsTitle: "What sets the price",
+      factors: [
+        { icon: "database", title: "Your information", desc: "More documents and cases mean more training work." },
+        { icon: "link", title: "Connections", desc: "WhatsApp, social media and tools it must use." },
+        { icon: "zap", title: "Actions", desc: "Booking, quoting or charging add functions." },
+      ],
+      priceNote: "Custom quote with no commitment. Tell me what you want your AI to do and I will give you the exact price.",
+
+      faqA: "Frequently asked",
+      faqB: "questions",
+      faq: [
+        { q: "Will the AI make up answers?", a: "It is set up to answer with your business information. If it does not know something, it hands the chat to a person." },
+        { q: "Can it speak like my brand?", a: "Yes. We define the tone: formal, friendly, fun, whatever fits your business." },
+        { q: "Does it work on my WhatsApp?", a: "Yes, it can be connected to your business WhatsApp and your social media." },
+        { q: "Do I need to know technology?", a: "No. I configure everything and teach you to review the conversations." },
+        { q: "What happens to my customers' data?", a: "It is handled with restricted access and stays in accounts under your name." },
+      ],
+
+      finalCtaTitle: "Ready for your business to answer at any hour?",
+      finalCtaDesc: "Message me and tell me what you want your AI to do. The first consultation is free and with no commitment.",
+      finalCtaBtn: "Chat on WhatsApp",
+    },
+  },
+};

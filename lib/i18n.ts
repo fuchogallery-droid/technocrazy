@@ -6,7 +6,6 @@ export const translations = {
       links: [
         { label: "Inicio", href: "#inicio", icon: "home" },
         { label: "Servicios", href: "#servicios", icon: "layers" },
-        { label: "Promotores", href: "#promotores", icon: "users" },
         { label: "Proceso", href: "#proceso", icon: "route" },
         { label: "Calendario", href: "/calendario", icon: "calendar" },
         { label: "Propuesta IA", href: "/propuesta-ia.html", icon: "bot" },
@@ -277,7 +276,6 @@ export const translations = {
       links: [
         { label: "Inicio", href: "#inicio" },
         { label: "Servicios", href: "#servicios" },
-        { label: "Promotores", href: "#promotores" },
         { label: "Proceso", href: "#proceso" },
         { label: "📅 Calendario", href: "/calendario" },
         { label: "🤖 Propuesta IA", href: "/propuesta-ia.html" },
@@ -618,7 +616,6 @@ export const translations = {
       links: [
         { label: "Home", href: "#inicio", icon: "home" },
         { label: "Services", href: "#servicios", icon: "layers" },
-        { label: "Promoters", href: "#promotores", icon: "users" },
         { label: "Process", href: "#proceso", icon: "route" },
         { label: "Calendar", href: "/calendario", icon: "calendar" },
         { label: "AI Proposal", href: "/propuesta-ia.html", icon: "bot" },
@@ -889,7 +886,6 @@ export const translations = {
       links: [
         { label: "Home", href: "#inicio" },
         { label: "Services", href: "#servicios" },
-        { label: "Promoters", href: "#promotores" },
         { label: "Process", href: "#proceso" },
         { label: "📅 Calendar", href: "/calendario" },
         { label: "🤖 AI Proposal", href: "/propuesta-ia.html" },

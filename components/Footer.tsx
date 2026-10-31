@@ -32,7 +32,7 @@ const sinEmojis = (s: string) =>
   s.replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}\u{2B00}-\u{2BFF}]/gu, "").trim();
 
 export default function Footer() {
-  const { t, lang } = useLanguage();
+  const { t } = useLanguage();
   const { config } = useSiteConfig();
   const tf = t.footer;
   const contact = {
@@ -41,7 +41,6 @@ export default function Footer() {
     email: config?.contact?.email || "Rafaelpixel3004@gmail.com",
     whatsapp: config?.contact?.whatsapp || "https://wa.me/17794318214",
   };
-  const ctaLabel = sinEmojis((lang === "en" ? config?.cta?.en : config?.cta?.es) || tf.cta);
 
   const contactItems = [
     {
@@ -141,15 +140,6 @@ export default function Footer() {
                 </a>
               ))}
             </div>
-            <a
-              href={contact.whatsapp}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-primary"
-              style={{ marginTop: 20, padding: "11px 24px", fontSize: 13.5, minHeight: 44 }}
-            >
-              {ctaLabel}
-            </a>
           </div>
         </div>
 

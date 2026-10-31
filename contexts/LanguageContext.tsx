@@ -27,6 +27,12 @@ const LanguageContext = createContext<LanguageCtx>({
 
 function detectLang(): Lang {
   if (typeof window === "undefined") return "en";
+  // Enlace compartido con ?lang=es (o en) fuerza el idioma y lo recuerda.
+  const fromUrl = new URLSearchParams(window.location.search).get("lang");
+  if (fromUrl === "es" || fromUrl === "en") {
+    try { localStorage.setItem("tc_lang", fromUrl); } catch {}
+    return fromUrl;
+  }
   const saved = localStorage.getItem("tc_lang") as Lang | null;
   if (saved === "en" || saved === "es") return saved;
   return "en";

@@ -1,0 +1,215 @@
+import type { ServicioDef } from "../types";
+
+const IMG = "/images/servicios/web";
+
+export const WEB: ServicioDef = {
+  slug: "web",
+  hero: "web",
+  theme: { accent: "#2979ff", accent2: "#1d4ed8", soft: "#82b1ff" },
+  meta: {
+    title: "Páginas Web · TechnoCrazy",
+    description: "Páginas web modernas, rápidas y seguras: landing pages, sitios corporativos, tiendas online y plataformas con login, pagos e inteligencia artificial.",
+  },
+  copy: {
+    es: {
+      back: "Volver a servicios",
+      badge: "PÁGINAS WEB",
+      titleA: "Tu negocio, abierto al mundo",
+      titleB: "24 horas al día",
+      tagline: "Una web no es un folleto digital: es tu mejor vendedor trabajando sin descanso. Rápida, segura y pensada para convertir visitas en clientes.",
+      ctaWant: "Quiero mi página web",
+      ctaPortfolio: "Ver proyectos",
+      chips: ["Landing", "Corporativa", "Tienda", "Plataforma"],
+
+      areasA: "Todo lo que",
+      areasB: "incluye",
+      areasSub: "Una página web profesional se construye con varias piezas. Estas vienen contigo.",
+      areas: [
+        { icon: "rocket", title: "Landing pages", desc: "Una sola página con un solo objetivo: que tu visitante escriba, llame o compre.", tags: ["Conversión", "Una acción"] },
+        { icon: "store", title: "Sitios corporativos", desc: "Tu empresa presentada con seriedad: quiénes son, qué hacen y cómo contactarlos.", tags: ["Institucional", "Confianza"] },
+        { icon: "cart", title: "Tiendas online", desc: "Catálogo, carrito y pago en línea para vender sin horarios.", tags: ["E-commerce", "Pagos"] },
+        { icon: "search", title: "SEO para Google", desc: "Estructura y velocidad para que te encuentren cuando te buscan.", tags: ["Google", "Visibilidad"] },
+        { icon: "gauge", title: "Velocidad extrema", desc: "Una web que carga en segundos: las visitas que esperan se van.", tags: ["Rendimiento", "Core Web"] },
+        { icon: "smartphone", title: "100% responsive", desc: "Se ve y funciona perfecto en celular, tablet y computadora.", tags: ["Móvil", "Tablet", "PC"] },
+      ],
+
+      explainA: "Qué tipo de web",
+      explainB: "necesitas",
+      explainSub: "Toca cada tipo y mira cómo se arma. Cada una resuelve un problema distinto.",
+      explainIdealFor: "Ideal para",
+      explain: [
+        { name: "Landing", what: "Una página corta y directa: titular, beneficios, prueba social y un botón. Nada que distraiga.", ideal: "Lanzar un servicio, una promoción o captar contactos de un anuncio.", demo: { kind: "wire", frame: "browser", rows: ["hero", "cards3", "btn"] } },
+        { name: "Corporativa", what: "Varias secciones que presentan la empresa: servicios, equipo, trabajos y contacto.", ideal: "Negocios que quieren verse serios y ser encontrados en Google.", demo: { kind: "wire", frame: "browser", rows: ["nav", "hero", "cards3", "text"] } },
+        { name: "Tienda", what: "Catálogo de productos con carrito, pago en línea y panel para administrar pedidos.", ideal: "Vender productos sin depender de un chat ni de un horario.", demo: { kind: "wire", frame: "browser", rows: ["nav", "search", "grid4", "price"] } },
+        { name: "Plataforma", what: "Una web con cuentas de usuario, paneles, pagos y datos en tiempo real, hecha a medida.", ideal: "Sistemas de reservas, membresías, paneles de clientes o productos digitales.", demo: { kind: "wire", frame: "browser", rows: ["nav", "chart", "list"] } },
+      ],
+
+      processA: "Cómo",
+      processB: "trabajamos",
+      processSub: "De la idea a tu web publicada. Tú ves y apruebas cada paso.",
+      steps: [
+        { icon: "message", title: "Conversamos", desc: "Me cuentas qué vendes, a quién y qué quieres que haga tu visitante." },
+        { icon: "layers", title: "Estructura", desc: "Armamos el esquema de la página: qué va primero y cómo se recorre." },
+        { icon: "palette", title: "Diseño", desc: "Le damos tu identidad: colores, textos e imágenes reales de tu negocio." },
+        { icon: "eye", title: "Revisión", desc: "Navegas la web en tu celular y en la computadora. Ajustamos lo que haga falta." },
+        { icon: "rocket", title: "Publicación", desc: "La ponemos en línea con tu dominio, segura y lista para recibir visitas." },
+      ],
+
+      receiveA: "Qué",
+      receiveB: "recibes",
+      receiveSub: "Una web terminada, publicada y que puedes administrar.",
+      files: [
+        { icon: "globe", title: "Tu web publicada", desc: "En línea, con tu dirección propia y certificado de seguridad." },
+        { icon: "smartphone", title: "Versión móvil", desc: "Probada en celular y tablet, donde entra la mayoría de tus visitas." },
+        { icon: "search", title: "Base de SEO", desc: "Títulos, descripciones y estructura listos para que Google te entienda." },
+        { icon: "support", title: "Soporte", desc: "Mantenimiento y ayuda continua para que tu web siga funcionando." },
+      ],
+
+      portfolioA: "Proyectos",
+      portfolioB: "reales",
+      portfolioSub: "Webs que ya están en línea. Tócalas para visitarlas.",
+      portfolioHint: "Cada proyecto abre en vivo en una pestaña nueva",
+      portfolio: [
+        { img: `${IMG}/technocrazy.png`, url: "https://technocrazy.org", label: "TechnoCrazy — esta plaza" },
+        { img: `${IMG}/autopost.png`, url: "https://autopost-plum-five.vercel.app", label: "AutoPost" },
+        { img: `${IMG}/elgestor.png`, url: "https://elgestor.vercel.app", label: "ElGestor" },
+        { img: `${IMG}/serviya.png`, url: "https://serviya.vercel.app", label: "ServiYA" },
+        { img: `${IMG}/cambiobs.png`, url: "https://cambiobs.vercel.app", label: "CambioBs" },
+        { cta: true, label: "El próximo eres tú" },
+      ],
+
+      priceA: "Cuánto",
+      priceB: "cuesta",
+      priceSub: "Depende de lo que necesites. Una landing cuesta menos que una plataforma completa.",
+      priceFrom: "$50",
+      priceTo: "$150",
+      priceUnit: "USD",
+      priceSteps: [
+        { label: "Landing", desc: "Una página con un objetivo" },
+        { label: "Sitio completo", desc: "Varias secciones y contacto" },
+        { label: "Tienda o plataforma", desc: "Pagos, cuentas y paneles" },
+      ],
+      factorsTitle: "Qué define el precio",
+      factors: [
+        { icon: "layers", title: "Número de secciones", desc: "Más páginas y contenido, más tiempo de diseño." },
+        { icon: "card", title: "Pagos y cuentas", desc: "Vender en línea o tener usuarios requiere más trabajo." },
+        { icon: "sparkles", title: "Funciones a medida", desc: "Reservas, paneles o IA integrada suman alcance." },
+      ],
+      priceNote: "Cotización personalizada y sin compromiso. Cuéntame tu idea y te doy el precio exacto.",
+
+      faqA: "Preguntas",
+      faqB: "frecuentes",
+      faq: [
+        { q: "¿Necesito tener las fotos y los textos listos?", a: "No es obligatorio. Si los tienes, los uso; si no, te ayudo a ordenarlos y redactarlos." },
+        { q: "¿La web será mía?", a: "Sí. Tu web, tu dominio y tu contenido son tuyos." },
+        { q: "¿Puedo cambiar cosas después?", a: "Sí. Puedes pedirme cambios cuando quieras, o administrarlos tú si tu web tiene panel." },
+        { q: "¿Se verá bien en el celular?", a: "Sí. Se diseña pensando primero en el celular y se prueba también en tablet y computadora." },
+        { q: "¿Cuánto tarda?", a: "Depende del tamaño. Una landing es rápida; una plataforma lleva más. Te doy un plazo claro al cotizar." },
+      ],
+
+      finalCtaTitle: "¿Listo para que tu negocio no cierre nunca?",
+      finalCtaDesc: "Escríbeme y cuéntame de tu negocio. La primera asesoría es gratis y sin compromiso.",
+      finalCtaBtn: "Hablar por WhatsApp",
+    },
+    en: {
+      back: "Back to services",
+      badge: "WEBSITES",
+      titleA: "Your business, open to the world",
+      titleB: "24 hours a day",
+      tagline: "A website is not a digital brochure: it is your best salesperson working nonstop. Fast, secure and built to turn visits into customers.",
+      ctaWant: "I want my website",
+      ctaPortfolio: "See projects",
+      chips: ["Landing", "Corporate", "Store", "Platform"],
+
+      areasA: "Everything",
+      areasB: "included",
+      areasSub: "A professional website is built from several pieces. These come with it.",
+      areas: [
+        { icon: "rocket", title: "Landing pages", desc: "One page with one goal: get your visitor to write, call or buy.", tags: ["Conversion", "One action"] },
+        { icon: "store", title: "Corporate sites", desc: "Your company presented seriously: who you are, what you do and how to reach you.", tags: ["Institutional", "Trust"] },
+        { icon: "cart", title: "Online stores", desc: "Catalog, cart and online payment so you sell around the clock.", tags: ["E-commerce", "Payments"] },
+        { icon: "search", title: "SEO for Google", desc: "Structure and speed so people find you when they search.", tags: ["Google", "Visibility"] },
+        { icon: "gauge", title: "Extreme speed", desc: "A site that loads in seconds: visitors who wait, leave.", tags: ["Performance", "Core Web"] },
+        { icon: "smartphone", title: "100% responsive", desc: "Looks and works perfectly on phone, tablet and computer.", tags: ["Mobile", "Tablet", "PC"] },
+      ],
+
+      explainA: "Which kind of site",
+      explainB: "do you need",
+      explainSub: "Tap each type and see how it is built. Each one solves a different problem.",
+      explainIdealFor: "Best for",
+      explain: [
+        { name: "Landing", what: "A short, direct page: headline, benefits, social proof and one button. Nothing distracting.", ideal: "Launching a service, a promotion or capturing leads from an ad.", demo: { kind: "wire", frame: "browser", rows: ["hero", "cards3", "btn"] } },
+        { name: "Corporate", what: "Several sections that present the company: services, team, work and contact.", ideal: "Businesses that want to look serious and be found on Google.", demo: { kind: "wire", frame: "browser", rows: ["nav", "hero", "cards3", "text"] } },
+        { name: "Store", what: "A product catalog with cart, online payment and a panel to manage orders.", ideal: "Selling products without depending on a chat or business hours.", demo: { kind: "wire", frame: "browser", rows: ["nav", "search", "grid4", "price"] } },
+        { name: "Platform", what: "A site with user accounts, dashboards, payments and real-time data, made to measure.", ideal: "Booking systems, memberships, client portals or digital products.", demo: { kind: "wire", frame: "browser", rows: ["nav", "chart", "list"] } },
+      ],
+
+      processA: "How we",
+      processB: "work",
+      processSub: "From idea to published site. You see and approve every step.",
+      steps: [
+        { icon: "message", title: "We talk", desc: "You tell me what you sell, to whom and what you want your visitor to do." },
+        { icon: "layers", title: "Structure", desc: "We map the page: what goes first and how it is read." },
+        { icon: "palette", title: "Design", desc: "We give it your identity: colors, copy and real images of your business." },
+        { icon: "eye", title: "Review", desc: "You browse it on your phone and computer. We adjust whatever is needed." },
+        { icon: "rocket", title: "Launch", desc: "We put it online with your domain, secure and ready for visitors." },
+      ],
+
+      receiveA: "What you",
+      receiveB: "get",
+      receiveSub: "A finished, published website that you can manage.",
+      files: [
+        { icon: "globe", title: "Your live website", desc: "Online, with your own address and security certificate." },
+        { icon: "smartphone", title: "Mobile version", desc: "Tested on phone and tablet, where most of your visits come from." },
+        { icon: "search", title: "SEO foundation", desc: "Titles, descriptions and structure so Google understands you." },
+        { icon: "support", title: "Support", desc: "Ongoing maintenance and help to keep your site running." },
+      ],
+
+      portfolioA: "Real",
+      portfolioB: "projects",
+      portfolioSub: "Websites that are already live. Tap them to visit.",
+      portfolioHint: "Each project opens live in a new tab",
+      portfolio: [
+        { img: `${IMG}/technocrazy.png`, url: "https://technocrazy.org", label: "TechnoCrazy — this platform" },
+        { img: `${IMG}/autopost.png`, url: "https://autopost-plum-five.vercel.app", label: "AutoPost" },
+        { img: `${IMG}/elgestor.png`, url: "https://elgestor.vercel.app", label: "ElGestor" },
+        { img: `${IMG}/serviya.png`, url: "https://serviya.vercel.app", label: "ServiYA" },
+        { img: `${IMG}/cambiobs.png`, url: "https://cambiobs.vercel.app", label: "CambioBs" },
+        { cta: true, label: "You're next" },
+      ],
+
+      priceA: "How much",
+      priceB: "does it cost",
+      priceSub: "It depends on what you need. A landing costs less than a full platform.",
+      priceFrom: "$50",
+      priceTo: "$150",
+      priceUnit: "USD",
+      priceSteps: [
+        { label: "Landing", desc: "One page, one goal" },
+        { label: "Full site", desc: "Several sections and contact" },
+        { label: "Store or platform", desc: "Payments, accounts and dashboards" },
+      ],
+      factorsTitle: "What sets the price",
+      factors: [
+        { icon: "layers", title: "Number of sections", desc: "More pages and content mean more design time." },
+        { icon: "card", title: "Payments and accounts", desc: "Selling online or having users takes more work." },
+        { icon: "sparkles", title: "Custom features", desc: "Bookings, dashboards or built-in AI add scope." },
+      ],
+      priceNote: "Custom quote with no commitment. Tell me your idea and I will give you the exact price.",
+
+      faqA: "Frequently asked",
+      faqB: "questions",
+      faq: [
+        { q: "Do I need to have photos and text ready?", a: "Not required. If you have them I use them; if not, I help you organize and write them." },
+        { q: "Will the site be mine?", a: "Yes. Your site, your domain and your content are yours." },
+        { q: "Can I change things later?", a: "Yes. You can ask me for changes anytime, or manage them yourself if your site has a panel." },
+        { q: "Will it look good on a phone?", a: "Yes. It is designed phone-first and also tested on tablet and computer." },
+        { q: "How long does it take?", a: "It depends on size. A landing is quick; a platform takes longer. I give you a clear timeline when quoting." },
+      ],
+
+      finalCtaTitle: "Ready for your business to never close?",
+      finalCtaDesc: "Message me and tell me about your business. The first consultation is free and with no commitment.",
+      finalCtaBtn: "Chat on WhatsApp",
+    },
+  },
+};

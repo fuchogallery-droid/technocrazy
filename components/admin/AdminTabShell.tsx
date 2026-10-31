@@ -5,19 +5,21 @@ import { Menu, X, LogOut, PencilRuler, type LucideIcon } from "lucide-react";
 import { useAdminMode } from "@/contexts/AdminModeContext";
 
 export type AdminTabDef<T extends string> = { id: T; label: string; icon: LucideIcon };
+// Un grupo agrupa varias pestañas bajo una sección del panel (Inicio del sitio, Chip NFC…).
+export type AdminGroupDef<T extends string> = { id: string; label: string; icon: LucideIcon; tabs: AdminTabDef<T>[] };
 
 // Cáscara del panel admin: barra superior fija con identidad + acciones, y una
 // segunda fila con las pestañas en scroll horizontal (antes se envolvían en dos
 // líneas apretadas). Las pestañas activas se marcan con superficie sólida y
 // subrayado en vez de pastillas de colores.
 export default function AdminTabShell<T extends string>({
-  tabs,
+  groups,
   activeTab,
   onTabChange,
   onLogout,
   children,
 }: {
-  tabs: AdminTabDef<T>[];
+  groups: AdminGroupDef<T>[];
   activeTab: T;
   onTabChange: (t: T) => void;
   onLogout: () => void;
@@ -26,11 +28,9 @@ export default function AdminTabShell<T extends string>({
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const { setEditModeEnabled } = useAdminMode();
 
+  const tabs = groups.flatMap((g) => g.tabs);
   const active = tabs.find((t) => t.id === activeTab);
-
-  // Dos filas parejas: si el total es impar, la de arriba lleva una más.
-  const half = Math.ceil(tabs.length / 2);
-  const tabRows = [tabs.slice(0, half), tabs.slice(half)].filter((row) => row.length > 0);
+  const activeGroup = groups.find((g) => g.tabs.some((t) => t.id === activeTab)) ?? groups[0];
 
   return (
     <div>
@@ -90,16 +90,40 @@ export default function AdminTabShell<T extends string>({
           </div>
         </div>
 
-        {/* ── Pestañas (desktop) — dos filas repartidas a todo lo ancho, sin
-             scroll horizontal: cada fila es un grid de columnas iguales. ── */}
+        {/* ── Secciones (desktop): una fila de grupos y, debajo, las pestañas del grupo activo ── */}
         <nav className="hidden lg:block" style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}>
-          <div className="tc-wrap flex flex-col" style={{ maxWidth: 1180, gap: 6, paddingTop: 9, paddingBottom: 11 }}>
-            {tabRows.map((row, rowIndex) => (
-              <div
-                key={rowIndex}
-                style={{ display: "grid", gridTemplateColumns: `repeat(${row.length}, minmax(0, 1fr))`, gap: 6 }}
-              >
-                {row.map((tab) => {
+          <div className="tc-wrap flex flex-col" style={{ maxWidth: 1180, gap: 8, paddingTop: 10, paddingBottom: 12 }}>
+            <div style={{ display: "grid", gridTemplateColumns: `repeat(${groups.length}, minmax(0, 1fr))`, gap: 6 }}>
+              {groups.map((g) => {
+                const Icon = g.icon;
+                const isActive = g.id === activeGroup.id;
+                return (
+                  <button
+                    key={g.id}
+                    type="button"
+                    onClick={() => onTabChange(g.tabs[0].id)}
+                    aria-pressed={isActive}
+                    className="flex items-center justify-center gap-2 transition-colors"
+                    style={{
+                      padding: "10px 8px",
+                      borderRadius: 10,
+                      fontSize: 13,
+                      fontWeight: isActive ? 700 : 500,
+                      color: isActive ? "#fff" : "rgba(255,255,255,0.55)",
+                      background: isActive ? "rgba(41,121,255,0.18)" : "rgba(255,255,255,0.025)",
+                      border: `1px solid ${isActive ? "rgba(41,121,255,0.5)" : "rgba(255,255,255,0.06)"}`,
+                      minWidth: 0,
+                    }}
+                  >
+                    <Icon size={15} style={{ flexShrink: 0, color: isActive ? "#2979ff" : "currentColor" }} />
+                    <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{g.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+            {activeGroup.tabs.length > 1 && (
+              <div className="flex flex-wrap" style={{ gap: 6 }}>
+                {activeGroup.tabs.map((tab) => {
                   const Icon = tab.icon;
                   const isActive = activeTab === tab.id;
                   return (
@@ -107,59 +131,69 @@ export default function AdminTabShell<T extends string>({
                       key={tab.id}
                       type="button"
                       onClick={() => onTabChange(tab.id)}
-                      className="flex items-center justify-center gap-1.5 transition-colors"
+                      className="flex items-center gap-1.5 transition-colors"
                       style={{
-                        padding: "9px 8px",
+                        padding: "7px 12px",
                         borderRadius: 8,
-                        fontSize: 12,
+                        fontSize: 12.5,
                         fontWeight: isActive ? 700 : 500,
                         color: isActive ? "#fff" : "rgba(255,255,255,0.5)",
-                        background: isActive ? "rgba(41,121,255,0.16)" : "rgba(255,255,255,0.025)",
-                        border: `1px solid ${isActive ? "rgba(41,121,255,0.45)" : "rgba(255,255,255,0.06)"}`,
-                        minWidth: 0,
+                        background: isActive ? "rgba(255,255,255,0.09)" : "transparent",
+                        borderBottom: `2px solid ${isActive ? "#2979ff" : "transparent"}`,
                       }}
                     >
-                      <Icon size={13} style={{ flexShrink: 0, color: isActive ? "#2979ff" : "currentColor" }} />
-                      <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                        {tab.label}
-                      </span>
+                      <Icon size={13} style={{ flexShrink: 0 }} />
+                      {tab.label}
                     </button>
                   );
                 })}
               </div>
-            ))}
+            )}
           </div>
         </nav>
 
-        {/* ── Pestañas (móvil) ── */}
+        {/* ── Secciones (móvil): grupos con sus pestañas ── */}
         {mobileNavOpen && (
-          <nav className="lg:hidden" style={{ borderTop: "1px solid rgba(255,255,255,0.06)", background: "rgba(8,10,24,0.98)" }}>
-            <div className="tc-wrap grid grid-cols-2 sm:grid-cols-3" style={{ gap: 6, paddingTop: 12, paddingBottom: 14 }}>
-              {tabs.map((tab) => {
-                const Icon = tab.icon;
-                const isActive = activeTab === tab.id;
+          <nav className="lg:hidden" style={{ borderTop: "1px solid rgba(255,255,255,0.06)", background: "rgba(8,10,24,0.98)", maxHeight: "70vh", overflowY: "auto" }}>
+            <div className="tc-wrap flex flex-col" style={{ gap: 14, paddingTop: 12, paddingBottom: 16 }}>
+              {groups.map((g) => {
+                const GIcon = g.icon;
                 return (
-                  <button
-                    key={tab.id}
-                    type="button"
-                    onClick={() => {
-                      onTabChange(tab.id);
-                      setMobileNavOpen(false);
-                    }}
-                    className="flex items-center gap-2"
-                    style={{
-                      padding: "10px 12px",
-                      borderRadius: 9,
-                      fontSize: 12.5,
-                      fontWeight: isActive ? 700 : 500,
-                      color: isActive ? "#fff" : "rgba(255,255,255,0.55)",
-                      background: isActive ? "rgba(41,121,255,0.16)" : "rgba(255,255,255,0.03)",
-                      border: `1px solid ${isActive ? "rgba(41,121,255,0.4)" : "rgba(255,255,255,0.07)"}`,
-                    }}
-                  >
-                    <Icon size={14} />
-                    {tab.label}
-                  </button>
+                  <div key={g.id}>
+                    <p className="flex items-center gap-1.5 font-bold uppercase" style={{ fontSize: 11, letterSpacing: "0.08em", color: "rgba(255,255,255,0.4)", marginBottom: 6 }}>
+                      <GIcon size={12} /> {g.label}
+                    </p>
+                    <div className="grid grid-cols-2 sm:grid-cols-3" style={{ gap: 6 }}>
+                      {g.tabs.map((tab) => {
+                        const Icon = tab.icon;
+                        const isActive = activeTab === tab.id;
+                        return (
+                          <button
+                            key={tab.id}
+                            type="button"
+                            onClick={() => {
+                              onTabChange(tab.id);
+                              setMobileNavOpen(false);
+                            }}
+                            className="flex items-center gap-2"
+                            style={{
+                              padding: "10px 12px",
+                              minHeight: 44,
+                              borderRadius: 9,
+                              fontSize: 13,
+                              fontWeight: isActive ? 700 : 500,
+                              color: isActive ? "#fff" : "rgba(255,255,255,0.6)",
+                              background: isActive ? "rgba(41,121,255,0.16)" : "rgba(255,255,255,0.03)",
+                              border: `1px solid ${isActive ? "rgba(41,121,255,0.4)" : "rgba(255,255,255,0.07)"}`,
+                            }}
+                          >
+                            <Icon size={14} style={{ flexShrink: 0 }} />
+                            <span style={{ textAlign: "left" }}>{tab.label}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
                 );
               })}
             </div>

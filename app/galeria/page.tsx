@@ -1,7 +1,8 @@
 "use client";
 import { useState } from "react";
 import { orderBy } from "firebase/firestore";
-import { X, MessageSquare, Sparkles, Copy, Check } from "lucide-react";
+import { X, MessageSquare, Sparkles, Copy, Check, Play } from "lucide-react";
+import { youtubeId } from "@/components/HomeGallery";
 import { useCollection } from "@/lib/useCollection";
 import PageShell from "@/components/shared/PageShell";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -41,8 +42,12 @@ export default function GaleriaPage() {
               className="w-full flex items-center justify-center"
               style={{ aspectRatio: "4 / 3", background: "rgba(0,0,0,0.25)" }}
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={img.url} alt={img.title || ""} className="max-w-full max-h-full object-contain" />
+              {img.kind === "video" ? (
+                <span className="flex items-center gap-2 text-white/80 text-sm font-semibold"><Play size={20} /> Video</span>
+              ) : (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={img.url} alt={img.title || ""} className="max-w-full max-h-full object-contain" />
+              )}
             </div>
             {img.prompt && (
               <p className="px-3 py-2.5 text-xs text-gray-500 line-clamp-3">{img.prompt}</p>
@@ -70,13 +75,27 @@ export default function GaleriaPage() {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="w-full flex items-center justify-center" style={{ background: "rgba(0,0,0,0.3)" }}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={selected.url}
-                alt={selected.title || ""}
-                className="object-contain"
-                style={{ maxWidth: "90vw", maxHeight: "60vh" }}
-              />
+              {selected.kind === "video" ? (
+                youtubeId(selected.url) ? (
+                  <iframe
+                    src={`https://www.youtube-nocookie.com/embed/${youtubeId(selected.url)}`}
+                    title={selected.title || "Video"}
+                    allow="encrypted-media; picture-in-picture"
+                    allowFullScreen
+                    style={{ width: "min(90vw, 800px)", aspectRatio: "16 / 9", border: 0 }}
+                  />
+                ) : (
+                  <video src={selected.url} controls playsInline autoPlay style={{ maxWidth: "90vw", maxHeight: "60vh" }} />
+                )
+              ) : (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={selected.url}
+                  alt={selected.title || ""}
+                  className="object-contain"
+                  style={{ maxWidth: "90vw", maxHeight: "60vh" }}
+                />
+              )}
             </div>
             <div className="w-full p-4 sm:p-5 overflow-y-auto" style={{ maxHeight: "30vh" }}>
               <p className="text-white font-bold mb-2">{selected.title || tp.noTitle}</p>

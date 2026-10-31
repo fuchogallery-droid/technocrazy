@@ -1,0 +1,215 @@
+import type { ServicioDef } from "../types";
+
+const IMG = "/images/servicios/apps";
+
+export const APPS: ServicioDef = {
+  slug: "apps",
+  hero: "apps",
+  theme: { accent: "#7c4dff", accent2: "#5722cc", soft: "#b388ff" },
+  meta: {
+    title: "Apps Móviles · TechnoCrazy",
+    description: "Aplicaciones móviles para iOS y Android con pagos, notificaciones y seguimiento en tiempo real. Tu idea en el bolsillo de tus clientes.",
+  },
+  copy: {
+    es: {
+      back: "Volver a servicios",
+      badge: "APPS MÓVILES",
+      titleA: "Tu idea en el bolsillo",
+      titleB: "de tus clientes",
+      tagline: "Aplicaciones para iOS y Android con experiencias claras y funcionales. Tus clientes te llevan en el teléfono y tú los avisas cuando quieras.",
+      ctaWant: "Quiero mi app",
+      ctaPortfolio: "Ver tipos de app",
+      chips: ["iOS", "Android", "Pagos", "Notificaciones"],
+
+      areasA: "Lo que tu app",
+      areasB: "puede hacer",
+      areasSub: "Funciones que convierten un teléfono en un canal de venta y de atención.",
+      areas: [
+        { icon: "smartphone", title: "iOS y Android", desc: "Una sola app que funciona en los dos sistemas, lista para instalarse.", tags: ["React Native", "Expo"] },
+        { icon: "pin", title: "Seguimiento en tiempo real", desc: "Pedidos, ubicación y estado actualizándose al instante.", tags: ["Pedidos", "Mapa"] },
+        { icon: "card", title: "Pagos integrados", desc: "Pasarela de pago y checkout dentro de la misma app.", tags: ["Checkout", "Pasarela"] },
+        { icon: "bell", title: "Notificaciones push", desc: "Mensajes que llegan al teléfono para recordar, avisar y vender.", tags: ["Push", "Recordatorios"] },
+        { icon: "dashboard", title: "Panel de administración", desc: "Controlas contenidos, usuarios y ventas desde un panel propio.", tags: ["Admin", "Analíticas"] },
+        { icon: "rocket", title: "Publicación en tiendas", desc: "Te acompañamos para publicarla en App Store y Google Play.", tags: ["App Store", "Google Play"] },
+      ],
+
+      explainA: "Qué tipo de app",
+      explainB: "puedes tener",
+      explainSub: "Toca cada tipo y mira cómo se organiza la pantalla. La app se diseña según tu rubro.",
+      explainIdealFor: "Ideal para",
+      explain: [
+        { name: "Pedidos", what: "Menú, carrito y seguimiento del pedido en el mapa, con aviso cuando llega.", ideal: "Restaurantes, tiendas y negocios con entrega a domicilio.", demo: { kind: "wire", frame: "phone", rows: ["search", "list", "map", "tabs"] } },
+        { name: "Reservas", what: "El cliente elige día y hora, y recibe un recordatorio antes de su cita.", ideal: "Clínicas, barberías, canchas y cualquier negocio con agenda.", demo: { kind: "wire", frame: "phone", rows: ["hero", "grid4", "btn", "tabs"] } },
+        { name: "Comunidad", what: "Perfiles, publicaciones y mensajes para que tus usuarios interactúen.", ideal: "Marcas con comunidad, clubes y proyectos sociales.", demo: { kind: "wire", frame: "phone", rows: ["nav", "feed", "tabs"] } },
+        { name: "Tienda", what: "Catálogo con fotos, carrito y pago directo desde el teléfono.", ideal: "Marcas que venden productos y quieren clientes recurrentes.", demo: { kind: "wire", frame: "phone", rows: ["search", "grid4", "price", "tabs"] } },
+      ],
+
+      processA: "Cómo",
+      processB: "trabajamos",
+      processSub: "De tu idea a tu app instalada. Ves avances reales, no solo promesas.",
+      steps: [
+        { icon: "message", title: "Conversamos", desc: "Me cuentas qué problema resuelve tu app y quién la va a usar." },
+        { icon: "layers", title: "Pantallas", desc: "Dibujamos el recorrido: qué ve y qué toca el usuario en cada paso." },
+        { icon: "palette", title: "Diseño", desc: "Le damos tu identidad con una interfaz clara y cómoda para el pulgar." },
+        { icon: "eye", title: "Prueba", desc: "Instalas una versión en tu teléfono y la usas. Ajustamos lo que haga falta." },
+        { icon: "rocket", title: "Publicación", desc: "La subimos a las tiendas y te acompañamos en el lanzamiento." },
+      ],
+
+      receiveA: "Qué",
+      receiveB: "recibes",
+      receiveSub: "Una app terminada y las herramientas para administrarla.",
+      files: [
+        { icon: "smartphone", title: "App para iOS y Android", desc: "Una sola base de código que funciona en los dos sistemas." },
+        { icon: "dashboard", title: "Panel de control", desc: "Gestiona usuarios, contenido y ventas sin tocar código." },
+        { icon: "rocket", title: "Publicación en tiendas", desc: "Subida a App Store y Google Play con tu ficha completa." },
+        { icon: "wrench", title: "Actualizaciones", desc: "Mantenimiento y mejoras continuas para que no se quede atrás." },
+      ],
+
+      portfolioA: "Ejemplos",
+      portfolioB: "de apps",
+      portfolioSub: "Conceptos de aplicaciones por rubro.",
+      portfolioHint: "Toca una imagen para verla en grande",
+      portfolio: [
+        { img: `${IMG}/delivery.png`, label: "Delivery" },
+        { img: `${IMG}/fitness.png`, label: "Fitness" },
+        { img: `${IMG}/finanzas.png`, label: "Finanzas" },
+        { img: `${IMG}/social.png`, label: "Social" },
+        { img: `${IMG}/reservas.png`, label: "Reservas" },
+        { img: `${IMG}/tienda.png`, label: "Tienda" },
+      ],
+
+      priceA: "Cuánto",
+      priceB: "cuesta",
+      priceSub: "Depende de las funciones. Una app sencilla cuesta menos que una con pagos y seguimiento.",
+      priceFrom: "$50",
+      priceTo: "$199",
+      priceUnit: "USD",
+      priceSteps: [
+        { label: "App sencilla", desc: "Pocas pantallas, contenido" },
+        { label: "App con cuentas", desc: "Usuarios, perfiles y avisos" },
+        { label: "App completa", desc: "Pagos, mapa y panel" },
+      ],
+      factorsTitle: "Qué define el precio",
+      factors: [
+        { icon: "layers", title: "Número de pantallas", desc: "Más pantallas y flujos, más tiempo de diseño y desarrollo." },
+        { icon: "card", title: "Pagos y seguimiento", desc: "Cobrar y seguir pedidos añade integraciones." },
+        { icon: "users", title: "Cuentas de usuario", desc: "Registro, perfiles y panel suman alcance." },
+      ],
+      priceNote: "Cotización personalizada y sin compromiso. Cuéntame tu idea y te doy el precio exacto.",
+
+      faqA: "Preguntas",
+      faqB: "frecuentes",
+      faq: [
+        { q: "¿Funciona en iPhone y en Android?", a: "Sí. Se construye una app que funciona en los dos sistemas." },
+        { q: "¿Tengo que pagar las tiendas aparte?", a: "Las tiendas (App Store y Google Play) cobran sus propias cuotas de desarrollador. Te explico cuáles son al cotizar." },
+        { q: "¿Puedo actualizarla después?", a: "Sí. Puedes pedir mejoras, y parte del contenido lo cambias tú desde el panel." },
+        { q: "¿Necesito tener claras todas las funciones?", a: "No. Empezamos por lo esencial y la app puede crecer con el tiempo." },
+        { q: "¿Y si ya tengo una web?", a: "Podemos reutilizar tu contenido y tus datos para que la app y la web trabajen juntas." },
+      ],
+
+      finalCtaTitle: "¿Listo para llevar tu negocio al bolsillo de tus clientes?",
+      finalCtaDesc: "Escríbeme y cuéntame tu idea. La primera asesoría es gratis y sin compromiso.",
+      finalCtaBtn: "Hablar por WhatsApp",
+    },
+    en: {
+      back: "Back to services",
+      badge: "MOBILE APPS",
+      titleA: "Your idea in the pocket",
+      titleB: "of your customers",
+      tagline: "iOS and Android apps with clear, functional experiences. Your customers carry you on their phone and you reach them whenever you want.",
+      ctaWant: "I want my app",
+      ctaPortfolio: "See app types",
+      chips: ["iOS", "Android", "Payments", "Notifications"],
+
+      areasA: "What your app",
+      areasB: "can do",
+      areasSub: "Features that turn a phone into a sales and support channel.",
+      areas: [
+        { icon: "smartphone", title: "iOS and Android", desc: "One app that works on both systems, ready to install.", tags: ["React Native", "Expo"] },
+        { icon: "pin", title: "Real-time tracking", desc: "Orders, location and status updating instantly.", tags: ["Orders", "Map"] },
+        { icon: "card", title: "Built-in payments", desc: "Payment gateway and checkout inside the same app.", tags: ["Checkout", "Gateway"] },
+        { icon: "bell", title: "Push notifications", desc: "Messages that reach the phone to remind, notify and sell.", tags: ["Push", "Reminders"] },
+        { icon: "dashboard", title: "Admin panel", desc: "Manage content, users and sales from your own panel.", tags: ["Admin", "Analytics"] },
+        { icon: "rocket", title: "Store publishing", desc: "We help you publish it on the App Store and Google Play.", tags: ["App Store", "Google Play"] },
+      ],
+
+      explainA: "Which kind of app",
+      explainB: "can you have",
+      explainSub: "Tap each type and see how the screen is organized. The app is designed for your industry.",
+      explainIdealFor: "Best for",
+      explain: [
+        { name: "Orders", what: "Menu, cart and order tracking on a map, with an alert on arrival.", ideal: "Restaurants, stores and any business with delivery.", demo: { kind: "wire", frame: "phone", rows: ["search", "list", "map", "tabs"] } },
+        { name: "Bookings", what: "The customer picks a day and time and gets a reminder before the appointment.", ideal: "Clinics, barbershops, courts and any business with a schedule.", demo: { kind: "wire", frame: "phone", rows: ["hero", "grid4", "btn", "tabs"] } },
+        { name: "Community", what: "Profiles, posts and messages so your users can interact.", ideal: "Brands with a community, clubs and social projects.", demo: { kind: "wire", frame: "phone", rows: ["nav", "feed", "tabs"] } },
+        { name: "Store", what: "A catalog with photos, cart and direct payment from the phone.", ideal: "Brands that sell products and want repeat customers.", demo: { kind: "wire", frame: "phone", rows: ["search", "grid4", "price", "tabs"] } },
+      ],
+
+      processA: "How we",
+      processB: "work",
+      processSub: "From your idea to an installed app. You see real progress, not just promises.",
+      steps: [
+        { icon: "message", title: "We talk", desc: "You tell me what problem your app solves and who will use it." },
+        { icon: "layers", title: "Screens", desc: "We sketch the journey: what the user sees and taps at each step." },
+        { icon: "palette", title: "Design", desc: "We give it your identity with a clear, thumb-friendly interface." },
+        { icon: "eye", title: "Testing", desc: "You install a version on your phone and use it. We adjust what is needed." },
+        { icon: "rocket", title: "Launch", desc: "We upload it to the stores and guide you through the release." },
+      ],
+
+      receiveA: "What you",
+      receiveB: "get",
+      receiveSub: "A finished app and the tools to manage it.",
+      files: [
+        { icon: "smartphone", title: "App for iOS and Android", desc: "One codebase that works on both systems." },
+        { icon: "dashboard", title: "Control panel", desc: "Manage users, content and sales without touching code." },
+        { icon: "rocket", title: "Store publishing", desc: "Upload to the App Store and Google Play with a complete listing." },
+        { icon: "wrench", title: "Updates", desc: "Ongoing maintenance and improvements so it never falls behind." },
+      ],
+
+      portfolioA: "App",
+      portfolioB: "examples",
+      portfolioSub: "App concepts by industry.",
+      portfolioHint: "Tap an image to see it larger",
+      portfolio: [
+        { img: `${IMG}/delivery.png`, label: "Delivery" },
+        { img: `${IMG}/fitness.png`, label: "Fitness" },
+        { img: `${IMG}/finanzas.png`, label: "Finance" },
+        { img: `${IMG}/social.png`, label: "Social" },
+        { img: `${IMG}/reservas.png`, label: "Bookings" },
+        { img: `${IMG}/tienda.png`, label: "Store" },
+      ],
+
+      priceA: "How much",
+      priceB: "does it cost",
+      priceSub: "It depends on the features. A simple app costs less than one with payments and tracking.",
+      priceFrom: "$50",
+      priceTo: "$199",
+      priceUnit: "USD",
+      priceSteps: [
+        { label: "Simple app", desc: "Few screens, content" },
+        { label: "App with accounts", desc: "Users, profiles and alerts" },
+        { label: "Full app", desc: "Payments, map and panel" },
+      ],
+      factorsTitle: "What sets the price",
+      factors: [
+        { icon: "layers", title: "Number of screens", desc: "More screens and flows mean more design and development time." },
+        { icon: "card", title: "Payments and tracking", desc: "Charging and tracking orders adds integrations." },
+        { icon: "users", title: "User accounts", desc: "Sign-up, profiles and a panel add scope." },
+      ],
+      priceNote: "Custom quote with no commitment. Tell me your idea and I will give you the exact price.",
+
+      faqA: "Frequently asked",
+      faqB: "questions",
+      faq: [
+        { q: "Does it work on iPhone and Android?", a: "Yes. One app is built that works on both systems." },
+        { q: "Do I pay the stores separately?", a: "The stores (App Store and Google Play) charge their own developer fees. I explain which ones when quoting." },
+        { q: "Can I update it later?", a: "Yes. You can ask for improvements, and part of the content you change yourself from the panel." },
+        { q: "Do I need every feature defined?", a: "No. We start with the essentials and the app can grow over time." },
+        { q: "What if I already have a website?", a: "We can reuse your content and data so the app and the site work together." },
+      ],
+
+      finalCtaTitle: "Ready to put your business in your customers' pocket?",
+      finalCtaDesc: "Message me and tell me your idea. The first consultation is free and with no commitment.",
+      finalCtaBtn: "Chat on WhatsApp",
+    },
+  },
+};

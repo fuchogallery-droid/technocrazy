@@ -6,12 +6,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useWhatsAppUrl } from "@/lib/useWhatsApp";
 
-// Indicador de que la tarjeta flotante es clicable y abre su página de solución.
+// Indicador de que la tarjeta es clicable y abre su página de solución.
 function VerMas({ color }: { color: string }) {
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: 3, marginTop: 7, opacity: 0.75 }}>
-      <span style={{ fontSize: 7, fontWeight: 800, letterSpacing: "0.1em", color }}>VER MÁS</span>
-      <ChevronRight size={8} style={{ color }} />
+    <div style={{ display: "flex", alignItems: "center", gap: 3, marginTop: 8, opacity: 0.8 }}>
+      <span style={{ fontSize: 9, fontWeight: 800, letterSpacing: "0.1em", color }}>VER MÁS</span>
+      <ChevronRight size={10} style={{ color }} />
     </div>
   );
 }
@@ -20,10 +20,6 @@ export default function Hero() {
   const { t } = useLanguage();
   const whatsappUrl = useWhatsAppUrl();
   const h = t.hero;
-  // El número de "proyectos entregados" salía del array de productos que estaba
-  // escrito dentro de Products.tsx. Ahora los productos se administran desde el
-  // panel, así que el número vive en lib/i18n.ts (editable con el candado).
-  const stats = h.stats;
 
   const variants = h.h1Variants ?? [{ a: h.h1a, b: h.h1b, c: h.h1c }];
   const [headlineIndex, setHeadlineIndex] = useState(0);
@@ -49,14 +45,14 @@ export default function Hero() {
         <div className="absolute rounded-full blur-3xl" style={{ width: 400, height: 400, bottom: 0, right: 0, background: "radial-gradient(circle,rgba(124,77,255,0.08),transparent 70%)" }} />
       </div>
 
-      <div className="tc-wrap relative z-10 flex flex-col lg:flex-row items-center lg:items-start gap-6 lg:gap-12 pt-6 pb-10 lg:py-14">
+      <div className="tc-wrap relative z-10 flex flex-col lg:flex-row items-center lg:items-start gap-8 lg:gap-12 pt-6 pb-14 lg:py-14">
 
         {/* ── IZQUIERDA ── */}
         <motion.div
           initial={{ opacity: 0, x: -32 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.72, ease: "easeOut" }}
-          className="w-full lg:flex-none lg:max-w-[46%] lg:basis-[46%] max-lg:flex max-lg:flex-col max-lg:items-center max-lg:text-center"
+          className="w-full lg:flex-none lg:max-w-[50%] lg:basis-[50%] max-lg:flex max-lg:flex-col max-lg:items-center max-lg:text-center"
         >
           {/* Tagline pill */}
           <div style={{ display: "inline-flex", alignItems: "center", gap: 7, borderRadius: 9999, padding: "6px 16px", fontSize: 10, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 22, background: "rgba(41,121,255,0.10)", border: "1px solid rgba(41,121,255,0.24)", color: "rgba(255,255,255,0.65)" }}>
@@ -65,7 +61,7 @@ export default function Hero() {
           </div>
 
           {/* H1 — 2 líneas: blanca + azul, rota entre variaciones */}
-          <h1 style={{ fontWeight: 900, lineHeight: 1.18, marginBottom: 14, letterSpacing: "-0.02em", minHeight: "clamp(64px,9vw,100px)" }}>
+          <h1 style={{ fontWeight: 900, lineHeight: 1.18, marginBottom: 22, letterSpacing: "-0.02em", minHeight: "clamp(64px,9vw,100px)" }}>
             <AnimatePresence mode="wait">
               <motion.span
                 key={headlineIndex}
@@ -85,33 +81,72 @@ export default function Hero() {
             </AnimatePresence>
           </h1>
 
-          {/* Subtítulo */}
-          <p className="hidden lg:block" style={{ fontSize: "clamp(13px,1.4vw,16px)", color: "rgba(255,255,255,0.58)", lineHeight: 1.8, marginBottom: 16, maxWidth: 480 }}>
-            {h.subtitle}{" "}
-            <span style={{ color: "#2979ff", fontWeight: 600 }}>{h.subtitleHighlight}</span>.
-          </p>
-
-          {/* Quote */}
-          <div className="hidden lg:block" style={{ borderLeft: "3px solid #2979ff", paddingLeft: 20, marginBottom: 22 }}>
-            <p style={{ fontSize: "clamp(13px,1.3vw,16px)", fontWeight: 600, color: "rgba(255,255,255,0.88)", lineHeight: 1.6 }}>
-              {h.quoteA}<br />
-              {h.quoteB} <span style={{ color: "#2979ff" }}>{h.quoteHighlight}</span>.
-            </p>
-          </div>
-
-          {/* Stats */}
-          <div className="hidden lg:grid" style={{ gridTemplateColumns: "repeat(3, 1fr)", gap: 10, marginBottom: 20 }}>
-            {stats.map((s) => (
-              <motion.div
-                key={s.num}
-                whileHover={{ y: -3, borderColor: "rgba(41,121,255,0.35)" }}
-                style={{ padding: "14px 10px", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 16, textAlign: "center", cursor: "default", transition: "border-color 0.2s" }}
-              >
-                <div style={{ fontSize: 20, marginBottom: 6 }}>{s.emoji}</div>
-                <div style={{ fontWeight: 900, fontSize: 22, color: "#ffffff", lineHeight: 1 }}>{s.num}</div>
-                <div style={{ fontSize: 8, color: "rgba(255,255,255,0.38)", letterSpacing: "0.09em", marginTop: 6, whiteSpace: "pre-line", lineHeight: 1.5 }}>{s.label}</div>
+          {/* Tarjetas de soluciones — debajo de los títulos y encima del botón */}
+          <div className="w-full text-left" style={{ display: "grid", gridTemplateColumns: "repeat(2, minmax(0, 1fr))", gap: 12, marginBottom: 24, maxWidth: 520 }}>
+            {/* Dashboard */}
+            <Link href="/soluciones/dashboard" style={{ textDecoration: "none", display: "block" }}>
+              <motion.div whileHover={{ scale: 1.03, borderColor: "rgba(41,121,255,0.5)" }} whileTap={{ scale: 0.97 }} style={{ height: "100%", background: "rgba(255,255,255,0.05)", backdropFilter: "blur(14px)", border: "1px solid rgba(255,255,255,0.10)", borderRadius: 14, padding: "12px 14px", cursor: "pointer" }}>
+                <div style={{ fontSize: 10, color: "rgba(255,255,255,0.45)", fontWeight: 700, letterSpacing: "0.06em", marginBottom: 6 }}>{h.floatingDashboard.label}</div>
+                <div style={{ fontSize: 22, fontWeight: 900, color: "#fff", lineHeight: 1 }}>$127,430</div>
+                <div style={{ fontSize: 11, color: "#00e676", marginTop: 4, fontWeight: 600 }}>{h.floatingDashboard.growth}</div>
+                <div style={{ fontSize: 10, color: "rgba(255,255,255,0.4)", marginTop: 4 }}>{h.floatingDashboard.users}</div>
+                <VerMas color="#82b1ff" />
               </motion.div>
-            ))}
+            </Link>
+
+            {/* IA Agent */}
+            <Link href="/soluciones/agente-ia" style={{ textDecoration: "none", display: "block" }}>
+              <motion.div whileHover={{ scale: 1.03, borderColor: "rgba(41,121,255,0.6)" }} whileTap={{ scale: 0.97 }} style={{ height: "100%", background: "rgba(41,121,255,0.12)", backdropFilter: "blur(14px)", border: "1px solid rgba(41,121,255,0.28)", borderRadius: 14, padding: "12px 14px", cursor: "pointer" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
+                  <div style={{ width: 26, height: 26, borderRadius: 8, background: "rgba(41,121,255,0.3)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                    <Bot size={14} style={{ color: "#82b1ff" }} />
+                  </div>
+                  <div>
+                    <div style={{ fontSize: 11, fontWeight: 700, color: "#fff", lineHeight: 1.1 }}>{h.floatingAgent.title}</div>
+                    <div style={{ fontSize: 9, color: "rgba(255,255,255,0.45)" }}>{h.floatingAgent.sub}</div>
+                  </div>
+                </div>
+                <div style={{ fontSize: 11, color: "rgba(255,255,255,0.75)", background: "rgba(255,255,255,0.06)", borderRadius: 8, padding: "7px 10px", lineHeight: 1.5 }}>
+                  {h.floatingAgent.msg.split("\n").map((line, i) => <span key={i}>{line}{i === 0 && <br />}</span>)}
+                </div>
+                <VerMas color="#82b1ff" />
+              </motion.div>
+            </Link>
+
+            {/* API + Tiempo real */}
+            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+              <Link href="/soluciones/api" style={{ textDecoration: "none", display: "block", flex: 1 }}>
+                <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} style={{ height: "100%", background: "linear-gradient(135deg,#2979ff,#00b8d4)", borderRadius: 14, padding: "12px 14px", boxShadow: "0 8px 24px rgba(41,121,255,0.40)", textAlign: "center", cursor: "pointer", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                  <div style={{ fontSize: 22, fontWeight: 900, color: "#fff", letterSpacing: "0.04em", lineHeight: 1 }}>API</div>
+                  <div style={{ fontSize: 9, color: "rgba(255,255,255,0.8)", marginTop: 4, letterSpacing: "0.06em" }}>{h.floatingApi.sub}</div>
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 4, marginTop: 6 }}>
+                    <Code2 size={11} style={{ color: "rgba(255,255,255,0.7)" }} />
+                    <span style={{ fontSize: 9, fontWeight: 800, letterSpacing: "0.1em", color: "rgba(255,255,255,0.9)" }}>VER MÁS</span>
+                    <ChevronRight size={10} style={{ color: "rgba(255,255,255,0.9)" }} />
+                  </div>
+                </motion.div>
+              </Link>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 7, background: "rgba(0,229,255,0.1)", border: "1px solid rgba(0,229,255,0.2)", borderRadius: 10, padding: "8px 12px" }}>
+                <Zap size={13} style={{ color: "#00e5ff" }} />
+                <span style={{ fontSize: 10, color: "rgba(0,229,255,0.9)", fontWeight: 700 }}>{h.floatingRt}</span>
+              </div>
+            </div>
+
+            {/* Automatización */}
+            <Link href="/soluciones/automatizacion" style={{ textDecoration: "none", display: "block" }}>
+              <motion.div whileHover={{ scale: 1.03, borderColor: "rgba(124,77,255,0.55)" }} whileTap={{ scale: 0.97 }} style={{ height: "100%", background: "rgba(124,77,255,0.10)", backdropFilter: "blur(14px)", border: "1px solid rgba(124,77,255,0.22)", borderRadius: 14, padding: "12px 14px", cursor: "pointer" }}>
+                <div style={{ fontSize: 10, fontWeight: 700, color: "#b388ff", letterSpacing: "0.08em", marginBottom: 8 }}>{h.floatingAuto.title}</div>
+                <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                  {h.floatingAuto.steps.map((label, i) => ({ label, green: i === 2 })).map((step) => (
+                    <div key={step.label} style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                      <div style={{ width: 7, height: 7, borderRadius: "50%", flexShrink: 0, background: step.green ? "#00e676" : "rgba(124,77,255,0.7)" }} />
+                      <span style={{ fontSize: 10, color: step.green ? "rgba(0,230,118,0.9)" : "rgba(255,255,255,0.6)" }}>{step.label}</span>
+                    </div>
+                  ))}
+                </div>
+                <VerMas color="#b388ff" />
+              </motion.div>
+            </Link>
           </div>
 
           {/* CTA */}
@@ -121,7 +156,7 @@ export default function Hero() {
             rel="noopener noreferrer"
             whileHover={{ scale: 1.03, y: -2 }}
             whileTap={{ scale: 0.97 }}
-            className="hidden lg:inline-flex"
+            className="inline-flex"
             style={{ alignItems: "center", gap: 10, background: "linear-gradient(135deg,#2979ff,#7c4dff)", color: "#fff", fontWeight: 700, fontSize: 14, padding: "15px 30px", borderRadius: 14, boxShadow: "0 14px 40px rgba(41,121,255,0.45)", textDecoration: "none", letterSpacing: "0.01em" }}
           >
             {h.cta}
@@ -129,112 +164,22 @@ export default function Hero() {
           </motion.a>
         </motion.div>
 
-        {/* ── DERECHA: foto + elementos flotantes ── */}
+        {/* ── DERECHA: foto de Rafael ── */}
         <motion.div
           initial={{ opacity: 0, x: 32 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.72, delay: 0.15, ease: "easeOut" }}
-          className="flex-1 flex items-start justify-center lg:items-center lg:justify-start"
+          className="flex-1 flex items-start justify-center max-lg:order-first"
           style={{ position: "relative" }}
         >
-          {/* Glow detrás de la foto */}
-          <div className="hidden lg:block" style={{ position: "absolute", width: 340, height: 340, borderRadius: "50%", background: "radial-gradient(circle,rgba(41,121,255,0.22),transparent 65%)", top: "50%", left: "10%", transform: "translate(-50%,-50%)", zIndex: 0 }} />
-          <div className="lg:hidden" style={{ position: "absolute", width: 340, height: 340, borderRadius: "50%", background: "radial-gradient(circle,rgba(41,121,255,0.22),transparent 65%)", top: "50%", left: "50%", transform: "translate(-50%,-50%)", zIndex: 0 }} />
-
-          {/* Foto Rafael + Automatización debajo (mobile) */}
-          <div className="flex flex-col gap-2 lg:contents">
-            <div className="lg:ml-[6%] w-[clamp(150px,38vw,260px)] lg:w-[clamp(200px,22vw,260px)]" style={{ position: "relative", zIndex: 1, borderRadius: 28, overflow: "hidden", boxShadow: "0 30px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(41,121,255,0.15)" }}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/rafael-hero.png" alt="Rafael Navarro · TechnoCrazy" style={{ width: "100%", display: "block", objectFit: "cover", objectPosition: "center top" }} />
-              <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "36px 18px 16px", background: "linear-gradient(to top,rgba(4,8,26,0.95),transparent)" }}>
-                <div style={{ fontFamily: "Georgia,serif", color: "#fff", fontSize: 16, fontWeight: 700 }}>Rafael</div>
-                <div style={{ color: "rgba(255,255,255,0.45)", fontSize: 8, letterSpacing: "0.18em", fontWeight: 700, marginTop: 2 }}>FUNDADOR · TECHNOCRAZY</div>
-              </div>
+          <div style={{ position: "absolute", width: 340, height: 340, borderRadius: "50%", background: "radial-gradient(circle,rgba(41,121,255,0.22),transparent 65%)", top: "50%", left: "50%", transform: "translate(-50%,-50%)", zIndex: 0 }} />
+          <div style={{ position: "relative", zIndex: 1, width: "clamp(220px,60vw,320px)", borderRadius: 28, overflow: "hidden", boxShadow: "0 30px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(41,121,255,0.15)" }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/rafael-hero.png" alt="Rafael Navarro · TechnoCrazy" style={{ width: "100%", display: "block", objectFit: "cover", objectPosition: "center top" }} />
+            <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "36px 18px 16px", background: "linear-gradient(to top,rgba(4,8,26,0.95),transparent)" }}>
+              <div style={{ fontFamily: "Georgia,serif", color: "#fff", fontSize: 18, fontWeight: 700 }}>Rafael</div>
+              <div style={{ color: "rgba(255,255,255,0.45)", fontSize: 9, letterSpacing: "0.18em", fontWeight: 700, marginTop: 2 }}>FUNDADOR · TECHNOCRAZY</div>
             </div>
-
-            {/* Automatización — debajo de la foto, solo mobile */}
-            <Link href="/soluciones/automatizacion" className="lg:hidden" style={{ textDecoration: "none" }}>
-              <motion.div whileTap={{ scale: 0.97 }} animate={{ y: [0, -6, 0] }} transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1.2 }} style={{ background: "rgba(124,77,255,0.10)", backdropFilter: "blur(14px)", border: "1px solid rgba(124,77,255,0.22)", borderRadius: 14, padding: "10px 12px", cursor: "pointer" }}>
-                <div style={{ fontSize: 8, fontWeight: 700, color: "#b388ff", letterSpacing: "0.08em", marginBottom: 7 }}>{h.floatingAuto.title}</div>
-                <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-                  {h.floatingAuto.steps.map((label, i) => ({ label, green: i === 2 })).map((step) => (
-                    <div key={step.label} style={{ display: "flex", alignItems: "center", gap: 7 }}>
-                      <div style={{ width: 6, height: 6, borderRadius: "50%", flexShrink: 0, background: step.green ? "#00e676" : "rgba(124,77,255,0.7)" }} />
-                      <span style={{ fontSize: 8, color: step.green ? "rgba(0,230,118,0.9)" : "rgba(255,255,255,0.6)" }}>{step.label}</span>
-                    </div>
-                  ))}
-                </div>
-                <VerMas color="#b388ff" />
-              </motion.div>
-            </Link>
-          </div>
-
-          {/* Panel de tarjetas flotantes — todas contenidas en una sola columna a la derecha de la foto */}
-          <div className="flex gap-2 w-[130px] lg:gap-3 lg:w-[156px]" style={{ flexDirection: "column", position: "relative", zIndex: 2, marginLeft: "clamp(12px,3vw,22px)" }}>
-            {/* Dashboard */}
-            <Link href="/soluciones/dashboard" style={{ textDecoration: "none", display: "block" }}>
-              <motion.div whileHover={{ scale: 1.05, borderColor: "rgba(41,121,255,0.5)" }} whileTap={{ scale: 0.97 }} animate={{ y: [0, -6, 0] }} transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }} style={{ background: "rgba(255,255,255,0.05)", backdropFilter: "blur(14px)", border: "1px solid rgba(255,255,255,0.10)", borderRadius: 14, padding: "10px 13px", cursor: "pointer" }}>
-                <div style={{ fontSize: 8, color: "rgba(255,255,255,0.45)", fontWeight: 700, letterSpacing: "0.06em", marginBottom: 5 }}>{h.floatingDashboard.label}</div>
-                <div style={{ fontSize: 18, fontWeight: 900, color: "#fff", lineHeight: 1 }}>$127,430</div>
-                <div style={{ fontSize: 9, color: "#00e676", marginTop: 3, fontWeight: 600 }}>{h.floatingDashboard.growth}</div>
-                <div style={{ fontSize: 8, color: "rgba(255,255,255,0.35)", marginTop: 4 }}>{h.floatingDashboard.users}</div>
-                <VerMas color="#82b1ff" />
-              </motion.div>
-            </Link>
-
-            {/* IA Agent */}
-            <Link href="/soluciones/agente-ia" style={{ textDecoration: "none", display: "block" }}>
-              <motion.div whileHover={{ scale: 1.05, borderColor: "rgba(41,121,255,0.6)" }} whileTap={{ scale: 0.97 }} animate={{ y: [0, -6, 0] }} transition={{ duration: 3.8, repeat: Infinity, ease: "easeInOut", delay: 0.6 }} style={{ background: "rgba(41,121,255,0.12)", backdropFilter: "blur(14px)", border: "1px solid rgba(41,121,255,0.28)", borderRadius: 14, padding: "10px 12px", cursor: "pointer" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 7 }}>
-                  <div style={{ width: 22, height: 22, borderRadius: 7, background: "rgba(41,121,255,0.3)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                    <Bot size={11} style={{ color: "#82b1ff" }} />
-                  </div>
-                  <div>
-                    <div style={{ fontSize: 9, fontWeight: 700, color: "#fff", lineHeight: 1 }}>{h.floatingAgent.title}</div>
-                    <div style={{ fontSize: 7, color: "rgba(255,255,255,0.45)" }}>{h.floatingAgent.sub}</div>
-                  </div>
-                </div>
-                <div style={{ fontSize: 10, color: "rgba(255,255,255,0.75)", background: "rgba(255,255,255,0.06)", borderRadius: 8, padding: "6px 9px", lineHeight: 1.5 }}>
-                  {h.floatingAgent.msg.split("\n").map((line, i) => <span key={i}>{line}{i === 0 && <br />}</span>)}
-                </div>
-                <VerMas color="#82b1ff" />
-              </motion.div>
-            </Link>
-
-            {/* Tiempo real */}
-            <motion.div animate={{ y: [0, -6, 0] }} transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut", delay: 1.8 }} className="flex items-center" style={{ background: "rgba(0,229,255,0.1)", border: "1px solid rgba(0,229,255,0.2)", borderRadius: 10, padding: "8px 12px", gap: 6, alignSelf: "flex-start" }}>
-              <Zap size={11} style={{ color: "#00e5ff" }} />
-              <span style={{ fontSize: 8, color: "rgba(0,229,255,0.9)", fontWeight: 700 }}>{h.floatingRt}</span>
-            </motion.div>
-
-            {/* API */}
-            <Link href="/soluciones/api" style={{ textDecoration: "none", display: "block", alignSelf: "flex-start" }}>
-              <motion.div whileHover={{ scale: 1.06 }} whileTap={{ scale: 0.97 }} animate={{ y: [0, -6, 0] }} transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut", delay: 0.9 }} style={{ background: "linear-gradient(135deg,#2979ff,#00b8d4)", borderRadius: 13, padding: "10px 16px", boxShadow: "0 8px 24px rgba(41,121,255,0.50)", textAlign: "center", cursor: "pointer" }}>
-                <div style={{ fontSize: 18, fontWeight: 900, color: "#fff", letterSpacing: "0.04em" }}>API</div>
-                <div style={{ fontSize: 7, color: "rgba(255,255,255,0.75)", marginTop: 3, letterSpacing: "0.06em" }}>{h.floatingApi.sub}</div>
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 3, marginTop: 5 }}>
-                  <Code2 size={9} style={{ color: "rgba(255,255,255,0.6)" }} />
-                  <span style={{ fontSize: 7, fontWeight: 800, letterSpacing: "0.1em", color: "rgba(255,255,255,0.85)" }}>VER MÁS</span>
-                  <ChevronRight size={8} style={{ color: "rgba(255,255,255,0.85)" }} />
-                </div>
-              </motion.div>
-            </Link>
-
-            {/* Automatización — en desktop se queda en el panel; en mobile vive debajo de la foto */}
-            <Link href="/soluciones/automatizacion" className="hidden lg:block" style={{ textDecoration: "none" }}>
-              <motion.div whileHover={{ scale: 1.05, borderColor: "rgba(124,77,255,0.55)" }} whileTap={{ scale: 0.97 }} animate={{ y: [0, -6, 0] }} transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1.2 }} style={{ background: "rgba(124,77,255,0.10)", backdropFilter: "blur(14px)", border: "1px solid rgba(124,77,255,0.22)", borderRadius: 14, padding: "10px 12px", cursor: "pointer" }}>
-                <div style={{ fontSize: 8, fontWeight: 700, color: "#b388ff", letterSpacing: "0.08em", marginBottom: 7 }}>{h.floatingAuto.title}</div>
-                <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-                  {h.floatingAuto.steps.map((label, i) => ({ label, green: i === 2 })).map((step) => (
-                    <div key={step.label} style={{ display: "flex", alignItems: "center", gap: 7 }}>
-                      <div style={{ width: 6, height: 6, borderRadius: "50%", flexShrink: 0, background: step.green ? "#00e676" : "rgba(124,77,255,0.7)" }} />
-                      <span style={{ fontSize: 8, color: step.green ? "rgba(0,230,118,0.9)" : "rgba(255,255,255,0.6)" }}>{step.label}</span>
-                    </div>
-                  ))}
-                </div>
-                <VerMas color="#b388ff" />
-              </motion.div>
-            </Link>
           </div>
         </motion.div>
       </div>

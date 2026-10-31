@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useState } from "react";
 import {
   addDoc,
   collection,
@@ -19,10 +19,13 @@ import {
 import { signOut } from "firebase/auth";
 import { auth, db } from "@/lib/firebase";
 import { useCollection } from "@/lib/useCollection";
-import AdminTabShell, { type AdminTabDef } from "@/components/admin/AdminTabShell";
+import AdminTabShell, { type AdminGroupDef } from "@/components/admin/AdminTabShell";
+import { Card, Field, IconBtn, VisibleToggle, inputClass } from "@/components/admin/ui";
+import { NfcInicioTab, PaginasWebTab, ServiciosPropiosCard } from "@/components/admin/HomeSectionsTabs";
 import LlamadasTab from "@/components/admin/LlamadasTab";
 import OficinaTab from "@/components/admin/OficinaTab";
-import { Building2 } from "lucide-react";
+import EcosistemaTab from "@/components/admin/EcosistemaTab";
+import { Boxes, Building2, LayoutDashboard, Briefcase, Globe, Layers } from "lucide-react";
 import SolicitudesTab from "@/components/admin/SolicitudesTab";
 import ImageUploadField from "@/components/shared/ImageUploadField";
 import FileUploadField, { type UploadedFile } from "@/components/admin/FileUploadField";
@@ -108,99 +111,104 @@ import { generateContractPDF, generateReceiptPDF, type ContractData, type Receip
 import type { Timestamp } from "firebase/firestore";
 import type { NavLinkOverride, ServiceOverride } from "@/contexts/SiteConfigContext";
 
-// ── helpers UI compartidos dentro del panel ──────────────────────────────
-// Los estilos viven en las clases .adm-* de app/globals.css: esquinas suaves
-// (10px, no pastillas), foco con anillo azul y espaciado más generoso.
-function inputClass() {
-  return "adm-input";
-}
-
-function Card({ title, subtitle, children }: { title: string; subtitle?: string; children: ReactNode }) {
-  return (
-    <section className="adm-card">
-      <h2 className="adm-card-title">{title}</h2>
-      {subtitle && <p className="adm-card-sub">{subtitle}</p>}
-      <div style={{ marginTop: 20 }}>{children}</div>
-    </section>
-  );
-}
-
-function Field({ label, children }: { label: string; children: ReactNode }) {
-  return (
-    <div>
-      <label className="adm-label">{label}</label>
-      {children}
-    </div>
-  );
-}
-
-function IconBtn({ onClick, label, danger, children }: { onClick: () => void; label: string; danger?: boolean; children: ReactNode }) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-label={label}
-      title={label}
-      className="flex items-center justify-center flex-shrink-0 transition-colors"
-      style={{
-        width: 30,
-        height: 30,
-        borderRadius: 8,
-        background: danger ? "rgba(239,68,68,0.1)" : "rgba(255,255,255,0.05)",
-        border: `1px solid ${danger ? "rgba(239,68,68,0.24)" : "rgba(255,255,255,0.1)"}`,
-        color: danger ? "#ff8080" : "rgba(255,255,255,0.62)",
-      }}
-    >
-      {children}
-    </button>
-  );
-}
-
 // ── pestañas ──────────────────────────────────────────────────────────────
 type AdminTab =
-  | "perfil"
+  | "servicios"
   | "inicio"
-  | "enlaces"
-  | "promotores"
-  | "precios"
-  | "biblioteca"
+  | "paginas"
   | "galeria"
+  | "enlaces"
+  | "chips"
+  | "nfcinicio"
+  | "perfil"
+  | "biblioteca"
+  | "noticias"
   | "testimonios"
   | "preguntas"
   | "feedback"
-  | "noticias"
-  | "chips"
+  | "precios"
+  | "contratos"
+  | "promotores"
   | "solicitudes"
+  | "ecosistema"
   | "oficina"
   | "llamadas"
-  | "config"
-  | "contratos";
+  | "config";
 
-const ADMIN_TABS: AdminTabDef<AdminTab>[] = [
-  { id: "perfil", label: "Perfil y Muro", icon: UserCircle },
-  { id: "inicio", label: "Productos del Inicio", icon: Package },
-  { id: "enlaces", label: "Enlaces (/links)", icon: Link2 },
-  { id: "promotores", label: "Promotores", icon: Users },
-  { id: "precios", label: "Precios y Productos", icon: DollarSign },
-  { id: "biblioteca", label: "Biblioteca", icon: Library },
-  { id: "galeria", label: "Galería", icon: Images },
-  { id: "testimonios", label: "Testimonios", icon: Quote },
-  { id: "preguntas", label: "Preguntas", icon: MessageCircleQuestion },
-  { id: "feedback", label: "Feedback", icon: Lightbulb },
-  { id: "noticias", label: "Noticias", icon: Newspaper },
-  { id: "chips", label: "Chips NFC", icon: Nfc },
-  { id: "solicitudes", label: "Solicitudes del Agente", icon: Inbox },
-  { id: "oficina", label: "Oficina TEC", icon: Building2 },
-  { id: "llamadas", label: "Agente IA (Llamadas)", icon: Phone },
-  { id: "config", label: "Config", icon: Settings },
-  { id: "contratos", label: "Contratos y Recibos", icon: FileText },
+// Panel en secciones: cada grupo reúne lo que se administra junto. Las pestañas
+// conservan su id, así que los componentes de abajo no cambiaron.
+const ADMIN_GROUPS: AdminGroupDef<AdminTab>[] = [
+  {
+    id: "sitio",
+    label: "Inicio del sitio",
+    icon: LayoutDashboard,
+    tabs: [
+      { id: "servicios", label: "Servicios", icon: Layers },
+      { id: "inicio", label: "Productos", icon: Package },
+      { id: "paginas", label: "Páginas web", icon: Globe },
+      { id: "galeria", label: "Galería y videos", icon: Images },
+      { id: "enlaces", label: "Enlaces (/links)", icon: Link2 },
+    ],
+  },
+  {
+    id: "nfc",
+    label: "Chip NFC",
+    icon: Nfc,
+    tabs: [
+      { id: "nfcinicio", label: "Funciones en el inicio", icon: LayoutDashboard },
+      { id: "chips", label: "Chips y escaneos", icon: Nfc },
+    ],
+  },
+  {
+    id: "contenido",
+    label: "Contenido",
+    icon: Library,
+    tabs: [
+      { id: "perfil", label: "Perfil y Muro", icon: UserCircle },
+      { id: "biblioteca", label: "Biblioteca", icon: Library },
+      { id: "noticias", label: "Noticias", icon: Newspaper },
+      { id: "testimonios", label: "Testimonios", icon: Quote },
+      { id: "preguntas", label: "Preguntas", icon: MessageCircleQuestion },
+      { id: "feedback", label: "Feedback", icon: Lightbulb },
+    ],
+  },
+  {
+    id: "ventas",
+    label: "Ventas y clientes",
+    icon: Briefcase,
+    tabs: [
+      { id: "precios", label: "Precios y Productos", icon: DollarSign },
+      { id: "contratos", label: "Contratos y Recibos", icon: FileText },
+      { id: "promotores", label: "Promotores", icon: Users },
+      { id: "solicitudes", label: "Solicitudes del Agente", icon: Inbox },
+    ],
+  },
+  {
+    id: "oficina",
+    label: "Ecosistema y Oficina",
+    icon: Building2,
+    tabs: [
+      { id: "ecosistema", label: "Ecosistema", icon: Boxes },
+      { id: "oficina", label: "Oficina TEC", icon: Building2 },
+      { id: "llamadas", label: "Agente IA (Llamadas)", icon: Phone },
+    ],
+  },
+  { id: "config", label: "Config", icon: Settings, tabs: [{ id: "config", label: "Config", icon: Settings }] },
 ];
 
 export default function AdminDashboard() {
-  const [activeTab, setActiveTab] = useState<AdminTab>("perfil");
+  const [activeTab, setActiveTab] = useState<AdminTab>("servicios");
 
   return (
-    <AdminTabShell tabs={ADMIN_TABS} activeTab={activeTab} onTabChange={setActiveTab} onLogout={() => signOut(auth)}>
+    <AdminTabShell groups={ADMIN_GROUPS} activeTab={activeTab} onTabChange={setActiveTab} onLogout={() => signOut(auth)}>
+      {activeTab === "servicios" && (
+        <>
+          <ConfigTab only="services" />
+          <ServiciosPropiosCard />
+        </>
+      )}
+      {activeTab === "paginas" && <PaginasWebTab />}
+      {activeTab === "nfcinicio" && <NfcInicioTab />}
       {activeTab === "perfil" && <PerfilMuroTab />}
       {activeTab === "inicio" && <ProductosInicioTab />}
       {activeTab === "enlaces" && <EnlacesTab />}
@@ -214,9 +222,10 @@ export default function AdminDashboard() {
       {activeTab === "noticias" && <NoticiasTab />}
       {activeTab === "chips" && <NfcChipsTab />}
       {activeTab === "solicitudes" && <SolicitudesTab />}
+      {activeTab === "ecosistema" && <EcosistemaTab />}
       {activeTab === "oficina" && <OficinaTab />}
-        {activeTab === "llamadas" && <LlamadasTab />}
-      {activeTab === "config" && <ConfigTab />}
+      {activeTab === "llamadas" && <LlamadasTab />}
+      {activeTab === "config" && <ConfigTab only="rest" />}
       {activeTab === "contratos" && <ContratosTab />}
     </AdminTabShell>
   );
@@ -1568,13 +1577,33 @@ function BibliotecaTab() {
 function GaleriaTab() {
   const { items } = useCollection<GalleryImage>("galleryImages", [orderBy("createdAt", "desc")]);
   const [msg, setMsg] = useState("");
+  const [videoUrl, setVideoUrl] = useState("");
+  const [videoTitle, setVideoTitle] = useState("");
+  const [videoError, setVideoError] = useState("");
+
+  function flash(text: string) {
+    setMsg(text);
+    setTimeout(() => setMsg(""), 2000);
+  }
 
   async function addUploaded(urls: string[]) {
     for (const url of urls) {
-      await addDoc(collection(db, "galleryImages"), { url, title: "", prompt: "", createdAt: serverTimestamp() });
+      await addDoc(collection(db, "galleryImages"), { url, title: "", prompt: "", kind: "image", createdAt: serverTimestamp() });
     }
-    setMsg("Agregado ✓");
-    setTimeout(() => setMsg(""), 2000);
+    flash("Agregado ✓");
+  }
+
+  async function addVideo() {
+    const url = videoUrl.trim();
+    if (!/^https?:\/\//i.test(url) && !url.startsWith("/")) {
+      setVideoError("Pega la dirección completa del video (https://…) o una ruta como /videos/demo.mp4.");
+      return;
+    }
+    setVideoError("");
+    await addDoc(collection(db, "galleryImages"), { url, title: videoTitle.trim(), prompt: "", kind: "video", createdAt: serverTimestamp() });
+    setVideoUrl("");
+    setVideoTitle("");
+    flash("Video agregado ✓");
   }
 
   async function saveTitle(id: string, title: string) {
@@ -1585,47 +1614,78 @@ function GaleriaTab() {
     await updateDoc(doc(db, "galleryImages", id), { prompt });
   }
 
+  async function toggleHome(img: GalleryImage) {
+    await updateDoc(doc(db, "galleryImages", img.id), { hideHome: !img.hideHome });
+  }
+
   async function remove(id: string) {
-    if (!confirm("¿Borrar esta foto de la galería?")) return;
+    if (!confirm("¿Borrar este elemento de la galería?")) return;
     await deleteDoc(doc(db, "galleryImages", id));
   }
 
   return (
     <>
       {msg && <p className="text-green-400 text-xs font-semibold mb-4">{msg}</p>}
-      <Card title="Agregar fotos" subtitle="Puedes seleccionar varias a la vez — se muestran en /galeria.">
-        <ImageUploadField value={[]} onChange={addUploaded} multiple max={10} />
-      </Card>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <Card title="Agregar fotos" subtitle="Puedes seleccionar varias a la vez.">
+          <ImageUploadField value={[]} onChange={addUploaded} multiple max={10} />
+        </Card>
+        <Card title="Agregar un video" subtitle="Pega el enlace de YouTube o la dirección de un archivo de video (.mp4 / .webm).">
+          <div className="flex flex-col gap-3">
+            <Field label="Dirección del video">
+              <input className={inputClass()} value={videoUrl} onChange={(e) => setVideoUrl(e.target.value)} placeholder="https://youtu.be/…  o  https://…/video.mp4" style={{ fontFamily: "monospace", fontSize: 12 }} />
+            </Field>
+            <Field label="Título (opcional)">
+              <input className={inputClass()} value={videoTitle} onChange={(e) => setVideoTitle(e.target.value)} />
+            </Field>
+            {videoError && <p className="text-red-400 font-semibold" style={{ fontSize: 12 }}>{videoError}</p>}
+            <div>
+              <button onClick={addVideo} className="adm-btn adm-btn-primary">Agregar video</button>
+            </div>
+          </div>
+        </Card>
+      </div>
 
-      <Card title="Galería">
+      <Card title="Galería" subtitle="Todo lo visible se muestra en /galeria y en el carrusel del inicio. El ojo decide si sale en el carrusel del inicio.">
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
           {items.map((img) => (
             <div key={img.id} className="rounded-lg overflow-hidden" style={{ background: "rgba(255,255,255,0.03)" }}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={img.url} alt="" className="w-full h-28 object-cover" />
+              {img.kind === "video" ? (
+                <div className="w-full h-28 flex items-center justify-center gap-2 text-white/70 text-xs font-semibold" style={{ background: "rgba(0,0,0,0.3)" }}>
+                  <Video size={16} /> Video
+                </div>
+              ) : (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={img.url} alt="" className="w-full h-28 object-cover" />
+              )}
               <div className="p-2 flex flex-col gap-1.5">
                 <input
                   className={inputClass()}
                   placeholder="Título"
                   defaultValue={img.title}
                   onBlur={(e) => saveTitle(img.id, e.target.value)}
-                  style={{ fontSize: 11, padding: "6px 8px" }}
+                  style={{ fontSize: 12, padding: "6px 8px" }}
                 />
-                <textarea
-                  className={inputClass()}
-                  placeholder="Prompt usado para generar esta imagen"
-                  rows={3}
-                  defaultValue={img.prompt}
-                  onBlur={(e) => savePrompt(img.id, e.target.value)}
-                  style={{ fontSize: 11, padding: "6px 8px" }}
-                />
-                <button onClick={() => remove(img.id)} className="text-red-400 text-xs font-semibold">
-                  Borrar
-                </button>
+                {img.kind !== "video" && (
+                  <textarea
+                    className={inputClass()}
+                    placeholder="Prompt usado para generar esta imagen"
+                    rows={3}
+                    defaultValue={img.prompt}
+                    onBlur={(e) => savePrompt(img.id, e.target.value)}
+                    style={{ fontSize: 12, padding: "6px 8px" }}
+                  />
+                )}
+                <div className="flex items-center justify-between gap-2">
+                  <VisibleToggle compact visible={!img.hideHome} onClick={() => toggleHome(img)} />
+                  <button onClick={() => remove(img.id)} className="text-red-400 text-xs font-semibold">
+                    Borrar
+                  </button>
+                </div>
               </div>
             </div>
           ))}
-          {items.length === 0 && <p className="text-white/30 text-xs">Todavía no hay fotos.</p>}
+          {items.length === 0 && <p className="text-white/30 text-xs">Todavía no hay fotos ni videos.</p>}
         </div>
       </Card>
     </>
@@ -2483,7 +2543,7 @@ const SERVICE_LABELS = [
 type Contact = { instagram: string; website: string; email: string; whatsapp: string };
 type Cta = { es: string; en: string };
 
-function ConfigTab() {
+function ConfigTab({ only }: { only?: "services" | "rest" }) {
   const [loadingData, setLoadingData] = useState(true);
   const [services, setServices] = useState<Record<string, ServiceOverride>>({});
   const [contact, setContact] = useState<Contact>({ instagram: "", website: "", email: "", whatsapp: "" });
@@ -2516,6 +2576,7 @@ function ConfigTab() {
           priceNoteES: row.priceNoteES || baseES?.priceNote || "",
           priceEN: row.priceEN || baseEN?.price || "",
           priceNoteEN: row.priceNoteEN || baseEN?.priceNote || "",
+          hidden: !!row.hidden,
         };
       }
       setServices(merged);
@@ -2584,6 +2645,7 @@ function ConfigTab() {
         if (!val || val === original) updates[key] = deleteField();
         else updates[key] = val;
       });
+      updates[`services.${s.id}.hidden`] = row.hidden ? true : deleteField();
     }
 
     if (Object.keys(updates).length === 0) return;
@@ -2606,11 +2668,19 @@ function ConfigTab() {
     <>
       {savedMsg && <p className="text-green-400 text-xs font-semibold mb-4">{savedMsg}</p>}
 
-      <Card title="Servicios" subtitle="Título, descripción y precio de cada tarjeta de la sección Servicios (página de inicio), en español e inglés. Los campos muestran lo que el sitio dice ahora mismo — cambia el que quieras y pulsa Guardar.">
+      {only !== "rest" && (
+      <Card title="Las seis tarjetas fijas" subtitle="Título, descripción y precio de cada tarjeta de la sección Servicios (página de inicio), en español e inglés. Los campos muestran lo que el sitio dice ahora mismo — cambia el que quieras y pulsa Guardar.">
         <div className="flex flex-col gap-5">
           {SERVICE_LABELS.map((s) => (
             <div key={s.id} className="rounded-xl p-4" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}>
-              <p className="text-white font-semibold text-sm mb-3">{s.label}</p>
+              <div className="flex items-center justify-between gap-3 mb-3">
+                <p className="text-white font-semibold text-sm">{s.label}</p>
+                <VisibleToggle
+                  compact
+                  visible={!services[s.id]?.hidden}
+                  onClick={() => setServices((prev) => ({ ...prev, [s.id]: { ...prev[s.id], hidden: !prev[s.id]?.hidden } }))}
+                />
+              </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <Field label="Título (ES)">
                   <input
@@ -2681,7 +2751,9 @@ function ConfigTab() {
           Los campos vacíos no se guardan — así nunca se borra algo ya guardado sin querer.
         </p>
       </Card>
+      )}
 
+      {only !== "services" && (<>
       <Card title="Contacto y redes">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <Field label="Instagram (URL)"><input className={inputClass()} value={contact.instagram} onChange={(e) => setContact({ ...contact, instagram: e.target.value })} /></Field>
@@ -2740,6 +2812,7 @@ function ConfigTab() {
           Guardar menú
         </button>
       </Card>
+      </>)}
     </>
   );
 }

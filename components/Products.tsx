@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useSiteConfig } from "@/contexts/SiteConfigContext";
 import { useWhatsAppUrl } from "@/lib/useWhatsApp";
+import { PagedCarousel } from "@/components/shared/Carousels";
 import {
   FALLBACK_PRODUCT_ICON,
   PLATFORM_ICON_MAP,
@@ -64,16 +65,20 @@ const COPY: Record<"es" | "en", Copy> = {
   },
 };
 
+const GRID_GAP = "clamp(8px, 2vw, 20px)";
+
 function ProductCard({
   p,
   onZoom,
   copy,
   lang,
+  perView,
 }: {
   p: HomeProduct;
   onZoom: (url: string) => void;
   copy: Copy;
   lang: string;
+  perView: number;
 }) {
   const accent = accentOf(p.accent);
   const Icon = PRODUCT_ICON_MAP[p.icon] ?? FALLBACK_PRODUCT_ICON;
@@ -97,12 +102,10 @@ function ProductCard({
         background: "rgba(255,255,255,0.05)",
         border: "1px solid rgba(255,255,255,0.09)",
         boxShadow: "0 2px 20px rgba(0,0,0,0.3)",
-        // Media tarjeta menos medio hueco: en el teléfono entran siempre dos por
-        // fila (Rafael lo pidió así), y en pantallas grandes el tope de 340px
-        // manda antes que el 50%, así que se siguen viendo tres por fila.
-        flex: "1 1 calc(50% - clamp(6px, 1vw, 10px))",
+        // Hasta 3 productos: los tres se ven a la vez. Con más de 3 (pedido de
+        // Rafael, 25/10/2026) quedan 2 columnas que rotan juntas en el carrusel.
+        flex: `0 0 calc((100% - ${perView - 1} * ${GRID_GAP}) / ${perView})`,
         minWidth: 0,
-        maxWidth: 340,
       }}
     >
       {/* Portada: foto del producto o bloque con su ícono. La ventana es siempre
@@ -155,61 +158,42 @@ function ProductCard({
         </div>
       )}
 
-        {platform && PlatformIcon && (
-          <span
-            className="absolute flex items-center gap-1.5 font-bold rounded-full pointer-events-none"
-            style={{
-              top: 12,
-              left: 12,
-              fontSize: 10,
-              letterSpacing: "0.04em",
-              padding: "5px 10px",
-              color: "#fff",
-              background: "rgba(6,8,20,0.72)",
-              border: "1px solid rgba(255,255,255,0.20)",
-              backdropFilter: "blur(6px)",
-            }}
-          >
-            <PlatformIcon size={12} /> {lang === "en" ? platform.en : platform.es}
-          </span>
-        )}
       </div>
 
       {/* El padding va en línea, no con la clase `p-5`: el reset universal de
           globals.css (margin y padding en 0) está fuera de las capas de
           Tailwind v4 y gana a cualquier utilidad de espaciado, así que las
           clases de padding y margen no hacen nada en este proyecto. */}
-      <div className="flex flex-col flex-1" style={{ padding: "clamp(13px, 3vw, 24px)" }}>
-        <div className="flex items-center gap-2 flex-wrap" style={{ marginBottom: 12 }}>
-          {/* Sin foto, el ícono ya es la portada: repetirlo aquí sería el mismo
-              símbolo dos veces en la misma tarjeta. */}
-          {p.imageUrl && (
-            <div
-              className="rounded-lg flex items-center justify-center flex-shrink-0"
-              style={{ width: "clamp(26px, 7vw, 32px)", height: "clamp(26px, 7vw, 32px)", background: accent.grad, boxShadow: `0 4px 12px ${accent.glow}` }}
-            >
-              <Icon size={16} style={{ color: "#fff" }} />
-            </div>
-          )}
-          {p.tag && (
-            <span
-              className="font-bold rounded-full"
-              style={{ fontSize: 10, padding: "4px 10px", color: accent.solid, background: `${accent.solid}1f`, letterSpacing: "0.04em" }}
-            >
-              {p.tag.toUpperCase()}
-            </span>
-          )}
-        </div>
-
-        <h3 className="text-white font-black" style={{ fontSize: "clamp(14px, 3.6vw, 18px)", lineHeight: 1.25, wordBreak: "break-word", marginBottom: 8 }}>
+      <div className="flex flex-col flex-1" style={{ padding: "clamp(8px, 2.2vw, 24px)" }}>
+        <h3 className="text-white font-black" style={{ fontSize: "clamp(10px, 2.6vw, 18px)", lineHeight: 1.2, wordBreak: "break-word", marginBottom: "clamp(3px, 1vw, 8px)" }}>
           {p.name}
         </h3>
-        <p style={{ fontSize: "clamp(11.5px, 3vw, 13px)", lineHeight: 1.6, color: "rgba(255,255,255,0.55)", wordBreak: "break-word", marginBottom: 16 }}>
+
+        {/* Etiquetas dentro del texto (no sobre la foto): plataforma y categoría. */}
+        {(platform || p.tag) && (
+          <div className="flex items-center flex-wrap" style={{ gap: "clamp(3px, 1vw, 8px)", marginBottom: "clamp(3px, 1vw, 8px)" }}>
+            {platform && PlatformIcon && (
+              <span className="inline-flex items-center font-bold" style={{ gap: 3, fontSize: "clamp(7px, 1.9vw, 11px)", color: "rgba(255,255,255,0.75)" }}>
+                <PlatformIcon size={10} /> {lang === "en" ? platform.en : platform.es}
+              </span>
+            )}
+            {p.tag && (
+              <span
+                className="font-bold rounded-full"
+                style={{ fontSize: "clamp(6.5px, 1.8vw, 10px)", padding: "2px clamp(4px, 1.5vw, 10px)", color: accent.solid, background: `${accent.solid}1f`, letterSpacing: "0.02em", maxWidth: "100%", whiteSpace: "nowrap" }}
+              >
+                {p.tag.toUpperCase()}
+              </span>
+            )}
+          </div>
+        )}
+
+        <p style={{ fontSize: "clamp(8px, 2.1vw, 13px)", lineHeight: 1.4, color: "rgba(255,255,255,0.55)", wordBreak: "break-word", marginBottom: "clamp(6px, 1.6vw, 14px)" }}>
           {p.desc}
         </p>
 
         {(p.badge || size) && (
-          <p className="font-bold" style={{ fontSize: "clamp(11px, 2.6vw, 12px)", color: accent.solid, marginBottom: 16 }}>
+          <p className="font-bold" style={{ fontSize: "clamp(7.5px, 2vw, 12px)", color: accent.solid, marginBottom: "clamp(6px, 1.6vw, 14px)" }}>
             {[p.badge, size].filter(Boolean).join(" · ")}
           </p>
         )}
@@ -223,9 +207,9 @@ function ProductCard({
               download={p.fileName || undefined}
               rel="noopener"
               className="w-full flex items-center justify-center gap-2 font-bold text-white transition-transform"
-              style={{ minHeight: 44, borderRadius: 12, background: accent.grad, boxShadow: `0 6px 18px ${accent.glow}`, fontSize: "clamp(12px, 3vw, 14px)" }}
+              style={{ minHeight: "clamp(28px, 7vw, 44px)", borderRadius: 10, background: accent.grad, boxShadow: `0 6px 18px ${accent.glow}`, fontSize: "clamp(8.5px, 2.2vw, 14px)", gap: 4 }}
             >
-              <Download size={16} /> {copy.download}
+              <Download size={12} /> {copy.download}
             </a>
           )}
 
@@ -236,12 +220,12 @@ function ProductCard({
               rel={p.linkUrl?.startsWith("http") ? "noopener noreferrer" : undefined}
               className="w-full flex items-center justify-center gap-2 font-bold transition-colors"
               style={{
-                minHeight: 44,
-                borderRadius: 12,
+                minHeight: "clamp(28px, 7vw, 44px)",
+                borderRadius: 10,
                 border: `1px solid ${accent.solid}66`,
                 background: `${accent.solid}14`,
                 color: accent.solid,
-                fontSize: "clamp(12px, 3vw, 14px)",
+                fontSize: "clamp(8.5px, 2.2vw, 14px)",
               }}
             >
               {copy.view} <ExternalLink size={15} />
@@ -252,11 +236,11 @@ function ProductCard({
             <div
               className="w-full flex items-center justify-center gap-2 font-bold"
               style={{
-                minHeight: 44,
-                borderRadius: 12,
+                minHeight: "clamp(28px, 7vw, 44px)",
+                borderRadius: 10,
                 border: "1px solid rgba(255,255,255,0.12)",
                 color: "rgba(255,255,255,0.45)",
-                fontSize: "clamp(12px, 3vw, 14px)",
+                fontSize: "clamp(8.5px, 2.2vw, 14px)",
               }}
             >
               <Clock size={15} /> {copy.soon}
@@ -277,6 +261,7 @@ export default function Products() {
 
   const items = (config?.homeProducts ?? []).filter((p) => p && p.visible !== false && p.name);
   if (items.length === 0) return null;
+  const perView = items.length > 3 ? 2 : 3;
 
   return (
     <section id="productos" className="section-py relative overflow-hidden" style={{ background: "linear-gradient(160deg,#08091a 0%,#0d1030 60%,#07091a 100%)" }}>
@@ -306,11 +291,11 @@ export default function Products() {
 
         {/* Tarjetas — flex centrado para que 1, 2 o 6 productos se vean bien.
             El hueco encoge en el teléfono para que quepan dos por fila. */}
-        <div className="flex flex-wrap justify-center" style={{ gap: "clamp(12px, 2vw, 20px)" }}>
+        <PagedCarousel perView={perView} gap={GRID_GAP} label={copy.badge}>
           {items.map((p) => (
-            <ProductCard key={p.id || p.name} p={p} onZoom={setLightbox} copy={copy} lang={lang} />
+            <ProductCard key={p.id || p.name} p={p} onZoom={setLightbox} copy={copy} lang={lang} perView={perView} />
           ))}
-        </div>
+        </PagedCarousel>
 
         {/* CTA banner */}
         <motion.div

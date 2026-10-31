@@ -44,6 +44,8 @@ export type GalleryImage = {
   title?: string;
   prompt?: string;
   caption?: string; // legado, ya no se usa en items nuevos
+  kind?: "image" | "video"; // sin valor = foto
+  hideHome?: boolean; // true = no sale en el carrusel del inicio
   createdAt?: Timestamp;
 };
 
