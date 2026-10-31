@@ -113,8 +113,8 @@ function ProductCard({
           horizontal (16:10) para que todas las tarjetas midan igual, pero la
           foto se ve ENTERA dentro de ella — nunca recortada. Lo que sobra a los
           lados lo rellena la misma foto ampliada y desenfocada, así no quedan
-          franjas negras. Encima va la etiqueta de "qué es" (app de teléfono,
-          programa de PC…). */}
+          franjas negras. La etiqueta de "qué es" (app de teléfono, programa de
+          PC…) va abajo, en la info de la tarjeta, no superpuesta a la foto. */}
       <div className="relative">
       {p.imageUrl ? (
         <button
@@ -158,25 +158,6 @@ function ProductCard({
           <Icon size={44} style={{ color: "#fff", opacity: 0.9 }} />
         </div>
       )}
-
-        {platform && PlatformIcon && (
-          <span
-            className="absolute flex items-center gap-1.5 font-bold rounded-full pointer-events-none"
-            style={{
-              top: 12,
-              left: 12,
-              fontSize: 10,
-              letterSpacing: "0.04em",
-              padding: "5px 10px",
-              color: "#fff",
-              background: "rgba(6,8,20,0.72)",
-              border: "1px solid rgba(255,255,255,0.20)",
-              backdropFilter: "blur(6px)",
-            }}
-          >
-            <PlatformIcon size={12} /> {lang === "en" ? platform.en : platform.es}
-          </span>
-        )}
       </div>
 
       {/* El padding va en línea, no con la clase `p-5`: el reset universal de
@@ -201,6 +182,21 @@ function ProductCard({
               style={{ fontSize: 10, padding: "4px 10px", color: accent.solid, background: `${accent.solid}1f`, letterSpacing: "0.04em" }}
             >
               {p.tag.toUpperCase()}
+            </span>
+          )}
+          {platform && PlatformIcon && (
+            <span
+              className="flex items-center gap-1.5 font-bold rounded-full"
+              style={{
+                fontSize: 10,
+                letterSpacing: "0.04em",
+                padding: "4px 10px",
+                color: "rgba(255,255,255,0.75)",
+                background: "rgba(255,255,255,0.08)",
+                border: "1px solid rgba(255,255,255,0.12)",
+              }}
+            >
+              <PlatformIcon size={12} /> {lang === "en" ? platform.en : platform.es}
             </span>
           )}
         </div>
